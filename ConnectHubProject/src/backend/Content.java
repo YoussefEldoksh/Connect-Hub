@@ -8,6 +8,6 @@ package backend;
  *
  * @author malak
  */
-public class Profile {
+public class Content {
     
 }
