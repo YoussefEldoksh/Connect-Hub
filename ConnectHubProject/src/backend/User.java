@@ -4,6 +4,7 @@
  */
 package backend;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
@@ -15,11 +16,11 @@ public class User {
     private String email;
     private String username;
     private String password;
-    private String dateOfBirth;
+    private LocalDate dateOfBirth;
     private String status;
     private ArrayList<User> friends;
     
-    public User(String userId, String email, String username, String password, String dateOfBirth, String status) {
+    public User(String userId, String email, String username, String password, LocalDate dateOfBirth, String status) {
         this.userId = userId;
         this.email = email;
         this.username = username;
@@ -63,7 +64,7 @@ public class User {
         return password;
     }
 
-    public String getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
