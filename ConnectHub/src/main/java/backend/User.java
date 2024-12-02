@@ -4,8 +4,11 @@
  */
 package backend;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Base64;
 
 /**
  *
@@ -24,7 +27,7 @@ public class User {
         this.userId = userId;
         this.email = email;
         this.username = username;
-        this.password = password;
+        this.setPassword(password);
         this.dateOfBirth = dateOfBirth;
         this.status = status;
         friends = new ArrayList<>();
@@ -76,8 +79,17 @@ public class User {
         this.username = username;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String password){
+        MessageDigest md;
+        try{
+            md=MessageDigest.getInstance("SHA-256");
+        }
+        catch(NoSuchAlgorithmException e){
+            System.out.println("No Such Algorithm.");
+            return;
+        }
+        byte[] hashedBytes=md.digest(password.getBytes());
+        this.password=Base64.getEncoder().encodeToString(hashedBytes);
     }
 
     public void setStatus(String status) {
