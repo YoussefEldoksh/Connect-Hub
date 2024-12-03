@@ -22,22 +22,33 @@ public class User {
     private LocalDate dateOfBirth;
     private String status;
     private ArrayList<User> friends;
-    
+    private ArrayList<Stories> userStories;
+    private ArrayList<Posts> userPosts;
+
     public User(String userId, String email, String username, String password, LocalDate dateOfBirth, String status) {
         this.userId = userId;
         this.email = email;
         this.username = username;
-        this.setPassword(password);
+        this.password = password;
         this.dateOfBirth = dateOfBirth;
         this.status = status;
-        friends = new ArrayList<>();
+        this.friends = new ArrayList<>();
+        this.userStories = new ArrayList<>();
+        this.userPosts = new ArrayList<>();
     }
-    
     
     
     public void addFriends(User friend)
     {
         friends.add(friend);
+    }
+
+    public ArrayList<Stories> getUserStories() {
+        return userStories;
+    }
+
+    public ArrayList<Posts> getUserPosts() {
+        return userPosts;
     }
     
     public void removeFriend(User friend)

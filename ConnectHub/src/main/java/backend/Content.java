@@ -5,6 +5,8 @@
 package backend;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -14,9 +16,9 @@ public class Content {
    private String contentID;
    private String authorID;
    private String content;
-   private LocalDate timestamp;
+   private LocalDateTime timestamp=LocalDateTime.now();
 
-    public Content(String contentID, String authorID, String content, LocalDate timestamp) {
+    public Content(String contentID, String authorID, String content, LocalDateTime timestamp) {
         this.contentID = contentID;
         this.authorID = authorID;
         this.content = content;
@@ -47,12 +49,24 @@ public class Content {
         this.content = content;
     }
 
-    public LocalDate getTimestamp() {
+    public LocalDateTime getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(LocalDate timestamp) {
+    public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
+    }
+   
+   public Posts createPost(String contentID, String authorID, String content)
+   {
+       Posts newPost= new Posts(contentID, authorID,content,LocalDateTime.now());
+       return newPost;
+   }
+   
+   public Stories createStory(String contentID, String authorID, String content)
+   {   
+   Stories newStory =  new Stories(contentID, authorID,content,LocalDateTime.now());
+   return newStory;
     }
    
    

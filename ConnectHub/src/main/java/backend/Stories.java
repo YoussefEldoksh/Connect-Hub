@@ -4,8 +4,11 @@
  */
 package backend;
 
-import java.time.LocalDate;
+
+
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+
 
 /**
  *
@@ -13,13 +16,24 @@ import java.time.LocalDateTime;
  */
 public class Stories extends Content {
     
-    public Stories(String contentID, String authorID, String content, LocalDate timestamp) {
+    
+    
+    public Stories(String contentID, String authorID, String content, LocalDateTime timestamp){
         super(contentID, authorID, content, timestamp);
     }
     
-    public static void expiredStory(Stories story)
+    public static boolean expiredStory(Stories story)
     {
+        // check if story passed 24hours
+    LocalDateTime timeAgo = LocalDateTime.now().minusHours(24); //instance 24 hours ago
+    if(story.getTimestamp().isEqual(timeAgo)||story.getTimestamp().isBefore(timeAgo))
+        return true;
+    else
+        return false;
+    }
     
-    
+    public static void removeStory(Stories story, ArrayList<Stories> stories)
+    {
+
     }
 }

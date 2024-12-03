@@ -4,17 +4,11 @@
  */
 package backend;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 /**
  *
  * @author dell
  */
-public class Posts extends Content{
+public class Image {
     
-    public Posts(String contentID, String authorID, String content, LocalDateTime timestamp) {
-        super(contentID, authorID, content, timestamp);
-    }
     
 }
