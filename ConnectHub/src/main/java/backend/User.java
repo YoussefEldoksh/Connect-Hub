@@ -22,6 +22,8 @@ public class User{
     private LocalDate dateOfBirth;
     private boolean status;
     private ArrayList<Friend> friends;
+    private ArrayList<Friend> blockedFriends;
+    private ArrayList<Friend> friendReq;
     
     public User(String userId, String email, String username, String password, LocalDate dateOfBirth, boolean status) {
         this.email = email;
@@ -31,6 +33,7 @@ public class User{
         this.dateOfBirth = dateOfBirth;
         this.status = status;
         friends = new ArrayList<>();
+        blockedFriends = new ArrayList<>();
     }
     
     
@@ -96,7 +99,35 @@ public class User{
         this.status = status;
     }
     
+     public void addBlockedFriends(Friend friend)
+    {
+        blockedFriends.add(friend);
+    }
+    
+    public void removeBlockedFriend(Friend friend) // for unblocking
+    {
+        blockedFriends.remove(friend);
+    }
     
     
+    public ArrayList<Friend> getListOfBlockedFriends()
+    {
+        return blockedFriends;
+    }
+     public void addFriendsReq(Friend friend)
+    {
+        friendReq.add(friend);
+    }
+    
+    public void removeFriendReq(Friend friend) 
+    {
+        friendReq.remove(friend);
+    }
+    
+    
+    public ArrayList<Friend> getListOfFriendReq()
+    {
+        return friendReq;
+    }    
     
 }

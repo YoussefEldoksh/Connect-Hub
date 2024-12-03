@@ -18,12 +18,12 @@ public class ConnectHub {
         public static void main(String[] args) {
         User user = new User("U122", "Ahmed@gmail.com", "Ahmed", "test122", LocalDate.now(), true);
         ArrayList<User> users = new ArrayList<>();
-        users.add(user);
+        //users.add(user);
         Friend friend = new Friend("khaled@gmail.com", "khaled", "U188");
         user.addFriends(friend);
         AccountManagement manager = new AccountManagement();
-//        manager.signUp("U122", "Ahmed@gmail.com", "Ahmed", "test122", LocalDate.now(), true,users);
-System.out.println("Users list size: " + users.size());
-        manager.saveInJSONfile(users);
+       manager.signUp("U162", "Tamer@gmail.com", "Ahmed", "test142", LocalDate.now(), true);
+       System.out.println("Users list size: " + users.size());
+        
     }
 }
