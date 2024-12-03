@@ -42,11 +42,7 @@ public class AccountManagement {
                 System.out.println("Email Already used");
                 return  null;
             }
-            if(user.getUsername().equals(username))
-            {
-                System.out.println("Username already used");
-                return null;
-            }
+            
         }
         
         
