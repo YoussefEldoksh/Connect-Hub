@@ -22,7 +22,9 @@ import org.json.JSONObject;
 public class AccountManagement {
     
     
-    public User signUp(String userId, String email, String username, String password, LocalDate dateOfBirth, boolean status,ArrayList<User> users) //create a user
+    ArrayList<User> users = FileManagement.loadFromJSONfile();
+    
+    public User signUp(String userId, String email, String username, String password, LocalDate dateOfBirth, boolean status) //create a user
     {
         EmailValidator validator = EmailValidator.getInstance();
         if(!validator.isValid(email)) // check for email format
@@ -50,7 +52,7 @@ public class AccountManagement {
         User user = new User(userId, email, username, password, dateOfBirth, status);// created a new user
         users.add(user); //adding a new user to our data base
         //here I'll add the user to the json file before I return the user
-        saveInJSONfile(users);
+        FileManagement.saveInJSONfile(users);
         return user; //returned the new user for use
     }
     
@@ -80,81 +82,5 @@ public class AccountManagement {
     }
     
     
-    public void loadFromJSONfile(ArrayList<User> users)
-    {
-        try{
-            
-            if (!Files.exists(Paths.get("users.json"))) {
-                    Files.createFile(Paths.get("users.json")); // create the file if not found
-                }
-            String json = new String(Files.readAllBytes(Paths.get("users.json")));
-            JSONArray usersArray = new JSONArray(json);
-            
-            DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
-            
-            for (int i = 0; i < usersArray.length(); i++) {
-                
-                JSONObject userJson = usersArray.getJSONObject(i);
-                String email = userJson.getString("email");
-                String id = userJson.getString("userId");
-                String username = userJson.getString("username");
-                LocalDate date = LocalDate.parse(userJson.getString("dob"));
-                String password = userJson.getString("password");
-                boolean status = userJson.getBoolean("status");
-                User user = new User(id, email, username, password, date, status);
-                JSONArray friends = userJson.getJSONArray("friends");
-                
-                for (int j = 0; j < friends.length(); j++) 
-                {
-                    JSONObject friend = friends.getJSONObject(j);
-                    String friendEmail = friend.getString("email");
-                    String friendId = friend.getString("userId");
-                    String friendUsername = friend.getString("username");
-                    user.addFriends(new Friend(friendEmail, friendId, friendUsername));
-                    
-                }
-                
-                
-                users.add(user);
-            }
-        } catch (IOException ex) {
-             System.err.println("Error loading users from JSON file: " + ex.getMessage());
-        }
-    }
-    
-    public void saveInJSONfile(ArrayList<User> users)
-    {
-       
-        try{
-            JSONArray jsonUsersArray = new JSONArray();
-            for (User user : users) {
-                JSONObject jsonUser = new JSONObject();
-                
-                jsonUser.put("userId", user.getUserId());
-                jsonUser.put("email", user.getEmail());
-                jsonUser.put("username", user.getUsername());
-                jsonUser.put("dob", user.getDateOfBirth().format(DateTimeFormatter.ISO_DATE));
-                jsonUser.put("password", user.getPassword());
-                jsonUser.put("status", user.getStatus());
-                
-                JSONArray friends = new JSONArray();
-                
-                for (Friend friend : user.getListOfFriends()) {
-                    JSONObject jsonFriend = new JSONObject();
-                    jsonFriend.put("userId", friend.getUserId());
-                    jsonFriend.put("email", friend.getEmail());
-                    jsonFriend.put("username", friend.getUsername());
-                    
-                    friends.put(jsonFriend);
-                }
-                jsonUser.put("friends", friends);
-                jsonUsersArray.put(jsonUser);
-            }
-        Files.write(Paths.get("users.json"), jsonUsersArray.toString(4).getBytes());
-        
-            System.out.println("System successfully saved the users");
-        } catch (IOException ex) {
-             System.err.println("Error saving users from JSON file: " + ex.getMessage());
-            }
-    }
+
 }

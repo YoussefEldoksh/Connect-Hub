@@ -1,13 +1,20 @@
-[{
-    "password": "TCkSauARHEo9wavh9qZXQ3QsKC7TXw+8Pa4CVSk0JY4=",
-    "dob": "2024-12-03",
-    "userId": "U122",
-    "email": "Ahmed@gmail.com",
-    "friends": [{
-        "userId": "U188",
-        "email": "khaled@gmail.com",
-        "username": "khaled"
-    }],
-    "username": "Ahmed",
-    "status": true
-}]
+[
+    {
+        "password": "21uOdH365gYZ8dgGgsbV1GxdZTgSnJZWj1Wvn7aSczY=",
+        "dob": "2024-12-03",
+        "userId": "U122",
+        "email": "Ahmed@gmail.com",
+        "friends": [],
+        "username": "Ahmed",
+        "status": true
+    },
+    {
+        "password": "QMqikaxr2Ct7ywFczNEHeRWhb7AOpyuHKwoGkqL+Goc=",
+        "dob": "2024-12-03",
+        "userId": "U162",
+        "email": "Tamer@gmail.com",
+        "friends": [],
+        "username": "Ahmed",
+        "status": true
+    }
+]
