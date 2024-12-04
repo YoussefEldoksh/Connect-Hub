@@ -22,7 +22,7 @@ import org.json.JSONObject;
 public class AccountManagement {
     
     
-    ArrayList<User> users = FileManagement.loadFromJSONfile();
+    ArrayList<User> users = FileManagement.loadFromUsersJSONfile();
     
     public int signUp(String userId, String email, String username, String password, LocalDate dateOfBirth, boolean status) //create a user
     {
@@ -51,6 +51,8 @@ public class AccountManagement {
         //here I'll add the user to the json file before I return that it was successfully added
         FileManagement.saveInJSONfile(users);
         return 4; //returned the new user for use
+
+   
     }
     
     public User signIn(String unOrem, String password) {
@@ -59,7 +61,7 @@ public class AccountManagement {
             {
                 return users.get(i);
             }
-
+     
         }
         return null;
     }

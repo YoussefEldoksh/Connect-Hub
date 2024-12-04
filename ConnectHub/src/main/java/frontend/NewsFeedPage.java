@@ -58,7 +58,7 @@ public class NewsFeedPage extends javax.swing.JFrame {
             .addGroup(FriendPanelLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(friendsNewsPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(127, Short.MAX_VALUE))
         );
         FriendPanelLayout.setVerticalGroup(
             FriendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -130,6 +130,7 @@ public class NewsFeedPage extends javax.swing.JFrame {
 
         FeedPanel.setBackground(new java.awt.Color(204, 204, 255));
 
+        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\malak\\Downloads\\download.jpeg")); // NOI18N
         jButton1.setText("jButton1");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -144,14 +145,14 @@ public class NewsFeedPage extends javax.swing.JFrame {
             .addGroup(mainNewsPanel1Layout.createSequentialGroup()
                 .addGap(109, 109, 109)
                 .addComponent(jButton1)
-                .addContainerGap(121, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         mainNewsPanel1Layout.setVerticalGroup(
             mainNewsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainNewsPanel1Layout.createSequentialGroup()
                 .addGap(69, 69, 69)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout FeedPanelLayout = new javax.swing.GroupLayout(FeedPanel);
@@ -168,7 +169,7 @@ public class NewsFeedPage extends javax.swing.JFrame {
             .addGroup(FeedPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(mainNewsPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addContainerGap(150, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -202,7 +203,7 @@ public class NewsFeedPage extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addGap(0, 63, Short.MAX_VALUE)
+                    .addGap(0, 65, Short.MAX_VALUE)
                     .addComponent(FeedPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
