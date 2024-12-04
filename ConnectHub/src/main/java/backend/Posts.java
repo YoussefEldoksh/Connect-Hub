@@ -6,16 +6,19 @@ package backend;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import javax.swing.ImageIcon;
 
 /**
  *
  * @author dell
  */
 public class Posts extends Content{
-    
-    
-    public Posts(String contentID, String authorID, String content, LocalDateTime timestamp) {
-        super(contentID, authorID, content);
+
+    public Posts(String contentID, String authorID, String content, ImageIcon image, String imagePath) {
+        super(contentID, authorID, content, image, imagePath);
     }
+    
+    
+    
     
 }

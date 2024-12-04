@@ -8,6 +8,7 @@ package backend;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 
 
 /**
@@ -15,12 +16,14 @@ import java.util.ArrayList;
  * @author dell
  */
 public class Stories extends Content {
-    
-    
-    
-    public Stories(String contentID, String authorID, String content, LocalDateTime timestamp){
-        super(contentID, authorID, content);
+
+    public Stories(String contentID, String authorID, String content, ImageIcon image, String imagePath) {
+        super(contentID, authorID, content, image, imagePath);
     }
+    
+    
+    
+  
     
     public static boolean expiredStory(Stories story)
     {

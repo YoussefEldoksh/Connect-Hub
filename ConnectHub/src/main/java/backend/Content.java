@@ -7,6 +7,10 @@ package backend;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import javax.swing.JOptionPane;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import javax.swing.ImageIcon;
+
 
 /**
  *
@@ -16,14 +20,39 @@ public class Content {
 
     private String contentID;
     private String authorID;
+    private ImageIcon image;
+    private String imagePath;
     private String content;
     private LocalDateTime timestamp;
 
-    public Content(String contentID, String authorID, String content) {
+    public Content(String contentID, String authorID, String content, ImageIcon image, String imagePath) {
         this.contentID = contentID;
         this.authorID = authorID;
         this.content = content;
+        this.image= image;
+        this.imagePath=imagePath;
         this.timestamp = LocalDateTime.now();
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    // Method to check if the image is null
+    public boolean hasImage() {
+        return image != null;
+    }
+    
+    public ImageIcon getImage() {
+        return image;
+    }
+
+    public void setImage(ImageIcon image) {
+        this.image = image;
     }
 
     public String getContentID() {
@@ -57,23 +86,15 @@ public class Content {
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
-
-    public static Posts createPost(String contentID, String authorID, String content) {
-        Posts newPost = new Posts(contentID, authorID, content, LocalDateTime.now());
-        return newPost;
-    }
-
-    public static Stories createStory(String contentID, String authorID, String content) {
-        Stories newStory = new Stories(contentID, authorID, content, LocalDateTime.now());
-        return newStory;
-    }
     
     public static void deleteStory()
     {
+        
     }
     
     public static void deletePost()
     {
+        
     }
     
     public static void readPosts()
