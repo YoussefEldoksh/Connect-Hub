@@ -198,8 +198,11 @@ public class FileManagement {
                     Files.createFile(Paths.get("friendrequests.json")); // create the file if not found
                     return friendRequests;
 
+            }
+
                     
                 }
+
             String json = new String(Files.readAllBytes(Paths.get("friendrequests.json")));
             JSONArray friendRequestsJson = new JSONArray(json);
             
@@ -277,12 +280,14 @@ public class FileManagement {
         ArrayList<Posts> posts = new ArrayList<>();
         
         try{
-            
+
             if (!Files.exists(Paths.get("posts.json")) || Files.size(Paths.get("posts.json")) == 0) {
                     Files.createFile(Paths.get("posts.json")); // create the file if not found
                     return posts;
+            }
 
-                }
+  
+
             String json = new String(Files.readAllBytes(Paths.get("posts.json")));
             
             JSONArray jsonPosts = new JSONArray(json);
@@ -401,6 +406,7 @@ public class FileManagement {
                     return stories;
                 }
             String json = new String(Files.readAllBytes(Paths.get("stories.json")));
+
 
             
             JSONArray jsonPosts = new JSONArray(json);
