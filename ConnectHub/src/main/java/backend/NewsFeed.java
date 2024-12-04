@@ -68,19 +68,20 @@ public class NewsFeed {
     
     public ArrayList<Posts> sortPosts(ArrayList<Posts> posts)
     {
-        boolean sorted;
+        boolean swapped;
         
         for(int i = 0; i < posts.size(); i++) {
-            sorted = false;
+            swapped = false;
             for(int j = i; j < posts.size(); j++) {
                 if(posts.get(j).getTimestamp().isBefore(posts.get(j+1).getTimestamp()))
                 {
                    Posts temp = posts.get(j);
                    posts.set(j, posts.get(j + 1));
                    posts.set(j + 1, temp);
+                   swapped=true;
                 }
             }
-            if(sorted == false)
+            if(swapped == false)
             {
                 break;
             }
@@ -90,19 +91,20 @@ public class NewsFeed {
     
     public ArrayList<Stories> sortStories(ArrayList<Stories> stories)
     {
-        boolean sorted;
+        boolean swapped;
         
         for(int i = 0; i < stories.size(); i++) {
-            sorted = false;
+            swapped = false;
             for(int j = i; j < stories.size(); j++) {
                 if(stories.get(j).getTimestamp().isBefore(stories.get(j+1).getTimestamp()))
                 {
                    Stories temp = stories.get(j);
                    stories.set(j, stories.get(j + 1));
                    stories.set(j + 1, temp);
+                   swapped=true;
                 }
             }
-            if(sorted == false)
+            if(swapped == false)
             {
                 break;
             }

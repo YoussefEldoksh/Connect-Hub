@@ -211,7 +211,7 @@ public class FileManagement {
                 String username = userJson.getString("username");
                 String receiverId = userJson.getString("receiver");
                 
-                friendRequests.add(new FriendRequests(email, username, username, receiverId));
+                friendRequests.add(new FriendRequests(email, username, id, receiverId));
           
             }
         } catch (IOException ex) {
@@ -260,7 +260,9 @@ public class FileManagement {
                 }
                 
                 
-               posts.add(new Posts(contentId, userId, content, image, photoPath));// adding a new post to the array
+               Posts post=new Posts(contentId, userId, content, image, photoPath);
+                post.setTimestamp(date);
+               posts.add(post);// adding a new post to the array
             }
 
             
@@ -302,8 +304,9 @@ public class FileManagement {
                    System.err.println("Image not found for path: " + photoPath);
                 }
                 
-                
-               posts.add(new Posts(contentId, userId, content, image, photoPath));// adding a new post to the array
+                Posts post=new Posts(contentId, userId, content, image, photoPath);
+                post.setTimestamp(date);//setting the date to the actual one saved in file
+               posts.add(post);// adding a new post to the array
             }
 
             
@@ -374,8 +377,11 @@ public class FileManagement {
             } else {
                 System.err.println("Image not found for path: " + photoPath);
             }
-                
-               stories.add(new Stories(contentId, userId, content, image, photoPath));// adding a new story to the array
+               Stories story=new Stories(contentId, userId, content, image, photoPath);
+                story.setTimestamp(date);//because constructor doesn't set the date saved in the file
+               if(!Stories.expiredStory(story)){
+                    stories.add(story);
+               }
                
         }
         } catch (IOException e) {
@@ -413,9 +419,11 @@ public class FileManagement {
             } else {
                 System.err.println("Image not found for path: " + photoPath);
             }
-                
-               stories.add(new Stories(contentId, userId, content, image, photoPath));// adding a new story to the array
-               
+                Stories story=new Stories(contentId, userId, content, image, photoPath);
+                story.setTimestamp(date);//because constructor doesn't set the date saved in the file
+               if(!Stories.expiredStory(story)){
+                    stories.add(story);
+               }
         }
         } catch (IOException e) {
             System.err.println("Error loading stories from JSON file: " + e.getMessage());
