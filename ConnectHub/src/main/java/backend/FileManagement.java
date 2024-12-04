@@ -151,7 +151,7 @@ public class FileManagement {
              System.err.println("Error saving friend requests from JSON file: " + ex.getMessage());
             }
     }
-    public static ArrayList<FriendRequests> loadFromFriendRequestsJsonFileForSpecificUser(User user)
+    public static ArrayList<FriendRequests> loadFromFriendRequestsJsonFileForSpecificUser(String userId)
     {
     
         ArrayList<FriendRequests> friendRequests = new ArrayList<>();
@@ -172,13 +172,11 @@ public class FileManagement {
                 String username = userJson.getString("username");
                 String receiverId = userJson.getString("receiver");
                 
-                if(receiverId.equals(user.getUserId())) // add friend request if it's for the user in question
+                if(receiverId.equals(userId)) // add friend request if it's for the user in question
                 {
-<<<<<<< HEAD
+
                     friendRequests.add(new FriendRequests(email, username, id, receiverId));
-=======
-                    friendRequests.add(new FriendRequests(email, username, username, receiverId));
->>>>>>> 829ddfe97da3d1992ad1f52db725b2b78b9cb12b
+
                 }
             }
         } catch (IOException ex) {
@@ -195,14 +193,12 @@ public class FileManagement {
         ArrayList<FriendRequests> friendRequests = new ArrayList<>();
         try{
             
-<<<<<<< HEAD
+
             if (!Files.exists(Paths.get("friendrequests.json")) || Files.size(Paths.get("friendrequests.json")) == 0) {
                     Files.createFile(Paths.get("friendrequests.json")); // create the file if not found
                     return friendRequests;
-=======
-            if (!Files.exists(Paths.get("friendrequests.json"))) {
-                    Files.createFile(Paths.get("friendrequests.json")); // create the file if not found
->>>>>>> 829ddfe97da3d1992ad1f52db725b2b78b9cb12b
+
+                    
                 }
             String json = new String(Files.readAllBytes(Paths.get("friendrequests.json")));
             JSONArray friendRequestsJson = new JSONArray(json);
@@ -229,7 +225,7 @@ public class FileManagement {
     
     
     
-    public static ArrayList<Posts> loadFromPostsJsonFileForSpecificUser(User user)
+    public static ArrayList<Posts> loadFromPostsJsonFileForSpecificUser(String id)
     {
         ArrayList<Posts> posts = new ArrayList<>();
         
@@ -245,7 +241,7 @@ public class FileManagement {
             for (int i = 0; i < jsonPosts.length(); i++) {
                 JSONObject jsonPost = jsonPosts.getJSONObject(i);
                 String userId = jsonPost.getString("userid");
-                if(!userId.equals(user.getUserId()))
+                if(!userId.equals(id))
                 {
                     continue;
                 }
@@ -279,14 +275,11 @@ public class FileManagement {
         ArrayList<Posts> posts = new ArrayList<>();
         
         try{
-<<<<<<< HEAD
+            
             if (!Files.exists(Paths.get("posts.json")) || Files.size(Paths.get("posts.json")) == 0) {
                     Files.createFile(Paths.get("posts.json")); // create the file if not found
                     return posts;
-=======
-            if (!Files.exists(Paths.get("posts.json"))) {
-                    Files.createFile(Paths.get("posts.json")); // create the file if not found
->>>>>>> 829ddfe97da3d1992ad1f52db725b2b78b9cb12b
+
                 }
             String json = new String(Files.readAllBytes(Paths.get("posts.json")));
             
@@ -350,7 +343,7 @@ public class FileManagement {
     }
     
     
-    public static ArrayList<Stories> loadFromStroiesJsonFileForSpecificUser(User user)
+    public static ArrayList<Stories> loadFromStroiesJsonFileForSpecificUser(String id)
     {
         ArrayList<Stories> stories = new ArrayList<>();
         
@@ -366,7 +359,7 @@ public class FileManagement {
             for (int i = 0; i < jsonPosts.length(); i++) {
                 JSONObject jsonPost = jsonPosts.getJSONObject(i);
                 String userId = jsonPost.getString("userid");
-                if(!userId.equals(user.getUserId()))
+                if(!userId.equals(id))
                 {
                     continue;
                 }
@@ -396,18 +389,13 @@ public class FileManagement {
         ArrayList<Stories> stories = new ArrayList<>();
         
         try {
-<<<<<<< HEAD
+
              if (!Files.exists(Paths.get("stories.json")) || Files.size(Paths.get("stories.json")) == 0) {
                     Files.createFile(Paths.get("stories.json")); // create the file if not found
                     return stories;
                 }
             String json = new String(Files.readAllBytes(Paths.get("stories.json")));
-=======
-             if (!Files.exists(Paths.get("posts.json"))) {
-                    Files.createFile(Paths.get("posts.json")); // create the file if not found
-                }
-            String json = new String(Files.readAllBytes(Paths.get("posts.json")));
->>>>>>> 829ddfe97da3d1992ad1f52db725b2b78b9cb12b
+
             
             JSONArray jsonPosts = new JSONArray(json);
             

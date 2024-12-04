@@ -36,9 +36,9 @@ public class User{
         this.status = status;
         friends = new ArrayList<>();
         blockedFriends = new ArrayList<>();
-        friendReq = FileManagement.loadFromFriendRequestsJsonFileForSpecificUser(this);
-        userStories = FileManagement.loadFromStroiesJsonFileForSpecificUser(this);
-        userPosts = FileManagement.loadFromPostsJsonFileForSpecificUser(this);
+        friendReq = FileManagement.loadFromFriendRequestsJsonFileForSpecificUser(userId);
+        userStories = FileManagement.loadFromStroiesJsonFileForSpecificUser(userId);
+        userPosts = FileManagement.loadFromPostsJsonFileForSpecificUser(userId);
     }
     
   public void addFriends(Friend friend)
