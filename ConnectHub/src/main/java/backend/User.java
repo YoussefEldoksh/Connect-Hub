@@ -23,7 +23,7 @@ public class User{
     private boolean status;
     private ArrayList<Friend> friends;
     private ArrayList<Friend> blockedFriends;
-    private ArrayList<Friend> friendReq;
+    private ArrayList<FriendRequests> friendReq;
     private ArrayList<Posts> userPosts;
     private ArrayList<Stories> userStories;
 
@@ -36,8 +36,9 @@ public class User{
         this.status = status;
         friends = new ArrayList<>();
         blockedFriends = new ArrayList<>();
-        userStories = new ArrayList<>();
-        userPosts = new ArrayList<>();
+        friendReq = FileManagement.loadFromFriendRequestsJsonFileForSpecificUser(this);
+        userStories = FileManagement.loadFromStroiesJsonFileForSpecificUser(this);
+        userPosts = FileManagement.loadFromPostsJsonFileForSpecificUser(this);
     }
     
   public void addFriends(Friend friend)
@@ -52,6 +53,8 @@ public class User{
     public ArrayList<Posts> getUserPosts() {
         return userPosts;
     }
+    
+    
     
     public void removeFriend(Friend friend)
     {
@@ -112,6 +115,13 @@ public class User{
      public void addBlockedFriends(Friend friend)
     {
         blockedFriends.add(friend);
+        if(friends.contains(friend)){
+            friends.remove(friend);
+        }
+        if(friendReq.contains(friend))
+        {
+            friendReq.remove(friend);
+        }
     }
     
     public void removeBlockedFriend(Friend friend) // for unblocking
@@ -124,20 +134,36 @@ public class User{
     {
         return blockedFriends;
     }
-     public void addFriendsReq(Friend friend)
+     public void addFriendsReq(FriendRequests friend)
     {
         friendReq.add(friend);
     }
     
-    public void removeFriendReq(Friend friend) 
+    public void removeFriendReq(FriendRequests friend) 
     {
         friendReq.remove(friend);
     }
     
     
-    public ArrayList<Friend> getListOfFriendReq()
+    public ArrayList<FriendRequests> getListOfFriendReq()
     {
         return friendReq;
     }    
     
+    public void addPost(Posts post)
+    {
+        this.userPosts.add(post);
+    }
+    public void addStory(Stories story)
+    {
+        this.userStories.add(story);
+    }
+    public void removePost(Posts post)
+    {
+        this.userStories.remove(post);
+    }
+    public void removeStory(Stories story)
+    {
+        this.userStories.remove(story);
+    }
 }

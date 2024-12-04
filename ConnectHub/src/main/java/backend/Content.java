@@ -87,28 +87,32 @@ public class Content {
         this.timestamp = timestamp;
     }
     
-    public static void deleteStory()
-    {
-        
-    }
     
-    public static void deletePost()
-    {
-        
-    }
     
-    public static void readPosts()
-    {
     
-    }
     
-    public static void readStories()
-    {}
-    
-    public static void savePosts()
-    {}
-    
-    public static void saveStories()
-    {}
+//    public static void deleteStory()
+//    {
+//        
+//    }
+//    
+//    public static void deletePost()
+//    {
+//        
+//    }
+//    
+//    public static void readPosts()
+//    {
+//    
+//    }
+//    
+//    public static void readStories()
+//    {}
+//    
+//    public static void savePosts()
+//    {}
+//    
+//    public static void saveStories()
+//    {}
 
 }

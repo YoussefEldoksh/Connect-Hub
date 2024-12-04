@@ -5,6 +5,8 @@
 package backend;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -23,13 +25,13 @@ public class NewsFeed {
         for (User allusers : users) {
             if(friends.contains(allusers.getUserId()))
             {
-                ArrayList<Posts> friendPosts = FileManagement.loadFromPostsJsonFile(user);
+                ArrayList<Posts> friendPosts = allusers.getUserPosts();
                 if (friendPosts != null) {
                  posts.addAll(friendPosts); // Add all posts from this friend
                  }
             }
         }
-        return posts;
+        return sortPosts(posts);
     }
     
     public ArrayList<Stories> fetchStories(User user)
@@ -42,14 +44,14 @@ public class NewsFeed {
         for (User allusers : users) {
             if(friends.contains(allusers.getUserId()))
             {
-                ArrayList<Stories> friendStories = FileManagement.loadFromStroiesJsonFile(user);
+                ArrayList<Stories> friendStories = allusers.getUserStories();
                 if (friendStories != null) {
                  stories.addAll(friendStories); // Add all Stories from this friend
                  }
             }
         }
      
-        return stories;
+        return sortStories(stories);
     }
     
     public ArrayList<String> fetchFriends(User user) // fetching an array list of friends in the String format for display
@@ -63,4 +65,60 @@ public class NewsFeed {
         }
         return friends;
     }
+    
+    public ArrayList<Posts> sortPosts(ArrayList<Posts> posts)
+    {
+        boolean sorted;
+        
+        for(int i = 0; i < posts.size(); i++) {
+            sorted = false;
+            for(int j = i; j < posts.size(); j++) {
+                if(posts.get(j).getTimestamp().isBefore(posts.get(j+1).getTimestamp()))
+                {
+                   Posts temp = posts.get(j);
+                   posts.set(j, posts.get(j + 1));
+                   posts.set(j + 1, temp);
+                }
+            }
+            if(sorted == false)
+            {
+                break;
+            }
+        }
+        return posts;
+    }
+    
+    public ArrayList<Stories> sortStories(ArrayList<Stories> stories)
+    {
+        boolean sorted;
+        
+        for(int i = 0; i < stories.size(); i++) {
+            sorted = false;
+            for(int j = i; j < stories.size(); j++) {
+                if(stories.get(j).getTimestamp().isBefore(stories.get(j+1).getTimestamp()))
+                {
+                   Stories temp = stories.get(j);
+                   stories.set(j, stories.get(j + 1));
+                   stories.set(j + 1, temp);
+                }
+            }
+            if(sorted == false)
+            {
+                break;
+            }
+        }
+        return stories;
+    }
+    
+    public void createPost(User user,String contentID,String content, ImageIcon image, String imagePath )
+    {
+        Posts post = new Posts(contentID, user.getUserId(), content, image, imagePath);
+        user.addPost(post);
+        
+    }
+    
+    
 }
+
+
+
