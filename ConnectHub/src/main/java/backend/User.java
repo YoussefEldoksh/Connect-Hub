@@ -24,23 +24,33 @@ public class User{
     private ArrayList<Friend> friends;
     private ArrayList<Friend> blockedFriends;
     private ArrayList<Friend> friendReq;
-    
+    private ArrayList<Posts> userPosts;
+    private ArrayList<Stories> userStories;
+
     public User(String userId, String email, String username, String password, LocalDate dateOfBirth, boolean status) {
         this.email = email;
         this.userId = userId;
         this.username = username;
-        this.setPassword(password);
+        this.password = password;
         this.dateOfBirth = dateOfBirth;
         this.status = status;
         friends = new ArrayList<>();
         blockedFriends = new ArrayList<>();
+        userStories = new ArrayList<>();
+        userPosts = new ArrayList<>();
     }
     
-    
-    
-    public void addFriends(Friend friend)
+  public void addFriends(Friend friend)
     {
         friends.add(friend);
+    }
+
+    public ArrayList<Stories> getUserStories() {
+        return userStories;
+    }
+
+    public ArrayList<Posts> getUserPosts() {
+        return userPosts;
     }
     
     public void removeFriend(Friend friend)
