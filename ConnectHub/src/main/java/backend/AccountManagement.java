@@ -22,7 +22,7 @@ import org.json.JSONObject;
 public class AccountManagement {
     
     
-    ArrayList<User> users = FileManagement.loadFromJSONfile();
+    ArrayList<User> users = FileManagement.loadFromUsersJSONfile();
     
     public User signUp(String userId, String email, String username, String password, LocalDate dateOfBirth, boolean status) //create a user
     {
@@ -52,7 +52,7 @@ public class AccountManagement {
         User user = new User(userId, email, username, password, dateOfBirth, status);// created a new user
         users.add(user); //adding a new user to our data base
         //here I'll add the user to the json file before I return the user
-        FileManagement.saveInJSONfile(users);
+        FileManagement.saveInUsersJSONfile(users);
         return user; //returned the new user for use
     }
     
