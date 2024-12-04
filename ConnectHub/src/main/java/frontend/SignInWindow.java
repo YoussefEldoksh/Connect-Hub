@@ -4,6 +4,10 @@
  */
 package frontend;
 
+import backend.AccountManagement;
+import backend.User;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author malak
@@ -33,7 +37,7 @@ SignIn_Or_SignUp_Window m;
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         PasswordField = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
+        LogInButton = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         SignupfromSigninButton = new javax.swing.JButton();
 
@@ -61,10 +65,15 @@ SignIn_Or_SignUp_Window m;
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(255, 153, 0));
-        jButton1.setFont(new java.awt.Font("Segoe UI Historic", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Login");
+        LogInButton.setBackground(new java.awt.Color(255, 153, 0));
+        LogInButton.setFont(new java.awt.Font("Segoe UI Historic", 1, 14)); // NOI18N
+        LogInButton.setForeground(new java.awt.Color(255, 255, 255));
+        LogInButton.setText("Login");
+        LogInButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LogInButtonActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Don't have an account?");
 
@@ -89,7 +98,7 @@ SignIn_Or_SignUp_Window m;
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(SignupfromSigninButton))
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(LogInButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -118,7 +127,7 @@ SignIn_Or_SignUp_Window m;
                     .addComponent(jLabel3)
                     .addComponent(PasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(36, 36, 36)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(LogInButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -142,14 +151,26 @@ SignIn_Or_SignUp_Window m;
 
     private void EmailusernameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmailusernameTextFieldActionPerformed
         // TODO add your handling code here:
-        /*email or username entered*/
-        String en= EmailusernameTextField.getText();
+
     }//GEN-LAST:event_EmailusernameTextFieldActionPerformed
 
     private void PasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PasswordFieldActionPerformed
         // TODO add your handling code here:
-        String pass= PasswordField.getText();
     }//GEN-LAST:event_PasswordFieldActionPerformed
+
+    private void LogInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogInButtonActionPerformed
+        // TODO add your handling code here:
+        /*enter either, uername or email*/
+        String emOrUn= EmailusernameTextField.getText();
+        String password= PasswordField.getText();
+        AccountManagement am= new AccountManagement();
+        User u= am.signIn(emOrUn, password);
+        if (u==null) {
+            JOptionPane.showMessageDialog(this, "Incorrect Username or Password.");
+        } else{
+            JOptionPane.showMessageDialog(this, "Hello" + u.getUsername());
+        }
+    }//GEN-LAST:event_LogInButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -189,9 +210,9 @@ SignIn_Or_SignUp_Window m;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFormattedTextField EmailusernameTextField;
+    private javax.swing.JButton LogInButton;
     private javax.swing.JPasswordField PasswordField;
     private javax.swing.JButton SignupfromSigninButton;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -4,12 +4,18 @@
  */
 package frontend;
 
+import backend.AccountManagement;
+import backend.User;
+import java.time.LocalDate;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author malak
  */
 public class SignUpWindow extends javax.swing.JFrame {
 SignIn_Or_SignUp_Window m;
+static long idCalc=0;
     /**
      * Creates new form SignUpWIndow
      */
@@ -38,7 +44,7 @@ SignIn_Or_SignUp_Window m;
         PasswordField = new javax.swing.JPasswordField();
         jLabel6 = new javax.swing.JLabel();
         SigninfromSignupButton = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        SignUpButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -60,11 +66,21 @@ SignIn_Or_SignUp_Window m;
 
         SigninfromSignupButton.setBackground(new java.awt.Color(255, 255, 153));
         SigninfromSignupButton.setText("Signin now");
+        SigninfromSignupButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SigninfromSignupButtonActionPerformed(evt);
+            }
+        });
 
-        jButton2.setBackground(new java.awt.Color(235, 207, 18));
-        jButton2.setFont(new java.awt.Font("Segoe UI Historic", 1, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Signup");
+        SignUpButton.setBackground(new java.awt.Color(235, 207, 18));
+        SignUpButton.setFont(new java.awt.Font("Segoe UI Historic", 1, 14)); // NOI18N
+        SignUpButton.setForeground(new java.awt.Color(255, 255, 255));
+        SignUpButton.setText("Signup");
+        SignUpButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SignUpButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -84,7 +100,7 @@ SignIn_Or_SignUp_Window m;
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(SignUpButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2)
@@ -119,7 +135,7 @@ SignIn_Or_SignUp_Window m;
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(SignUpButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -141,6 +157,38 @@ SignIn_Or_SignUp_Window m;
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void SignUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SignUpButtonActionPerformed
+        // TODO add your handling code here:
+        String email= EmailTextField.getText();
+        String username= UsernameTextField.getText();
+        String password = PasswordField.getText();
+        String userID= "U" + (idCalc++);
+        LocalDate dob= LocalDate.now();
+        AccountManagement am= new AccountManagement();
+        int n= am.signUp(userID, email, username, password, dob, true);
+        switch (n) {
+        case 1:
+            JOptionPane.showMessageDialog(this, "Incorrect Email Format. Please try again");
+            break;
+        case 2:
+            JOptionPane.showMessageDialog(this, "Username already exists. Please choose another one");
+            break;
+        case 3:
+            JOptionPane.showMessageDialog(this, "An account linked to this email already exists.");
+            break;
+        case 4:
+            JOptionPane.showMessageDialog(this, "Your account was successfully created.\nWelcome at ConnectHub!");
+            User u = am.findUser(username);
+            break;
+        default:
+            break;
+    }
+    }//GEN-LAST:event_SignUpButtonActionPerformed
+
+    private void SigninfromSignupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SigninfromSignupButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SigninfromSignupButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -149,9 +197,9 @@ SignIn_Or_SignUp_Window m;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField EmailTextField;
     private javax.swing.JPasswordField PasswordField;
+    private javax.swing.JButton SignUpButton;
     private javax.swing.JButton SigninfromSignupButton;
     private javax.swing.JTextField UsernameTextField;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
