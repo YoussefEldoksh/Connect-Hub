@@ -4,6 +4,8 @@
  */
 package backend;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author malak
@@ -52,6 +54,16 @@ public class FriendRequests {
     public void setReceiver(String receiver) {
         this.receiver = receiver;
     }
+    
+    /*public boolean contains(ArrayList<FriendRequests>requests,String id){
+        for(FriendRequests request:requests){
+            if(request.getUserId().equals(id)){
+                return true;
+            }
+        }
+        return false;
+    }*/
+    
 
 
 }

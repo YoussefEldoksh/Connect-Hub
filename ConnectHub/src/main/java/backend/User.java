@@ -118,9 +118,13 @@ public class User{
         if(friends.contains(friend)){
             friends.remove(friend);
         }
-        if(friendReq.contains(friend))
-        {
-            friendReq.remove(friend);
+        
+        
+        for(FriendRequests request:friendReq){
+            if(request.getUserId().equals(friend.getUserId())){
+                friendReq.remove(request);
+                return;
+            }
         }
     }
     
@@ -160,7 +164,7 @@ public class User{
     }
     public void removePost(Posts post)
     {
-        this.userStories.remove(post);
+        this.userPosts.remove(post);
     }
     public void removeStory(Stories story)
     {
