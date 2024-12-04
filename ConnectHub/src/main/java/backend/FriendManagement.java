@@ -11,11 +11,11 @@ import java.util.ArrayList;
  * @author malak
  */
 public class FriendManagement {
-    ArrayList<User> allUsers = FileManagement.loadFromJSONfile();
+    ArrayList<User> allUsers = FileManagement.loadFromUsersJSONfile();
     
     public void friendRequest(boolean accept, User user, Friend friend, boolean rejected)
     {
-      if(user.getListOfFriendReq().contains(friend))// if the request is already made don't added it again to the array
+      if(! user.getListOfFriendReq().contains(friend))// if the request is already made don't added it again to the array
       {
           user.addFriendsReq(friend);
       }
@@ -26,13 +26,17 @@ public class FriendManagement {
             {
                 user.addFriends(friend);
                 user.removeFriendReq(friend);
+                FileManagement.saveToFriendRequestsJsonFile(user);
+                FileManagement.saveInUsersJSONfile(allUsers);
             }
             else if(accept == false &&  rejected == true)
             {
                 user.removeFriendReq(friend);//this means that the request if rejected
+                FileManagement.saveToFriendRequestsJsonFile(user);
             }
 
             //else the request is still pending
+            FileManagement.saveToFriendRequestsJsonFile(user); // add it for future responding
        }
 
     }
@@ -68,10 +72,12 @@ public class FriendManagement {
     {
         user.removeFriend(blockFriend);
         user.addBlockedFriends(blockFriend);
+        FileManagement.saveInUsersJSONfile(allUsers);
     }
     
     public void removeFriend(User user,Friend friend){
         user.removeFriend(friend);
+        FileManagement.saveInUsersJSONfile(allUsers);
     }
     
     public void unblockFriend(User user, Friend blockedFriend) // function for unblocking someone
