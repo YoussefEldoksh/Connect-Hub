@@ -14,31 +14,33 @@ import java.util.Base64;
  *
  * @author malak
  */
-public class User {
+public class User{
     private String userId ;
     private String email;
     private String username;
     private String password;
     private LocalDate dateOfBirth;
-    private String status;
-    private ArrayList<User> friends;
-    private ArrayList<Stories> userStories;
+    private boolean status;
+    private ArrayList<Friend> friends;
+    private ArrayList<Friend> blockedFriends;
+    private ArrayList<Friend> friendReq;
     private ArrayList<Posts> userPosts;
+    private ArrayList<Stories> userStories;
 
-    public User(String userId, String email, String username, String password, LocalDate dateOfBirth, String status) {
-        this.userId = userId;
+    public User(String userId, String email, String username, String password, LocalDate dateOfBirth, boolean status) {
         this.email = email;
+        this.userId = userId;
         this.username = username;
         this.password = password;
         this.dateOfBirth = dateOfBirth;
         this.status = status;
-        this.friends = new ArrayList<>();
-        this.userStories = new ArrayList<>();
-        this.userPosts = new ArrayList<>();
+        friends = new ArrayList<>();
+        blockedFriends = new ArrayList<>();
+        userStories = new ArrayList<>();
+        userPosts = new ArrayList<>();
     }
     
-    
-    public void addFriends(User friend)
+  public void addFriends(Friend friend)
     {
         friends.add(friend);
     }
@@ -51,13 +53,13 @@ public class User {
         return userPosts;
     }
     
-    public void removeFriend(User friend)
+    public void removeFriend(Friend friend)
     {
         friends.remove(friend);
     }
     
     
-    public ArrayList<User> getListOfFriends()
+    public ArrayList<Friend> getListOfFriends()
     {
         return friends;
     }
@@ -82,7 +84,7 @@ public class User {
         return dateOfBirth;
     }
 
-    public String getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
@@ -103,11 +105,39 @@ public class User {
         this.password=Base64.getEncoder().encodeToString(hashedBytes);
     }
 
-    public void setStatus(String status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
     
+     public void addBlockedFriends(Friend friend)
+    {
+        blockedFriends.add(friend);
+    }
+    
+    public void removeBlockedFriend(Friend friend) // for unblocking
+    {
+        blockedFriends.remove(friend);
+    }
     
     
+    public ArrayList<Friend> getListOfBlockedFriends()
+    {
+        return blockedFriends;
+    }
+     public void addFriendsReq(Friend friend)
+    {
+        friendReq.add(friend);
+    }
+    
+    public void removeFriendReq(Friend friend) 
+    {
+        friendReq.remove(friend);
+    }
+    
+    
+    public ArrayList<Friend> getListOfFriendReq()
+    {
+        return friendReq;
+    }    
     
 }

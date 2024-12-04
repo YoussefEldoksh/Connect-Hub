@@ -19,7 +19,7 @@ public class Stories extends Content {
     
     
     public Stories(String contentID, String authorID, String content, LocalDateTime timestamp){
-        super(contentID, authorID, content, timestamp);
+        super(contentID, authorID, content);
     }
     
     public static boolean expiredStory(Stories story)
@@ -32,8 +32,11 @@ public class Stories extends Content {
         return false;
     }
     
-    public static void removeStory(Stories story, ArrayList<Stories> stories)
+    /*public static void removeStory(User user,Stories story, ArrayList<Stories> stories)
     {
-
-    }
+        if(expiredStory(story))
+        {
+        user.getUserStories().remove(story);
+        }
+    }*/
 }

@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public class Posts extends Content{
     
     public Posts(String contentID, String authorID, String content, LocalDateTime timestamp) {
-        super(contentID, authorID, content, timestamp);
+        super(contentID, authorID, content);
     }
     
 }

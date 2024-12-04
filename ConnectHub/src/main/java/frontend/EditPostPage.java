@@ -6,14 +6,14 @@ package frontend;
 
 /**
  *
- * @author malak
+ * @author pc castle
  */
-public class SignUpWIndow extends javax.swing.JFrame {
+public class EditPostPage extends javax.swing.JFrame {
 
     /**
-     * Creates new form SignUpWIndow
+     * Creates new form EditPostPage
      */
-    public SignUpWIndow() {
+    public EditPostPage() {
         initComponents();
     }
 
@@ -59,20 +59,20 @@ public class SignUpWIndow extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SignUpWIndow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditPostPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SignUpWIndow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditPostPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SignUpWIndow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditPostPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SignUpWIndow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditPostPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SignUpWIndow().setVisible(true);
+                new EditPostPage().setVisible(true);
             }
         });
     }
