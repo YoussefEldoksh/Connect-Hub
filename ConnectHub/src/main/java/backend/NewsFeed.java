@@ -78,7 +78,8 @@ public class NewsFeed {
                    Posts temp = posts.get(j);
                    posts.set(j, posts.get(j + 1));
                    posts.set(j + 1, temp);
-                   swapped=true;
+                   swapped=true; 
+                   
                 }
             }
             if(swapped == false)
@@ -102,6 +103,7 @@ public class NewsFeed {
                    stories.set(j, stories.get(j + 1));
                    stories.set(j + 1, temp);
                    swapped=true;
+                   
                 }
             }
             if(swapped == false)

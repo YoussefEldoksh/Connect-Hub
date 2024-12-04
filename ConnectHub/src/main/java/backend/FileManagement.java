@@ -4,6 +4,7 @@
  */
 package backend;
 
+import backend.User;
 import java.awt.Image;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -201,7 +202,7 @@ public class FileManagement {
             }
 
                     
-                }
+                
 
             String json = new String(Files.readAllBytes(Paths.get("friendrequests.json")));
             JSONArray friendRequestsJson = new JSONArray(json);
@@ -382,7 +383,8 @@ public class FileManagement {
             } else {
                 System.err.println("Image not found for path: " + photoPath);
             }
-               Stories story=new Stories(contentId, userId, content, image, photoPath);
+               
+            Stories story=new Stories(contentId, userId, content, image, photoPath);
                 story.setTimestamp(date);//because constructor doesn't set the date saved in the file
                if(!Stories.expiredStory(story)){
                     stories.add(story);
