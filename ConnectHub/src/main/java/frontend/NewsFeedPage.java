@@ -69,8 +69,8 @@ public class NewsFeedPage extends javax.swing.JFrame {
      
      public void openFriendManagementPage(User u) {
         this.setVisible(false);
-        FriendManagementPage fmp = FriendManagementPage.getInstance(this, u);
-        fmp.setVisible(true);
+//        FriendManagementPage fmp = FriendManagementPage.getInstance(this, u);
+//        fmp.setVisible(true);
     }
     /**
      * This method is called from within the constructor to initialize the form.
