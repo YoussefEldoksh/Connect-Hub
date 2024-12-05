@@ -10,47 +10,66 @@ import java.util.ArrayList;
  *
  * @author malak
  */
-public class DataBase {
-    private static ArrayList<User> users = FileManagement.loadFromUsersJSONfile();
-    private static ArrayList<Posts> posts =  FileManagement.loadFromPostsJsonFile();
-    private static ArrayList<Stories> stories = FileManagement.loadFromStroiesJsonFile();
-    private static ArrayList<FriendRequests> requests = FileManagement.loadFromFriendRequestsJsonFile();
+public class DataBase { // Centralized Data Management
+    private ArrayList<User> users;
+    private ArrayList<Posts> posts;
+    private ArrayList<Stories> stories;
+    private ArrayList<FriendRequests> requests;
+    
+    private static DataBase database = null;
+
+    private DataBase() {
+        this.users = FileManagement.loadFromUsersJSONfile();
+        this.posts = FileManagement.loadFromPostsJsonFile();
+        this.stories = FileManagement.loadFromStroiesJsonFile();
+        this.requests = FileManagement.loadFromFriendRequestsJsonFile();
         
-    public static void addToGlobalPosts(Posts post) // add for future saving
+    }
+    
+    public static DataBase getInstance() {
+        if (database == null) {
+            database = new DataBase(); 
+        }
+        return database;
+    }
+    
+    
+        
+    public  synchronized void addToGlobalPosts(Posts post) // add for future saving
     {
         posts.add(post);
     }
-    public  static void addTOGlobalStories(Stories story)// add for future saving
+    public  synchronized void addTOGlobalStories(Stories story)// add for future saving
     {
         stories.add(story);
     }
 
     
     
-    public static ArrayList<Posts> getGlobalPosts() 
+    public synchronized ArrayList<Posts> getGlobalPosts() 
     {
         return posts;
     }
 
-    public static ArrayList<Stories> getGlobalStories() 
+    public synchronized ArrayList<Stories> getGlobalStories() 
     {
         return stories;
     }
     
-    public static void addToGlobalFriendRequests(FriendRequests request) // add for future saving
+    public synchronized void addToGlobalFriendRequests(FriendRequests request) // add for future saving
     {
         requests.add(request);
     }
     
-    public static ArrayList<FriendRequests> getGlobalFriendRequests() 
+    public synchronized ArrayList<FriendRequests> getGlobalFriendRequests() 
     {
         return requests;
     }
 
-    public static ArrayList<User> getUsers() {
+    public synchronized ArrayList<User> getUsers() {
         return users;
     }
-    public static void addUser(User user){
+    public synchronized void addUser(User user){
         users.add(user);
     }
     

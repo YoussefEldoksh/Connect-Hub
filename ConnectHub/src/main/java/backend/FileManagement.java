@@ -22,7 +22,7 @@ import org.json.JSONObject;
  *
  * @author malak
  */
-public class FileManagement {
+public class FileManagement { // Centrlized file operations system
     
      public static ArrayList<User> loadFromUsersJSONfile()
     {
@@ -83,7 +83,7 @@ public class FileManagement {
     
     public static void saveInUsersJSONfile()
     {
-       ArrayList<User> users = DataBase.getUsers();
+       ArrayList<User> users = DataBase.getInstance().getUsers();
         try{
             JSONArray jsonUsersArray = new JSONArray();
             for (User user : users) {
@@ -133,7 +133,7 @@ public class FileManagement {
     
     public static void saveToFriendRequestsJsonFile()
     {
-        ArrayList<FriendRequests> requests = DataBase.getGlobalFriendRequests();
+        ArrayList<FriendRequests> requests = DataBase.getInstance().getGlobalFriendRequests();
         try{
             JSONArray jsonFriendsArray = new JSONArray();
             for (FriendRequests request : requests) {
@@ -330,7 +330,7 @@ public class FileManagement {
     
     public static void saveToPostsJsonFile()
     {
-        ArrayList<Posts> posts = DataBase.getGlobalPosts();
+        ArrayList<Posts> posts = DataBase.getInstance().getGlobalPosts();
         try{
             JSONArray Posts = new JSONArray();
             
@@ -445,7 +445,7 @@ public class FileManagement {
     
     public static void saveToStoriesJsonFile()
     {       
-        ArrayList<Stories> stories = DataBase.getGlobalStories();
+        ArrayList<Stories> stories = DataBase.getInstance().getGlobalStories();
         
         try{
             JSONArray Stories = new JSONArray();
