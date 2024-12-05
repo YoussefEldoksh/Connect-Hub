@@ -1,4 +1,4 @@
-/*
+    /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -253,6 +253,7 @@ public class FileManagement {
                 String content = jsonPost.getString("content");
                 String time = jsonPost.getString("timestamp");
                 LocalDateTime date = LocalDateTime.parse(time);
+
                 String photoPath = jsonPost.optString("photopath");
                 
                 
@@ -313,6 +314,7 @@ public class FileManagement {
                 Posts post=new Posts(contentId, userId, content, image, photoPath);
                 post.setTimestamp(date);//setting the date to the actual one saved in file
                posts.add(post);// adding a new post to the array
+
             }
 
             
@@ -334,11 +336,13 @@ public class FileManagement {
             
             for (int i = 0; i < posts.size(); i++) {
                 JSONObject post = new JSONObject();
+
                 post.put("userid", posts.get(i).getAuthorID());
                 post.put("contentid", posts.get(i).getContentID());
                 post.put("content", posts.get(i).getContent());
                 post.put("photopath", posts.get(i).getImagePath());
                 post.put("timestamp", posts.get(i).getTimestamp());
+
                 
                 Posts.put(post);
                 
@@ -386,7 +390,7 @@ public class FileManagement {
                
             Stories story=new Stories(contentId, userId, content, image, photoPath);
                 story.setTimestamp(date);//because constructor doesn't set the date saved in the file
-               if(!Stories.expiredStory(story)){
+               if(!Stories.isExpiredStory(story)){
                     stories.add(story);
                }
                
@@ -410,7 +414,7 @@ public class FileManagement {
             String json = new String(Files.readAllBytes(Paths.get("stories.json")));
 
 
-            
+
             JSONArray jsonPosts = new JSONArray(json);
             
             for (int i = 0; i < jsonPosts.length(); i++) {
@@ -429,7 +433,7 @@ public class FileManagement {
             }
                 Stories story=new Stories(contentId, userId, content, image, photoPath);
                 story.setTimestamp(date);//because constructor doesn't set the date saved in the file
-               if(!Stories.expiredStory(story)){
+               if(!Stories.isExpiredStory(story)){
                     stories.add(story);
                }
         }
