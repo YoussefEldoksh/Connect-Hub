@@ -4,7 +4,7 @@
  */
 package backend;
 
-import java.io.File;
+/*import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -17,28 +17,42 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.ImageIcon;
 import org.json.JSONArray;
-import org.json.JSONObject;
+import org.json.JSONObject;*/
 
 
 public class ProfileManagement {
-    private static Map<String,Profile> profiles;//Hahsmap with key=userId to the profile of the user
-    private ArrayList<User> users;
+    //private ArrayList<Profile> profiles;//Hahsmap with key=userId to the profile of the user
+    
     private static ProfileManagement instance=null;
     
-    private ProfileManagement(ArrayList<User> users){//using singleton design pattern
-        this.users=users;
-        profiles=new HashMap<>();
-        this.loadProfiles();
+    private ProfileManagement(){//using singleton design pattern
+        
+       // profiles=DataBase.getProfiles();
     }
     
-    public static ProfileManagement getInstance(ArrayList<User> users){//in order to return a single object only
+    public static ProfileManagement getInstance(){//in order to return a single object only
         if(instance==null){
-            instance= new ProfileManagement(users);
+            instance= new ProfileManagement();
         }
         return instance;
     }
     
-    private void loadProfiles(){
+    public void addProfile(Profile profile){
+        DataBase.addProfile(profile);
+    }
+    
+    public Profile getProfile(String userid){
+        for(Profile profile:DataBase.getProfiles()){
+            if(profile.getUserId().equals(userid)){
+                return profile;
+            }
+        }
+        return null;
+    }
+    
+    
+    
+    /*private void loadProfiles(){
         String json;
         try {
             json=new String(Files.readAllBytes(Paths.get("profiles.json")));//reads the json file
