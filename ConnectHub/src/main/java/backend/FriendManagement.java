@@ -13,30 +13,44 @@ import java.util.ArrayList;
 public class FriendManagement {
     ArrayList<User> allUsers = FileManagement.loadFromUsersJSONfile();
     
-    public void friendRequest(boolean accept, User user, Friend friend, boolean rejected)
+    public void friendRequest(boolean accept, User user,FriendRequests friend, boolean rejected)
     {
-      if(! user.getListOfFriendReq().contains(friend))// if the request is already made don't added it again to the array
+      ArrayList<String> excludedIds = new ArrayList<>();
+        for (Friend excludedfriends : user.getListOfBlockedFriends()) {
+            excludedIds.add(excludedfriends.getUserId());
+        }
+        for(Friend excludedFriends : user.getListOfFriends())
+        {
+            excludedIds.add(excludedFriends.getUserId());
+        }
+        excludedIds.add(user.getUserId());
+        
+        
+      if(!user.getListOfFriendReq().contains(friend))// if the request is already made don't added it again to the array
       {
           user.addFriendsReq(friend);
       }
        
-       if(!(user.getListOfFriends().contains(friend)) && !(user.getListOfBlockedFriends().contains(friend)))
+       if(!excludedIds.contains(friend.getUserId()))
        {
             if(accept == true) 
             {
-                user.addFriends(friend);
+                user.addFriends(new Friend(friend.getEmail(),friend.getUsername(), friend.getUserId()));
                 user.removeFriendReq(friend);
-                FileManagement.saveToFriendRequestsJsonFile(user);
-                FileManagement.saveInUsersJSONfile(allUsers);
+                DataBase.addToGlobalFriendRequests(friend);
+                FileManagement.saveToFriendRequestsJsonFile();
+                FileManagement.saveInUsersJSONfile();
             }
             else if(accept == false &&  rejected == true)
             {
                 user.removeFriendReq(friend);//this means that the request if rejected
-                FileManagement.saveToFriendRequestsJsonFile(user);
+                DataBase.addToGlobalFriendRequests(friend);
+                FileManagement.saveToFriendRequestsJsonFile();
             }
 
             //else the request is still pending
-            FileManagement.saveToFriendRequestsJsonFile(user); // add it for future responding
+            DataBase.addToGlobalFriendRequests(friend);
+            FileManagement.saveToFriendRequestsJsonFile(); // add it for future responding
        }
 
     }
@@ -70,14 +84,13 @@ public class FriendManagement {
     
     public void blockFriend(User user, Friend blockFriend)// moving the friend from the friends list to the blocked list
     {
-        user.removeFriend(blockFriend);
         user.addBlockedFriends(blockFriend);
-        FileManagement.saveInUsersJSONfile(allUsers);
+        FileManagement.saveInUsersJSONfile();
     }
     
     public void removeFriend(User user,Friend friend){
         user.removeFriend(friend);
-        FileManagement.saveInUsersJSONfile(allUsers);
+        FileManagement.saveInUsersJSONfile();
     }
     
     public void unblockFriend(User user, Friend blockedFriend) // function for unblocking someone

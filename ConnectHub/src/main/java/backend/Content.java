@@ -89,30 +89,29 @@ public class Content {
         this.timestamp = timestamp;
     }
     
-    public static void deleteStory() //not expired user chooses to delete it
+
+    public static void deleteStory(String contentID) //not expired user chooses to delete it
     {
-      FileManagement storiesFile= new FileManagement();
      ArrayList<Stories> stories;
      
-        stories = storiesFile.loadFromStroiesJsonFile(user);
+        stories = FileManagement.loadFromStroiesJsonFile();
      ArrayList<Stories> updated= new ArrayList();
      
      for(Stories s: stories)
      {
-    if(s.getContentID != contentID)
+    if(s.getContentID() != contentID)
      {
          updated.add(s);
      }
-     storiesFile.saveToStoriesJsonFile(user);
+     FileManagement.saveToStoriesJsonFile();
      }  
     }
     
     public static void deletePost(String contentID)
     {
-     FileManagement postsFile= new FileManagement();
      ArrayList<Posts> posts;
-        posts = postsFile.loadFromPostsJsonFile(user);
-     ArrayList<Stories> updated= new ArrayList();
+        posts = FileManagement.loadFromPostsJsonFile();
+     ArrayList<Posts> updated= new ArrayList();
      
      for(Posts p: posts)
      {
@@ -120,12 +119,12 @@ public class Content {
      {
          updated.add(p);
      }
-     postsFile.saveToStoriesJsonFile(user);
+     FileManagement.saveToStoriesJsonFile();
      }
     }
      public static ArrayList<Posts> readPostForUser(String userID) {
         FileManagement postsFile= new FileManagement();
-        ArrayList<Posts> x = postsFile.loadFromPostsJsonFile(user);
+        ArrayList<Posts> x = FileManagement.loadFromPostsJsonFile();
         ArrayList<Posts> y = new ArrayList<>();
         for (Posts post : x) {
             if (post.getAuthorID() == userID) {
@@ -136,8 +135,7 @@ public class Content {
     }
   
  public static ArrayList<Stories> readStoryForUser(String userID) {
-        FileManagement storiesFile= new FileManagement();
-        ArrayList<Stories> x = storiesFile.loadFromStroiesJsonFile(user);
+        ArrayList<Stories> x = FileManagement.loadFromStroiesJsonFile();
         ArrayList<Stories> y = new ArrayList<>();
         for (Stories story : x) {
             if (story.getAuthorID() == userID) {
@@ -146,6 +144,6 @@ public class Content {
         }
         return y;
     }
-    
+
 
 }

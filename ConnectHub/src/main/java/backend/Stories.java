@@ -31,11 +31,10 @@ public class Stories extends Content {
         return false;
     }
     
-   public static void expiredStory(User user)
+   public static void expiredStory()
     {
-     FileManagement storiesFile= new FileManagement();
      ArrayList<Stories> stories;
-        stories = storiesFile.loadFromStroiesJsonFile(user);
+        stories = FileManagement.loadFromStroiesJsonFile();
      ArrayList<Stories> updated= new ArrayList();
      
      for(Stories s: stories)
@@ -44,7 +43,7 @@ public class Stories extends Content {
      {
          updated.add(s);
      }
-     storiesFile.saveToStoriesJsonFile(user);
+     FileManagement.saveToStoriesJsonFile();
      }
     }
 }
