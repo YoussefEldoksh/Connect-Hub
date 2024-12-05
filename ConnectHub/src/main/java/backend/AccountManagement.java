@@ -47,7 +47,7 @@ public class AccountManagement {
             
         }
         User user = new User(userId, email, username, password, dateOfBirth, status);// created a new user
-        users.add(user); //adding a new user to our data base
+        DataBase.addUser(user); //adding a new user to our data base
         //here I'll add the user to the json file before I return that it was successfully added
         FileManagement.saveInUsersJSONfile();
         return 4; //returned the new user for use

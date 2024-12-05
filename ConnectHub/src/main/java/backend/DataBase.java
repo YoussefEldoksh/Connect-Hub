@@ -50,7 +50,9 @@ public class DataBase {
     public static ArrayList<User> getUsers() {
         return users;
     }
-    
+    public static void addUser(User user){
+        users.add(user);
+    }
     
 
     
