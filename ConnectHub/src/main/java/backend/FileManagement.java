@@ -1,4 +1,4 @@
-/*
+    /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -179,7 +179,7 @@ public class FileManagement {
                 String time = jsonPost.getString("timestamp");
                 LocalDateTime date = LocalDateTime.parse(time);
                 String photoPath = jsonPost.getString("photo");
-               posts.add(new Posts(contentId, userId, content, date));// adding a new post to the array
+              // posts.add(new Posts(contentId, userId, content, date));// adding a new post to the array
             }
 
             
@@ -200,7 +200,7 @@ public class FileManagement {
                 post.put("userid", user.getUserPosts().get(i).getAuthorID());
                 post.put("contentid", user.getUserPosts().get(i).getContentID());
                 post.put("content", user.getUserPosts().get(i).getContent());
-                post.put("photo", user.getUserPosts().get(i).);
+                post.put("photo", user.getUserPosts().get(i).getImagePath());
                 post.put("timestamp", user.getUserPosts().get(i).getTimestamp());
                 
                 Posts.put(post);
@@ -239,7 +239,7 @@ public class FileManagement {
                 String time = jsonPost.getString("timestamp");
                 LocalDateTime date = LocalDateTime.parse(time);
                 String photoPath = jsonPost.getString("photo");
-               stories.add(new Stories(contentId, userId, content, date));// adding a new story to the array
+               //stories.add(new Stories(contentId, userId, content, date));// adding a new story to the array
             
         }
         } catch (IOException e) {
@@ -257,7 +257,7 @@ public class FileManagement {
                 post.put("userid", user.getUserPosts().get(i).getAuthorID());
                 post.put("contentid", user.getUserPosts().get(i).getContentID());
                 post.put("content", user.getUserPosts().get(i).getContent());
-                post.put("photo", user.getUserPosts().get(i).);
+                post.put("photo", user.getUserPosts().get(i).getImage());
                 post.put("timestamp", user.getUserPosts().get(i).getTimestamp());
                 
                 Posts.put(post);

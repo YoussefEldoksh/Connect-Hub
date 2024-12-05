@@ -21,11 +21,7 @@ public class Stories extends Content {
         super(contentID, authorID, content, image, imagePath);
     }
     
-    
-    
-  
-    
-    public static boolean expiredStory(Stories story)
+  public static boolean isExpiredStory(Stories story)
     {
         // check if story passed 24hours
     LocalDateTime timeAgo = LocalDateTime.now().minusHours(24); //instance 24 hours ago
@@ -35,11 +31,20 @@ public class Stories extends Content {
         return false;
     }
     
-    /*public static void removeStory(User user,Stories story, ArrayList<Stories> stories)
+   public static void expiredStory(User user)
     {
-        if(expiredStory(story))
-        {
-        user.getUserStories().remove(story);
-        }
-    }*/
+     FileManagement storiesFile= new FileManagement();
+     ArrayList<Stories> stories;
+        stories = storiesFile.loadFromStroiesJsonFile(user);
+     ArrayList<Stories> updated= new ArrayList();
+     
+     for(Stories s: stories)
+     {
+     if(!isExpiredStory(s))
+     {
+         updated.add(s);
+     }
+     storiesFile.saveToStoriesJsonFile(user);
+     }
+    }
 }
