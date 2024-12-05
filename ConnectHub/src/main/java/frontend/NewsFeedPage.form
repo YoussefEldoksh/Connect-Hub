@@ -254,9 +254,6 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="jButton1">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\malak\Downloads\download.jpeg"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="jButton1"/>
               </Properties>
               <Events>
