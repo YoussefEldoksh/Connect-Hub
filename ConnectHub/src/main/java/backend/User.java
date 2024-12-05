@@ -14,7 +14,7 @@ import java.util.Base64;
  *
  * @author malak
  */
-public class User{
+public class User {
     private String userId ;
     private String email;
     private String username;
@@ -31,7 +31,7 @@ public class User{
         this.email = email;
         this.userId = userId;
         this.username = username;
-        this.password = password;
+        setPassword(password);
         this.dateOfBirth = dateOfBirth;
         this.status = status;
         friends = new ArrayList<>();
@@ -169,5 +169,5 @@ public class User{
     public void removeStory(Stories story)
     {
         this.userStories.remove(story);
-    }
+    } 
 }
