@@ -10,11 +10,13 @@ import java.util.ArrayList;
  *
  * @author malak
  */
+
 public class DataBase { // Centralized Data Management
     private ArrayList<User> users;
     private ArrayList<Posts> posts;
     private ArrayList<Stories> stories;
     private ArrayList<FriendRequests> requests;
+    private ArrayList<Profile> profiles;
     
     private static DataBase database = null;
 
@@ -23,6 +25,7 @@ public class DataBase { // Centralized Data Management
         this.posts = FileManagement.loadFromPostsJsonFile();
         this.stories = FileManagement.loadFromStroiesJsonFile();
         this.requests = FileManagement.loadFromFriendRequestsJsonFile();
+        this.profiles = FileManagement.loadFromProfilesJsonFile();
         
     }
     
@@ -71,6 +74,13 @@ public class DataBase { // Centralized Data Management
     }
     public synchronized void addUser(User user){
         users.add(user);
+    }
+    
+     public  ArrayList<Profile> getProfiles() {
+        return profiles;
+    }
+    public  void addProfile(Profile profile){
+        profiles.add(profile);
     }
     
 
