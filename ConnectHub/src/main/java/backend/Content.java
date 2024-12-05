@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 import javax.swing.JOptionPane;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.time.Duration;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
 
@@ -87,32 +89,61 @@ public class Content {
         this.timestamp = timestamp;
     }
     
+
+    public static void deleteStory(String contentID) //not expired user chooses to delete it
+    {
+     ArrayList<Stories> stories;
+     
+        stories = FileManagement.loadFromStroiesJsonFile();
+     ArrayList<Stories> updated= new ArrayList();
+     
+     for(Stories s: stories)
+     {
+    if(s.getContentID() != contentID)
+     {
+         updated.add(s);
+     }
+     FileManagement.saveToStoriesJsonFile();
+     }  
+    }
     
-    
-    
-    
-//    public static void deleteStory()
-//    {
-//        
-//    }
-//    
-//    public static void deletePost()
-//    {
-//        
-//    }
-//    
-//    public static void readPosts()
-//    {
-//    
-//    }
-//    
-//    public static void readStories()
-//    {}
-//    
-//    public static void savePosts()
-//    {}
-//    
-//    public static void saveStories()
-//    {}
+    public static void deletePost(String contentID)
+    {
+     ArrayList<Posts> posts;
+        posts = FileManagement.loadFromPostsJsonFile();
+     ArrayList<Posts> updated= new ArrayList();
+     
+     for(Posts p: posts)
+     {
+     if(!p.getContentID().equals(contentID))
+     {
+         updated.add(p);
+     }
+     FileManagement.saveToStoriesJsonFile();
+     }
+    }
+     public static ArrayList<Posts> readPostForUser(String userID) {
+        FileManagement postsFile= new FileManagement();
+        ArrayList<Posts> x = FileManagement.loadFromPostsJsonFile();
+        ArrayList<Posts> y = new ArrayList<>();
+        for (Posts post : x) {
+            if (post.getAuthorID() == userID) {
+                y.add(post);
+            }
+        }
+        return y;
+    }
+  
+ public static ArrayList<Stories> readStoryForUser(String userID) {
+        ArrayList<Stories> x = FileManagement.loadFromStroiesJsonFile();
+        ArrayList<Stories> y = new ArrayList<>();
+        for (Stories story : x) {
+            if (story.getAuthorID() == userID) {
+                y.add(story);
+            }
+        }
+        return y;
+    }
+
 
 }

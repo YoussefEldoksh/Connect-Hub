@@ -26,17 +26,97 @@ public class FriendManagementPage extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        requestsFriendManagePanel1 = new frontend.RequestsFriendManagePanel();
+        suggestionsFriendManagePanel1 = new frontend.SuggestionsFriendManagePanel();
+        friendsFriendManagePanel1 = new frontend.FriendsFriendManagePanel();
+        blockedFriendManagePanel1 = new frontend.BlockedFriendManagePanel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        requestsFriendManagePanel1.setBackground(new java.awt.Color(153, 153, 255));
+
+        javax.swing.GroupLayout requestsFriendManagePanel1Layout = new javax.swing.GroupLayout(requestsFriendManagePanel1);
+        requestsFriendManagePanel1.setLayout(requestsFriendManagePanel1Layout);
+        requestsFriendManagePanel1Layout.setHorizontalGroup(
+            requestsFriendManagePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        requestsFriendManagePanel1Layout.setVerticalGroup(
+            requestsFriendManagePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        suggestionsFriendManagePanel1.setBackground(new java.awt.Color(255, 204, 255));
+
+        javax.swing.GroupLayout suggestionsFriendManagePanel1Layout = new javax.swing.GroupLayout(suggestionsFriendManagePanel1);
+        suggestionsFriendManagePanel1.setLayout(suggestionsFriendManagePanel1Layout);
+        suggestionsFriendManagePanel1Layout.setHorizontalGroup(
+            suggestionsFriendManagePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        suggestionsFriendManagePanel1Layout.setVerticalGroup(
+            suggestionsFriendManagePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        friendsFriendManagePanel1.setBackground(new java.awt.Color(102, 255, 255));
+
+        javax.swing.GroupLayout friendsFriendManagePanel1Layout = new javax.swing.GroupLayout(friendsFriendManagePanel1);
+        friendsFriendManagePanel1.setLayout(friendsFriendManagePanel1Layout);
+        friendsFriendManagePanel1Layout.setHorizontalGroup(
+            friendsFriendManagePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        friendsFriendManagePanel1Layout.setVerticalGroup(
+            friendsFriendManagePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        blockedFriendManagePanel1.setBackground(new java.awt.Color(0, 204, 204));
+
+        javax.swing.GroupLayout blockedFriendManagePanel1Layout = new javax.swing.GroupLayout(blockedFriendManagePanel1);
+        blockedFriendManagePanel1.setLayout(blockedFriendManagePanel1Layout);
+        blockedFriendManagePanel1Layout.setHorizontalGroup(
+            blockedFriendManagePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        blockedFriendManagePanel1Layout.setVerticalGroup(
+            blockedFriendManagePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(requestsFriendManagePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(suggestionsFriendManagePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(92, 92, 92))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(61, 61, 61)
+                .addComponent(friendsFriendManagePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(60, 60, 60)
+                .addComponent(blockedFriendManagePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(79, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(requestsFriendManagePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(suggestionsFriendManagePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(39, 39, 39)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(blockedFriendManagePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(55, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(friendsFriendManagePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
 
         pack();
@@ -78,5 +158,9 @@ public class FriendManagementPage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private frontend.BlockedFriendManagePanel blockedFriendManagePanel1;
+    private frontend.FriendsFriendManagePanel friendsFriendManagePanel1;
+    private frontend.RequestsFriendManagePanel requestsFriendManagePanel1;
+    private frontend.SuggestionsFriendManagePanel suggestionsFriendManagePanel1;
     // End of variables declaration//GEN-END:variables
 }
