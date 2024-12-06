@@ -28,10 +28,24 @@ public class User extends Account {
     private ArrayList<User> unviewableUsers;
     private ArrayList<Posts> userPosts;
     private ArrayList<Stories> userStories;
+    public String getPassword;
 
     public User(String userId, String email, String username, String password, LocalDate dateOfBirth, boolean status) {
         super(email,username,userId);
         setPassword(password);
+        this.dateOfBirth = dateOfBirth;
+        this.status = status;
+        friends = new ArrayList<>();
+        blockedFriends = new ArrayList<>();
+        unviewableUsers = new ArrayList<>();
+        friendReq = FileManagement.loadFromFriendRequestsJsonFileForSpecificUser(userId);
+        userStories = FileManagement.loadFromStroiesJsonFileForSpecificUser(userId);
+        userPosts = FileManagement.loadFromPostsJsonFileForSpecificUser(userId);
+    }
+    
+    public User(String userId, String email, String username, String password, LocalDate dateOfBirth, boolean status,String load) {
+        super(email,username,userId);
+        this.password=password;
         this.dateOfBirth = dateOfBirth;
         this.status = status;
         friends = new ArrayList<>();

@@ -21,7 +21,7 @@ static SignUpWindow instance;
     /**
      * Creates new form SignUpWIndow
      */
-    public SignUpWindow(SignIn_Or_SignUp_Window parentWindow) {
+    private SignUpWindow(SignIn_Or_SignUp_Window parentWindow) {
         initComponents();
         this.parentWindow=parentWindow;
     }

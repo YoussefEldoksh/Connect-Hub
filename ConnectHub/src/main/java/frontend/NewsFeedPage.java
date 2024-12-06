@@ -77,8 +77,10 @@ public class NewsFeedPage extends javax.swing.JFrame {
         return instance;
     }
 
-    private static NewsFeedPage getInstance(SignUpWindow signUpToNews, User user) {
-        System.out.println("ana ahao");
+
+ 
+    public static NewsFeedPage getInstance(SignUpWindow signUpToNews, User user) {
+
         if (instance == null) {
             instance = new NewsFeedPage(signUpToNews, user);
         }
