@@ -45,11 +45,11 @@ public class NewPostPanel extends javax.swing.JPanel {
         File file= null;
         
         if (choice == 0) {
-            text = JOptionPane.showInputDialog(this, "Please enter your story's text", "Add Story");
+            text = JOptionPane.showInputDialog(this, "Please enter your story's text");
             ImagePreviewFrame ipf = new ImagePreviewFrame(null, text);
             ipf.setVisible(true);
         } else if (choice == 1) {
-            text = JOptionPane.showInputDialog(this, "Please enter your story's text", "Add Story");
+            text = JOptionPane.showInputDialog(this, "Please enter your story's text");
             jfc.setDialogTitle("Select an Image File");
             jfc.showOpenDialog(this);
             file = jfc.getSelectedFile();

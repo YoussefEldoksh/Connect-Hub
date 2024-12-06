@@ -179,7 +179,7 @@ static SignUpWindow instance;
         String username= UsernameTextField.getText();
         String password = PasswordField.getText();
         
-        String userID= "U4";  //(DataBase.getInstance().getUsers().size());
+        String userID= "U"+ DataBase.getInstance().getUsers().size();
         System.out.println("Current number of users: " + DataBase.getInstance().getUsers().size());
         LocalDate dob= LocalDate.now();
 
