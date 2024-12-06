@@ -137,6 +137,21 @@ public class NewsFeed {
         }
         return lineRepresentations;
     }
+        
+        public ArrayList<String> static getLineRepresentationsStories(User u) {
+        ArrayList<Posts> posts = fetchPosts(u);
+        ArrayList<String> lineRepresentations= new ArrayList<>();
+        for (int i = 0; i < posts.size(); i++) {
+            String username = AccountManagement.findUsername(posts.get(i).getAuthorID());
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            // Convert LocalDate to String
+            String formattedDate = posts.get(i).getTimestamp().format(formatter);
+            String s = username + "published on: " + formattedDate;
+            lineRepresentations.add(s);
+        }
+        return lineRepresentations;
+    }
+    
     
 }
 
