@@ -100,6 +100,7 @@ public class Content {
     if(s.getContentID().equals(contentID))
      {
          stories.remove(s);
+         DataBase.getInstance().getUsers().get(DataBase.getInstance().getUsers().indexOf(s.getAuthorID())).removeStory(s);
      }
      FileManagement.saveToStoriesJsonFile();
      }  
@@ -114,6 +115,7 @@ public class Content {
      if(!p.getContentID().equals(contentID))
      {
          posts.remove(p);
+         DataBase.getInstance().getUsers().get(DataBase.getInstance().getUsers().indexOf(p.getAuthorID())).removePost(p);
      }
      FileManagement.saveToStoriesJsonFile();
      }

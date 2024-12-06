@@ -1,7 +1,7 @@
 [
     {
         "blockedfriends": [],
-        "password": "hM+o7NLM4nHZvzMTfxLl7/WFRNPjvOLR2zHkdJhHhjU=",
+        "password": "VgMjG13IyamS+7814SXGexp8CI+Uz04CcGoxvf50Jvg=",
         "dob": "2024-12-06",
         "userId": "U0",
         "email": "youssef@gmail.com",
@@ -11,12 +11,22 @@
     },
     {
         "blockedfriends": [],
-        "password": "vKw3G1T1mUWhSqSeLkCOXW5NvFk4f12M/GsBXUDVuwI=",
+        "password": "JUsTOGF6Had3UoY0SkA9NWsFD0co/sMoMorJb1e8dT8=",
         "dob": "2024-12-06",
         "userId": "U2",
         "email": "doksh@gmail.com",
         "friends": [],
         "username": "gamed_awy",
+        "status": true
+    },
+    {
+        "blockedfriends": [],
+        "password": "IOGverHsdprNeUY71bwx8I7Zm21YZ+Xia4nwjF00zeQ=",
+        "dob": "2024-12-06",
+        "userId": "U3",
+        "email": "sbxchab@jdc.com",
+        "friends": [],
+        "username": "nkjjn",
         "status": true
     }
 ]
