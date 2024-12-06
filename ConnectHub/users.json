@@ -1,1 +1,22 @@
-[]
+[
+    {
+        "blockedfriends": [],
+        "password": "1234",
+        "dob": "2024-12-06",
+        "userId": "U5",
+        "email": "2halaahaitham@gmail.com",
+        "friends": [],
+        "username": "kefaya",
+        "status": true
+    },
+    {
+        "blockedfriends": [],
+        "password": "1234",
+        "dob": "2024-12-06",
+        "userId": "U0",
+        "email": "halaa@yahoo.com",
+        "friends": [],
+        "username": "1234",
+        "status": true
+    }
+]

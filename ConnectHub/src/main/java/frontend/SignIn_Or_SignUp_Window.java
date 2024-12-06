@@ -4,6 +4,8 @@
  */
 package frontend;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author malak
@@ -18,6 +20,18 @@ public class SignIn_Or_SignUp_Window extends javax.swing.JFrame {
         this.setTitle("Main Window");
     }
 
+
+    public void openSignInWindow() {
+        this.setVisible(false);
+        SignInWindow si = SignInWindow.getInstance(this);
+        si.setVisible(true);
+    }
+    
+    public void openSignUpWindow() {
+        this.setVisible(false);
+        SignUpWindow su = SignUpWindow.getInstance(this);
+        su.setVisible(true);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -121,16 +135,12 @@ public class SignIn_Or_SignUp_Window extends javax.swing.JFrame {
 
     private void SignupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SignupButtonActionPerformed
         // TODO add your handling code here:
-       SignUpWindow su= new SignUpWindow(this);
-       setVisible(false);
-       su.setVisible(true);
+       this.openSignUpWindow();
     }//GEN-LAST:event_SignupButtonActionPerformed
 
     private void SigninButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SigninButtonActionPerformed
         // TODO add your handling code here:
-       SignInWindow si= new SignInWindow(this);
-       setVisible(false);
-       si.setVisible(true);
+       this.openSignInWindow();
     }//GEN-LAST:event_SigninButtonActionPerformed
 
     /**

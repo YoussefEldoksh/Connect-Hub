@@ -14,16 +14,29 @@ import javax.swing.JOptionPane;
  * @author malak
  */
 public class SignUpWindow extends javax.swing.JFrame {
-SignIn_Or_SignUp_Window m;
+SignIn_Or_SignUp_Window parentWindow;
+static SignUpWindow instance;
 static long idCalc=0;
     /**
      * Creates new form SignUpWIndow
      */
-    public SignUpWindow(SignIn_Or_SignUp_Window m) {
+    public SignUpWindow(SignIn_Or_SignUp_Window parentWindow) {
         initComponents();
-        this.m=m;
+        this.parentWindow=parentWindow;
     }
 
+    public static SignUpWindow getInstance(SignIn_Or_SignUp_Window parentWindow) {
+        if (instance == null) {
+            instance = new SignUpWindow(parentWindow);
+        }
+        return instance;
+    }
+    
+    public void openNewsFeedPage(User u) {
+        this.setVisible(false);
+        NewsFeedPage nfp = NewsFeedPage.getInstance(u);
+        nfp.setVisible(true);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -169,16 +182,20 @@ static long idCalc=0;
         switch (n) {
         case 1:
             JOptionPane.showMessageDialog(this, "Incorrect Email Format. Please try again");
+            idCalc--;
             break;
         case 2:
             JOptionPane.showMessageDialog(this, "Username already exists. Please choose another one");
+            idCalc--;
             break;
         case 3:
             JOptionPane.showMessageDialog(this, "An account linked to this email already exists.");
+            idCalc--;
             break;
         case 4:
             JOptionPane.showMessageDialog(this, "Your account was successfully created.\nWelcome at ConnectHub!");
             User u = am.findUser(username);
+            this.openNewsFeedPage(u);
             break;
         default:
             break;
@@ -187,6 +204,8 @@ static long idCalc=0;
 
     private void SigninfromSignupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SigninfromSignupButtonActionPerformed
         // TODO add your handling code here:
+        this.setVisible(false);
+        parentWindow.openSignInWindow();
     }//GEN-LAST:event_SigninfromSignupButtonActionPerformed
 
     /**

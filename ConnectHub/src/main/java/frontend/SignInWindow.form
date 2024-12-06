@@ -173,6 +173,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Signup now"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SignupfromSigninButtonActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

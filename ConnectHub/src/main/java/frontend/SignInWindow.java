@@ -13,15 +13,28 @@ import javax.swing.JOptionPane;
  * @author malak
  */
 public class SignInWindow extends javax.swing.JFrame {
-SignIn_Or_SignUp_Window m;
+SignIn_Or_SignUp_Window parentWindow;
+private static SignInWindow instance;
     /**
      * Creates new form SignInWindow
      */
-    public SignInWindow(SignIn_Or_SignUp_Window m) {
-        this.m=m;
+    public SignInWindow(SignIn_Or_SignUp_Window parentWindow) {
         initComponents();
+        this.parentWindow=parentWindow;
     }
 
+      public static SignInWindow getInstance(SignIn_Or_SignUp_Window parentWindow) {
+        if (instance == null) {
+            instance = new SignInWindow(parentWindow);
+        }
+        return instance;
+    }
+   
+    public void openNewsFeedPage(User u) {
+        this.setVisible(false);
+        NewsFeedPage nfp = NewsFeedPage.getInstance(u);
+        nfp.setVisible(true);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -79,6 +92,11 @@ SignIn_Or_SignUp_Window m;
 
         SignupfromSigninButton.setBackground(new java.awt.Color(255, 204, 102));
         SignupfromSigninButton.setText("Signup now");
+        SignupfromSigninButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SignupfromSigninButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -169,44 +187,20 @@ SignIn_Or_SignUp_Window m;
             JOptionPane.showMessageDialog(this, "Incorrect Username or Password.");
         } else{
             JOptionPane.showMessageDialog(this, "Hello" + u.getUsername());
+            this.openNewsFeedPage(u); 
         }
     }//GEN-LAST:event_LogInButtonActionPerformed
+
+    private void SignupfromSigninButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SignupfromSigninButtonActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        parentWindow.openSignUpWindow();
+    }//GEN-LAST:event_SignupfromSigninButtonActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SignInWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SignInWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SignInWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SignInWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */ 
-
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                /*new SignInWindow().setVisible(true);*/
-            }
-        });
-    }
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFormattedTextField EmailusernameTextField;
