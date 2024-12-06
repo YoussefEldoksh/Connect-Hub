@@ -62,14 +62,15 @@ public class NewsFeed {
         ArrayList<Friend> userFriends = user.getListOfFriends();
         int i = 0;
         for (Friend userFriend : userFriends) {
-            if(FriendManagement.displayFriendStatus(user, userFriend))
-            friends.add(userFriend.getUserId() + " " + "ONLINE");
-            else
-            friends.add(userFriend.getUserId() + " " + "OFFLINE");
+            if (FriendManagement.displayFriendStatus(user, userFriend)) {
+                friends.add(userFriend.getUsername() + " " + "ONLINE");
+            } else {
+                friends.add(userFriend.getUsername() + " " + "OFFLINE");
+            }
         }
         return friends;
     }
-    
+
     public static ArrayList<Posts> sortPosts(ArrayList<Posts> posts)
     {
         boolean swapped;

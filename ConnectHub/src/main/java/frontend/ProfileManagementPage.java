@@ -4,36 +4,41 @@
  */
 package frontend;
 
+import backend.AccountManagement;
 import backend.User;
+import backend.UserSession;
 
 /**
  *
  * @author malak
  */
 public class ProfileManagementPage extends javax.swing.JFrame {
-User user;
-static ProfileManagementPage instance;
+
+    User user;
+    static ProfileManagementPage instance;
+    public UserSession userSession;
+
     /**
      * Creates new form ProfileManagementPage
      */
     public ProfileManagementPage(User u) {
         initComponents();
-        this.user= u;
+        this.user = u;
+        userSession.setCurrentUser(user);
         friendReqSuggPanel2.updateFriendsList(user);
         friendReqSuggPanel2.updateRequestsList(user);
         friendReqSuggPanel2.updateSuggestionsList(user);
-        
         userContentPanel1.updateStoriesList(user);
         userContentPanel1.updatePostsList(user);
     }
 
-     public static ProfileManagementPage getInstance(User user) {
+    public static ProfileManagementPage getInstance(User user) {
         if (instance == null) {
             instance = new ProfileManagementPage(user);
         }
         return instance;
     }
-     
+
        public void openNewsFeedPage(User u) {
         this.setVisible(false);
         NewsFeedPage nfp = NewsFeedPage.getInstance(u);
@@ -73,6 +78,7 @@ static ProfileManagementPage instance;
         profilePictureLabel = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         userNameLabel = new javax.swing.JLabel();
+        logoutButton = new javax.swing.JButton();
         panelforuserpostsandstories = new javax.swing.JPanel();
         userContentPanel1 = new frontend.UserContentPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -101,24 +107,28 @@ static ProfileManagementPage instance;
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        profileButton.setText("your profile");
         profileButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 profileButtonActionPerformed(evt);
             }
         });
 
+        refreshButton.setText("REFRESH");
         refreshButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 refreshButtonActionPerformed(evt);
             }
         });
 
+        friendsButton.setText("FRIENDS");
         friendsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 friendsButtonActionPerformed(evt);
             }
         });
 
+        homeButton.setText("HOME");
         homeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 homeButtonActionPerformed(evt);
@@ -138,28 +148,31 @@ static ProfileManagementPage instance;
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
                 .addComponent(homeButton)
-                .addGap(78, 78, 78)
+                .addGap(86, 86, 86)
                 .addComponent(friendsButton)
-                .addGap(68, 68, 68)
+                .addGap(79, 79, 79)
                 .addComponent(refreshButton)
-                .addGap(157, 157, 157)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 334, Short.MAX_VALUE)
                 .addComponent(profileButton)
-                .addGap(425, 425, 425))
+                .addGap(229, 229, 229))
         );
         friendReqSuggPanel1Layout.setVerticalGroup(
             friendReqSuggPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(homeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(friendsButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(refreshButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, friendReqSuggPanel1Layout.createSequentialGroup()
-                .addGroup(friendReqSuggPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(friendReqSuggPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(profileButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(friendReqSuggPanel1Layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)))
+                .addContainerGap()
+                .addComponent(profileButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(35, 35, 35))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, friendReqSuggPanel1Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(friendReqSuggPanel1Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(friendReqSuggPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(refreshButton)
+                    .addComponent(homeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(friendsButton))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -189,6 +202,13 @@ static ProfileManagementPage instance;
 
         userNameLabel.setText("username");
 
+        logoutButton.setText("LOGOUT");
+        logoutButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout userDisplayPanel1Layout = new javax.swing.GroupLayout(userDisplayPanel1);
         userDisplayPanel1.setLayout(userDisplayPanel1Layout);
         userDisplayPanel1Layout.setHorizontalGroup(
@@ -200,10 +220,15 @@ static ProfileManagementPage instance;
                 .addComponent(userNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(75, 75, 75))
             .addGroup(userDisplayPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(userDisplayPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(coverPhotoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(userDisplayPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(userDisplayPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(coverPhotoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(userDisplayPanel1Layout.createSequentialGroup()
+                        .addGap(100, 100, 100)
+                        .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         userDisplayPanel1Layout.setVerticalGroup(
@@ -217,7 +242,9 @@ static ProfileManagementPage instance;
                     .addComponent(profilePictureLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(45, 45, 45)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(265, 265, 265))
+                .addGap(150, 150, 150)
+                .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(57, 57, 57))
         );
 
         javax.swing.GroupLayout panelinpmLayout = new javax.swing.GroupLayout(panelinpm);
@@ -239,18 +266,10 @@ static ProfileManagementPage instance;
 
         panelforuserpostsandstories.setBackground(new java.awt.Color(204, 204, 255));
 
-        storiesList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        storiesList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         jScrollPane4.setViewportView(storiesList);
 
-        postsList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        postsList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         jScrollPane5.setViewportView(postsList);
 
         jLabel7.setText("Your posts");
@@ -309,29 +328,17 @@ static ProfileManagementPage instance;
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 255));
 
-        friendsList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        friendsList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         jScrollPane1.setViewportView(friendsList);
 
         jLabel3.setText("Friends");
 
         jLabel4.setText("Friend Requests");
 
-        suggestionsList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        suggestionsList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         jScrollPane6.setViewportView(suggestionsList);
 
-        requestsList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        requestsList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         jScrollPane7.setViewportView(requestsList);
 
         jLabel5.setText("Friend Suggestions");
@@ -524,6 +531,11 @@ static ProfileManagementPage instance;
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
+        // TODO add your handling code here:
+        AccountManagement.signOut(user);
+    }//GEN-LAST:event_logoutButtonActionPerformed
+
   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -553,6 +565,7 @@ static ProfileManagementPage instance;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JButton logoutButton;
     private javax.swing.JPanel panelforuserpostsandstories;
     private javax.swing.JPanel panelinpm;
     private javax.swing.JList<String> postsList;

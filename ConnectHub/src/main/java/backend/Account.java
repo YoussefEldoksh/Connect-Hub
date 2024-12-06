@@ -21,8 +21,6 @@ public abstract class Account {
         return username;
     }
     
-    
-
     public String getUserId() {
         return userId;
     }

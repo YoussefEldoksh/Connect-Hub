@@ -174,33 +174,33 @@ static SignUpWindow instance;
 
     private void SignUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SignUpButtonActionPerformed
         // TODO add your handling code here:
-        String email= EmailTextField.getText();
-        String username= UsernameTextField.getText();
+        String email = EmailTextField.getText();
+        String username = UsernameTextField.getText();
         String password = PasswordField.getText();
-        
-        String userID= "U"+ DataBase.getInstance().getUsers().size();
-        System.out.println("Current number of users: " + DataBase.getInstance().getUsers().size());
-        LocalDate dob= LocalDate.now();
 
-        int n= AccountManagement.signUp(userID, email, username, password, dob, true);
+        String userID = "U" + DataBase.getInstance().getUsers().size();
+        System.out.println("Current number of users: " + DataBase.getInstance().getUsers().size());
+        LocalDate dob = LocalDate.now();
+
+        int n = AccountManagement.signUp(userID, email, username, password, dob, true);
         switch (n) {
-        case 1:
-            JOptionPane.showMessageDialog(this, "Incorrect Email Format. Please try again");
-            break;
-        case 2:
-            JOptionPane.showMessageDialog(this, "Username already exists. Please choose another one");
-            break;
-        case 3:
-            JOptionPane.showMessageDialog(this, "An account linked to this email already exists.");
-            break;
-        case 4:
-            JOptionPane.showMessageDialog(this, "Your account was successfully created.\nWelcome at ConnectHub!");
-            User u = AccountManagement.findUser(username);
-            this.openNewsFeedPage(u);
-            break;
-        default:
-            break;
-    }
+            case 1:
+                JOptionPane.showMessageDialog(this, "Incorrect Email Format. Please try again");
+                break;
+            case 2:
+                JOptionPane.showMessageDialog(this, "Username already exists. Please choose another one");
+                break;
+            case 3:
+                JOptionPane.showMessageDialog(this, "An account linked to this email already exists.");
+                break;
+            case 4:
+                JOptionPane.showMessageDialog(this, "Your account was successfully created.\nWelcome at ConnectHub!");
+                User u = AccountManagement.findUser(username);
+                this.openNewsFeedPage(u);
+                break;
+            default:
+                break;
+        }
     }//GEN-LAST:event_SignUpButtonActionPerformed
 
     private void SigninfromSignupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SigninfromSignupButtonActionPerformed

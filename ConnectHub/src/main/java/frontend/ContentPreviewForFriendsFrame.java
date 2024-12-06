@@ -8,7 +8,10 @@ import backend.NewsFeed;
 import backend.Posts;
 import backend.Stories;
 import backend.User;
+import backend.UserSession;
+import java.awt.Font;
 import java.util.ArrayList;
+import javax.swing.JLabel;
 
 /**
  *
@@ -20,15 +23,21 @@ public class ContentPreviewForFriendsFrame extends javax.swing.JFrame {
     /**
      * Creates new form ContentPreviewForFriendsFrame
      */
-    public ContentPreviewForFriendsFrame(int selectedIndex, int type, User user) {
+    public ContentPreviewForFriendsFrame(int selectedIndex, int type) {
         initComponents();
-        this.user= user;
-        friendContentLabel.setText(user.getUsername()+ "'s recent updates");
+        friendContentLabel.setText(UserSession.getCurrentUser().getUsername()+ "'s recent updates");
+        friendContentLabel.setFont(new Font("Arial", Font.BOLD, 30));
+        friendContentLabel.setIcon(findPost(selectedIndex).getImage());
+        friendContentLabel.setText(findPost(selectedIndex).getContent());
+        friendContentLabel.setHorizontalTextPosition(JLabel.RIGHT);
+        friendContentLabel.setVerticalTextPosition(JLabel.CENTER);
+        friendContentLabel.setFont(new Font("Arial", Font.BOLD, 24));
     }
     
-    public void findPost(int selectedIndex) {
+    public Posts findPost(int selectedIndex) {
         ArrayList<Posts> posts = NewsFeed.fetchPosts(user);
         Posts postChosen= posts.get(selectedIndex);
+        return postChosen;
     }
     
     public void findStory(int selectedIndex) {

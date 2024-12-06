@@ -37,9 +37,9 @@ public class UserContentPanel extends javax.swing.JPanel {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) { 
-                    String selectedStory = storiesList.getSelectedValue();
+                    int selectedIndex = postsList.getSelectedIndex();
 
-                    System.out.println("User selected: " + selectedStory);
+                    System.out.println("User selected: " + selectedIndex);
                 }
             }
         }
@@ -49,9 +49,9 @@ public class UserContentPanel extends javax.swing.JPanel {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) { 
-                    String selectedStory = postsList.getSelectedValue();
+                    int selectedIndex = postsList.getSelectedIndex();
 
-                    System.out.println("User selected: " + selectedStory);
+                    System.out.println("User selected: " + selectedIndex);
                 }
             }
         }

@@ -42,10 +42,10 @@ public class MainNewsPanel extends javax.swing.JPanel {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) { 
-                     int selectedIndex = postsList.getSelectedIndex();
+                    int selectedIndex = postsList.getSelectedIndex();
 
                     System.out.println("User selected: " + selectedIndex);
-                    ContentPreviewForFriendsFrame friendcontent= new ContentPreviewForFriendsFrame(selectedIndex, 1, user);
+                    ContentPreviewForFriendsFrame friendcontent= new ContentPreviewForFriendsFrame(selectedIndex, 1);
                 }
             }
         }
@@ -58,7 +58,7 @@ public class MainNewsPanel extends javax.swing.JPanel {
                     int selectedIndex = storiesList.getSelectedIndex();
 
                     System.out.println("User selected: " + selectedIndex);
-                    ContentPreviewForFriendsFrame friendcontent= new ContentPreviewForFriendsFrame(selectedIndex, 2, user);
+                    ContentPreviewForFriendsFrame friendcontent= new ContentPreviewForFriendsFrame(selectedIndex, 2);
                 }
             }
         }

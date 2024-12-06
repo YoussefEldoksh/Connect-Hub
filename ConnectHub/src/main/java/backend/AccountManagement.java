@@ -98,6 +98,7 @@ public abstract class AccountManagement {
         FileManagement.saveToPostsJsonFile();
         FileManagement.saveToStoriesJsonFile();
         FileManagement.saveToProfilesJsonFile();
+        System.exit(0);
     }
     
     public static String hashPassword(String password) {

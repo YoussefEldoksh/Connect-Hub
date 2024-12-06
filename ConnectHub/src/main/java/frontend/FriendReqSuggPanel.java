@@ -4,12 +4,18 @@
  */
 package frontend;
 
+import backend.AccountManagement;
+import backend.DataBase;
+import backend.Friend;
 import backend.FriendManagement;
+import backend.FriendRequests;
 import backend.NewsFeed;
 import backend.User;
+import backend.UserSession;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -22,11 +28,11 @@ public class FriendReqSuggPanel extends javax.swing.JPanel {
     private JList<String> friendsList;
     private JList<String> requestsList;
     private JList<String> suggestionsList;
-    
+
     private DefaultListModel<String> friendsListModel;
     private DefaultListModel<String> requestsListModel;
     private DefaultListModel<String> suggestionsListModel;
-    
+
     public FriendReqSuggPanel() {
         initComponents();
         friendsListModel = new DefaultListModel<>();
@@ -36,38 +42,105 @@ public class FriendReqSuggPanel extends javax.swing.JPanel {
         friendsList = new JList<>(friendsListModel);
         requestsList = new JList<>(requestsListModel);
         suggestionsList = new JList<>(suggestionsListModel);
-        
-         friendsList.addListSelectionListener(new ListSelectionListener() {
+
+        friendsList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) { 
-                    String selectedStory = friendsList.getSelectedValue();
+                if (!e.getValueIsAdjusting()) {
+                    String selectedFriend = friendsList.getSelectedValue();
+                    String[] token = selectedFriend.split(" ");
+                    String usernameUser = UserSession.getCurrentUser().getUsername();
+                    Friend friend = Friend.getFriend(usernameUser, token[0]);
+                    String[] options = {"Remove", "Block"};
+                    int choice = JOptionPane.showOptionDialog(
+                            null,
+                            "Would you like to: ",
+                            ("Friend" + friend.getUsername()),
+                            JOptionPane.DEFAULT_OPTION,
+                            JOptionPane.INFORMATION_MESSAGE,
+                            null, options, options[0]
+                    );
+                    if (choice == 0) {
+                        FriendManagement.removeFriend(UserSession.getCurrentUser(), friend);
+                        friendsListModel.removeElement(selectedFriend);
+          
+                        updateFriendsList(UserSession.getCurrentUser());
+                    } else if (choice == 1) {
+                        FriendManagement.blockFriend(UserSession.getCurrentUser(), friend);
+                        UserSession.getCurrentUser().addBlockedFriends(friend);
+                        friendsListModel.removeElement(selectedFriend);
+                        updateFriendsList(UserSession.getCurrentUser());
+                        /*must update blocked*/
+                        JOptionPane.showMessageDialog(null, "Friend removed successfully");
+                    }
+                }
 
-                    System.out.println("User selected: " + selectedStory);
+            }
+        }
+        );
+
+        requestsList.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    String selectedFriend = requestsList.getSelectedValue();
+                    String[] token = selectedFriend.split(" ");
+                    String usernameUser = UserSession.getCurrentUser().getUsername();
+                    FriendRequests friendrequest = UserSession.getCurrentUser().getFriendReq(token[0]);
+                    String[] options = {"Accept", "Remove"};
+                    int choice = JOptionPane.showOptionDialog(
+                            null,
+                            "Would you like to: ",
+                            ("Request by" + friendrequest.getUsername()),
+                            JOptionPane.DEFAULT_OPTION,
+                            JOptionPane.INFORMATION_MESSAGE,
+                            null, options, options[0]
+                    );
+
+                    System.out.println("User selected: " + selectedFriend);
+                    if (choice == 0) {
+                        FriendManagement.friendRequest(true, UserSession.getCurrentUser(), friendrequest, false);
+                        updateRequestsList(UserSession.getCurrentUser());  // Refresh the requests list
+                        updateFriendsList(UserSession.getCurrentUser());
+                        JOptionPane.showMessageDialog(null, "Friend request accepted successfully");
+                        
+                    } else if (choice == 1) {
+                        FriendManagement.friendRequest(false, UserSession.getCurrentUser(), friendrequest, true);
+                        JOptionPane.showMessageDialog(null, "Friend request denied successfully");
+                    }
                 }
             }
         }
         );
-         
-         requestsList.addListSelectionListener(new ListSelectionListener() {
+
+        suggestionsList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) { 
-                    String selectedStory = requestsList.getSelectedValue();
+                if (!e.getValueIsAdjusting()) {
+                    
+                    String selectedFriend = suggestionsList.getSelectedValue();
+                    String[] token = selectedFriend.split(" ");
+                    String usernameUser = UserSession.getCurrentUser().getUsername();
+                    Friend suggestedFriend = FriendManagement.getFriendSuggested(UserSession.getCurrentUser(), token[0]);
+                    System.out.println("User selected: " + selectedFriend);
 
-                    System.out.println("User selected: " + selectedStory);
-                }
-            }
-        }
-        );
-         
-          suggestionsList.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) { 
-                    String selectedStory = suggestionsList.getSelectedValue();
+                    String[] options = {"Send Request", "Ignore"};
+                    int choice = JOptionPane.showOptionDialog(
+                            null,
+                            "Would you like to: ",
+                            ("Suggested Friend" + suggestedFriend.getUsername()),
+                            JOptionPane.DEFAULT_OPTION,
+                            JOptionPane.INFORMATION_MESSAGE,
+                            null, options, options[0]
+                    );
 
-                    System.out.println("User selected: " + selectedStory);
+                    System.out.println("User selected: " + selectedFriend);
+                    if (choice == 0) {
+                        FriendRequests fr = new FriendRequests(UserSession.getCurrentUser().getUsername(), UserSession.getCurrentUser().getEmail(), UserSession.getCurrentUser().getUserId(), suggestedFriend.getUserId());
+                        DataBase.getInstance().addToGlobalFriendRequests(fr);
+                        JOptionPane.showMessageDialog(null, "Friend request sent successfully");
+                    } else if (choice == 1) {
+                    }
                 }
             }
         }
@@ -94,7 +167,7 @@ public class FriendReqSuggPanel extends javax.swing.JPanel {
      
      public void updateRequestsList(User u) {
         ArrayList<String> linerep = u.getLineRepOfFriendReq();
-        suggestionsListModel.clear();
+        requestsListModel.clear();
 
         for (int i = 0; i < linerep.size(); i++) {
             suggestionsListModel.addElement(linerep.get(i));

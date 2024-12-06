@@ -68,6 +68,10 @@ public class User extends Account {
         return friends;
     }
 
+     public String getUsername() {
+        return username;
+    }
+
     /*public String getUserId() {
         return userId;
     }
@@ -76,10 +80,7 @@ public class User extends Account {
         return email;
     }
 
-    public String getUsername() {
-        return username;
-    }*/
-
+   */
     public String getPassword() {
         return password;
     }
@@ -166,6 +167,15 @@ public class User extends Account {
         return blockedFriends;
     }
     
+    public Friend getListOfBlockedFriends(String username){
+    for (int i=0; i< getListOfBlockedFriends().size(); i++) {
+            if(getListOfBlockedFriends().get(i).getUsername().equals(username)){
+            return getListOfBlockedFriends().get(i);
+            }
+        }
+        return null;
+    }
+    
     public ArrayList<String> getLineRepOfBlockedFriends() // fetching an array list of friends suggestions in the String format for display
     {
         ArrayList<String> blocked = new ArrayList<>();
@@ -193,6 +203,14 @@ public class User extends Account {
         return friendReq;
     }    
     
+    public FriendRequests getFriendReq(String username) {
+        for (int i = 0; i < this.getListOfFriendReq().size(); i++) {
+            if (this.getListOfFriendReq().get(i).getUsername().equals(username))
+                return this.getListOfFriendReq().get(i);
+        }
+        return null;
+    }
+    
      public ArrayList<String> getLineRepOfFriendReq() // fetching an array list of friends suggestions in the String format for display
     {
         ArrayList<String> requests = new ArrayList<>();
@@ -203,8 +221,8 @@ public class User extends Account {
         }
         return requests;
     }
-     
-    /* public void addSentRequest(FriendRequests friend){
+     /*
+    public void addSentRequest(FriendRequests friend){
         sentFriendReq.add(friend);
     }
     

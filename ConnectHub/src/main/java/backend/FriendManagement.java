@@ -95,6 +95,16 @@ public class FriendManagement {
         return suggestions;
     }
     
+    public static Friend getFriendSuggested(User user, String friendUsername) {
+        ArrayList<Friend> suggestedFriends= friendSuggestion(user);
+        for (int i = 0; i < friendSuggestion(user).size(); i++) {
+            if (suggestedFriends.get(i).getUsername().equals(friendUsername))
+            return suggestedFriends.get(i);
+        }
+        return null;
+    }
+     
+     
     public static ArrayList<String> fetchFriendsSuggestions(User user) // fetching an array list of friends suggestions in the String format for display
     {
         ArrayList<String> friends = new ArrayList<>();

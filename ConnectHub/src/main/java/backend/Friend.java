@@ -19,11 +19,11 @@ public class Friend extends Account{
    /* public String getEmail() {
         return email;
     }
-
+*/
     public String getUsername() {
         return username;
     }
-
+/*
     public String getUserId() {
         return userId;
     }*/

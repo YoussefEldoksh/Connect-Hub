@@ -4,8 +4,15 @@
  */
 package frontend;
 
+import backend.Friend;
+import backend.FriendManagement;
+import backend.NewsFeed;
+import backend.User;
+import backend.UserSession;
+import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -30,15 +37,39 @@ public class BlockedUsersPanel extends javax.swing.JPanel {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) { 
-                    String selectedStory = blockedList.getSelectedValue();
-
-                    System.out.println("User selected: " + selectedStory);
+                    String selectedBlock = blockedList.getSelectedValue();
+                    String[] token = selectedBlock.split(" ");
+                    String usernameUser = UserSession.getCurrentUser().getUsername();
+                    Friend blocked = UserSession.getCurrentUser().getListOfBlockedFriends(token[0]);
+                    String[] options = {"Unblock", "Ignore"};
+                    int choice = JOptionPane.showOptionDialog(
+                            null,
+                            "Would you like to: ",
+                            ("Blocked User: " + blocked.getUsername()),
+                            JOptionPane.DEFAULT_OPTION,
+                            JOptionPane.INFORMATION_MESSAGE,
+                            null, options, options[0]
+                    );
+                    if (choice == 0) {
+                        FriendManagement.blockFriend(UserSession.getCurrentUser(), blocked);
+                        blockedListModel.removeElement(selectedBlock);
+                        updateBlockedList(UserSession.getCurrentUser());
+                    } else if (choice == 1) {
+                    }
                 }
             }
         }
         );
     }
 
+    
+    public void updateBlockedList(User u) {
+        ArrayList<String> linerep = UserSession.getCurrentUser().getLineRepOfBlockedFriends();
+        blockedListModel.clear();
+        for (int i = 0; i < linerep.size(); i++) {
+            blockedListModel.addElement(linerep.get(i));
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
