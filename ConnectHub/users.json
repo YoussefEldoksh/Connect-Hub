@@ -1,7 +1,7 @@
 [
     {
         "blockedfriends": [],
-        "password": "lMJz/CXvucU8+QTqaiR+Am8Bxchu5VSbsIHttrfVN+0=",
+        "password": "FSvvlsL/ZjRy2Ir60263Cvh4dGbSMDtFQIipHJAPwv8=",
         "dob": "2024-12-06",
         "userId": "U0",
         "email": "haslaaaa#@ahoo.com",
@@ -11,12 +11,22 @@
     },
     {
         "blockedfriends": [],
-        "password": "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=",
+        "password": "4263DyM5AgU1r5/pe1+tD0W8u/ZKgTVt/oMuDmzhuqI=",
         "dob": "2024-12-06",
         "userId": "U1",
         "email": "hala@yahoo.com",
         "friends": [],
         "username": "123",
+        "status": true
+    },
+    {
+        "blockedfriends": [],
+        "password": "A6xnQhbz4Vx2HuGl4lXwZ5U2I8iziLRFnhP5eNfIRvQ=",
+        "dob": "2024-12-06",
+        "userId": "U2",
+        "email": "halaa@yahoo.com",
+        "friends": [],
+        "username": "halaa",
         "status": true
     }
 ]

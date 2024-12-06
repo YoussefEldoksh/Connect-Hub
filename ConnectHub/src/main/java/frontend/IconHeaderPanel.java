@@ -4,19 +4,20 @@
  */
 package frontend;
 
+import backend.User;
+
 /**
  *
- * @author dell
+ * @author malak
  */
-public class FriendsFriendManagePanel extends javax.swing.JPanel {
+public class IconHeaderPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form FriendsFriendManagePanel
+     * Creates new form IconPanel
      */
-    public FriendsFriendManagePanel() {
+    public IconHeaderPanel() {
         initComponents();
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

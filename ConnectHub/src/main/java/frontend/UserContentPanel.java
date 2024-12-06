@@ -4,6 +4,9 @@
  */
 package frontend;
 
+import backend.NewsFeed;
+import backend.User;
+import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.event.ListSelectionEvent;
@@ -13,30 +16,67 @@ import javax.swing.event.ListSelectionListener;
  *
  * @author husse
  */
-public class BlockedUsersPanel extends javax.swing.JPanel {
+public class UserContentPanel extends javax.swing.JPanel {
 
-    private JList<String> blockedList;
+    private JList<String> storiesList;
+    private JList<String> postsList;
     
-    private DefaultListModel<String> blockedListModel;
+    private DefaultListModel<String> storiesListModel;
+    private DefaultListModel<String> postsListModel;
     /**
-     * Creates new form BlockedUsersPanel
+     * Creates new form UserContentPanel
      */
-    public BlockedUsersPanel() {
-        initComponents();
-        blockedListModel = new DefaultListModel<>();
+    public UserContentPanel() {
+        initComponents();storiesListModel = new DefaultListModel<>();
+        postsListModel = new DefaultListModel<>();
+
         // Set the JList models to DefaultListModel
-        blockedList = new JList<>(blockedListModel);
-        blockedList.addListSelectionListener(new ListSelectionListener() {
+        storiesList = new JList<>(storiesListModel);
+        postsList = new JList<>(postsListModel);
+        storiesList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) { 
-                    String selectedStory = blockedList.getSelectedValue();
+                    String selectedStory = storiesList.getSelectedValue();
 
                     System.out.println("User selected: " + selectedStory);
                 }
             }
         }
         );
+        
+        postsList.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) { 
+                    String selectedStory = postsList.getSelectedValue();
+
+                    System.out.println("User selected: " + selectedStory);
+                }
+            }
+        }
+        );
+    }
+    
+    
+    public void updateStoriesList(User u) {
+        ArrayList<String> linerep = NewsFeed.getLineRepresentationsStories(u);
+        storiesListModel.clear();
+
+        for (int i = 0; i < linerep.size(); i++) {
+            storiesListModel.addElement(linerep.get(i));
+
+        }
+    }
+
+    public void updatePostsList(User u) {
+        ArrayList<String> linerep = NewsFeed.getLineRepresentationsPosts(u);
+        postsListModel.clear();
+
+        for (int i = 0; i < linerep.size(); i++) {
+            postsListModel.addElement(linerep.get(i));
+
+        }
     }
 
     /**

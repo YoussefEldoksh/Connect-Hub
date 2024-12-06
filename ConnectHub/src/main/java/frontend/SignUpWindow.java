@@ -63,7 +63,7 @@ static SignUpWindow instance;
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 204));
+        jPanel1.setBackground(new java.awt.Color(204, 204, 255));
         jPanel1.setForeground(new java.awt.Color(255, 153, 153));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Historic", 1, 18)); // NOI18N
@@ -79,7 +79,6 @@ static SignUpWindow instance;
 
         jLabel6.setText("Already have an account?");
 
-        SigninfromSignupButton.setBackground(new java.awt.Color(255, 255, 153));
         SigninfromSignupButton.setText("Signin now");
         SigninfromSignupButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -87,7 +86,7 @@ static SignUpWindow instance;
             }
         });
 
-        SignUpButton.setBackground(new java.awt.Color(235, 207, 18));
+        SignUpButton.setBackground(new java.awt.Color(153, 153, 255));
         SignUpButton.setFont(new java.awt.Font("Segoe UI Historic", 1, 14)); // NOI18N
         SignUpButton.setForeground(new java.awt.Color(255, 255, 255));
         SignUpButton.setText("Signup");

@@ -4,35 +4,37 @@
  */
 package frontend;
 
-import java.awt.Component;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.*;
-import java.awt.*;
+import backend.NewsFeed;
+import backend.Posts;
+import backend.Stories;
+import backend.User;
+import java.util.ArrayList;
+
 /**
  *
  * @author husse
  */
-public class ImagePreviewFrame extends javax.swing.JFrame {
+public class ContentPreviewForFriendsFrame extends javax.swing.JFrame {
 
+    User user;
     /**
-     * Creates new form ImagePreviewFrame
+     * Creates new form ContentPreviewForFriendsFrame
      */
-    public ImagePreviewFrame(ImageIcon imageIcon, String text) {
+    public ContentPreviewForFriendsFrame(int selectedIndex, int type, User user) {
         initComponents();
-        labelOfContent.setIcon(imageIcon);
-        labelOfContent.setText(text);
-        labelOfContent.setHorizontalTextPosition(JLabel.RIGHT);
-        labelOfContent.setVerticalTextPosition(JLabel.CENTER);
-        labelOfContent.setFont(new Font("Arial", Font.BOLD, 30));
+        this.user= user;
+        friendContentLabel.setText(user.getUsername()+ "'s recent updates");
     }
-
     
-
-    // Optional: Add text below the image
+    public void findPost(int selectedIndex) {
+        ArrayList<Posts> posts = NewsFeed.fetchPosts(user);
+        Posts postChosen= posts.get(selectedIndex);
+    }
     
-
-    
+    public void findStory(int selectedIndex) {
+        ArrayList<Stories> stories = NewsFeed.fetchStories(user);
+        Stories storyChosen= stories.get(selectedIndex);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -42,25 +44,25 @@ public class ImagePreviewFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        labelOfContent = new javax.swing.JLabel();
+        friendContentLabel = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(labelOfContent, javax.swing.GroupLayout.DEFAULT_SIZE, 943, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(40, 40, 40)
+                .addComponent(friendContentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(265, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(labelOfContent, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(19, 19, 19)
+                .addComponent(friendContentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(574, Short.MAX_VALUE))
         );
 
         pack();
@@ -69,9 +71,8 @@ public class ImagePreviewFrame extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
- 
-
+  
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel labelOfContent;
+    private javax.swing.JLabel friendContentLabel;
     // End of variables declaration//GEN-END:variables
 }

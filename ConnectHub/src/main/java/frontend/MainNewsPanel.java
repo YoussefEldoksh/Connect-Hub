@@ -18,13 +18,12 @@ import javax.swing.event.ListSelectionListener;
  * @author malak
  */
 public class MainNewsPanel extends javax.swing.JPanel {
-
     private JList<String> storiesList;
     private JList<String> postsList;
     
     private DefaultListModel<String> storiesListModel;
     private DefaultListModel<String> postsListModel;
-    
+    User user;
    
     /**
      * Creates new form MainNewsPanel
@@ -37,37 +36,37 @@ public class MainNewsPanel extends javax.swing.JPanel {
         // Set the JList models to DefaultListModel
         storiesList = new JList<>(storiesListModel);
         postsList = new JList<>(postsListModel);
-        storiesList.addListSelectionListener(new ListSelectionListener() {
+        
+        
+        postsList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) { // Don't process the event while adjusting
-                    // Get the selected value from the JList
-                    String selectedStory = storiesList.getSelectedValue();
+                if (!e.getValueIsAdjusting()) { 
+                     int selectedIndex = postsList.getSelectedIndex();
 
-                    // Handle the selected item (For example, print it or perform an action)
-                    System.out.println("User selected: " + selectedStory);
+                    System.out.println("User selected: " + selectedIndex);
+                    ContentPreviewForFriendsFrame friendcontent= new ContentPreviewForFriendsFrame(selectedIndex, 1, user);
                 }
             }
         }
         );
         
-        postsList.addListSelectionListener(new ListSelectionListener() {
+        storiesList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) { // Don't process the event while adjusting
-                    // Get the selected value from the JList
-                    String selectedStory = postsList.getSelectedValue();
+                if (!e.getValueIsAdjusting()) {
+                    int selectedIndex = storiesList.getSelectedIndex();
 
-                    // Handle the selected item (For example, print it or perform an action)
-                    System.out.println("User selected: " + selectedStory);
+                    System.out.println("User selected: " + selectedIndex);
+                    ContentPreviewForFriendsFrame friendcontent= new ContentPreviewForFriendsFrame(selectedIndex, 2, user);
                 }
             }
         }
         );
     }
     
-    
     public void updateStoriesList(User u) {
+        this.user= user;
         ArrayList<String> linerep = NewsFeed.getLineRepresentationsStories(u);
         storiesListModel.clear();
 
@@ -78,6 +77,7 @@ public class MainNewsPanel extends javax.swing.JPanel {
     }
 
     public void updatePostsList(User u) {
+        this.user =user;
         ArrayList<String> linerep = NewsFeed.getLineRepresentationsPosts(u);
         postsListModel.clear();
 

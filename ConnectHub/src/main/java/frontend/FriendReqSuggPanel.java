@@ -17,7 +17,7 @@ import javax.swing.event.ListSelectionListener;
  *
  * @author malak
  */
-public class FriendsNewsPanel extends javax.swing.JPanel {
+public class FriendReqSuggPanel extends javax.swing.JPanel {
 
     private JList<String> friendsList;
     private JList<String> requestsList;
@@ -26,10 +26,8 @@ public class FriendsNewsPanel extends javax.swing.JPanel {
     private DefaultListModel<String> friendsListModel;
     private DefaultListModel<String> requestsListModel;
     private DefaultListModel<String> suggestionsListModel;
-    /**
-     * Creates new form FriendsNewsPanel
-     */
-    public FriendsNewsPanel() {
+    
+    public FriendReqSuggPanel() {
         initComponents();
         friendsListModel = new DefaultListModel<>();
         requestsListModel = new DefaultListModel<>();
@@ -42,11 +40,9 @@ public class FriendsNewsPanel extends javax.swing.JPanel {
          friendsList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) { // Don't process the event while adjusting
-                    // Get the selected value from the JList
+                if (!e.getValueIsAdjusting()) { 
                     String selectedStory = friendsList.getSelectedValue();
 
-                    // Handle the selected item (For example, print it or perform an action)
                     System.out.println("User selected: " + selectedStory);
                 }
             }
@@ -56,11 +52,9 @@ public class FriendsNewsPanel extends javax.swing.JPanel {
          requestsList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) { // Don't process the event while adjusting
-                    // Get the selected value from the JList
+                if (!e.getValueIsAdjusting()) { 
                     String selectedStory = requestsList.getSelectedValue();
 
-                    // Handle the selected item (For example, print it or perform an action)
                     System.out.println("User selected: " + selectedStory);
                 }
             }
@@ -70,11 +64,9 @@ public class FriendsNewsPanel extends javax.swing.JPanel {
           suggestionsList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) { // Don't process the event while adjusting
-                    // Get the selected value from the JList
+                if (!e.getValueIsAdjusting()) { 
                     String selectedStory = suggestionsList.getSelectedValue();
 
-                    // Handle the selected item (For example, print it or perform an action)
                     System.out.println("User selected: " + selectedStory);
                 }
             }

@@ -46,7 +46,7 @@ public class NewPostPanel extends javax.swing.JPanel {
         
         if (choice == 0) {
             text = JOptionPane.showInputDialog(this, "Please enter your story's text");
-            ImagePreviewFrame ipf = new ImagePreviewFrame(null, text);
+            ContentPreviewForUserFrame ipf = new ContentPreviewForUserFrame(this, contentType, null, text);
             ipf.setVisible(true);
         } else if (choice == 1) {
             text = JOptionPane.showInputDialog(this, "Please enter your story's text");
@@ -56,25 +56,30 @@ public class NewPostPanel extends javax.swing.JPanel {
             try {
                 image = ImageIO.read(file);
                 imageIcon = new ImageIcon(image.getScaledInstance(350, 350, Image.SCALE_SMOOTH));
-                ImagePreviewFrame ipf = new ImagePreviewFrame(imageIcon, text);
+                ContentPreviewForUserFrame ipf = new ContentPreviewForUserFrame(this, contentType, imageIcon, text);
                 ipf.setVisible(true);
             } catch (IOException e) {
-                // Handle the exception if the image cannot be loaded
+                // Handles the exception if the image cannot be loaded
                 JOptionPane.showMessageDialog(null, "Failed to load the image: " + e.getMessage());
             }
         }
         
         if (contentType == 1) {
-                Posts post = new Posts("P" + (contentIDnum++), userId, text, imageIcon, file.getPath());
+                Posts post = new Posts("C" + (contentIDnum++), userId, text, imageIcon, file.getPath());
                 contents.add(post);
                 DataBase.getInstance().addToGlobalPosts(post);
             } else if (contentType == 2) {
-                Stories story = new Stories("S" + (contentIDnum++), userId, text, imageIcon, file.getPath());
+                Stories story = new Stories("C" + (contentIDnum++), userId, text, imageIcon, file.getPath());
                 contents.add(story);
                 DataBase.getInstance().addTOGlobalStories(story);
             }
     }
 
+    public void deleteContent(boolean Yes_Or_No)
+    {
+    if(Yes_Or_No = true)
+        contents.getLast().delete(contents.getLast().getContentID());
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
