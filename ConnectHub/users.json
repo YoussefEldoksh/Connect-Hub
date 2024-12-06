@@ -2,10 +2,14 @@
     {
         "blockedfriends": [],
 <<<<<<< HEAD
+<<<<<<< HEAD
         "password": "lMJz/CXvucU8+QTqaiR+Am8Bxchu5VSbsIHttrfVN+0=",
 =======
         "password": "hM+o7NLM4nHZvzMTfxLl7/WFRNPjvOLR2zHkdJhHhjU=",
 >>>>>>> 4319407fe78dec6a9828cb07806eb98ec8062adf
+=======
+        "password": "VgMjG13IyamS+7814SXGexp8CI+Uz04CcGoxvf50Jvg=",
+>>>>>>> b8b527b8ce19fa088f3fd837393656a6cb843fc7
         "dob": "2024-12-06",
         "userId": "U0",
         "email": "youssef@gmail.com",
@@ -16,10 +20,14 @@
     {
         "blockedfriends": [],
 <<<<<<< HEAD
+<<<<<<< HEAD
         "password": "lMJz/CXvucU8+QTqaiR+Am8Bxchu5VSbsIHttrfVN+0=",
 =======
         "password": "vKw3G1T1mUWhSqSeLkCOXW5NvFk4f12M/GsBXUDVuwI=",
 >>>>>>> 4319407fe78dec6a9828cb07806eb98ec8062adf
+=======
+        "password": "JUsTOGF6Had3UoY0SkA9NWsFD0co/sMoMorJb1e8dT8=",
+>>>>>>> b8b527b8ce19fa088f3fd837393656a6cb843fc7
         "dob": "2024-12-06",
         "userId": "U2",
         "email": "doksh@gmail.com",
@@ -29,6 +37,7 @@
     },
     {
         "blockedfriends": [],
+<<<<<<< HEAD
         "password": "lMJz/CXvucU8+QTqaiR+Am8Bxchu5VSbsIHttrfVN+0=",
         "dob": "2024-12-06",
         "userId": "U0",
@@ -45,6 +54,14 @@
         "email": "hebaatef@yahoo.com",
         "friends": [],
         "username": "halaa",
+=======
+        "password": "IOGverHsdprNeUY71bwx8I7Zm21YZ+Xia4nwjF00zeQ=",
+        "dob": "2024-12-06",
+        "userId": "U3",
+        "email": "sbxchab@jdc.com",
+        "friends": [],
+        "username": "nkjjn",
+>>>>>>> b8b527b8ce19fa088f3fd837393656a6cb843fc7
         "status": true
     }
 ]

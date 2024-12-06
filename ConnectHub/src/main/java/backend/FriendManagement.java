@@ -37,7 +37,7 @@ public class FriendManagement {
             {
                 user.addFriends(new Friend(friend.getEmail(),friend.getUsername(), friend.getUserId()));
                 user.removeFriendReq(friend);
-                DataBase.getInstance().addToGlobalFriendRequests(friend);
+                DataBase.getInstance().getGlobalFriendRequests().remove(friend);
                 FileManagement.saveToFriendRequestsJsonFile();
                 FileManagement.saveInUsersJSONfile();
             }
@@ -114,6 +114,7 @@ public class FriendManagement {
     public static void unblockFriend(User user, Friend blockedFriend) // function for unblocking someone
     {                                                          // can be added to suggestions and searched for
         user.removeBlockedFriend(blockedFriend);
+        FileManagement.saveInUsersJSONfile();
     }
     
     public static Boolean displayFriendStatus(User user,Friend friend){
