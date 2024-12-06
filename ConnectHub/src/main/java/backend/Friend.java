@@ -31,4 +31,13 @@ public class Friend {
     public String getUserId() {
         return userId;
     }
+    
+    public static Friend getFriend(String username,String friendname){
+        for(Friend friend:AccountManagement.findUser(username).getListOfFriends()){
+            if(friend.getUsername().equals(friendname)){
+                return friend;
+            }
+        }
+        return null;
+    }
 }
