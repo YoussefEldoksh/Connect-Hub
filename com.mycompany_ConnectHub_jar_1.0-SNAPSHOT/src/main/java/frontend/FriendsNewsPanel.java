@@ -8,12 +8,12 @@ package frontend;
  *
  * @author malak
  */
-public class NewPostFeedPanel extends javax.swing.JPanel {
+public class FriendsNewsPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form NewPostFeedPanel
+     * Creates new form FriendsNewsPanel
      */
-    public NewPostFeedPanel() {
+    public FriendsNewsPanel() {
         initComponents();
     }
 

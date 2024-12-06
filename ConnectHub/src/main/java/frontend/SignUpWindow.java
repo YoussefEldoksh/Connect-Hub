@@ -5,6 +5,7 @@
 package frontend;
 
 import backend.AccountManagement;
+import backend.DataBase;
 import backend.User;
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
@@ -14,16 +15,29 @@ import javax.swing.JOptionPane;
  * @author malak
  */
 public class SignUpWindow extends javax.swing.JFrame {
-SignIn_Or_SignUp_Window m;
-static long idCalc=0;
+SignIn_Or_SignUp_Window parentWindow;
+static SignUpWindow instance;
+
     /**
      * Creates new form SignUpWIndow
      */
-    public SignUpWindow(SignIn_Or_SignUp_Window m) {
+    public SignUpWindow(SignIn_Or_SignUp_Window parentWindow) {
         initComponents();
-        this.m=m;
+        this.parentWindow=parentWindow;
     }
 
+    public static SignUpWindow getInstance(SignIn_Or_SignUp_Window parentWindow) {
+        if (instance == null) {
+            instance = new SignUpWindow(parentWindow);
+        }
+        return instance;
+    }
+    
+    public void openNewsFeedPage(User u) {
+        this.setVisible(false);
+        NewsFeedPage nfp = NewsFeedPage.getInstance(u);
+        nfp.setVisible(true);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -162,10 +176,11 @@ static long idCalc=0;
         String email= EmailTextField.getText();
         String username= UsernameTextField.getText();
         String password = PasswordField.getText();
-        String userID= "U" + (idCalc++);
+        
+        String userID= "U" + (DataBase.getInstance().getUsers().size()+1);
         LocalDate dob= LocalDate.now();
-        AccountManagement am= new AccountManagement();
-        int n= am.signUp(userID, email, username, password, dob, true);
+
+        int n= AccountManagement.signUp(userID, email, username, password, dob, true);
         switch (n) {
         case 1:
             JOptionPane.showMessageDialog(this, "Incorrect Email Format. Please try again");
@@ -175,10 +190,12 @@ static long idCalc=0;
             break;
         case 3:
             JOptionPane.showMessageDialog(this, "An account linked to this email already exists.");
+            
             break;
         case 4:
             JOptionPane.showMessageDialog(this, "Your account was successfully created.\nWelcome at ConnectHub!");
-            User u = am.findUser(username);
+            User u = AccountManagement.findUser(username);
+            this.openNewsFeedPage(u);
             break;
         default:
             break;
@@ -187,6 +204,8 @@ static long idCalc=0;
 
     private void SigninfromSignupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SigninfromSignupButtonActionPerformed
         // TODO add your handling code here:
+        this.setVisible(false);
+        parentWindow.openSignInWindow();
     }//GEN-LAST:event_SigninfromSignupButtonActionPerformed
 
     /**

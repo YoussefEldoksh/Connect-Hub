@@ -13,16 +13,15 @@ import javax.swing.ImageIcon;
  * @author malak
  */
 public class NewsFeed {
-    ArrayList<User> users = FileManagement.loadFromUsersJSONfile();
-    FriendManagement friendmanager = new FriendManagement();
-    public ArrayList<Posts> fetchPosts(User user)
+
+    public static ArrayList<Posts> fetchPosts(User user)
     {
         ArrayList<Posts> posts = new ArrayList<>();
         ArrayList<String> friends = new ArrayList<>();
         for (Friend friend : user.getListOfFriends()) {
             friends.add(friend.getUserId());
         }
-        for (User allusers : users) {
+        for (User allusers : DataBase.getInstance().getUsers()) {
             if(friends.contains(allusers.getUserId()))
             {
                 ArrayList<Posts> friendPosts = allusers.getUserPosts();
@@ -34,14 +33,14 @@ public class NewsFeed {
         return sortPosts(posts);
     }
     
-    public ArrayList<Stories> fetchStories(User user)
+    public static ArrayList<Stories> fetchStories(User user)
     {
         ArrayList<Stories> stories = new ArrayList<>();
         ArrayList<String> friends = new ArrayList<>();
         for (Friend friend : user.getListOfFriends()) {
             friends.add(friend.getUserId());
         }
-        for (User allusers : users) {
+        for (User allusers :  DataBase.getInstance().getUsers()) {
             if(friends.contains(allusers.getUserId()))
             {
                 ArrayList<Stories> friendStories = allusers.getUserStories();
@@ -54,19 +53,21 @@ public class NewsFeed {
         return sortStories(stories);
     }
     
-    public ArrayList<String> fetchFriends(User user) // fetching an array list of friends in the String format for display
+    public static ArrayList<String> fetchFriends(User user) // fetching an array list of friends in the String format for display
     {
         ArrayList<String> friends = new ArrayList<>();
         ArrayList<Friend> userFriends = user.getListOfFriends();
         int i = 0;
         for (Friend userFriend : userFriends) {
-            
-            friends.add(userFriend.getUserId() + " " +friendmanager.displayFriendStatus(user, userFriend));
+            if(FriendManagement.displayFriendStatus(user, userFriend))
+            friends.add(userFriend.getUserId() + " " + "ONLINE");
+            else
+            friends.add(userFriend.getUserId() + " " + "OFFLINE");
         }
         return friends;
     }
     
-    public ArrayList<Posts> sortPosts(ArrayList<Posts> posts)
+    public static ArrayList<Posts> sortPosts(ArrayList<Posts> posts)
     {
         boolean swapped;
         
@@ -90,7 +91,7 @@ public class NewsFeed {
         return posts;
     }
     
-    public ArrayList<Stories> sortStories(ArrayList<Stories> stories)
+    public static ArrayList<Stories> sortStories(ArrayList<Stories> stories)
     {
         boolean swapped;
         
@@ -114,11 +115,11 @@ public class NewsFeed {
         return stories;
     }
     
-    public void createPost(User user,String contentID,String content, ImageIcon image, String imagePath )
+    public static void createPost(User user,String contentID,String content, ImageIcon image, String imagePath )
     {
         Posts post = new Posts(contentID, user.getUserId(), content, image, imagePath);
         user.addPost(post);
-        
+        DataBase.getInstance().addToGlobalPosts(post);
     }
     
     

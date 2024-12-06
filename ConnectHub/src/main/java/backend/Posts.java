@@ -24,7 +24,7 @@ public class Posts extends Content{
    public void delete(String contentID)
     {
      ArrayList<Posts> posts;
-        posts = DataBase.getGlobalPosts();
+        posts = DataBase.getInstance().getGlobalPosts();
      ArrayList<Posts> updated= new ArrayList();
      
      for(Posts p: posts)
@@ -32,13 +32,13 @@ public class Posts extends Content{
      if(!p.getContentID().equals(contentID))
      {
          updated.add(p);
-         DataBase.addToGlobalPosts(p);
+         DataBase.getInstance().addToGlobalPosts(p);
      }
      }
     }
   
      public ArrayList<Posts> readPostForUser(String userID) {
-        ArrayList<Posts> x = DataBase.getGlobalPosts();
+        ArrayList<Posts> x = DataBase.getInstance().getGlobalPosts();
         ArrayList<Posts> y = new ArrayList<>();
         for (Posts post : x) {
             if (post.getAuthorID() == userID) {

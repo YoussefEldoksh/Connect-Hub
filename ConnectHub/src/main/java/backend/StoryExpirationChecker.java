@@ -21,7 +21,7 @@ public class StoryExpirationChecker implements Runnable {
 
     @Override
     public void run() {
-    stories=  DataBase.getGlobalStories(); 
+    stories=  DataBase.getInstance().getGlobalStories(); 
     ArrayList<Stories> updated= new ArrayList();
      
      for(Stories s: stories)
@@ -29,7 +29,7 @@ public class StoryExpirationChecker implements Runnable {
      if(!isExpiredStory(s))
      {
          updated.add(s);
-         DataBase.addTOGlobalStories(s);
+         DataBase.getInstance().addTOGlobalStories(s);
      }
      }  
     }

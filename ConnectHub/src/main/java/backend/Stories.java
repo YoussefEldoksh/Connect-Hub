@@ -38,7 +38,7 @@ public class Stories extends Content {
     {
      ArrayList<Stories> stories;
      
-        stories = DataBase.getGlobalStories();
+        stories = DataBase.getInstance().getGlobalStories();
      ArrayList<Stories> updated= new ArrayList();
      
      for(Stories s: stories)
@@ -46,13 +46,13 @@ public class Stories extends Content {
     if(s.getContentID() != contentID)
      {
          updated.add(s);
-         DataBase.addTOGlobalStories(s);
+         DataBase.getInstance().addTOGlobalStories(s);
      }
      }  
     }
  
    public ArrayList<Stories> readStoryForUser(String userID) {
-        ArrayList<Stories> x = DataBase.getGlobalStories();
+        ArrayList<Stories> x = DataBase.getInstance().getGlobalStories();
         ArrayList<Stories> y = new ArrayList<>();
         for (Stories story : x) {
             if (story.getAuthorID() == userID) {

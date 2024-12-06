@@ -4,6 +4,7 @@
  */
 package backend;
 
+import java.security.AllPermission;
 import java.util.ArrayList;
 
 /**
@@ -11,9 +12,8 @@ import java.util.ArrayList;
  * @author malak
  */
 public class FriendManagement {
-    ArrayList<User> allUsers = FileManagement.loadFromUsersJSONfile();
     
-    public void friendRequest(boolean accept, User user,FriendRequests friend, boolean rejected)
+    public static void friendRequest(boolean accept, User user,FriendRequests friend, boolean rejected)
     {
       ArrayList<String> excludedIds = new ArrayList<>();
         for (Friend excludedfriends : user.getListOfBlockedFriends()) {
@@ -37,25 +37,25 @@ public class FriendManagement {
             {
                 user.addFriends(new Friend(friend.getEmail(),friend.getUsername(), friend.getUserId()));
                 user.removeFriendReq(friend);
-                DataBase.addToGlobalFriendRequests(friend);
+                DataBase.getInstance().getGlobalFriendRequests().remove(friend);
                 FileManagement.saveToFriendRequestsJsonFile();
                 FileManagement.saveInUsersJSONfile();
             }
             else if(accept == false &&  rejected == true)
             {
                 user.removeFriendReq(friend);//this means that the request if rejected
-                DataBase.addToGlobalFriendRequests(friend);
+                DataBase.getInstance().addToGlobalFriendRequests(friend);
                 FileManagement.saveToFriendRequestsJsonFile();
             }
 
             //else the request is still pending
-            DataBase.addToGlobalFriendRequests(friend);
+            DataBase.getInstance().addToGlobalFriendRequests(friend);
             FileManagement.saveToFriendRequestsJsonFile(); // add it for future responding
        }
 
     }
     
-    public ArrayList<Friend> friendSuggestion(User user )
+    public static ArrayList<Friend> friendSuggestion(User user )
     {
         // check for the friends that are not 
         ArrayList<Friend> suggestions = new ArrayList<>();
@@ -72,7 +72,7 @@ public class FriendManagement {
         }
         excludedIds.add(user.getUserId()); // exclude the user themselves
         
-        for (User allUser : allUsers) {
+        for (User allUser : DataBase.getInstance().getUsers()) {
                 if(!excludedIds.contains(allUser.getUserId()))
                  // check if this user in the database is one of the friends or one of the blocked don't add to suggestions
                 {
@@ -82,27 +82,28 @@ public class FriendManagement {
         return suggestions;
     }
     
-    public void blockFriend(User user, Friend blockFriend)// moving the friend from the friends list to the blocked list
+    public static void blockFriend(User user, Friend blockFriend)// moving the friend from the friends list to the blocked list
     {
         user.addBlockedFriends(blockFriend);
         FileManagement.saveInUsersJSONfile();
     }
     
-    public void removeFriend(User user,Friend friend){
+    public static void removeFriend(User user,Friend friend){
         user.removeFriend(friend);
         FileManagement.saveInUsersJSONfile();
     }
     
-    public void unblockFriend(User user, Friend blockedFriend) // function for unblocking someone
+    public static void unblockFriend(User user, Friend blockedFriend) // function for unblocking someone
     {                                                          // can be added to suggestions and searched for
         user.removeBlockedFriend(blockedFriend);
+        FileManagement.saveInUsersJSONfile();
     }
     
-    public Boolean displayFriendStatus(User user,Friend friend){
+    public static Boolean displayFriendStatus(User user,Friend friend){
         
         if(user.getListOfFriends().contains(friend))
         {
-            for (User allUser : allUsers) 
+            for (User allUser : DataBase.getInstance().getUsers()) 
             {
                 if(allUser.getUserId().equals(friend.getUserId()))
                 {
@@ -112,5 +113,61 @@ public class FriendManagement {
         }
         return null;
     }
+    
+     public static ArrayList<Friend> advancedSearchFriends(String friend, User user)
+     {
+        ArrayList<Friend> friends = new ArrayList<>();
+        ArrayList<Friend> userFriends = user.getListOfFriends();
         
+         if (friend == null || user == null || user.getListOfFriends() == null)
+         {
+              return friends; // Return empty list if input is invalid
+         }
+        
+         for (Friend userFriend : userFriends) {
+             if(userFriend.getUsername().toLowerCase().contains(friend.toLowerCase()))
+             {
+                 friends.add(userFriend);
+             }
+         }
+        return friends;
+     }
+    
+      public static ArrayList<FriendRequests> advancedSearchFriendsRequests(String friend, User user)
+     {
+        ArrayList<FriendRequests> friendrequests = new ArrayList<>();
+        ArrayList<FriendRequests> userFriends = user.getListOfFriendReq();
+        
+         if (friend == null || user == null || user.getListOfFriendReq()== null)
+         {
+              return friendrequests; // Return empty list if input is invalid
+         }
+        
+         for (FriendRequests userFriendRequests : userFriends) {
+             if(userFriendRequests.getUsername().toLowerCase().contains(friend.toLowerCase())) // make case insenstive
+             {
+                 friendrequests.add(userFriendRequests);
+             }
+         }
+        return friendrequests;
+     }
+    
+    public static ArrayList<User> advancedSearchFriendsRequests(String user)
+     {
+        ArrayList<User> searchedUser = new ArrayList<>();
+       
+         if (user == null)
+         {
+              return searchedUser; // Return empty list if input is invalid
+         }
+        
+         for (User allUsers : DataBase.getInstance().getUsers()) {
+             if(allUsers.getUsername().toLowerCase().contains(user.toLowerCase())) // make case insenstive
+             {
+                 searchedUser.add(allUsers);
+             }
+         }
+        return searchedUser;
+     }   
+   
 }

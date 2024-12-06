@@ -3,6 +3,7 @@ package backend;
 
 import java.awt.Image;
 import java.io.File;
+import java.nio.file.Paths;
 import javax.swing.ImageIcon;
 
 
@@ -14,15 +15,17 @@ public class Profile {
     private String bio;
     private String password;
     private final User user;
-    //content array: private ArrayList<Content>content;
+    
     public Profile(String cover,String profilePhoto,String bio,User user){
-       coverPath=cover;
-       this.profilePicPath=profilePhoto;
+       //coverPath=cover;
+       //this.profilePicPath=profilePhoto;
        this.bio=bio;
        this.user=user;
        this.password=user.getPassword();
-       setCoverPhoto(coverPath);
-       setProfilePhoto(profilePicPath);
+       this.profilePhoto=ImageHandler.saveImage(profilePhoto);
+       this.coverPhoto=ImageHandler.saveImage(cover);
+       coverPath="Images/"+Paths.get(cover).getFileName().toString();
+       profilePicPath="Images/"+Paths.get(profilePhoto).getFileName().toString();
     }
     
     public ImageIcon getCoverPhoto(){
@@ -52,31 +55,35 @@ public class Profile {
         return user.getUserId();
     }
     
-    public void setCoverPhoto(ImageIcon cover){
+    /*public void setCoverPhoto(ImageIcon cover){
         this.coverPhoto=cover;
+    }*/
+    
+    public void setCover(String cover){
+        coverPath="Images/"+Paths.get(cover).getFileName().toString();//the path is the images file in the project
+        this.coverPhoto=ImageHandler.saveImage(cover);
     }
     
-    public void setCoverPath(String cover){
-        this.coverPath=cover;
-    }
-    
-    public void setCoverPhoto(String cover){
+    /*public void setCoverPhoto(String cover){
         File cov=new File(cover);//path for cover pic
+        
         this.coverPhoto=new ImageIcon(cov.getAbsolutePath());
-    }
+    }*/
     
-    public void setProfilePhoto(ImageIcon profilePhoto){
+    /*public void setProfilePhoto(ImageIcon profilePhoto){
         this.profilePhoto=profilePhoto;
+    }*/
+    
+    public void setProfilePic(String profilePic){
+        profilePicPath="Images/"+Paths.get(profilePic).getFileName().toString();
+        this.profilePhoto=ImageHandler.saveImage(profilePic);
     }
     
-    public void setProfilePicPath(String profilePic){
-        this.profilePicPath=profilePic;
-    }
-    
-    public void setProfilePhoto(String profilePic){
+    /*public void setProfilePhoto(String profilePic){
         File pp=new File(profilePic);//path for profile pic
+        
         this.profilePhoto=new ImageIcon(pp.getAbsolutePath());
-    }
+    }*/
     
     public void setBio(String bio){
         this.bio=bio;
