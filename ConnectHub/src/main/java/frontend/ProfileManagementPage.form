@@ -81,7 +81,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Container class="frontend.FriendReqSuggPanel" name="friendReqSuggPanel1">
+        <Container class="org.netbeans.modules.form.InvalidComponent" name="friendReqSuggPanel1">
 
           <Layout>
             <DimensionLayout dim="0">
@@ -186,7 +186,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Container class="frontend.UserDisplayPanel" name="userDisplayPanel1">
+        <Container class="org.netbeans.modules.form.InvalidComponent" name="userDisplayPanel1">
 
           <Layout>
             <DimensionLayout dim="0">
@@ -202,7 +202,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="coverPhotoLabel" min="-2" pref="306" max="-2" attributes="0"/>
-                          <Component id="jLabel2" alignment="0" min="-2" pref="286" max="-2" attributes="0"/>
+                          <Component id="BioTextbox" alignment="0" min="-2" pref="286" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -219,7 +219,7 @@
                           <Component id="profilePictureLabel" alignment="3" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
-                      <Component id="jLabel2" min="-2" pref="34" max="-2" attributes="0"/>
+                      <Component id="BioTextbox" min="-2" pref="34" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="265" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -236,7 +236,7 @@
                 <Property name="text" type="java.lang.String" value="pp"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel2">
+            <Component class="javax.swing.JLabel" name="BioTextbox">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Bio:"/>
               </Properties>
@@ -278,7 +278,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Container class="frontend.UserContentPanel" name="userContentPanel1">
+        <Container class="org.netbeans.modules.form.InvalidComponent" name="userContentPanel1">
 
           <Layout>
             <DimensionLayout dim="0">
@@ -414,7 +414,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Container class="frontend.FriendReqSuggPanel" name="friendReqSuggPanel2">
+        <Container class="org.netbeans.modules.form.InvalidComponent" name="friendReqSuggPanel2">
 
           <Layout>
             <DimensionLayout dim="0">

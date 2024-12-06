@@ -28,6 +28,7 @@ public class User extends Account {
     private ArrayList<User> unviewableUsers;
     private ArrayList<Posts> userPosts;
     private ArrayList<Stories> userStories;
+    public String getPassword;
 
     public User(String userId, String email, String username, String password, LocalDate dateOfBirth, boolean status) {
         super(email,username,userId);

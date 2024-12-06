@@ -4,7 +4,9 @@
  */
 package frontend;
 
+import backend.Profile;
 import backend.User;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,7 +18,7 @@ static ProfileManagementPage instance;
     /**
      * Creates new form ProfileManagementPage
      */
-    private ProfileManagementPage(User u) {
+    public ProfileManagementPage(User u) {
         initComponents();
         this.user= u;
         friendReqSuggPanel2.updateFriendsList(user);
@@ -61,20 +63,20 @@ static ProfileManagementPage instance;
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        friendReqSuggPanel1 = new frontend.FriendReqSuggPanel();
+        friendReqSuggPanel1 = new org.netbeans.modules.form.InvalidComponent();
         profileButton = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
         friendsButton = new javax.swing.JButton();
         homeButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         panelinpm = new javax.swing.JPanel();
-        userDisplayPanel1 = new frontend.UserDisplayPanel();
+        userDisplayPanel1 = new org.netbeans.modules.form.InvalidComponent();
         coverPhotoLabel = new javax.swing.JLabel();
         profilePictureLabel = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        BioTextbox = new javax.swing.JLabel();
         userNameLabel = new javax.swing.JLabel();
         panelforuserpostsandstories = new javax.swing.JPanel();
-        userContentPanel1 = new frontend.UserContentPanel();
+        userContentPanel1 = new org.netbeans.modules.form.InvalidComponent();
         jScrollPane4 = new javax.swing.JScrollPane();
         storiesList = new javax.swing.JList<>();
         jScrollPane5 = new javax.swing.JScrollPane();
@@ -82,7 +84,7 @@ static ProfileManagementPage instance;
         jLabel7 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        friendReqSuggPanel2 = new frontend.FriendReqSuggPanel();
+        friendReqSuggPanel2 = new org.netbeans.modules.form.InvalidComponent();
         jScrollPane1 = new javax.swing.JScrollPane();
         friendsList = new javax.swing.JList<>();
         jLabel3 = new javax.swing.JLabel();
@@ -185,7 +187,7 @@ static ProfileManagementPage instance;
 
         profilePictureLabel.setText("pp");
 
-        jLabel2.setText("Bio:");
+        BioTextbox.setText("Bio:");
 
         userNameLabel.setText("username");
 
@@ -203,7 +205,7 @@ static ProfileManagementPage instance;
                 .addContainerGap()
                 .addGroup(userDisplayPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(coverPhotoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(BioTextbox, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         userDisplayPanel1Layout.setVerticalGroup(
@@ -216,7 +218,7 @@ static ProfileManagementPage instance;
                     .addComponent(userNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(profilePictureLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(45, 45, 45)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(BioTextbox, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(265, 265, 265))
         );
 
@@ -488,48 +490,61 @@ static ProfileManagementPage instance;
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void profileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileButtonActionPerformed
-        // TODO add your handling code here:
-        this.openProfileManagementPage(user);
-    }//GEN-LAST:event_profileButtonActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String newPassword;
+            newPassword = JOptionPane.showInputDialog(this, "Please enter your new Password:");
+            if(newPassword==user.getPassword)
+            {JOptionPane.showMessageDialog(null, "Your new password can not be same as old password!");}
+            else
+            { user.setPassword(newPassword);
+              JOptionPane.showMessageDialog(null, "Your password was changed successfully!");
+            }
+            
+    }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
-        // TODO add your handling code here:
-       this.openProfileManagementPage(user);
-    }//GEN-LAST:event_refreshButtonActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void friendsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_friendsButtonActionPerformed
-        // TODO add your handling code here:
-        this.openFriendManagementPage(user);
-    }//GEN-LAST:event_friendsButtonActionPerformed
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        String newBio;
+        newBio = JOptionPane.showInputDialog(this, "Please enter your new Bio:");
+        //.setBio(newBio);
+        BioTextbox.setText(newBio);
+        
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     private void homeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeButtonActionPerformed
         // TODO add your handling code here:
         this.openNewsFeedPage(user);
     }//GEN-LAST:event_homeButtonActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void friendsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_friendsButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        this.openFriendManagementPage(user);
+    }//GEN-LAST:event_friendsButtonActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        this.openProfileManagementPage(user);
+    }//GEN-LAST:event_refreshButtonActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void profileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+        this.openProfileManagementPage(user);
+    }//GEN-LAST:event_profileButtonActionPerformed
 
   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel BioTextbox;
     private javax.swing.JLabel coverPhotoLabel;
-    private frontend.FriendReqSuggPanel friendReqSuggPanel1;
-    private frontend.FriendReqSuggPanel friendReqSuggPanel2;
+    private org.netbeans.modules.form.InvalidComponent friendReqSuggPanel1;
+    private org.netbeans.modules.form.InvalidComponent friendReqSuggPanel2;
     private javax.swing.JButton friendsButton;
     private javax.swing.JList<String> friendsList;
     private javax.swing.JButton homeButton;
@@ -538,7 +553,6 @@ static ProfileManagementPage instance;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -562,8 +576,8 @@ static ProfileManagementPage instance;
     private javax.swing.JList<String> requestsList;
     private javax.swing.JList<String> storiesList;
     private javax.swing.JList<String> suggestionsList;
-    private frontend.UserContentPanel userContentPanel1;
-    private frontend.UserDisplayPanel userDisplayPanel1;
+    private org.netbeans.modules.form.InvalidComponent userContentPanel1;
+    private org.netbeans.modules.form.InvalidComponent userDisplayPanel1;
     private javax.swing.JLabel userNameLabel;
     // End of variables declaration//GEN-END:variables
 }
