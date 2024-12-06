@@ -175,7 +175,13 @@ public class FileManagement { // Centrlized file operations system
                 String username = userJson.getString("username");
                 String receiverId = userJson.getString("receiver");
                 
-                if(receiverId.equals(userId)) // add friend request if it's for the user in question
+                if(receiverId.equals(userId)) // add friend request as a receiver
+                {
+
+                    friendRequests.add(new FriendRequests(email, username, id, receiverId));
+
+                }
+                if(id.equals(userId)) // add friend request as a sender
                 {
 
                     friendRequests.add(new FriendRequests(email, username, id, receiverId));
