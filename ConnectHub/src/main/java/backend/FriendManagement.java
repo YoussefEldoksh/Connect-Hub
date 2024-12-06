@@ -99,7 +99,7 @@ public class FriendManagement {
     {
         ArrayList<String> friends = new ArrayList<>();
         ArrayList<Friend> userFriends = friendSuggestion(user);
-        int i = 0;
+        
         for (Friend userFriend : userFriends) {
             if(FriendManagement.displayFriendStatus(user, userFriend))
             friends.add(userFriend.getUserId() + " " + "ONLINE");
@@ -142,7 +142,7 @@ public class FriendManagement {
                 }                              // false == offline
             }
         }
-        return null;
+        return false;
     }
     
      public static ArrayList<Friend> advancedSearchFriends(String friend, User user)
