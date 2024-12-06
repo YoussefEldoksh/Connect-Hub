@@ -47,7 +47,7 @@ public class FileManagement { // Centrlized file operations system
                 LocalDate date = LocalDate.parse(userJson.getString("dob"));
                 String password = userJson.getString("password");
                 boolean status = userJson.getBoolean("status");
-                User user = new User(id, email, username, password, date, status);
+                User user = new User(id, email, username, password, date, status,"load");
                 
                 JSONArray friends = userJson.getJSONArray("friends");
                 

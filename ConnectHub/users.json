@@ -1,7 +1,7 @@
 [
     {
         "blockedfriends": [],
-        "password": "bK230ZiPuPUA1xIpMe0lg22ybeevs8DyOEamz+4hFS0=",
+        "password": "sKOFcUrJc7Xa27IVjvVP6/FsrpmRbtd/7A5RhCN1naY=",
         "dob": "2024-12-06",
         "userId": "U0",
         "email": "haslaaaa#@ahoo.com",
@@ -11,7 +11,7 @@
     },
     {
         "blockedfriends": [],
-        "password": "MH6O1YiSaMjI6yH4sz5GComlcN6X9POXe62y5qX9IUk=",
+        "password": "si1PgtEbBqGSC6BT6BhnnGkYvysA7I4q3s5iz0gFIhU=",
         "dob": "2024-12-06",
         "userId": "U1",
         "email": "hala@yahoo.com",
@@ -21,7 +21,7 @@
     },
     {
         "blockedfriends": [],
-        "password": "FSvvlsL/ZjRy2Ir60263Cvh4dGbSMDtFQIipHJAPwv8=",
+        "password": "bkgXe2PxgLbLSy9CBNnNzYrE2+TAmHgryHF6ndSPcTo=",
         "dob": "2024-12-06",
         "userId": "U2",
         "email": "halaa@yahoo.com",
@@ -31,7 +31,7 @@
     },
     {
         "blockedfriends": [],
-        "password": "t32MsHP9/Lh03EyRGCR4lnoO605xkUU8jqX9q2hMpzM=",
+        "password": "dn3ldueYlABQE0UYqbEBl6fqTf2EuvXp/+vqVlHJGxQ=",
         "dob": "2024-12-06",
         "userId": "U3",
         "email": "whatemail@gmail.com",
@@ -41,12 +41,52 @@
     },
     {
         "blockedfriends": [],
-        "password": "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=",
+        "password": "MH6O1YiSaMjI6yH4sz5GComlcN6X9POXe62y5qX9IUk=",
         "dob": "2024-12-06",
         "userId": "U4",
         "email": "swe@h.com",
         "friends": [],
         "username": "swe",
+        "status": true
+    },
+    {
+        "blockedfriends": [],
+        "password": "FSvvlsL/ZjRy2Ir60263Cvh4dGbSMDtFQIipHJAPwv8=",
+        "dob": "2024-12-06",
+        "userId": "U5",
+        "email": "swe43@23.com",
+        "friends": [],
+        "username": "swed",
+        "status": true
+    },
+    {
+        "blockedfriends": [],
+        "password": "4263DyM5AgU1r5/pe1+tD0W8u/ZKgTVt/oMuDmzhuqI=",
+        "dob": "2024-12-06",
+        "userId": "U6",
+        "email": "ioe@w.com",
+        "friends": [],
+        "username": "ioe",
+        "status": true
+    },
+    {
+        "blockedfriends": [],
+        "password": "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=",
+        "dob": "2024-12-06",
+        "userId": "U7",
+        "email": "sde@s.com",
+        "friends": [],
+        "username": "abc",
+        "status": true
+    },
+    {
+        "blockedfriends": [],
+        "password": "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=",
+        "dob": "2024-12-06",
+        "userId": "U8",
+        "email": "abdo@ad.com",
+        "friends": [],
+        "username": "abcd",
         "status": true
     }
 ]

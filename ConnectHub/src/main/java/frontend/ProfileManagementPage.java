@@ -16,7 +16,7 @@ static ProfileManagementPage instance;
     /**
      * Creates new form ProfileManagementPage
      */
-    public ProfileManagementPage(User u) {
+    private ProfileManagementPage(User u) {
         initComponents();
         this.user= u;
         friendReqSuggPanel2.updateFriendsList(user);
