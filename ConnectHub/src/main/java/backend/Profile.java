@@ -24,14 +24,14 @@ public class Profile {
        this.password=user.getPassword();
        if(profilePhoto!=null){
            this.profilePhoto=ImageHandler.saveImage(profilePhoto);
-           profilePicPath="Images/"+Paths.get(profilePhoto).getFileName().toString();}
+           profilePicPath="/Images/"+Paths.get(profilePhoto).getFileName().toString();}
        else{
            this.profilePhoto=null;
            profilePicPath=null;
        }
        if(cover!=null){
            this.coverPhoto=ImageHandler.saveImage(cover);
-           coverPath="Images/"+Paths.get(cover).getFileName().toString();}
+           coverPath="/Images/"+Paths.get(cover).getFileName().toString();}
        else{
            this.coverPath=null;
            coverPhoto=null;
@@ -72,7 +72,7 @@ public class Profile {
     }*/
     
     public void setCover(String cover){
-        coverPath="Images/"+Paths.get(cover).getFileName().toString();//the path is the images file in the project
+        coverPath="/Images/"+Paths.get(cover).getFileName().toString();//the path is the images file in the project
         this.coverPhoto=ImageHandler.saveImage(cover);
     }
     
@@ -87,7 +87,7 @@ public class Profile {
     }*/
     
     public void setProfilePic(String profilePic){
-        profilePicPath="Images/"+Paths.get(profilePic).getFileName().toString();
+        profilePicPath="/Images/"+Paths.get(profilePic).getFileName().toString();
         this.profilePhoto=ImageHandler.saveImage(profilePic);
     }
     
