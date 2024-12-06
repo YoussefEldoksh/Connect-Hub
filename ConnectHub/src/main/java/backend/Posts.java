@@ -6,6 +6,7 @@ package backend;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
 /**
@@ -18,7 +19,33 @@ public class Posts extends Content{
         super(contentID, authorID, content, image, imagePath);
     }
     
-    
-    
-    
+  
+    @Override
+   public void delete(String contentID)
+    {
+     ArrayList<Posts> posts;
+        posts = DataBase.getGlobalPosts();
+     ArrayList<Posts> updated= new ArrayList();
+     
+     for(Posts p: posts)
+     {
+     if(!p.getContentID().equals(contentID))
+     {
+         updated.add(p);
+         DataBase.addToGlobalPosts(p);
+     }
+     }
+    }
+  
+     public ArrayList<Posts> readPostForUser(String userID) {
+        ArrayList<Posts> x = DataBase.getGlobalPosts();
+        ArrayList<Posts> y = new ArrayList<>();
+        for (Posts post : x) {
+            if (post.getAuthorID() == userID) {
+                y.add(post);
+            }
+        }
+        return y;
+    }
+   
 }

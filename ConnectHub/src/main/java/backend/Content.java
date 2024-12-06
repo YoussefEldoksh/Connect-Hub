@@ -18,7 +18,7 @@ import javax.swing.ImageIcon;
  *
  * @author malak
  */
-public class Content {
+public abstract class Content {
 
     private String contentID;
     private String authorID;
@@ -89,61 +89,5 @@ public class Content {
         this.timestamp = timestamp;
     }
     
-
-    public static void deleteStory(String contentID) //not expired user chooses to delete it
-    {
-     ArrayList<Stories> stories;
-     
-        stories = FileManagement.loadFromStroiesJsonFile();
-     ArrayList<Stories> updated= new ArrayList();
-     
-     for(Stories s: stories)
-     {
-    if(s.getContentID() != contentID)
-     {
-         updated.add(s);
-     }
-     FileManagement.saveToStoriesJsonFile();
-     }  
-    }
-    
-    public static void deletePost(String contentID)
-    {
-     ArrayList<Posts> posts;
-        posts = FileManagement.loadFromPostsJsonFile();
-     ArrayList<Posts> updated= new ArrayList();
-     
-     for(Posts p: posts)
-     {
-     if(!p.getContentID().equals(contentID))
-     {
-         updated.add(p);
-     }
-     FileManagement.saveToStoriesJsonFile();
-     }
-    }
-     public static ArrayList<Posts> readPostForUser(String userID) {
-        FileManagement postsFile= new FileManagement();
-        ArrayList<Posts> x = FileManagement.loadFromPostsJsonFile();
-        ArrayList<Posts> y = new ArrayList<>();
-        for (Posts post : x) {
-            if (post.getAuthorID() == userID) {
-                y.add(post);
-            }
-        }
-        return y;
-    }
-  
- public static ArrayList<Stories> readStoryForUser(String userID) {
-        ArrayList<Stories> x = FileManagement.loadFromStroiesJsonFile();
-        ArrayList<Stories> y = new ArrayList<>();
-        for (Stories story : x) {
-            if (story.getAuthorID() == userID) {
-                y.add(story);
-            }
-        }
-        return y;
-    }
-
-
+    public abstract void delete(String contentID);
 }
