@@ -4,7 +4,7 @@ package backend;
 
 public abstract class Account {
     private String email;
-    private String username;
+    protected String username;
     private String userId;
 
     public Account(String email, String username, String userId) {
@@ -21,9 +21,7 @@ public abstract class Account {
         return username;
     }
     
-    public void setUsername(String username){
-        this.username=username;
-    }
+    
 
     public String getUserId() {
         return userId;
