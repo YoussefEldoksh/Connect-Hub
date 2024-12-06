@@ -18,7 +18,7 @@ public abstract class ImageHandler {
         ImageIcon imageIcon=new ImageIcon(imagePath);
         try{
             String filename=Paths.get(imagePath).getFileName().toString();
-            File outputFile=new File("src/Images/"+filename);//name of the new file to save it in our folder
+            File outputFile=new File("Images/"+filename);//name of the new file to save it in our folder,add src/ in case of error
             outputFile.getParentFile().mkdirs();
             Image image=imageIcon.getImage();
             BufferedImage bufferedImage=new BufferedImage(image.getWidth(null),image.getHeight(null),BufferedImage.TYPE_INT_ARGB);//used to write an image into a file using graphics in a compatible format

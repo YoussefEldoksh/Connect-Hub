@@ -24,8 +24,8 @@ public class Profile {
        this.password=user.getPassword();
        this.profilePhoto=ImageHandler.saveImage(profilePhoto);
        this.coverPhoto=ImageHandler.saveImage(cover);
-       coverPath="src/Images/"+Paths.get(cover).getFileName().toString();
-       profilePicPath="src/Images/"+Paths.get(profilePhoto).getFileName().toString();
+       coverPath="Images/"+Paths.get(cover).getFileName().toString();
+       profilePicPath="Images/"+Paths.get(profilePhoto).getFileName().toString();
     }
     
     public ImageIcon getCoverPhoto(){
@@ -60,7 +60,7 @@ public class Profile {
     }*/
     
     public void setCover(String cover){
-        coverPath="src/Images/"+Paths.get(cover).getFileName().toString();//the path is the images file in the project
+        coverPath="Images/"+Paths.get(cover).getFileName().toString();//the path is the images file in the project
         this.coverPhoto=ImageHandler.saveImage(cover);
     }
     
@@ -75,7 +75,7 @@ public class Profile {
     }*/
     
     public void setProfilePic(String profilePic){
-        profilePicPath="src/Images/"+Paths.get(profilePic).getFileName().toString();
+        profilePicPath="Images/"+Paths.get(profilePic).getFileName().toString();
         this.profilePhoto=ImageHandler.saveImage(profilePic);
     }
     
