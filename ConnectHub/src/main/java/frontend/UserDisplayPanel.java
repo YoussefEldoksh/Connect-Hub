@@ -6,17 +6,18 @@ package frontend;
 
 /**
  *
- * @author malak
+ * @author husse
  */
-public class FriendsNewsPanel extends javax.swing.JPanel {
+public class UserDisplayPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form FriendsNewsPanel
+     * Creates new form UserDisplayPanel
      */
-    public FriendsNewsPanel() {
+    public UserDisplayPanel() {
         initComponents();
     }
 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

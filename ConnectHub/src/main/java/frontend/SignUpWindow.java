@@ -21,7 +21,7 @@ static SignUpWindow instance;
     /**
      * Creates new form SignUpWIndow
      */
-    public SignUpWindow(SignIn_Or_SignUp_Window parentWindow) {
+    private SignUpWindow(SignIn_Or_SignUp_Window parentWindow) {
         initComponents();
         this.parentWindow=parentWindow;
     }
@@ -35,6 +35,7 @@ static SignUpWindow instance;
     
     public void openNewsFeedPage(User u) {
         this.setVisible(false);
+        System.out.println("ana ahao");
         NewsFeedPage nfp = NewsFeedPage.getInstance(u);
         nfp.setVisible(true);
     }
@@ -62,7 +63,7 @@ static SignUpWindow instance;
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 204));
+        jPanel1.setBackground(new java.awt.Color(204, 204, 255));
         jPanel1.setForeground(new java.awt.Color(255, 153, 153));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Historic", 1, 18)); // NOI18N
@@ -78,7 +79,6 @@ static SignUpWindow instance;
 
         jLabel6.setText("Already have an account?");
 
-        SigninfromSignupButton.setBackground(new java.awt.Color(255, 255, 153));
         SigninfromSignupButton.setText("Signin now");
         SigninfromSignupButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -86,10 +86,11 @@ static SignUpWindow instance;
             }
         });
 
-        SignUpButton.setBackground(new java.awt.Color(235, 207, 18));
+        SignUpButton.setBackground(new java.awt.Color(153, 153, 255));
         SignUpButton.setFont(new java.awt.Font("Segoe UI Historic", 1, 14)); // NOI18N
         SignUpButton.setForeground(new java.awt.Color(255, 255, 255));
         SignUpButton.setText("Signup");
+        SignUpButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         SignUpButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SignUpButtonActionPerformed(evt);
@@ -177,7 +178,8 @@ static SignUpWindow instance;
         String username= UsernameTextField.getText();
         String password = PasswordField.getText();
         
-        String userID= "U" + (DataBase.getInstance().getUsers().size()+1);
+        String userID= "U"+ DataBase.getInstance().getUsers().size();
+        System.out.println("Current number of users: " + DataBase.getInstance().getUsers().size());
         LocalDate dob= LocalDate.now();
 
         int n= AccountManagement.signUp(userID, email, username, password, dob, true);
@@ -190,7 +192,6 @@ static SignUpWindow instance;
             break;
         case 3:
             JOptionPane.showMessageDialog(this, "An account linked to this email already exists.");
-            
             break;
         case 4:
             JOptionPane.showMessageDialog(this, "Your account was successfully created.\nWelcome at ConnectHub!");

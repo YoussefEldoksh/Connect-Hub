@@ -64,7 +64,7 @@ public class FileManagement { // Centrlized file operations system
                 JSONArray blockedFriends = userJson.getJSONArray("blockedfriends");
                   for (int j = 0; j < blockedFriends.length(); j++) 
                 {
-                    JSONObject friend = friends.getJSONObject(j);
+                    JSONObject friend = blockedFriends.getJSONObject(j);
                     String friendEmail = friend.getString("email");
                     String friendId = friend.getString("userId");
                     String friendUsername = friend.getString("username");
@@ -72,11 +72,13 @@ public class FileManagement { // Centrlized file operations system
                     
                 }
                 
-                
-                users.add(user);
+                            users.add(user);
             }
         } catch (IOException ex) {
-             System.err.println("Error loading users from JSON file: " + ex.getMessage());
+            System.err.println("Error loading users from JSON file: " + ex.getMessage());
+        } catch (Exception ex) {
+            System.err.println("Error parsing JSON: " + ex.getMessage());
+            ex.printStackTrace();
         }
         return users;
     }
@@ -173,7 +175,13 @@ public class FileManagement { // Centrlized file operations system
                 String username = userJson.getString("username");
                 String receiverId = userJson.getString("receiver");
                 
-                if(receiverId.equals(userId)) // add friend request if it's for the user in question
+                if(receiverId.equals(userId)) // add friend request as a receiver
+                {
+
+                    friendRequests.add(new FriendRequests(email, username, id, receiverId));
+
+                }
+                if(id.equals(userId)) // add friend request as a sender
                 {
 
                     friendRequests.add(new FriendRequests(email, username, id, receiverId));

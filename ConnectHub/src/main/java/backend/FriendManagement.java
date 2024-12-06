@@ -19,24 +19,32 @@ public class FriendManagement {
         for (Friend excludedfriends : user.getListOfBlockedFriends()) {
             excludedIds.add(excludedfriends.getUserId());
         }
-        for(Friend excludedFriends : user.getListOfFriends())
+        /*for(Friend excludedFriends : user.getListOfFriends())
         {
             excludedIds.add(excludedFriends.getUserId());
         }
-        excludedIds.add(user.getUserId());
+        excludedIds.add(user.getUserId());*/
         
         
       if(!user.getListOfFriendReq().contains(friend))// if the request is already made don't added it again to the array
       {
           user.addFriendsReq(friend);
+          User sender=AccountManagement.findUser(friend.getUsername());
+          sender.addFriendsReq(friend);
+          
       }
        
        if(!excludedIds.contains(friend.getUserId()))
        {
             if(accept == true) 
             {
+                
                 user.addFriends(new Friend(friend.getEmail(),friend.getUsername(), friend.getUserId()));
                 user.removeFriendReq(friend);
+                User sender=AccountManagement.findUser(friend.getUsername());
+                sender.addFriends(new Friend(user.getEmail(),user.getUsername(),user.getUserId()));
+                sender.removeFriendReq(friend);
+                
                 DataBase.getInstance().getGlobalFriendRequests().remove(friend);
                 FileManagement.saveToFriendRequestsJsonFile();
                 FileManagement.saveInUsersJSONfile();
@@ -44,7 +52,10 @@ public class FriendManagement {
             else if(accept == false &&  rejected == true)
             {
                 user.removeFriendReq(friend);//this means that the request if rejected
-                DataBase.getInstance().addToGlobalFriendRequests(friend);
+                User sender=AccountManagement.findUser(friend.getUsername());
+                sender.removeFriendReq(friend);
+          
+                DataBase.getInstance().getGlobalFriendRequests().remove(friend);
                 FileManagement.saveToFriendRequestsJsonFile();
             }
 
@@ -55,7 +66,9 @@ public class FriendManagement {
 
     }
     
-    public static ArrayList<Friend> friendSuggestion(User user )
+  
+    
+    public static ArrayList<Friend> friendSuggestion(User user)
     {
         // check for the friends that are not 
         ArrayList<Friend> suggestions = new ArrayList<>();
@@ -82,14 +95,32 @@ public class FriendManagement {
         return suggestions;
     }
     
+    public static ArrayList<String> fetchFriendsSuggestions(User user) // fetching an array list of friends suggestions in the String format for display
+    {
+        ArrayList<String> friends = new ArrayList<>();
+        ArrayList<Friend> userFriends = friendSuggestion(user);
+        int i = 0;
+        for (Friend userFriend : userFriends) {
+            if(FriendManagement.displayFriendStatus(user, userFriend))
+            friends.add(userFriend.getUserId() + " " + "ONLINE");
+            else
+            friends.add(userFriend.getUserId() + " " + "OFFLINE");
+        }
+        return friends;
+    }
+    
+    
+    
     public static void blockFriend(User user, Friend blockFriend)// moving the friend from the friends list to the blocked list
     {
         user.addBlockedFriends(blockFriend);
         FileManagement.saveInUsersJSONfile();
+        FileManagement.saveToFriendRequestsJsonFile();
     }
     
     public static void removeFriend(User user,Friend friend){
         user.removeFriend(friend);
+        AccountManagement.findUser(friend.getUsername()).removeFriend(Friend.getFriend(friend.getUsername(), user.getUsername()));//remove friend from both friends
         FileManagement.saveInUsersJSONfile();
     }
     

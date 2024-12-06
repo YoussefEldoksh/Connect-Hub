@@ -4,17 +4,39 @@
  */
 package frontend;
 
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
 /**
  *
- * @author dell
+ * @author husse
  */
-public class FriendsFriendManagePanel extends javax.swing.JPanel {
+public class BlockedUsersPanel extends javax.swing.JPanel {
 
+    private JList<String> blockedList;
+    
+    private DefaultListModel<String> blockedListModel;
     /**
-     * Creates new form FriendsFriendManagePanel
+     * Creates new form BlockedUsersPanel
      */
-    public FriendsFriendManagePanel() {
+    public BlockedUsersPanel() {
         initComponents();
+        blockedListModel = new DefaultListModel<>();
+        // Set the JList models to DefaultListModel
+        blockedList = new JList<>(blockedListModel);
+        blockedList.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) { 
+                    String selectedStory = blockedList.getSelectedValue();
+
+                    System.out.println("User selected: " + selectedStory);
+                }
+            }
+        }
+        );
     }
 
     /**

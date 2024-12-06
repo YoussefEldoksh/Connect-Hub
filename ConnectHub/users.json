@@ -1,32 +1,52 @@
 [
     {
         "blockedfriends": [],
-        "password": "VgMjG13IyamS+7814SXGexp8CI+Uz04CcGoxvf50Jvg=",
+        "password": "bK230ZiPuPUA1xIpMe0lg22ybeevs8DyOEamz+4hFS0=",
         "dob": "2024-12-06",
         "userId": "U0",
-        "email": "youssef@gmail.com",
+        "email": "haslaaaa#@ahoo.com",
         "friends": [],
-        "username": "youssef",
+        "username": "jkgjg",
         "status": true
     },
     {
         "blockedfriends": [],
-        "password": "JUsTOGF6Had3UoY0SkA9NWsFD0co/sMoMorJb1e8dT8=",
+        "password": "MH6O1YiSaMjI6yH4sz5GComlcN6X9POXe62y5qX9IUk=",
+        "dob": "2024-12-06",
+        "userId": "U1",
+        "email": "hala@yahoo.com",
+        "friends": [],
+        "username": "123",
+        "status": true
+    },
+    {
+        "blockedfriends": [],
+        "password": "FSvvlsL/ZjRy2Ir60263Cvh4dGbSMDtFQIipHJAPwv8=",
         "dob": "2024-12-06",
         "userId": "U2",
-        "email": "doksh@gmail.com",
+        "email": "halaa@yahoo.com",
         "friends": [],
-        "username": "gamed_awy",
+        "username": "halaa",
         "status": true
     },
     {
         "blockedfriends": [],
-        "password": "IOGverHsdprNeUY71bwx8I7Zm21YZ+Xia4nwjF00zeQ=",
+        "password": "t32MsHP9/Lh03EyRGCR4lnoO605xkUU8jqX9q2hMpzM=",
         "dob": "2024-12-06",
         "userId": "U3",
-        "email": "sbxchab@jdc.com",
+        "email": "whatemail@gmail.com",
         "friends": [],
-        "username": "nkjjn",
+        "username": "johndoe",
+        "status": true
+    },
+    {
+        "blockedfriends": [],
+        "password": "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=",
+        "dob": "2024-12-06",
+        "userId": "U4",
+        "email": "swe@h.com",
+        "friends": [],
+        "username": "swe",
         "status": true
     }
 ]

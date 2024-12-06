@@ -54,13 +54,12 @@ public class SignIn_Or_SignUp_Window extends javax.swing.JFrame {
         setBackground(new java.awt.Color(204, 255, 204));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        jPanel1.setBackground(new java.awt.Color(255, 153, 153));
+        jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Historic", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Hello there! Welcome to ConnectHub");
 
-        SignupButton.setBackground(new java.awt.Color(255, 153, 153));
         SignupButton.setFont(new java.awt.Font("Segoe UI Historic", 0, 14)); // NOI18N
         SignupButton.setText("Are you new here? Signup now!");
         SignupButton.addActionListener(new java.awt.event.ActionListener() {
@@ -69,7 +68,7 @@ public class SignIn_Or_SignUp_Window extends javax.swing.JFrame {
             }
         });
 
-        SigninButton.setBackground(new java.awt.Color(255, 204, 204));
+        SigninButton.setBackground(new java.awt.Color(102, 102, 255));
         SigninButton.setFont(new java.awt.Font("Segoe UI Historic", 0, 14)); // NOI18N
         SigninButton.setText("Login");
         SigninButton.addActionListener(new java.awt.event.ActionListener() {

@@ -5,7 +5,6 @@
 package frontend;
 
 import backend.NewsFeed;
-import backend.Stories;
 import backend.User;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
@@ -15,58 +14,52 @@ import javax.swing.event.ListSelectionListener;
 
 /**
  *
- * @author malak
+ * @author husse
  */
-public class MainNewsPanel extends javax.swing.JPanel {
+public class UserContentPanel extends javax.swing.JPanel {
+
     private JList<String> storiesList;
     private JList<String> postsList;
     
     private DefaultListModel<String> storiesListModel;
     private DefaultListModel<String> postsListModel;
-    User user;
-   
     /**
-     * Creates new form MainNewsPanel
+     * Creates new form UserContentPanel
      */
-    public MainNewsPanel() {
-        initComponents();
-        storiesListModel = new DefaultListModel<>();
+    public UserContentPanel() {
+        initComponents();storiesListModel = new DefaultListModel<>();
         postsListModel = new DefaultListModel<>();
 
         // Set the JList models to DefaultListModel
         storiesList = new JList<>(storiesListModel);
         postsList = new JList<>(postsListModel);
-        
-        
-        postsList.addListSelectionListener(new ListSelectionListener() {
+        storiesList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) { 
-                     int selectedIndex = postsList.getSelectedIndex();
+                    String selectedStory = storiesList.getSelectedValue();
 
-                    System.out.println("User selected: " + selectedIndex);
-                    ContentPreviewForFriendsFrame friendcontent= new ContentPreviewForFriendsFrame(selectedIndex, 1, user);
+                    System.out.println("User selected: " + selectedStory);
                 }
             }
         }
         );
         
-        storiesList.addListSelectionListener(new ListSelectionListener() {
+        postsList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) {
-                    int selectedIndex = storiesList.getSelectedIndex();
+                if (!e.getValueIsAdjusting()) { 
+                    String selectedStory = postsList.getSelectedValue();
 
-                    System.out.println("User selected: " + selectedIndex);
-                    ContentPreviewForFriendsFrame friendcontent= new ContentPreviewForFriendsFrame(selectedIndex, 2, user);
+                    System.out.println("User selected: " + selectedStory);
                 }
             }
         }
         );
     }
     
+    
     public void updateStoriesList(User u) {
-        this.user= user;
         ArrayList<String> linerep = NewsFeed.getLineRepresentationsStories(u);
         storiesListModel.clear();
 
@@ -77,7 +70,6 @@ public class MainNewsPanel extends javax.swing.JPanel {
     }
 
     public void updatePostsList(User u) {
-        this.user =user;
         ArrayList<String> linerep = NewsFeed.getLineRepresentationsPosts(u);
         postsListModel.clear();
 
@@ -86,8 +78,7 @@ public class MainNewsPanel extends javax.swing.JPanel {
 
         }
     }
-    
-   
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

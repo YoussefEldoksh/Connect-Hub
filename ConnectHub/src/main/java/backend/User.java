@@ -4,6 +4,7 @@
  */
 package backend;
 
+import static backend.FriendManagement.friendSuggestion;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
@@ -14,28 +15,28 @@ import java.util.Base64;
  *
  * @author malak
  */
-public class User {
-    private String userId ;
+public class User extends Account {
+    /*private String userId ;
     private String email;
-    private String username;
+    private String username;*/
     private String password;
     private LocalDate dateOfBirth;
     private boolean status;
     private ArrayList<Friend> friends;
     private ArrayList<Friend> blockedFriends;
     private ArrayList<FriendRequests> friendReq;
+    private ArrayList<User> unviewableUsers;
     private ArrayList<Posts> userPosts;
     private ArrayList<Stories> userStories;
 
     public User(String userId, String email, String username, String password, LocalDate dateOfBirth, boolean status) {
-        this.email = email;
-        this.userId = userId;
-        this.username = username;
+        super(email,username,userId);
         setPassword(password);
         this.dateOfBirth = dateOfBirth;
         this.status = status;
         friends = new ArrayList<>();
         blockedFriends = new ArrayList<>();
+        unviewableUsers = new ArrayList<>();
         friendReq = FileManagement.loadFromFriendRequestsJsonFileForSpecificUser(userId);
         userStories = FileManagement.loadFromStroiesJsonFileForSpecificUser(userId);
         userPosts = FileManagement.loadFromPostsJsonFileForSpecificUser(userId);
@@ -67,7 +68,7 @@ public class User {
         return friends;
     }
 
-    public String getUserId() {
+    /*public String getUserId() {
         return userId;
     }
 
@@ -77,7 +78,7 @@ public class User {
 
     public String getUsername() {
         return username;
-    }
+    }*/
 
     public String getPassword() {
         return password;
@@ -91,8 +92,8 @@ public class User {
         return status;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsername(String username){
+        this.username=username;
     }
 
     public void setPassword(String password){
@@ -115,14 +116,21 @@ public class User {
      public void addBlockedFriends(Friend friend)
     {
         blockedFriends.add(friend);
+        unviewableUsers.add(AccountManagement.findUser(friend.getUsername()));
+        AccountManagement.findUser(friend.getUsername()).addUnviewableUser(this);
         if(friends.contains(friend)){
             friends.remove(friend);
+           //unviewableUsers.add(AccountManagement.findUser(friend.getUsername()));
+           //AccountManagement.findUser(friend.getUsername()).addUnviewableUser(this); 
+           //make the blocked friend not view the user 
+           AccountManagement.findUser(friend.getUsername()).getListOfFriends().remove(new Friend(this.getEmail(),this.getUsername(),this.getUserId()));
         }
         
         
         for(FriendRequests request:friendReq){
             if(request.getUserId().equals(friend.getUserId())){
                 friendReq.remove(request);
+                AccountManagement.findUser(friend.getUsername()).getListOfFriendReq().remove(request); //remove friend req from the blocked user too
                 return;
             }
         }
@@ -130,14 +138,45 @@ public class User {
     
     public void removeBlockedFriend(Friend friend) // for unblocking
     {
+        if(blockedFriends.contains(friend)){
+        unviewableUsers.remove(AccountManagement.findUser(friend.getUsername()));
+        AccountManagement.findUser(friend.getUsername()).removeUnviewableUser(this);
         blockedFriends.remove(friend);
+            System.out.println("Unblocked.");
+            return;
+        }
+        System.out.println("Friend not blocked in the first place");
     }
     
+    public void addUnviewableUser(User user){
+        unviewableUsers.add(user);
+    }
+    
+    public void removeUnviewableUser(User user){
+        unviewableUsers.remove(user);
+    }
+    
+    public ArrayList<User> getListOfUnviewableUsers()
+    {
+        return unviewableUsers;
+    }
     
     public ArrayList<Friend> getListOfBlockedFriends()
     {
         return blockedFriends;
     }
+    
+    public ArrayList<String> getLineRepOfBlockedFriends() // fetching an array list of friends suggestions in the String format for display
+    {
+        ArrayList<String> blocked = new ArrayList<>();
+        ArrayList<Friend> userblocked = this.blockedFriends;
+        int i;
+        for (i=0; i< userblocked.size(); i++) {
+            blocked.add(userblocked.get(i).getUsername());
+        }
+        return blocked;
+    }
+    
      public void addFriendsReq(FriendRequests friend)
     {
         friendReq.add(friend);
@@ -153,6 +192,49 @@ public class User {
     {
         return friendReq;
     }    
+    
+     public ArrayList<String> getLineRepOfFriendReq() // fetching an array list of friends suggestions in the String format for display
+    {
+        ArrayList<String> requests = new ArrayList<>();
+        ArrayList<FriendRequests> requested = this.getListOfFriendReq();
+        int i;
+        for (i=0; i< requested.size(); i++) {
+            requests.add(requested.get(i).getUsername());
+        }
+        return requests;
+    }
+     
+    /* public void addSentRequest(FriendRequests friend){
+        sentFriendReq.add(friend);
+    }
+    
+    public void removeSentRequest(FriendRequests friend){
+        sentFriendReq.remove(friend);
+    }
+    
+     */
+     
+     public ArrayList<FriendRequests> getListOfSentReq()
+    {
+        ArrayList<FriendRequests>sent=new ArrayList<>();
+        for(FriendRequests req:friendReq){
+            if(req.getUserId().equals(this.getUserId())){
+                sent.add(req);
+            }
+        }
+        return sent;
+    }
+     
+     public ArrayList<FriendRequests> getListOfReceivedReq()
+    {
+        ArrayList<FriendRequests>received=new ArrayList<>();
+        for(FriendRequests req:friendReq){
+            if(req.getReceiver().equals(this.getUserId())){
+                received.add(req);
+            }
+        }
+        return received;
+    }
     
     public void addPost(Posts post)
     {
