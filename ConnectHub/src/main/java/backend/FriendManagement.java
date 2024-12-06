@@ -29,6 +29,8 @@ public class FriendManagement {
       if(!user.getListOfFriendReq().contains(friend))// if the request is already made don't added it again to the array
       {
           user.addFriendsReq(friend);
+          DataBase.getInstance().addToGlobalFriendRequests(friend);
+                  
       }
        
        if(!excludedIds.contains(friend.getUserId()))
@@ -152,7 +154,7 @@ public class FriendManagement {
         return friendrequests;
      }
     
-    public static ArrayList<User> advancedSearchFriendsRequests(String user)
+    public static ArrayList<User> advancedSearchUsersString(User user)
      {
         ArrayList<User> searchedUser = new ArrayList<>();
        
@@ -162,7 +164,7 @@ public class FriendManagement {
          }
         
          for (User allUsers : DataBase.getInstance().getUsers()) {
-             if(allUsers.getUsername().toLowerCase().contains(user.toLowerCase())) // make case insenstive
+             if(allUsers.getUsername().toLowerCase().contains(user.getUsername().toLowerCase())) // make case insenstive
              {
                  searchedUser.add(allUsers);
              }
