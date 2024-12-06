@@ -22,9 +22,9 @@ public class ImagePreviewFrame extends javax.swing.JFrame {
         initComponents();
         labelOfContent.setIcon(imageIcon);
         labelOfContent.setText(text);
-        labelOfContent.setHorizontalTextPosition(JLabel.CENTER); // Text horizontally centered
-        labelOfContent.setVerticalTextPosition(JLabel.BOTTOM);
-        labelOfContent.setFont(new Font("Arial", Font.BOLD, 16));
+        labelOfContent.setHorizontalTextPosition(JLabel.RIGHT);
+        labelOfContent.setVerticalTextPosition(JLabel.CENTER);
+        labelOfContent.setFont(new Font("Arial", Font.BOLD, 30));
     }
 
     
@@ -51,13 +51,16 @@ public class ImagePreviewFrame extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(labelOfContent, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(labelOfContent, javax.swing.GroupLayout.PREFERRED_SIZE, 449, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(500, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(labelOfContent, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelOfContent, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(126, Short.MAX_VALUE))
         );
 
         pack();

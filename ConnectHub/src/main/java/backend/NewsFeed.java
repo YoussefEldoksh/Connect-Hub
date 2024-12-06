@@ -4,6 +4,7 @@
  */
 package backend;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.ImageIcon;
@@ -13,6 +14,7 @@ import javax.swing.ImageIcon;
  * @author malak
  */
 public class NewsFeed {
+    
     ArrayList<User> users = FileManagement.loadFromUsersJSONfile();
     FriendManagement friendmanager = new FriendManagement();
     public ArrayList<Posts> fetchPosts(User user)
@@ -54,6 +56,7 @@ public class NewsFeed {
         return sortStories(stories);
     }
     
+
     public ArrayList<String> fetchFriends(User user) // fetching an array list of friends in the String format for display
     {
         ArrayList<String> friends = new ArrayList<>();
@@ -121,6 +124,19 @@ public class NewsFeed {
         
     }
     
+        public ArrayList<String> static getLineRepresentationsStories(User u) {
+        ArrayList<Stories> stories = fetchStories(u);
+        ArrayList<String> lineRepresentations= new ArrayList<>();
+        for (int i = 0; i < stories.size(); i++) {
+            String username = AccountManagement.findUsername(stories.get(i).getAuthorID());
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            // Convert LocalDate to String
+            String formattedDate = stories.get(i).getTimestamp().format(formatter);
+            String s = username + "published on: " + formattedDate;
+            lineRepresentations.add(s);
+        }
+        return lineRepresentations;
+    }
     
 }
 

@@ -36,7 +36,7 @@ public class AccountManagement {
         }
         for (int i=0; i< DataBase.getInstance().getUsers().size() ; i++) // validate if the user already exists or uses a username or email that is already used
         {
-            if(DataBase.getInstance().getUsers().get(i).getUserId().equals(userId))
+            if(DataBase.getInstance().getUsers().get(i).getUsername().equals(username))
             {
                 System.out.println("User Already exists");
                 return 2;
@@ -80,6 +80,15 @@ public class AccountManagement {
         return null;
     }
     
+    public static String findUsername(String userId) {
+        for (int i = 0; i < DataBase.getInstance().getUsers().size(); i++) {
+            if (DataBase.getInstance().getUsers().get(i).getUserId().equals(userId)) {
+                System.out.println("User found");
+                return DataBase.getInstance().getUsers().get(i).getUsername();
+            }
+        }
+        return null;
+    }
     public static void signOut(User user)
     {
         user.setStatus(false);

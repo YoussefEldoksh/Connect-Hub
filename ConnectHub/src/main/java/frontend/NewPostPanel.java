@@ -9,6 +9,7 @@ import backend.DataBase;
 import backend.FileManagement;
 import backend.Posts;
 import backend.Stories;
+import backend.User;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
@@ -42,7 +43,7 @@ public class NewPostPanel extends javax.swing.JPanel {
         ImageIcon imageIcon= null;
         JFileChooser jfc = new JFileChooser();
         File file= null;
-        String contentID = "S" + (contentIDnum++);
+        
         if (choice == 0) {
             text = JOptionPane.showInputDialog(this, "Please enter your story's text", "Add Story");
             ImagePreviewFrame ipf = new ImagePreviewFrame(null, text);
@@ -57,24 +58,20 @@ public class NewPostPanel extends javax.swing.JPanel {
                 imageIcon = new ImageIcon(image.getScaledInstance(350, 350, Image.SCALE_SMOOTH));
                 ImagePreviewFrame ipf = new ImagePreviewFrame(imageIcon, text);
                 ipf.setVisible(true);
-                Stories story = new Stories(contentID, userId, text, imageIcon, file.getPath());
-                contents.add(story);
-                
             } catch (IOException e) {
                 // Handle the exception if the image cannot be loaded
                 JOptionPane.showMessageDialog(null, "Failed to load the image: " + e.getMessage());
             }
         }
+        
         if (contentType == 1) {
-                Posts post = new Posts(contentID, userId, text, imageIcon, file.getPath());
+                Posts post = new Posts("P" + (contentIDnum++), userId, text, imageIcon, file.getPath());
                 contents.add(post);
-                DataBase.addToGlobalPosts(post);
-                FileManagement.saveToPostsJsonFile();
+                DataBase.getInstance().addToGlobalPosts(post);
             } else if (contentType == 2) {
-                Stories story = new Stories(contentID, userId, text, imageIcon, file.getPath());
+                Stories story = new Stories("S" + (contentIDnum++), userId, text, imageIcon, file.getPath());
                 contents.add(story);
-                DataBase.addTOGlobalStories(story);
-                FileManagement.saveToStoriesJsonFile();
+                DataBase.getInstance().addTOGlobalStories(story);
             }
     }
 
