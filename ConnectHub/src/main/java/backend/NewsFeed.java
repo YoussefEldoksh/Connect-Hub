@@ -118,9 +118,9 @@ public class NewsFeed {
         return stories;
     }
     
-    public static void createPost(User user,String contentID,String content, ImageIcon image, String imagePath )
+    public static void createPost(User user,String contentID,String content, String imagePath )
     {
-        Posts post = new Posts(contentID, user.getUserId(), content, image, imagePath);
+        Posts post = new Posts(contentID, user.getUserId(), content, ImageHandler.saveImage(imagePath), imagePath);
         user.addPost(post);
         DataBase.getInstance().addToGlobalPosts(post);
     }

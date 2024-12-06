@@ -181,8 +181,8 @@ private static SignInWindow instance;
         /*enter either, uername or email*/
         String emOrUn= EmailusernameTextField.getText();
         String password= PasswordField.getText();
-        AccountManagement am= new AccountManagement();
-        User u= am.signIn(emOrUn, password);
+        //AccountManagement am= new AccountManagement(); it's abstract
+        User u= AccountManagement.signIn(emOrUn, password);
         if (u==null) {
             JOptionPane.showMessageDialog(this, "Incorrect Username or Password.");
         } else{
