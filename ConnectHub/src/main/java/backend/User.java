@@ -15,10 +15,10 @@ import java.util.Base64;
  *
  * @author malak
  */
-public class User {
-    private String userId ;
+public class User extends Account {
+    /*private String userId ;
     private String email;
-    private String username;
+    private String username;*/
     private String password;
     private LocalDate dateOfBirth;
     private boolean status;
@@ -30,9 +30,7 @@ public class User {
     private ArrayList<Stories> userStories;
 
     public User(String userId, String email, String username, String password, LocalDate dateOfBirth, boolean status) {
-        this.email = email;
-        this.userId = userId;
-        this.username = username;
+        super(email,username,userId);
         setPassword(password);
         this.dateOfBirth = dateOfBirth;
         this.status = status;
@@ -70,7 +68,7 @@ public class User {
         return friends;
     }
 
-    public String getUserId() {
+    /*public String getUserId() {
         return userId;
     }
 
@@ -80,7 +78,7 @@ public class User {
 
     public String getUsername() {
         return username;
-    }
+    }*/
 
     public String getPassword() {
         return password;
@@ -94,9 +92,9 @@ public class User {
         return status;
     }
 
-    public void setUsername(String username) {
+    /*public void setUsername(String username) {
         this.username = username;
-    }
+    }*/
 
     public void setPassword(String password){
         MessageDigest md;
@@ -220,7 +218,7 @@ public class User {
     {
         ArrayList<FriendRequests>sent=new ArrayList<>();
         for(FriendRequests req:friendReq){
-            if(req.getUserId().equals(userId)){
+            if(req.getUserId().equals(this.getUserId())){
                 sent.add(req);
             }
         }
@@ -231,7 +229,7 @@ public class User {
     {
         ArrayList<FriendRequests>received=new ArrayList<>();
         for(FriendRequests req:friendReq){
-            if(req.getReceiver().equals(userId)){
+            if(req.getReceiver().equals(this.getUserId())){
                 received.add(req);
             }
         }
