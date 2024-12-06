@@ -23,7 +23,7 @@ import org.json.JSONObject;
  *
  * @author malak
  */
-public class AccountManagement {
+public abstract class AccountManagement {
     
     public static int signUp(String userId, String email, String username, String password, LocalDate dateOfBirth, boolean status) //create a user
     {
