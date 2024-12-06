@@ -22,7 +22,7 @@ import org.json.JSONObject;
  *
  * @author malak
  */
-public class FileManagement {
+public class FileManagement { // Centrlized file operations system
     
      public static ArrayList<User> loadFromUsersJSONfile()
     {
@@ -83,7 +83,7 @@ public class FileManagement {
     
     public static void saveInUsersJSONfile()
     {
-       ArrayList<User> users = DataBase.getUsers();
+       ArrayList<User> users = DataBase.getInstance().getUsers();
         try{
             JSONArray jsonUsersArray = new JSONArray();
             for (User user : users) {
@@ -133,7 +133,7 @@ public class FileManagement {
     
     public static void saveToFriendRequestsJsonFile()
     {
-        ArrayList<FriendRequests> requests = DataBase.getGlobalFriendRequests();
+        ArrayList<FriendRequests> requests = DataBase.getInstance().getGlobalFriendRequests();
         try{
             JSONArray jsonFriendsArray = new JSONArray();
             for (FriendRequests request : requests) {
@@ -330,7 +330,7 @@ public class FileManagement {
     
     public static void saveToPostsJsonFile()
     {
-        ArrayList<Posts> posts = DataBase.getGlobalPosts();
+        ArrayList<Posts> posts = DataBase.getInstance().getGlobalPosts();
         try{
             JSONArray Posts = new JSONArray();
             
@@ -362,7 +362,7 @@ public class FileManagement {
         
         try {
              if (!Files.exists(Paths.get("stories.json")) || Files.size(Paths.get("stories.json")) == 0) {
-                    Files.createFile(Paths.get("posts.json")); // create the file if not found
+                    Files.createFile(Paths.get("stories.json")); // create the file if not found
                     return stories;
                 }
             String json = new String(Files.readAllBytes(Paths.get("stories.json")));
@@ -445,7 +445,7 @@ public class FileManagement {
     
     public static void saveToStoriesJsonFile()
     {       
-        ArrayList<Stories> stories = DataBase.getGlobalStories();
+        ArrayList<Stories> stories = DataBase.getInstance().getGlobalStories();
         
         try{
             JSONArray Stories = new JSONArray();
@@ -468,6 +468,125 @@ public class FileManagement {
              System.err.println("Error saving stories to JSON file: " + ex.getMessage());
         }
     }
+    
+   /* public static ArrayList<Profiles> loadFromProfilesJsonFileForSpecificUser(String id)
+    {
+        ArrayList<Profile> profiles = new ArrayList<>();
+        
+        try {
+             if (!Files.exists(Paths.get("profiles.json")) || Files.size(Paths.get("profiles.json")) == 0) {
+                    Files.createFile(Paths.get("posts.json")); // create the file if not found
+                    return profiles;
+                }
+            String json = new String(Files.readAllBytes(Paths.get("profiles.json")));
+            
+            JSONArray jsonProfiles = new JSONArray(json);
+            
+            for (int i = 0; i < jsonProfiles.length(); i++) {
+                JSONObject jsonProfile = jsonProfiles.getJSONObject(i);
+                String userId = jsonProfile.getString("userid");
+                if(!userId.equals(id))
+                {
+                    continue;
+                }
+                String cover = jsonProfile.optString("cover",null);
+                String profilePic = jsonProfile.optString("profile pic",null);
+                String bio = jsonProfile.getString("bio");
+                
+            if (cover != null && Files.exists(Paths.get(cover)) && profilePic != null && Files.exists(Paths.get(profilePic))) {
+                image = new ImageIcon(photoPath);
+            } else {
+                System.err.println("Image not found for path: " + photoPath);
+            }
+            User user1=null;
+               for(User user:DataBase.getUsers()){
+                   if(user.getUserId().equals(userId)){
+                       user1=user;
+                       break;
+                   }
+               }
+               if(user1==null){
+                   System.out.println("User not found");
+                   continue;
+               }
+            Profile profile=new Profile(cover, profilePic, bio, user1);
+            profiles.add(profile);
+               
+        }
+        } catch (IOException e) {
+            System.err.println("Error loading profiles from JSON file: " + e.getMessage());
+        }
+        return profiles;
+    }*/
+    
+        public static ArrayList<Profile> loadFromProfilesJsonFile()
+    {
+        ArrayList<Profile> profiles = new ArrayList<>();
+        
+        try {
+
+             if (!Files.exists(Paths.get("profiles.json")) || Files.size(Paths.get("profiles.json")) == 0) {
+                    Files.createFile(Paths.get("profiles.json")); // create the file if not found
+                    return profiles;
+                }
+            String json = new String(Files.readAllBytes(Paths.get("profiles.json")));
+
+
+
+            JSONArray jsonProfiles = new JSONArray(json);
+            
+            for (int i = 0; i < jsonProfiles.length(); i++) {
+                JSONObject jsonProfile = jsonProfiles.getJSONObject(i);
+                String userId = jsonProfile.getString("userid");
+                String cover = jsonProfile.optString("cover",null);
+                String profilePic = jsonProfile.optString("profile pic",null);
+                String bio = jsonProfile.getString("bio");
+                User user1=null;
+               for(User user:DataBase.getInstance().getUsers()){
+                   if(user.getUserId().equals(userId)){
+                       user1=user;
+                       break;
+                   }
+               }
+               if(user1==null){
+                   System.out.println("User not found");
+                   continue;
+               }
+            Profile profile=new Profile(cover, profilePic, bio, user1);
+            profiles.add(profile);
+        }
+        } catch (IOException e) {
+            System.err.println("Error loading profiles from JSON file: " + e.getMessage());
+        }
+        return profiles;
+    }
+    
+    public static void saveToProfilesJsonFile()
+    {       
+        ArrayList<Profile> profiles = DataBase.getInstance().getProfiles();
+        
+        try{
+            JSONArray Profiles = new JSONArray();
+            
+            for (int i = 0; i < profiles.size(); i++) {
+                JSONObject profile = new JSONObject();
+                profile.put("userid", profiles.get(i).getUserId());
+                profile.put("cover", profiles.get(i).getCoverPath());
+                profile.put("profile pic", profiles.get(i).getProfilePicPath());
+                profile.put("bio", profiles.get(i).getBio());
+                
+                Profiles.put(profile);
+                
+            }
+           Files.write(Paths.get("profiles.json"), Profiles.toString(4).getBytes());
+            System.out.println("System successfully saved the stories");
+            
+        }catch (IOException ex) {
+             System.err.println("Error saving stories to JSON file: " + ex.getMessage());
+        }
+    }
+    
+    
     
 
     
