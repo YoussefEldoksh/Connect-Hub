@@ -57,7 +57,7 @@ private static SignInWindow instance;
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 204, 153));
 
-        jPanel1.setBackground(new java.awt.Color(255, 204, 153));
+        jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Historic", 1, 18)); // NOI18N
         jLabel1.setText("Login");
@@ -78,7 +78,7 @@ private static SignInWindow instance;
             }
         });
 
-        LogInButton.setBackground(new java.awt.Color(255, 153, 0));
+        LogInButton.setBackground(new java.awt.Color(102, 102, 255));
         LogInButton.setFont(new java.awt.Font("Segoe UI Historic", 1, 14)); // NOI18N
         LogInButton.setForeground(new java.awt.Color(255, 255, 255));
         LogInButton.setText("Login");
@@ -90,7 +90,6 @@ private static SignInWindow instance;
 
         jLabel4.setText("Don't have an account?");
 
-        SignupfromSigninButton.setBackground(new java.awt.Color(255, 204, 102));
         SignupfromSigninButton.setText("Signup now");
         SignupfromSigninButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -181,8 +180,8 @@ private static SignInWindow instance;
         /*enter either, uername or email*/
         String emOrUn= EmailusernameTextField.getText();
         String password= PasswordField.getText();
-        AccountManagement am= new AccountManagement();
-        User u= am.signIn(emOrUn, password);
+        //AccountManagement am= new AccountManagement(); it's abstract
+        User u= AccountManagement.signIn(emOrUn, password);
         if (u==null) {
             JOptionPane.showMessageDialog(this, "Incorrect Username or Password.");
         } else{

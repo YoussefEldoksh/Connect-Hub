@@ -9,6 +9,7 @@ import backend.DataBase;
 import backend.FileManagement;
 import backend.Posts;
 import backend.Stories;
+import backend.User;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +26,7 @@ import javax.swing.JOptionPane;
  */
 public class NewPostPanel extends javax.swing.JPanel {
 
-    private int contentIDnum;
+    private static int contentIDnum=0;
     ArrayList<Content> contents= new ArrayList<>();
         
     /**
@@ -42,42 +43,43 @@ public class NewPostPanel extends javax.swing.JPanel {
         ImageIcon imageIcon= null;
         JFileChooser jfc = new JFileChooser();
         File file= null;
-        String contentID = "S" + (contentIDnum++);
+        
         if (choice == 0) {
-            text = JOptionPane.showInputDialog(this, "Please enter your story's text", "Add Story");
-            ImagePreviewFrame ipf = new ImagePreviewFrame(null, text);
+            text = JOptionPane.showInputDialog(this, "Please enter your story's text");
+            ContentPreviewForUserFrame ipf = new ContentPreviewForUserFrame(this, contentType, null, text);
             ipf.setVisible(true);
         } else if (choice == 1) {
-            text = JOptionPane.showInputDialog(this, "Please enter your story's text", "Add Story");
+            text = JOptionPane.showInputDialog(this, "Please enter your story's text");
             jfc.setDialogTitle("Select an Image File");
             jfc.showOpenDialog(this);
             file = jfc.getSelectedFile();
             try {
                 image = ImageIO.read(file);
                 imageIcon = new ImageIcon(image.getScaledInstance(350, 350, Image.SCALE_SMOOTH));
-                ImagePreviewFrame ipf = new ImagePreviewFrame(imageIcon, text);
+                ContentPreviewForUserFrame ipf = new ContentPreviewForUserFrame(this, contentType, imageIcon, text);
                 ipf.setVisible(true);
-                Stories story = new Stories(contentID, userId, text, imageIcon, file.getPath());
-                contents.add(story);
-                
             } catch (IOException e) {
-                // Handle the exception if the image cannot be loaded
+                // Handles the exception if the image cannot be loaded
                 JOptionPane.showMessageDialog(null, "Failed to load the image: " + e.getMessage());
             }
         }
+        
         if (contentType == 1) {
-                Posts post = new Posts(contentID, userId, text, imageIcon, file.getPath());
+                Posts post = new Posts("C" + (contentIDnum++), userId, text, imageIcon, file.getPath());
                 contents.add(post);
                 DataBase.getInstance().addToGlobalPosts(post);
-                FileManagement.saveToPostsJsonFile();
             } else if (contentType == 2) {
-                Stories story = new Stories(contentID, userId, text, imageIcon, file.getPath());
+                Stories story = new Stories("C" + (contentIDnum++), userId, text, imageIcon, file.getPath());
                 contents.add(story);
                 DataBase.getInstance().addTOGlobalStories(story);
-                FileManagement.saveToStoriesJsonFile();
             }
     }
 
+    public void deleteContent(boolean Yes_Or_No)
+    {
+    if(Yes_Or_No = true)
+        contents.getLast().delete(contents.getLast().getContentID());
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

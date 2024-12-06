@@ -18,7 +18,7 @@ import javax.swing.ImageIcon;
  *
  * @author malak
  */
-public class Content {
+public abstract class Content {
 
     private String contentID;
     private String authorID;
@@ -89,58 +89,6 @@ public class Content {
         this.timestamp = timestamp;
     }
     
-
-    public static void deleteStory(String contentID) //not expired user chooses to delete it
-    {
-     ArrayList<Stories> stories;
-     
-        stories = DataBase.getInstance().getGlobalStories();     
-     for(Stories s: stories)
-     {
-    if(s.getContentID().equals(contentID))
-     {
-         stories.remove(s);
-         DataBase.getInstance().getUsers().get(DataBase.getInstance().getUsers().indexOf(s.getAuthorID())).removeStory(s);
-     }
-     FileManagement.saveToStoriesJsonFile();
-     }  
-    }
-    
-    public static void deletePost(String contentID)
-    {
-     ArrayList<Posts> posts = DataBase.getInstance().getGlobalPosts();
-     
-     for(Posts p: posts)
-     {
-     if(!p.getContentID().equals(contentID))
-     {
-         posts.remove(p);
-         DataBase.getInstance().getUsers().get(DataBase.getInstance().getUsers().indexOf(p.getAuthorID())).removePost(p);
-     }
-     FileManagement.saveToStoriesJsonFile();
-     }
-    }
-     public static ArrayList<Posts> readPostForUser(String userID) {
-        ArrayList<Posts> x = DataBase.getInstance().getGlobalPosts();
-        ArrayList<Posts> y = new ArrayList<>();
-        for (Posts post : x) {
-            if (post.getAuthorID().equals(userID)) {
-                y.add(post);
-            }
-        }
-        return y;
-    }
-  
- public static ArrayList<Stories> readStoryForUser(String userID) {
-        ArrayList<Stories> x = DataBase.getInstance().getGlobalStories();
-        ArrayList<Stories> y = new ArrayList<>();
-        for (Stories story : x) {
-            if (story.getAuthorID().equals(userID)) {
-                y.add(story);
-            }
-        }
-        return y;
-    }
-
+    public abstract void delete(String contentID);
 
 }

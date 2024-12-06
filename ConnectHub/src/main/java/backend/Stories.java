@@ -9,14 +9,16 @@ package backend;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
-
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
  * @author dell
  */
 public class Stories extends Content {
-
+    
     public Stories(String contentID, String authorID, String content, ImageIcon image, String imagePath) {
         super(contentID, authorID, content, image, imagePath);
     }
@@ -30,20 +32,34 @@ public class Stories extends Content {
     else
         return false;
     }
-    
-   public static void expiredStory()
+   
+   @Override
+   public void delete(String contentID) //not expired user chooses to delete it
     {
      ArrayList<Stories> stories;
-        stories = FileManagement.loadFromStroiesJsonFile();
+     
+        stories = DataBase.getInstance().getGlobalStories();
      ArrayList<Stories> updated= new ArrayList();
      
      for(Stories s: stories)
      {
-     if(!isExpiredStory(s))
+    if(s.getContentID() != contentID)
      {
          updated.add(s);
+         DataBase.getInstance().addTOGlobalStories(s);
      }
-     FileManagement.saveToStoriesJsonFile();
-     }
+     }  
     }
+ 
+   public ArrayList<Stories> readStoryForUser(String userID) {
+        ArrayList<Stories> x = DataBase.getInstance().getGlobalStories();
+        ArrayList<Stories> y = new ArrayList<>();
+        for (Stories story : x) {
+            if (story.getAuthorID() == userID) {
+                y.add(story);
+            }
+        }
+        return y;
+    }
+   
 }

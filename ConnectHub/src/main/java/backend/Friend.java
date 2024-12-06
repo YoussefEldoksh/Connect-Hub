@@ -8,19 +8,15 @@ package backend;
  *
  * @author malak
  */
-public class Friend {
+public class Friend extends Account{
 
-     private String email;
-    private String username;
-    private String userId;
+     
 
     public Friend(String email, String username, String userId) {
-        this.email = email;
-        this.username = username;
-        this.userId = userId;
+        super(email,username,userId);
     }
 
-    public String getEmail() {
+   /* public String getEmail() {
         return email;
     }
 
@@ -30,5 +26,14 @@ public class Friend {
 
     public String getUserId() {
         return userId;
+    }*/
+    
+    public static Friend getFriend(String username,String friendname){
+        for(Friend friend:AccountManagement.findUser(username).getListOfFriends()){
+            if(friend.getUsername().equals(friendname)){
+                return friend;
+            }
+        }
+        return null;
     }
 }

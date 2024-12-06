@@ -4,6 +4,7 @@
  */
 package backend;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.ImageIcon;
@@ -13,6 +14,7 @@ import javax.swing.ImageIcon;
  * @author malak
  */
 public class NewsFeed {
+
 
     public static ArrayList<Posts> fetchPosts(User user)
     {
@@ -53,6 +55,7 @@ public class NewsFeed {
         return sortStories(stories);
     }
     
+
     public static ArrayList<String> fetchFriends(User user) // fetching an array list of friends in the String format for display
     {
         ArrayList<String> friends = new ArrayList<>();
@@ -115,11 +118,39 @@ public class NewsFeed {
         return stories;
     }
     
-    public static void createPost(User user,String contentID,String content, ImageIcon image, String imagePath )
+    public static void createPost(User user,String contentID,String content, String imagePath )
     {
-        Posts post = new Posts(contentID, user.getUserId(), content, image, imagePath);
+        Posts post = new Posts(contentID, user.getUserId(), content, ImageHandler.saveImage(imagePath), imagePath);
         user.addPost(post);
         DataBase.getInstance().addToGlobalPosts(post);
+    }
+    
+    public static ArrayList<String> getLineRepresentationsStories(User u) {
+        ArrayList<Stories> stories = fetchStories(u);
+        ArrayList<String> lineRepresentations = new ArrayList<>();
+        for (int i = 0; i < stories.size(); i++) {
+            String username = AccountManagement.findUsername(stories.get(i).getAuthorID());
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            // Convert LocalDate to String
+            String formattedDate = stories.get(i).getTimestamp().format(formatter);
+            String s = username + "published on: " + formattedDate;
+            lineRepresentations.add(s);
+        }
+        return lineRepresentations;
+    }
+
+    public static ArrayList<String> getLineRepresentationsPosts(User u) {
+        ArrayList<Posts> posts = fetchPosts(u);
+        ArrayList<String> lineRepresentations = new ArrayList<>();
+        for (int i = 0; i < posts.size(); i++) {
+            String username = AccountManagement.findUsername(posts.get(i).getAuthorID());
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            // Convert LocalDate to String
+            String formattedDate = posts.get(i).getTimestamp().format(formatter);
+            String s = username + "published on: " + formattedDate;
+            lineRepresentations.add(s);
+        }
+        return lineRepresentations;
     }
     
     
