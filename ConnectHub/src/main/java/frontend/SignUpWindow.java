@@ -5,6 +5,7 @@
 package frontend;
 
 import backend.AccountManagement;
+import backend.DataBase;
 import backend.User;
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
@@ -16,7 +17,7 @@ import javax.swing.JOptionPane;
 public class SignUpWindow extends javax.swing.JFrame {
 SignIn_Or_SignUp_Window parentWindow;
 static SignUpWindow instance;
-static long idCalc=0;
+
     /**
      * Creates new form SignUpWIndow
      */
@@ -175,26 +176,25 @@ static long idCalc=0;
         String email= EmailTextField.getText();
         String username= UsernameTextField.getText();
         String password = PasswordField.getText();
-        String userID= "U" + (idCalc++);
+        
+        String userID= "U" + (DataBase.getInstance().getUsers().size()+1);
         LocalDate dob= LocalDate.now();
-        AccountManagement am= new AccountManagement();
-        int n= am.signUp(userID, email, username, password, dob, true);
+
+        int n= AccountManagement.signUp(userID, email, username, password, dob, true);
         switch (n) {
         case 1:
             JOptionPane.showMessageDialog(this, "Incorrect Email Format. Please try again");
-            idCalc--;
             break;
         case 2:
             JOptionPane.showMessageDialog(this, "Username already exists. Please choose another one");
-            idCalc--;
             break;
         case 3:
             JOptionPane.showMessageDialog(this, "An account linked to this email already exists.");
-            idCalc--;
+            
             break;
         case 4:
             JOptionPane.showMessageDialog(this, "Your account was successfully created.\nWelcome at ConnectHub!");
-            User u = am.findUser(username);
+            User u = AccountManagement.findUser(username);
             this.openNewsFeedPage(u);
             break;
         default:

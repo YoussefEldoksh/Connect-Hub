@@ -68,12 +68,12 @@ public class NewPostPanel extends javax.swing.JPanel {
         if (contentType == 1) {
                 Posts post = new Posts(contentID, userId, text, imageIcon, file.getPath());
                 contents.add(post);
-                DataBase.addToGlobalPosts(post);
+                DataBase.getInstance().addToGlobalPosts(post);
                 FileManagement.saveToPostsJsonFile();
             } else if (contentType == 2) {
                 Stories story = new Stories(contentID, userId, text, imageIcon, file.getPath());
                 contents.add(story);
-                DataBase.addTOGlobalStories(story);
+                DataBase.getInstance().addTOGlobalStories(story);
                 FileManagement.saveToStoriesJsonFile();
             }
     }

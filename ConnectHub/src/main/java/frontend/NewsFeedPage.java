@@ -90,9 +90,6 @@ public class NewsFeedPage extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         postsList = new javax.swing.JList<>();
         NewPostPanel = new javax.swing.JPanel();
-        newPostPanel1 = new frontend.NewPostPanel();
-        addStoryButton = new javax.swing.JButton();
-        addPostButton = new javax.swing.JButton();
         IconPanel = new javax.swing.JPanel();
         iconPanel1 = new frontend.IconPanel();
         friendsButton = new javax.swing.JButton();
@@ -157,82 +154,39 @@ public class NewsFeedPage extends javax.swing.JFrame {
 
         NewPostPanel.setBackground(new java.awt.Color(204, 204, 255));
 
-        addStoryButton.setBackground(new java.awt.Color(102, 102, 255));
-        addStoryButton.setFont(new java.awt.Font("Segoe UI Historic", 1, 14)); // NOI18N
-        addStoryButton.setText("ADD STORY");
-        addStoryButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addStoryButtonActionPerformed(evt);
-            }
-        });
-
-        addPostButton.setBackground(new java.awt.Color(102, 102, 255));
-        addPostButton.setFont(new java.awt.Font("Segoe UI Historic", 1, 14)); // NOI18N
-        addPostButton.setText("ADD POST");
-        addPostButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addPostButtonActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout newPostPanel1Layout = new javax.swing.GroupLayout(newPostPanel1);
-        newPostPanel1.setLayout(newPostPanel1Layout);
-        newPostPanel1Layout.setHorizontalGroup(
-            newPostPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, newPostPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(newPostPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(addStoryButton, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
-                    .addComponent(addPostButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        newPostPanel1Layout.setVerticalGroup(
-            newPostPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(newPostPanel1Layout.createSequentialGroup()
-                .addGap(211, 211, 211)
-                .addComponent(addStoryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addComponent(addPostButton, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
         javax.swing.GroupLayout NewPostPanelLayout = new javax.swing.GroupLayout(NewPostPanel);
         NewPostPanel.setLayout(NewPostPanelLayout);
         NewPostPanelLayout.setHorizontalGroup(
             NewPostPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(newPostPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGap(0, 167, Short.MAX_VALUE)
         );
         NewPostPanelLayout.setVerticalGroup(
             NewPostPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(newPostPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         IconPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         iconPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        friendsButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\husse\\Desktop\\halaa programming\\Group-512.jpg")); // NOI18N
         friendsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 friendsButtonActionPerformed(evt);
             }
         });
 
-        profileButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\husse\\Desktop\\halaa programming\\28165aaca2ee560b4a6b760765efe976.jpg")); // NOI18N
         profileButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 profileButtonActionPerformed(evt);
             }
         });
 
-        homeButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\husse\\Desktop\\halaa programming\\2cc2eb6f89352bba2567a36c511f611c.jpg")); // NOI18N
         homeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 homeButtonActionPerformed(evt);
             }
         });
 
-        refreshButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\husse\\Desktop\\halaa programming\\refresh-icon-3d-rendering-illustration-vector.jpg")); // NOI18N
         refreshButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 refreshButtonActionPerformed(evt);
@@ -371,48 +325,12 @@ public class NewsFeedPage extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_profileButtonActionPerformed
 
-    private void addPostButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPostButtonActionPerformed
-        // TODO add your handling code here:
-        /*1 for post and 2 for story*/
-        int content=1;
-        String[] options = {"Text Only", "Text and Picture"};
-        int choice = JOptionPane.showOptionDialog(
-            this,
-            "Choose how you want to add your story:",
-            "Add Story",
-            JOptionPane.DEFAULT_OPTION,
-            JOptionPane.INFORMATION_MESSAGE,
-            null, options, options[0]
-        );
-        newPostPanel1.addContent(content, choice, user.getUserId());
-        
-    }//GEN-LAST:event_addPostButtonActionPerformed
-
-    private void addStoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStoryButtonActionPerformed
-        // TODO add your handling code here:
-        /*1 for post and 2 for story*/
-        int content=2;
-        String[] options = {"Text Only", "Text and Picture"};
-        int choice = JOptionPane.showOptionDialog(
-            this,
-            "Choose how you want to add your story:",
-            "Add Story",
-            JOptionPane.DEFAULT_OPTION,
-            JOptionPane.INFORMATION_MESSAGE,
-            null, options, options[0]
-        );
-
-        newPostPanel1.addContent(content, choice, user.getUserId());
-    }//GEN-LAST:event_addStoryButtonActionPerformed
-
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel FeedPanel;
     private javax.swing.JPanel FriendPanel;
     private javax.swing.JPanel IconPanel;
     private javax.swing.JPanel NewPostPanel;
-    private javax.swing.JButton addPostButton;
-    private javax.swing.JButton addStoryButton;
     private javax.swing.JButton friendsButton;
     private frontend.FriendsNewsPanel friendsNewsPanel1;
     private javax.swing.JButton homeButton;
@@ -421,7 +339,6 @@ public class NewsFeedPage extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private frontend.MainNewsPanel mainNewsPanel1;
-    private frontend.NewPostPanel newPostPanel1;
     private javax.swing.JList<String> postsList;
     private javax.swing.JButton profileButton;
     private javax.swing.JButton refreshButton;
