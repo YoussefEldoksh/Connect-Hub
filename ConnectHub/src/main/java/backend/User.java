@@ -25,6 +25,7 @@ public class User {
     private ArrayList<Friend> friends;
     private ArrayList<Friend> blockedFriends;
     private ArrayList<FriendRequests> friendReq;
+    private ArrayList<User> unviewableUsers;
     private ArrayList<Posts> userPosts;
     private ArrayList<Stories> userStories;
 
@@ -37,6 +38,7 @@ public class User {
         this.status = status;
         friends = new ArrayList<>();
         blockedFriends = new ArrayList<>();
+        unviewableUsers = new ArrayList<>();
         friendReq = FileManagement.loadFromFriendRequestsJsonFileForSpecificUser(userId);
         userStories = FileManagement.loadFromStroiesJsonFileForSpecificUser(userId);
         userPosts = FileManagement.loadFromPostsJsonFileForSpecificUser(userId);
@@ -116,14 +118,21 @@ public class User {
      public void addBlockedFriends(Friend friend)
     {
         blockedFriends.add(friend);
+        unviewableUsers.add(AccountManagement.findUser(friend.getUsername()));
+        AccountManagement.findUser(friend.getUsername()).addUnviewableUser(this);
         if(friends.contains(friend)){
             friends.remove(friend);
+           //unviewableUsers.add(AccountManagement.findUser(friend.getUsername()));
+           //AccountManagement.findUser(friend.getUsername()).addUnviewableUser(this); 
+           //make the blocked friend not view the user 
+           AccountManagement.findUser(friend.getUsername()).getListOfFriends().remove(new Friend(this.getEmail(),this.getUsername(),this.getUserId()));
         }
         
         
         for(FriendRequests request:friendReq){
             if(request.getUserId().equals(friend.getUserId())){
                 friendReq.remove(request);
+                AccountManagement.findUser(friend.getUsername()).getListOfFriendReq().remove(request); //remove friend req from the blocked user too
                 return;
             }
         }
@@ -131,9 +140,28 @@ public class User {
     
     public void removeBlockedFriend(Friend friend) // for unblocking
     {
+        if(blockedFriends.contains(friend)){
+        unviewableUsers.remove(AccountManagement.findUser(friend.getUsername()));
+        AccountManagement.findUser(friend.getUsername()).removeUnviewableUser(this);
         blockedFriends.remove(friend);
+            System.out.println("Unblocked.");
+            return;
+        }
+        System.out.println("Friend not blocked in the first place");
     }
     
+    public void addUnviewableUser(User user){
+        unviewableUsers.add(user);
+    }
+    
+    public void removeUnviewableUser(User user){
+        unviewableUsers.remove(user);
+    }
+    
+    public ArrayList<User> getListOfUnviewableUsers()
+    {
+        return unviewableUsers;
+    }
     
     public ArrayList<Friend> getListOfBlockedFriends()
     {
@@ -144,7 +172,7 @@ public class User {
     {
         ArrayList<String> blocked = new ArrayList<>();
         ArrayList<Friend> userblocked = this.blockedFriends;
-        int i = 0;
+        int i;
         for (i=0; i< userblocked.size(); i++) {
             blocked.add(userblocked.get(i).getUsername());
         }
@@ -171,11 +199,43 @@ public class User {
     {
         ArrayList<String> requests = new ArrayList<>();
         ArrayList<FriendRequests> requested = this.getListOfFriendReq();
-        int i = 0;
+        int i;
         for (i=0; i< requested.size(); i++) {
             requests.add(requested.get(i).getUsername());
         }
         return requests;
+    }
+     
+    /* public void addSentRequest(FriendRequests friend){
+        sentFriendReq.add(friend);
+    }
+    
+    public void removeSentRequest(FriendRequests friend){
+        sentFriendReq.remove(friend);
+    }
+    
+     */
+     
+     public ArrayList<FriendRequests> getListOfSentReq()
+    {
+        ArrayList<FriendRequests>sent=new ArrayList<>();
+        for(FriendRequests req:friendReq){
+            if(req.getUserId().equals(userId)){
+                sent.add(req);
+            }
+        }
+        return sent;
+    }
+     
+     public ArrayList<FriendRequests> getListOfReceivedReq()
+    {
+        ArrayList<FriendRequests>received=new ArrayList<>();
+        for(FriendRequests req:friendReq){
+            if(req.getReceiver().equals(userId)){
+                received.add(req);
+            }
+        }
+        return received;
     }
     
     public void addPost(Posts post)
