@@ -25,7 +25,7 @@ public class DataBase { // Centralized Data Management
         this.posts = FileManagement.loadFromPostsJsonFile();
         this.stories = FileManagement.loadFromStroiesJsonFile();
         this.requests = FileManagement.loadFromFriendRequestsJsonFile();
-        this.profiles = FileManagement.loadFromProfilesJsonFile();
+        this.profiles = FileManagement.loadFromProfilesJsonFile(); 
         
     }
     
@@ -41,10 +41,12 @@ public class DataBase { // Centralized Data Management
     public  synchronized void addToGlobalPosts(Posts post) // add for future saving
     {
         posts.add(post);
+        FileManagement.saveToPostsJsonFile();
     }
     public  synchronized void addTOGlobalStories(Stories story)// add for future saving
     {
         stories.add(story);
+        FileManagement.saveToStoriesJsonFile();
     }
 
     
@@ -62,6 +64,7 @@ public class DataBase { // Centralized Data Management
     public synchronized void addToGlobalFriendRequests(FriendRequests request) // add for future saving
     {
         requests.add(request);
+        FileManagement.saveToFriendRequestsJsonFile();
     }
     
     public synchronized ArrayList<FriendRequests> getGlobalFriendRequests() 
@@ -74,6 +77,7 @@ public class DataBase { // Centralized Data Management
     }
     public synchronized void addUser(User user){
         users.add(user);
+        FileManagement.saveInUsersJSONfile();
     }
     
      public  ArrayList<Profile> getProfiles() {
@@ -81,6 +85,7 @@ public class DataBase { // Centralized Data Management
     }
     public  void addProfile(Profile profile){
         profiles.add(profile);
+        FileManagement.saveToProfilesJsonFile();
     }
     
 
