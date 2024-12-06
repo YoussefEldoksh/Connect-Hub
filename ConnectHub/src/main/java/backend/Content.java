@@ -94,14 +94,12 @@ public class Content {
     {
      ArrayList<Stories> stories;
      
-        stories = FileManagement.loadFromStroiesJsonFile();
-     ArrayList<Stories> updated= new ArrayList();
-     
+        stories = DataBase.getInstance().getGlobalStories();     
      for(Stories s: stories)
      {
-    if(s.getContentID() != contentID)
+    if(s.getContentID().equals(contentID))
      {
-         updated.add(s);
+         stories.remove(s);
      }
      FileManagement.saveToStoriesJsonFile();
      }  
@@ -109,25 +107,22 @@ public class Content {
     
     public static void deletePost(String contentID)
     {
-     ArrayList<Posts> posts;
-        posts = FileManagement.loadFromPostsJsonFile();
-     ArrayList<Posts> updated= new ArrayList();
+     ArrayList<Posts> posts = DataBase.getInstance().getGlobalPosts();
      
      for(Posts p: posts)
      {
      if(!p.getContentID().equals(contentID))
      {
-         updated.add(p);
+         posts.remove(p);
      }
      FileManagement.saveToStoriesJsonFile();
      }
     }
      public static ArrayList<Posts> readPostForUser(String userID) {
-        FileManagement postsFile= new FileManagement();
-        ArrayList<Posts> x = FileManagement.loadFromPostsJsonFile();
+        ArrayList<Posts> x = DataBase.getInstance().getGlobalPosts();
         ArrayList<Posts> y = new ArrayList<>();
         for (Posts post : x) {
-            if (post.getAuthorID() == userID) {
+            if (post.getAuthorID().equals(userID)) {
                 y.add(post);
             }
         }
@@ -135,10 +130,10 @@ public class Content {
     }
   
  public static ArrayList<Stories> readStoryForUser(String userID) {
-        ArrayList<Stories> x = FileManagement.loadFromStroiesJsonFile();
+        ArrayList<Stories> x = DataBase.getInstance().getGlobalStories();
         ArrayList<Stories> y = new ArrayList<>();
         for (Stories story : x) {
-            if (story.getAuthorID() == userID) {
+            if (story.getAuthorID().equals(userID)) {
                 y.add(story);
             }
         }
