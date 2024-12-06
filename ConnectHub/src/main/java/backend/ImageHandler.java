@@ -33,4 +33,11 @@ public abstract class ImageHandler {
         return imageIcon;
     }
     
+    public static ImageIcon scaledImage(ImageIcon i){
+        Image img=i.getImage();
+        Image scaledImage = img.getScaledInstance(300, 200, Image.SCALE_SMOOTH);//resize for scale
+        ImageIcon scaledIcon=new ImageIcon(scaledImage);
+        return scaledIcon;
+    }
+    
 }
