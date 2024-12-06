@@ -4,19 +4,110 @@
  */
 package frontend;
 
+import backend.FriendManagement;
+import backend.NewsFeed;
+import backend.User;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
 /**
  *
  * @author malak
  */
 public class FriendsNewsPanel extends javax.swing.JPanel {
 
+    private JList<String> friendsList;
+    private JList<String> requestsList;
+    private JList<String> suggestionsList;
+    
+    private DefaultListModel<String> friendsListModel;
+    private DefaultListModel<String> requestsListModel;
+    private DefaultListModel<String> suggestionsListModel;
     /**
      * Creates new form FriendsNewsPanel
      */
     public FriendsNewsPanel() {
         initComponents();
+        friendsListModel = new DefaultListModel<>();
+        requestsListModel = new DefaultListModel<>();
+        suggestionsListModel = new DefaultListModel<>();
+        // Set the JList models to DefaultListModel
+        friendsList = new JList<>(friendsListModel);
+        requestsList = new JList<>(requestsListModel);
+        suggestionsList = new JList<>(suggestionsListModel);
+        
+         friendsList.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) { // Don't process the event while adjusting
+                    // Get the selected value from the JList
+                    String selectedStory = friendsList.getSelectedValue();
+
+                    // Handle the selected item (For example, print it or perform an action)
+                    System.out.println("User selected: " + selectedStory);
+                }
+            }
+        }
+        );
+         
+         requestsList.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) { // Don't process the event while adjusting
+                    // Get the selected value from the JList
+                    String selectedStory = requestsList.getSelectedValue();
+
+                    // Handle the selected item (For example, print it or perform an action)
+                    System.out.println("User selected: " + selectedStory);
+                }
+            }
+        }
+        );
+         
+          suggestionsList.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) { // Don't process the event while adjusting
+                    // Get the selected value from the JList
+                    String selectedStory = suggestionsList.getSelectedValue();
+
+                    // Handle the selected item (For example, print it or perform an action)
+                    System.out.println("User selected: " + selectedStory);
+                }
+            }
+        }
+        );
     }
 
+    public void updateFriendsList(User u) {
+        ArrayList<String> linerep = NewsFeed.fetchFriends(u);
+        friendsListModel.clear();
+
+        for (int i = 0; i < linerep.size(); i++) {
+            friendsListModel.addElement(linerep.get(i));
+        }
+    }
+    
+     public void updateSuggestionsList(User u) {
+        ArrayList<String> linerep = FriendManagement.fetchFriendsSuggestions(u);
+        suggestionsListModel.clear();
+
+        for (int i = 0; i < linerep.size(); i++) {
+            suggestionsListModel.addElement(linerep.get(i));
+        }
+    }
+     
+     public void updateRequestsList(User u) {
+        ArrayList<String> linerep = u.getLineRepOfFriendReq();
+        suggestionsListModel.clear();
+
+        for (int i = 0; i < linerep.size(); i++) {
+            suggestionsListModel.addElement(linerep.get(i));
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

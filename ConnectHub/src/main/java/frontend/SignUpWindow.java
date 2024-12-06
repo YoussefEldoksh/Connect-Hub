@@ -5,6 +5,7 @@
 package frontend;
 
 import backend.AccountManagement;
+import backend.DataBase;
 import backend.User;
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
@@ -16,7 +17,7 @@ import javax.swing.JOptionPane;
 public class SignUpWindow extends javax.swing.JFrame {
 SignIn_Or_SignUp_Window parentWindow;
 static SignUpWindow instance;
-static long idCalc=0;
+
     /**
      * Creates new form SignUpWIndow
      */
@@ -34,6 +35,7 @@ static long idCalc=0;
     
     public void openNewsFeedPage(User u) {
         this.setVisible(false);
+        System.out.println("ana ahao");
         NewsFeedPage nfp = NewsFeedPage.getInstance(u);
         nfp.setVisible(true);
     }
@@ -89,6 +91,7 @@ static long idCalc=0;
         SignUpButton.setFont(new java.awt.Font("Segoe UI Historic", 1, 14)); // NOI18N
         SignUpButton.setForeground(new java.awt.Color(255, 255, 255));
         SignUpButton.setText("Signup");
+        SignUpButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         SignUpButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SignUpButtonActionPerformed(evt);
@@ -175,26 +178,25 @@ static long idCalc=0;
         String email= EmailTextField.getText();
         String username= UsernameTextField.getText();
         String password = PasswordField.getText();
-        String userID= "U" + (idCalc++);
+        
+        String userID= "U4";  //(DataBase.getInstance().getUsers().size());
+        System.out.println("Current number of users: " + DataBase.getInstance().getUsers().size());
         LocalDate dob= LocalDate.now();
-        AccountManagement am= new AccountManagement();
-        int n= am.signUp(userID, email, username, password, dob, true);
+
+        int n= AccountManagement.signUp(userID, email, username, password, dob, true);
         switch (n) {
         case 1:
             JOptionPane.showMessageDialog(this, "Incorrect Email Format. Please try again");
-            idCalc--;
             break;
         case 2:
             JOptionPane.showMessageDialog(this, "Username already exists. Please choose another one");
-            idCalc--;
             break;
         case 3:
             JOptionPane.showMessageDialog(this, "An account linked to this email already exists.");
-            idCalc--;
             break;
         case 4:
             JOptionPane.showMessageDialog(this, "Your account was successfully created.\nWelcome at ConnectHub!");
-            User u = am.findUser(username);
+            User u = AccountManagement.findUser(username);
             this.openNewsFeedPage(u);
             break;
         default:

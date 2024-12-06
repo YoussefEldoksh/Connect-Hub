@@ -55,7 +55,9 @@ public class FriendManagement {
 
     }
     
-    public static ArrayList<Friend> friendSuggestion(User user )
+  
+    
+    public static ArrayList<Friend> friendSuggestion(User user)
     {
         // check for the friends that are not 
         ArrayList<Friend> suggestions = new ArrayList<>();
@@ -81,6 +83,22 @@ public class FriendManagement {
         }
         return suggestions;
     }
+    
+    public static ArrayList<String> fetchFriendsSuggestions(User user) // fetching an array list of friends suggestions in the String format for display
+    {
+        ArrayList<String> friends = new ArrayList<>();
+        ArrayList<Friend> userFriends = friendSuggestion(user);
+        int i = 0;
+        for (Friend userFriend : userFriends) {
+            if(FriendManagement.displayFriendStatus(user, userFriend))
+            friends.add(userFriend.getUserId() + " " + "ONLINE");
+            else
+            friends.add(userFriend.getUserId() + " " + "OFFLINE");
+        }
+        return friends;
+    }
+    
+    
     
     public static void blockFriend(User user, Friend blockFriend)// moving the friend from the friends list to the blocked list
     {

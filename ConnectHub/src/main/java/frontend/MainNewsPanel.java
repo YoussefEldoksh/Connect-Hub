@@ -4,19 +4,90 @@
  */
 package frontend;
 
+import backend.NewsFeed;
+import backend.Stories;
+import backend.User;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
 /**
  *
  * @author malak
  */
 public class MainNewsPanel extends javax.swing.JPanel {
 
+    private JList<String> storiesList;
+    private JList<String> postsList;
+    
+    private DefaultListModel<String> storiesListModel;
+    private DefaultListModel<String> postsListModel;
+    
+   
     /**
      * Creates new form MainNewsPanel
      */
     public MainNewsPanel() {
         initComponents();
+        storiesListModel = new DefaultListModel<>();
+        postsListModel = new DefaultListModel<>();
+
+        // Set the JList models to DefaultListModel
+        storiesList = new JList<>(storiesListModel);
+        postsList = new JList<>(postsListModel);
+        storiesList.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) { // Don't process the event while adjusting
+                    // Get the selected value from the JList
+                    String selectedStory = storiesList.getSelectedValue();
+
+                    // Handle the selected item (For example, print it or perform an action)
+                    System.out.println("User selected: " + selectedStory);
+                }
+            }
+        }
+        );
+        
+        postsList.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) { // Don't process the event while adjusting
+                    // Get the selected value from the JList
+                    String selectedStory = postsList.getSelectedValue();
+
+                    // Handle the selected item (For example, print it or perform an action)
+                    System.out.println("User selected: " + selectedStory);
+                }
+            }
+        }
+        );
+    }
+    
+    
+    public void updateStoriesList(User u) {
+        ArrayList<String> linerep = NewsFeed.getLineRepresentationsStories(u);
+        storiesListModel.clear();
+
+        for (int i = 0; i < linerep.size(); i++) {
+            storiesListModel.addElement(linerep.get(i));
+
+        }
     }
 
+    public void updatePostsList(User u) {
+        ArrayList<String> linerep = NewsFeed.getLineRepresentationsPosts(u);
+        postsListModel.clear();
+
+        for (int i = 0; i < linerep.size(); i++) {
+            postsListModel.addElement(linerep.get(i));
+
+        }
+    }
+    
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

@@ -26,7 +26,7 @@ import javax.swing.JOptionPane;
  */
 public class NewPostPanel extends javax.swing.JPanel {
 
-    private int contentIDnum;
+    private static int contentIDnum=0;
     ArrayList<Content> contents= new ArrayList<>();
         
     /**

@@ -4,6 +4,7 @@
  */
 package backend;
 
+import static backend.FriendManagement.friendSuggestion;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
@@ -138,6 +139,18 @@ public class User {
     {
         return blockedFriends;
     }
+    
+    public ArrayList<String> getLineRepOfBlockedFriends() // fetching an array list of friends suggestions in the String format for display
+    {
+        ArrayList<String> blocked = new ArrayList<>();
+        ArrayList<Friend> userblocked = this.blockedFriends;
+        int i = 0;
+        for (i=0; i< userblocked.size(); i++) {
+            blocked.add(userblocked.get(i).getUsername());
+        }
+        return blocked;
+    }
+    
      public void addFriendsReq(FriendRequests friend)
     {
         friendReq.add(friend);
@@ -153,6 +166,17 @@ public class User {
     {
         return friendReq;
     }    
+    
+     public ArrayList<String> getLineRepOfFriendReq() // fetching an array list of friends suggestions in the String format for display
+    {
+        ArrayList<String> requests = new ArrayList<>();
+        ArrayList<FriendRequests> requested = this.getListOfFriendReq();
+        int i = 0;
+        for (i=0; i< requested.size(); i++) {
+            requests.add(requested.get(i).getUsername());
+        }
+        return requests;
+    }
     
     public void addPost(Posts post)
     {
