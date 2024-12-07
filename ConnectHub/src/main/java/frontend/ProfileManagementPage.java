@@ -71,21 +71,21 @@ public class ProfileManagementPage extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        friendReqSuggPanel1 = new org.netbeans.modules.form.InvalidComponent();
+        friendReqSuggPanel1 = new frontend.FriendReqSuggPanel();
         profileButton = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
         friendsButton = new javax.swing.JButton();
         homeButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         panelinpm = new javax.swing.JPanel();
-        userDisplayPanel1 = new org.netbeans.modules.form.InvalidComponent();
+        userDisplayPanel1 = new frontend.UserDisplayPanel();
         coverPhotoLabel = new javax.swing.JLabel();
         profilePictureLabel = new javax.swing.JLabel();
         BioTextbox = new javax.swing.JLabel();
         userNameLabel = new javax.swing.JLabel();
         logoutButton = new javax.swing.JButton();
         panelforuserpostsandstories = new javax.swing.JPanel();
-        userContentPanel1 = new org.netbeans.modules.form.InvalidComponent();
+        userContentPanel1 = new frontend.UserContentPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         storiesList = new javax.swing.JList<>();
         jScrollPane5 = new javax.swing.JScrollPane();
@@ -93,7 +93,7 @@ public class ProfileManagementPage extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        friendReqSuggPanel2 = new org.netbeans.modules.form.InvalidComponent();
+        friendReqSuggPanel2 = new frontend.FriendReqSuggPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         friendsList = new javax.swing.JList<>();
         jLabel3 = new javax.swing.JLabel();
@@ -226,19 +226,10 @@ public class ProfileManagementPage extends javax.swing.JFrame {
                 .addGap(75, 75, 75))
             .addGroup(userDisplayPanel1Layout.createSequentialGroup()
                 .addGroup(userDisplayPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-<<<<<<< HEAD
-                    .addGroup(userDisplayPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(userDisplayPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(coverPhotoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(userDisplayPanel1Layout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
-=======
+
                     .addComponent(coverPhotoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BioTextbox, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))
->>>>>>> d53af3d1817107dcc1f6b6b48e5003e0facbcbc5
+
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         userDisplayPanel1Layout.setVerticalGroup(
@@ -251,15 +242,10 @@ public class ProfileManagementPage extends javax.swing.JFrame {
                     .addComponent(userNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(profilePictureLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(45, 45, 45)
-<<<<<<< HEAD
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(150, 150, 150)
-                .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(57, 57, 57))
-=======
+
                 .addComponent(BioTextbox, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(265, 265, 265))
->>>>>>> d53af3d1817107dcc1f6b6b48e5003e0facbcbc5
+
         );
 
         javax.swing.GroupLayout panelinpmLayout = new javax.swing.GroupLayout(panelinpm);
@@ -567,8 +553,8 @@ public class ProfileManagementPage extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BioTextbox;
     private javax.swing.JLabel coverPhotoLabel;
-    private org.netbeans.modules.form.InvalidComponent friendReqSuggPanel1;
-    private org.netbeans.modules.form.InvalidComponent friendReqSuggPanel2;
+    private frontend.FriendReqSuggPanel friendReqSuggPanel1;
+    private frontend.FriendReqSuggPanel friendReqSuggPanel2;
     private javax.swing.JButton friendsButton;
     private javax.swing.JList<String> friendsList;
     private javax.swing.JButton homeButton;
@@ -601,8 +587,8 @@ public class ProfileManagementPage extends javax.swing.JFrame {
     private javax.swing.JList<String> requestsList;
     private javax.swing.JList<String> storiesList;
     private javax.swing.JList<String> suggestionsList;
-    private org.netbeans.modules.form.InvalidComponent userContentPanel1;
-    private org.netbeans.modules.form.InvalidComponent userDisplayPanel1;
+    private frontend.UserContentPanel userContentPanel1;
+    private frontend.UserDisplayPanel userDisplayPanel1;
     private javax.swing.JLabel userNameLabel;
     // End of variables declaration//GEN-END:variables
 }
