@@ -5,7 +5,18 @@
         "dob": "2024-12-06",
         "userId": "U0",
         "email": "haslaaaa#@ahoo.com",
-        "friends": [],
+        "friends": [
+            {
+                "userId": "U1",
+                "username": "123",
+                "email": "hala@yahoo.com"
+            },
+            {
+                "userId": "U2",
+                "username": "halaa",
+                "email": "halaa@yahoo.com"
+            }
+        ],
         "username": "jkgjg",
         "status": true
     },
@@ -87,6 +98,25 @@
         "email": "abdo@ad.com",
         "friends": [],
         "username": "abcd",
+        "status": true
+    },
+    {
+        "blockedfriends": [],
+        "password": "QyGoRO52DubKVXWnwWw00qQOwbPXYANoG4o4SNwfTMU=",
+        "dob": "2024-12-07",
+        "userId": "U9",
+        "email": "youssefeldoksh788@gmail.com",
+        "friends": [            {
+            "userId": "U1",
+            "username": "123",
+            "email": "hala@yahoo.com"
+        },
+        {
+            "userId": "U2",
+            "username": "halaa",
+            "email": "halaa@yahoo.com"
+        }],
+        "username": "doksh2020",
         "status": true
     }
 ]

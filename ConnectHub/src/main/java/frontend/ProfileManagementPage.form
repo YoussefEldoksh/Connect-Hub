@@ -215,22 +215,10 @@
                   </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-<<<<<<< HEAD
-                          <Group type="102" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="coverPhotoLabel" min="-2" pref="306" max="-2" attributes="0"/>
-                                  <Component id="jLabel2" alignment="0" min="-2" pref="286" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
-                              <Component id="logoutButton" min="-2" pref="120" max="-2" attributes="0"/>
-                          </Group>
-=======
+
                           <Component id="coverPhotoLabel" min="-2" pref="306" max="-2" attributes="0"/>
                           <Component id="BioTextbox" alignment="0" min="-2" pref="286" max="-2" attributes="0"/>
->>>>>>> d53af3d1817107dcc1f6b6b48e5003e0facbcbc5
+
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -247,15 +235,10 @@
                           <Component id="profilePictureLabel" alignment="3" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
-<<<<<<< HEAD
-                      <Component id="jLabel2" min="-2" pref="34" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="150" max="-2" attributes="0"/>
-                      <Component id="logoutButton" min="-2" pref="58" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
-=======
+
                       <Component id="BioTextbox" min="-2" pref="34" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="265" max="-2" attributes="0"/>
->>>>>>> d53af3d1817107dcc1f6b6b48e5003e0facbcbc5
+
                   </Group>
               </Group>
             </DimensionLayout>
