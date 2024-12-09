@@ -65,6 +65,8 @@ public abstract class AccountManagement {
         for (int i = 0; i < DataBase.getInstance().getUsers().size(); i++) {
             if ((DataBase.getInstance().getUsers().get(i).getUsername().equals(username) || DataBase.getInstance().getUsers().get(i).getEmail().equals(username)) && (DataBase.getInstance().getUsers().get(i).getPassword().equals(hashPassword(password)))) //check if the user is in our database
             {
+                DataBase.getInstance().getUsers().get(i).setStatus(true);
+                FileManagement.saveInUsersJSONfile();
                 return DataBase.getInstance().getUsers().get(i);
             }
      

@@ -72,6 +72,12 @@ public class DataBase { // Centralized Data Management
         return requests;
     }
 
+     public synchronized void removeToGlobalFriendRequests(FriendRequests request) // add for future saving
+    {
+        requests.remove(request);
+        FileManagement.saveToFriendRequestsJsonFile();
+    }
+     
     public synchronized ArrayList<User> getUsers() {
         return users;
     }

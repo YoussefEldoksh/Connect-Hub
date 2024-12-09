@@ -16,7 +16,8 @@ public class FriendManagement {
     public static void friendRequest(boolean accept, User user,FriendRequests friend, boolean rejected)
     {
       ArrayList<String> excludedIds = new ArrayList<>();
-      User sender=AccountManagement.findUser(friend.getUsername());
+      User sender=AccountManagement.findUser(AccountManagement.findUsername(friend.getReceiver()));
+      
       if (sender == null) {
     System.out.println("Sender user not found: " + friend.getUsername());
     return;
@@ -24,19 +25,18 @@ public class FriendManagement {
         for (Friend excludedfriends : user.getListOfBlockedFriends()) {
             excludedIds.add(excludedfriends.getUserId());
         }
-        /*for(Friend excludedFriends : user.getListOfFriends())
+        for(Friend excludedFriends : user.getListOfFriends())
         {
             excludedIds.add(excludedFriends.getUserId());
         }
-        excludedIds.add(user.getUserId());*/
+        excludedIds.add(user.getUserId());
         
         
       if(!user.getListOfFriendReq().contains(friend))// if the request is already made don't added it again to the array
       {
-          user.addFriendsReq(friend);
-          DataBase.getInstance().addToGlobalFriendRequests(friend);
-                          
+          user.addFriendsReq(friend);               
       }
+      
        
        if(!excludedIds.contains(friend.getUserId()))
        {
@@ -50,7 +50,7 @@ public class FriendManagement {
                 sender.removeFriendReq(friend);
                 
                 DataBase.getInstance().getGlobalFriendRequests().remove(friend);
-
+                FileManagement.saveToFriendRequestsJsonFile();
             }
             else if(accept == false &&  rejected == true)
             {
@@ -124,7 +124,7 @@ public class FriendManagement {
         ArrayList<Friend> userFriends = friendSuggestion(user);
         
         for (Friend userFriend : userFriends) {
-            if(FriendManagement.displayFriendStatus(user, userFriend))
+            if(AccountManagement.findUser(userFriend.getUsername()).getStatus())
             friends.add(userFriend.getUsername()+ " " + "ONLINE");
             else
             friends.add(userFriend.getUsername()+ " " + "OFFLINE");

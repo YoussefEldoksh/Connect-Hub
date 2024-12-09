@@ -555,53 +555,51 @@ public ProfileManagementPage(User u) {
                 .addGap(41, 41, 41)
                 .addComponent(jButton1)
                 .addGap(71, 71, 71)
-                .addComponent(jButton2)
-                .addGap(78, 78, 78)
-                .addComponent(jButton3)
-                .addGap(83, 83, 83)
-                .addComponent(jButton4)
-                .addContainerGap(225, Short.MAX_VALUE))
+                                .addComponent(jButton2)
+                                .addGap(78, 78, 78)
+                                .addComponent(jButton3)
+                                .addGap(83, 83, 83)
+                                .addComponent(jButton4)
+                                .addContainerGap(225, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(panelinpm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(panelforuserpostsandstories, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1344, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(33, 33, 33)
+                                .addComponent(panelinpm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(panelforuserpostsandstories, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1344, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(panelforuserpostsandstories, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(panelinpm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(panelforuserpostsandstories, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(panelinpm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>                        
 
-    
-    
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        String newPassword =  JOptionPane.showInputDialog(this, "Please enter your new Password:");
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+        String newPassword = JOptionPane.showInputDialog(this, "Please enter your new Password:");
         if (newPassword == user.getPassword()) {
             JOptionPane.showMessageDialog(null, "Your new password can not be same as old password!");
         } else {
@@ -609,30 +607,38 @@ public ProfileManagementPage(User u) {
             JOptionPane.showMessageDialog(null, "Your password was changed successfully!");
         }
 
-    }                                        
-    
-    
-    
-    
-    
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    }
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
         JFileChooser chooser = new JFileChooser();
         chooser.showSaveDialog(this);
         File file = chooser.getSelectedFile();
-        
-        if (file == null) {
-          JOptionPane.showMessageDialog(this, "No file selected");
-          return;
-        }
-        
-        ProfileManagement.getInstance().getProfile(user.getUserId()).setCover(file.getAbsolutePath());
-        
-    }   
-    
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        
-    }                                        
+        if (file == null) {
+            JOptionPane.showMessageDialog(this, "No file selected");
+            return;
+        }
+
+        ProfileManagement.getInstance().getProfile(user.getUserId()).setCover(file.getAbsolutePath());
+        Profile profile = ProfileManagement.getInstance().getProfile(user.getUserId());
+        coverPhotoLabel.setIcon(ImageHandler.rescaleImageIcon(profile.getCoverPhoto(), 285, 135));
+
+    }
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
+        JFileChooser chooser = new JFileChooser();
+        chooser.showSaveDialog(this);
+        File file = chooser.getSelectedFile();
+
+        if (file == null) {
+            JOptionPane.showMessageDialog(this, "No file selected");
+            return;
+        }
+
+        ProfileManagement.getInstance().getProfile(user.getUserId()).setProfilePic(file.getAbsolutePath());
+        Profile profile = ProfileManagement.getInstance().getProfile(user.getUserId());
+        profilePhotoLabel.setIcon(ImageHandler.rescaleImageIcon(profile.getProfilePhoto(), 112, 112));
+    }
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {                                         
         String newBio;
@@ -755,20 +761,42 @@ public ProfileManagementPage(User u) {
     }
     private void storiesListValueChanged(javax.swing.event.ListSelectionEvent evt) {
         // TODO add your handling code here:
-         int selectedIndex = storiesList.getSelectedIndex();
-
-                    System.out.println("User selected: " + selectedIndex);
-                    ContentPreviewForFriendsFrame friendcontent= new ContentPreviewForFriendsFrame(selectedIndex, 2);
-                
+       /*  
+        String selectedstory = storiesList.getSelectedValue();
+        String[] token = selectedstory.split(" ");
+                    String usernameUser = user.getUsername();
+                    String text
+                    String[] options = {"Remove", "Block"};
+                    int choice = JOptionPane.showOptionDialog(
+                            null,
+                            "Would you like to: ",
+                            ("Friend" + friend.getUsername()),
+                            JOptionPane.DEFAULT_OPTION,
+                            JOptionPane.INFORMATION_MESSAGE,
+                            null, options, options[0]
+                    );
+                    if (choice == 0) {
+                        FriendManagement.removeFriend(user, friend);
+                        friendsListModel.removeElement(selectedFriend);
+          
+                        updateFriendsList();
+                    } else if (choice == 1) {
+                        FriendManagement.blockFriend(user, friend);
+                        user.addBlockedFriends(friend);
+                        friendsListModel.removeElement(selectedFriend);
+                        updateFriendsList();
+                        /*must update blocked*/
+                        
+                    
     }
 
-    private void postsListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_postsListValueChanged
+    private void postsListValueChanged(javax.swing.event.ListSelectionEvent evt) {                                       
         // TODO add your handling code here:
         int selectedIndex = postsList.getSelectedIndex();
 
                     System.out.println("User selected: " + selectedIndex);
-                    ContentPreviewForFriendsFrame friendcontent= new ContentPreviewForFriendsFrame(selectedIndex, 1);
-               
+                    /*ContentPreviewForFriendsFrame friendcontent= new ContentPreviewForFriendsFrame(selectedIndex, 1);
+        */       
     }        
 
   

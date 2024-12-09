@@ -88,7 +88,7 @@ public class NewsFeedPage extends javax.swing.JFrame {
      
      
       public void updateStoriesList() {
-        ArrayList<String> linerep = NewsFeed.getLineRepresentationsStories(user);
+        ArrayList<String> linerep = NewsFeed.getLineRepresentationsAllStories(user);
         storiesListModel.clear();
 
         for (int i = 0; i < linerep.size(); i++) {
@@ -99,7 +99,7 @@ public class NewsFeedPage extends javax.swing.JFrame {
     }
 
     public void updatePostsList() {
-        ArrayList<String> linerep = NewsFeed.getLineRepresentationsPosts(user);
+        ArrayList<String> linerep = NewsFeed.getLineRepresentationsAllPosts(user);
         postsListModel.clear();
 
         for (int i = 0; i < linerep.size(); i++) {
@@ -294,7 +294,7 @@ public class NewsFeedPage extends javax.swing.JFrame {
             .addGroup(NewPostPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(newPostPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(238, Short.MAX_VALUE))
         );
 
         IconPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -436,8 +436,7 @@ public class NewsFeedPage extends javax.swing.JFrame {
                         .addGroup(friendReqSuggPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(friendReqSuggPanel2Layout.createSequentialGroup()
                                 .addGap(16, 16, 16)
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jLabel5))
                             .addGroup(friendReqSuggPanel2Layout.createSequentialGroup()
                                 .addGroup(friendReqSuggPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel6)
@@ -547,7 +546,7 @@ public class NewsFeedPage extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -579,10 +578,9 @@ public class NewsFeedPage extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(FriendPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(NewPostPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(mainNewsPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(FeedPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(NewPostPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(FeedPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mainNewsPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         pack();
@@ -647,62 +645,67 @@ public class NewsFeedPage extends javax.swing.JFrame {
 
     private void suggestionsListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_suggestionsListValueChanged
         // TODO add your handling code here:
-         String selectedFriend = suggestionsList.getSelectedValue();
-                    String[] token = selectedFriend.split(" ");
-                    String usernameUser = user.getUsername();
-                    Friend suggestedFriend = FriendManagement.getFriendSuggested(user, token[0]);
-                    System.out.println("User selected: " + selectedFriend);
+        try {
+            String selectedFriend = suggestionsList.getSelectedValue();
+            String[] token = selectedFriend.split(" ");
+            String usernameUser = user.getUsername();
+            Friend suggestedFriend = FriendManagement.getFriendSuggested(user, token[0]);
+            System.out.println("User selected: " + selectedFriend);
 
-                    String[] options = {"Send Request", "Ignore"};
-                    int choice = JOptionPane.showOptionDialog(
-                            null,
-                            "Would you like to: ",
-                            ("Suggested Friend" + suggestedFriend.getUsername()),
-                            JOptionPane.DEFAULT_OPTION,
-                            JOptionPane.INFORMATION_MESSAGE,
-                            null, options, options[0]
-                    );
+            String[] options = {"Send Request", "Ignore"};
+            int choice = JOptionPane.showOptionDialog(
+                    null,
+                    "Would you like to: ",
+                    ("Suggested Friend" + suggestedFriend.getUsername()),
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE,
+                    null, options, options[0]
+            );
 
-                    System.out.println("User selected: " + selectedFriend);
-                    if (choice == 0) {
-                        FriendRequests fr = new FriendRequests(user.getEmail(),user.getUsername(), user.getUserId(), suggestedFriend.getUserId());
-                        FriendManagement.requestSent(fr, DataBase.getInstance().getUsers().get(DataBase.getInstance().getUsers().indexOf(AccountManagement.findUser(token[0]))));
-                        JOptionPane.showMessageDialog(null, "Friend request sent successfully");
-                    } else if (choice == 1) {
-                    }
+            System.out.println("User selected: " + selectedFriend);
+            if (choice == 0) {
+                FriendRequests fr = new FriendRequests(user.getEmail(), user.getUsername(), user.getUserId(), suggestedFriend.getUserId());
+                FriendManagement.requestSent(fr, DataBase.getInstance().getUsers().get(DataBase.getInstance().getUsers().indexOf(AccountManagement.findUser(token[0]))));
+                JOptionPane.showMessageDialog(null, "Friend request sent successfully");
+            } else if (choice == 1) {
+            }
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_suggestionsListValueChanged
 
     private void requestsList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_requestsList1ValueChanged
         // TODO add your handling code here:
-                    String selectedFriend = requestsList1.getSelectedValue();
-                    String usernameUser = user.getUsername();
-                    FriendRequests friendrequest = user.getFriendReq(selectedFriend);
-                    String[] options = {"Accept", "Remove"};
-                    int choice = JOptionPane.showOptionDialog(
-                            null,
-                            "Would you like to: ",
-                            ("Request by" + friendrequest.getUsername()),
-                            JOptionPane.DEFAULT_OPTION,
-                            JOptionPane.INFORMATION_MESSAGE,
-                            null, options, options[0]
-                    );
+        try {
+            String selectedFriend = requestsList1.getSelectedValue();
+            String usernameUser = user.getUsername();
+            FriendRequests friendrequest = user.getFriendReq(selectedFriend);
+            String[] options = {"Accept", "Remove"};
+            int choice = JOptionPane.showOptionDialog(
+                    null,
+                    "Would you like to: ",
+                    ("Request by" + friendrequest.getUsername()),
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE,
+                    null, options, options[0]
+            );
 
-                    System.out.println("User selected: " + selectedFriend);
-                    if (choice == 0) {
-                        FriendManagement.friendRequest(true, user, friendrequest, false);
-                        updateRequestsList();  // Refresh the requests list
-                        updateFriendsList();
-                        JOptionPane.showMessageDialog(null, "Friend request accepted successfully");
-                        
-                    } else if (choice == 1) {
-                        FriendManagement.friendRequest(false, user, friendrequest, true);
-                        JOptionPane.showMessageDialog(null, "Friend request denied successfully");
-                    }
+            System.out.println("User selected: " + selectedFriend);
+            if (choice == 0) {
+                FriendManagement.friendRequest(true, user, friendrequest, false);
+                updateRequestsList();  // Refresh the requests list
+                updateFriendsList();
+                JOptionPane.showMessageDialog(null, "Friend request accepted successfully");
+            } else if (choice == 1) {
+                FriendManagement.friendRequest(false, user, friendrequest, true);
+                JOptionPane.showMessageDialog(null, "Friend request denied successfully");
+            }
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_requestsList1ValueChanged
 
     private void friendsList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_friendsList1ValueChanged
         // TODO add your handling code here:
-        
+        try{
                     String selectedFriend = friendsList1.getSelectedValue();
                     String[] token = selectedFriend.split(" ");
                     String usernameUser = user.getUsername();
@@ -730,15 +733,15 @@ public class NewsFeedPage extends javax.swing.JFrame {
                         updateFriendsList();
                         /*must update blocked*/
                         JOptionPane.showMessageDialog(null, "Friend removed successfully");
+                    }}catch(Exception e){
                     }
     }//GEN-LAST:event_friendsList1ValueChanged
 
     private void storiesListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_storiesListValueChanged
         // TODO add your handling code here:
          int selectedIndex = storiesList.getSelectedIndex();
-
-                    System.out.println("User selected: " + selectedIndex);
-                    ContentPreviewForFriendsFrame friendcontent= new ContentPreviewForFriendsFrame(selectedIndex, 2);
+         System.out.println("User selected: " + selectedIndex);
+         ContentPreviewForFriendsFrame friendcontent= new ContentPreviewForFriendsFrame(selectedIndex, 2);
                 
     }//GEN-LAST:event_storiesListValueChanged
 
