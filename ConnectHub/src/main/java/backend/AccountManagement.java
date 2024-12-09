@@ -51,7 +51,9 @@ public abstract class AccountManagement {
         
         
         User user = new User(userId, email, username, password, dateOfBirth, status);// created a new user
+        Profile userProfile = new Profile(null, null, "", user); // create a profile for this user
         DataBase.getInstance().addUser(user); //adding a new user to our data base
+        DataBase.getInstance().addProfile(userProfile);
         //here I'll add the user to the json file before I return that it was successfully added
         
         FileManagement.saveInUsersJSONfile();

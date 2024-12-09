@@ -44,7 +44,7 @@ public class FileManagement { // Centrlized file operations system
                 String email = userJson.getString("email");
                 String id = userJson.getString("userId");
                 String username = userJson.getString("username");
-                LocalDate date = LocalDate.parse(userJson.getString("dob"));
+                LocalDate date = LocalDate.parse(userJson.getString("dob"),formatter);
                 String password = userJson.getString("password");
                 boolean status = userJson.getBoolean("status");
                 User user = new User(id, email, username, password, date, status,"load");
@@ -181,12 +181,7 @@ public class FileManagement { // Centrlized file operations system
                     friendRequests.add(new FriendRequests(email, username, id, receiverId));
 
                 }
-                if(id.equals(userId)) // add friend request as a sender
-                {
-
-                    friendRequests.add(new FriendRequests(email, username, id, receiverId));
-
-                }
+                
             }
         } catch (IOException ex) {
              System.err.println("Error loading friend requests from JSON file: " + ex.getMessage());
@@ -431,7 +426,7 @@ public class FileManagement { // Centrlized file operations system
                 String contentId = jsonPost.getString("contentid");
                 String content = jsonPost.getString("content");
                 String time = jsonPost.getString("timestamp");
-                LocalDateTime date = LocalDateTime.parse(time);
+                LocalDateTime date = LocalDateTime.parse(time,DateTimeFormatter.ISO_LOCAL_DATE_TIME);
                 String photoPath = jsonPost.optString("photopath",null);
                 ImageIcon image = null;
             if (photoPath != null && Files.exists(Paths.get(photoPath))) {
@@ -530,7 +525,7 @@ public class FileManagement { // Centrlized file operations system
         public static ArrayList<Profile> loadFromProfilesJsonFile()
     {
         ArrayList<Profile> profiles = new ArrayList<>();
-        
+        ArrayList<User> users = loadFromUsersJSONfile();
         try {
 
              if (!Files.exists(Paths.get("profiles.json")) || Files.size(Paths.get("profiles.json")) == 0) {
@@ -550,7 +545,7 @@ public class FileManagement { // Centrlized file operations system
                 String profilePic = jsonProfile.optString("profile pic",null);
                 String bio = jsonProfile.getString("bio");
                 User user1=null;
-               for(User user:DataBase.getInstance().getUsers()){
+               for(User user:users){
                    if(user.getUserId().equals(userId)){
                        user1=user;
                        break;

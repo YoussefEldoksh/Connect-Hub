@@ -4,6 +4,7 @@
  */
 package frontend;
 
+import backend.User;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,21 +16,30 @@ public class SignIn_Or_SignUp_Window extends javax.swing.JFrame {
     /**
      * Creates new form Sign_inWindow
      */
-    public SignIn_Or_SignUp_Window() {
+    static SignIn_Or_SignUp_Window signIn_Or_SignUp_Window;
+    
+    private SignIn_Or_SignUp_Window() {
         initComponents();
         this.setTitle("Main Window");
     }
 
+        public static SignIn_Or_SignUp_Window getInstance() {
+        if (signIn_Or_SignUp_Window == null) {
+            signIn_Or_SignUp_Window = new SignIn_Or_SignUp_Window();
+        }
+        return signIn_Or_SignUp_Window;
+    }
+    
 
     public void openSignInWindow() {
         this.setVisible(false);
-        SignInWindow si = SignInWindow.getInstance(this);
+        SignInWindow si = SignInWindow.getInstance();
         si.setVisible(true);
     }
     
     public void openSignUpWindow() {
         this.setVisible(false);
-        SignUpWindow su = SignUpWindow.getInstance(this);
+        SignUpWindow su = SignUpWindow.getInstance();
         su.setVisible(true);
     }
     /**

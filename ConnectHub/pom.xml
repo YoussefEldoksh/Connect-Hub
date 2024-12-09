@@ -6,6 +6,11 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <build>
+        <resources>
+            <resource>
+                <directory>src/test/resources</directory>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -26,16 +31,15 @@
     </properties>
     <dependencies>
         <dependency>
-             <groupId>org.json</groupId>
-             <artifactId>json</artifactId>
-             <version>20230618</version>
-         </dependency>    
-         
-         <dependency>
-              <groupId>commons-validator</groupId>
-              <artifactId>commons-validator</artifactId>
-              <version>1.4.0</version>
-             <type>jar</type>
-         </dependency>
-     </dependencies>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20230618</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-validator</groupId>
+            <artifactId>commons-validator</artifactId>
+            <version>1.4.0</version>
+            <type>jar</type>
+        </dependency>
+    </dependencies>
 </project>

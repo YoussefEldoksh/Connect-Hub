@@ -1,122 +1,62 @@
 [
     {
         "blockedfriends": [],
-        "password": "sKOFcUrJc7Xa27IVjvVP6/FsrpmRbtd/7A5RhCN1naY=",
-        "dob": "2024-12-06",
+        "password": "QyGoRO52DubKVXWnwWw00qQOwbPXYANoG4o4SNwfTMU=",
+        "dob": "2024-12-08",
         "userId": "U0",
-        "email": "haslaaaa#@ahoo.com",
-        "friends": [
-            {
-                "userId": "U1",
-                "username": "123",
-                "email": "hala@yahoo.com"
-            },
-            {
-                "userId": "U2",
-                "username": "halaa",
-                "email": "halaa@yahoo.com"
-            }
-        ],
-        "username": "jkgjg",
-        "status": true
-    },
-    {
-        "blockedfriends": [],
-        "password": "si1PgtEbBqGSC6BT6BhnnGkYvysA7I4q3s5iz0gFIhU=",
-        "dob": "2024-12-06",
-        "userId": "U1",
-        "email": "hala@yahoo.com",
+        "email": "doksh@gmail.com",
         "friends": [],
-        "username": "123",
-        "status": true
-    },
-    {
-        "blockedfriends": [],
-        "password": "bkgXe2PxgLbLSy9CBNnNzYrE2+TAmHgryHF6ndSPcTo=",
-        "dob": "2024-12-06",
-        "userId": "U2",
-        "email": "halaa@yahoo.com",
-        "friends": [],
-        "username": "halaa",
-        "status": true
-    },
-    {
-        "blockedfriends": [],
-        "password": "dn3ldueYlABQE0UYqbEBl6fqTf2EuvXp/+vqVlHJGxQ=",
-        "dob": "2024-12-06",
-        "userId": "U3",
-        "email": "whatemail@gmail.com",
-        "friends": [],
-        "username": "johndoe",
-        "status": true
-    },
-    {
-        "blockedfriends": [],
-        "password": "MH6O1YiSaMjI6yH4sz5GComlcN6X9POXe62y5qX9IUk=",
-        "dob": "2024-12-06",
-        "userId": "U4",
-        "email": "swe@h.com",
-        "friends": [],
-        "username": "swe",
-        "status": true
-    },
-    {
-        "blockedfriends": [],
-        "password": "FSvvlsL/ZjRy2Ir60263Cvh4dGbSMDtFQIipHJAPwv8=",
-        "dob": "2024-12-06",
-        "userId": "U5",
-        "email": "swe43@23.com",
-        "friends": [],
-        "username": "swed",
-        "status": true
-    },
-    {
-        "blockedfriends": [],
-        "password": "4263DyM5AgU1r5/pe1+tD0W8u/ZKgTVt/oMuDmzhuqI=",
-        "dob": "2024-12-06",
-        "userId": "U6",
-        "email": "ioe@w.com",
-        "friends": [],
-        "username": "ioe",
-        "status": true
-    },
-    {
-        "blockedfriends": [],
-        "password": "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=",
-        "dob": "2024-12-06",
-        "userId": "U7",
-        "email": "sde@s.com",
-        "friends": [],
-        "username": "abc",
-        "status": true
-    },
-    {
-        "blockedfriends": [],
-        "password": "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=",
-        "dob": "2024-12-06",
-        "userId": "U8",
-        "email": "abdo@ad.com",
-        "friends": [],
-        "username": "abcd",
-        "status": true
+        "username": "doksh22",
+        "status": false
     },
     {
         "blockedfriends": [],
         "password": "QyGoRO52DubKVXWnwWw00qQOwbPXYANoG4o4SNwfTMU=",
-        "dob": "2024-12-07",
-        "userId": "U9",
-        "email": "youssefeldoksh788@gmail.com",
-        "friends": [            {
-            "userId": "U1",
-            "username": "123",
-            "email": "hala@yahoo.com"
-        },
-        {
-            "userId": "U2",
-            "username": "halaa",
-            "email": "halaa@yahoo.com"
-        }],
-        "username": "doksh2020",
-        "status": true
+        "dob": "2024-12-08",
+        "userId": "U1",
+        "email": "doksh5@gmail.com",
+        "friends": [],
+        "username": "doksh222",
+        "status": false
+    },
+    {
+        "blockedfriends": [],
+        "password": "QyGoRO52DubKVXWnwWw00qQOwbPXYANoG4o4SNwfTMU=",
+        "dob": "2024-12-08",
+        "userId": "U2",
+        "email": "deibfw@gmail.com",
+        "friends": [],
+        "username": "rwoknf",
+        "status": false
+    },
+    {
+        "blockedfriends": [],
+        "password": "QyGoRO52DubKVXWnwWw00qQOwbPXYANoG4o4SNwfTMU=",
+        "dob": "2024-12-08",
+        "userId": "U3",
+        "email": "doksh666@gmail.com",
+        "friends": [],
+        "username": "doksh66",
+        "status": false
+    },
+    {
+        "blockedfriends": [],
+        "password": "QyGoRO52DubKVXWnwWw00qQOwbPXYANoG4o4SNwfTMU=",
+        "dob": "2024-12-08",
+        "userId": "U4",
+        "email": "ahmed@gmail.com",
+        "friends": [],
+        "username": "ahmed22",
+        "status": false
+    },
+    {
+        "blockedfriends": [],
+        "password": "QyGoRO52DubKVXWnwWw00qQOwbPXYANoG4o4SNwfTMU=",
+        "dob": "1995-02-07",
+        "userId": "U5",
+        "email": "doksh88@gmail.com",
+        "friends": [],
+        "username": "doksh3333",
+        "status": false
     }
 ]

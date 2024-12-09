@@ -139,6 +139,50 @@ public class NewsFeed {
         }
         return lineRepresentations;
     }
+    
+               public static ArrayList<String> getLineRepresentationsAllStories(User user) {
+        ArrayList<String> lineRepresentations = new ArrayList<>();
+        ArrayList<String> friendsId = new ArrayList<>();
+        
+            for (Friend friend : user.getListOfFriends()) {
+                friendsId.add(friend.getUserId());
+                friendsId.add(user.getUserId());
+            }
+        
+        for (int i = 0; i < DataBase.getInstance().getGlobalStories().size(); i++) {
+           
+            if(friendsId.contains(DataBase.getInstance().getGlobalStories().get(i).getAuthorID()))
+            { String username = AccountManagement.findUsername(DataBase.getInstance().getGlobalStories().get(i).getAuthorID());
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            // Convert LocalDate to String
+            String formattedDate = DataBase.getInstance().getGlobalStories().get(i).getTimestamp().format(formatter);
+            String s = username + "published on: " + formattedDate;
+            lineRepresentations.add(s);
+            }
+        }
+        return lineRepresentations;
+    }
+    public static ArrayList<String> getLineRepresentationsAllPosts(User u) {
+      ArrayList<String> lineRepresentations = new ArrayList<>();
+        ArrayList<String> friendsId = new ArrayList<>();
+        
+            for (Friend friend : u.getListOfFriends()) {
+                friendsId.add(friend.getUserId());
+            }
+        
+        for (int i = 0; i < DataBase.getInstance().getGlobalPosts().size(); i++) {
+           
+            if(friendsId.contains(DataBase.getInstance().getGlobalPosts().get(i).getAuthorID()))
+            { String username = AccountManagement.findUsername(DataBase.getInstance().getGlobalPosts().get(i).getAuthorID());
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            // Convert LocalDate to String
+            String formattedDate = DataBase.getInstance().getGlobalPosts().get(i).getTimestamp().format(formatter);
+            String s = username + "published on: " + formattedDate;
+            lineRepresentations.add(s);
+            }
+        }
+        return lineRepresentations;
+    }
 
     public static ArrayList<String> getLineRepresentationsPosts(User u) {
         ArrayList<Posts> posts = fetchPosts(u);
