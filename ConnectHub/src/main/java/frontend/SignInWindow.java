@@ -12,20 +12,23 @@ import javax.swing.JOptionPane;
  *
  * @author malak
  */
+
+
 public class SignInWindow extends javax.swing.JFrame {
-SignIn_Or_SignUp_Window parentWindow;
-private static SignInWindow instance;
+
+    
+    
+    private static SignInWindow instance;
     /**
      * Creates new form SignInWindow
      */
-    public SignInWindow(SignIn_Or_SignUp_Window parentWindow) {
+    private SignInWindow() {
         initComponents();
-        this.parentWindow=parentWindow;
     }
 
-      public static SignInWindow getInstance(SignIn_Or_SignUp_Window parentWindow) {
+      public static SignInWindow getInstance() {
         if (instance == null) {
-            instance = new SignInWindow(parentWindow);
+            instance = new SignInWindow();
         }
         return instance;
     }
@@ -185,7 +188,7 @@ private static SignInWindow instance;
         if (u==null) {
             JOptionPane.showMessageDialog(this, "Incorrect Username or Password.");
         } else{
-            JOptionPane.showMessageDialog(this, "Hello" + u.getUsername());
+            JOptionPane.showMessageDialog(this, "Hello " + u.getUsername());
             this.openNewsFeedPage(u); 
         }
     }//GEN-LAST:event_LogInButtonActionPerformed
@@ -193,7 +196,7 @@ private static SignInWindow instance;
     private void SignupfromSigninButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SignupfromSigninButtonActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        parentWindow.openSignUpWindow();
+        SignIn_Or_SignUp_Window.getInstance().openSignUpWindow();
     }//GEN-LAST:event_SignupfromSigninButtonActionPerformed
 
     /**

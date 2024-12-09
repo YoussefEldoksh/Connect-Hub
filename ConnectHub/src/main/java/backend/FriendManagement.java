@@ -16,6 +16,11 @@ public class FriendManagement {
     public static void friendRequest(boolean accept, User user,FriendRequests friend, boolean rejected)
     {
       ArrayList<String> excludedIds = new ArrayList<>();
+      User sender=AccountManagement.findUser(friend.getUsername());
+      if (sender == null) {
+    System.out.println("Sender user not found: " + friend.getUsername());
+    return;
+}
         for (Friend excludedfriends : user.getListOfBlockedFriends()) {
             excludedIds.add(excludedfriends.getUserId());
         }
@@ -29,14 +34,8 @@ public class FriendManagement {
       if(!user.getListOfFriendReq().contains(friend))// if the request is already made don't added it again to the array
       {
           user.addFriendsReq(friend);
-
           DataBase.getInstance().addToGlobalFriendRequests(friend);
-                  
-
-          User sender=AccountManagement.findUser(friend.getUsername());
-          sender.addFriendsReq(friend);
-          
-
+                          
       }
        
        if(!excludedIds.contains(friend.getUserId()))
@@ -46,31 +45,40 @@ public class FriendManagement {
                 
                 user.addFriends(new Friend(friend.getEmail(),friend.getUsername(), friend.getUserId()));
                 user.removeFriendReq(friend);
-                User sender=AccountManagement.findUser(friend.getUsername());
+                
                 sender.addFriends(new Friend(user.getEmail(),user.getUsername(),user.getUserId()));
                 sender.removeFriendReq(friend);
                 
                 DataBase.getInstance().getGlobalFriendRequests().remove(friend);
-                FileManagement.saveToFriendRequestsJsonFile();
-                FileManagement.saveInUsersJSONfile();
+
             }
             else if(accept == false &&  rejected == true)
             {
                 user.removeFriendReq(friend);//this means that the request if rejected
-                User sender=AccountManagement.findUser(friend.getUsername());
-                sender.removeFriendReq(friend);
-          
-                DataBase.getInstance().getGlobalFriendRequests().remove(friend);
-                FileManagement.saveToFriendRequestsJsonFile();
+                          
             }
+            
+                 FileManagement.saveToFriendRequestsJsonFile();
+                FileManagement.saveInUsersJSONfile();
 
             //else the request is still pending
-            DataBase.getInstance().addToGlobalFriendRequests(friend);
-            FileManagement.saveToFriendRequestsJsonFile(); // add it for future responding
+            // add it for future responding
        }
 
     }
-    
+   public static void requestSent(FriendRequests request, User user) {
+    if (user.getListOfFriendReq().contains(request)) {
+        System.out.println("Friend request already sent: " + request.getUsername());
+        return;
+    }
+
+    DataBase.getInstance().addToGlobalFriendRequests(request);
+    DataBase.getInstance()
+            .getUsers()
+            .get(DataBase.getInstance().getUsers().indexOf(user))
+            .addFriendsReq(request);
+    System.out.println("Friend request sent to: " + request.getUsername());
+}
   
     
     public static ArrayList<Friend> friendSuggestion(User user)
@@ -117,9 +125,9 @@ public class FriendManagement {
         
         for (Friend userFriend : userFriends) {
             if(FriendManagement.displayFriendStatus(user, userFriend))
-            friends.add(userFriend.getUserId() + " " + "ONLINE");
+            friends.add(userFriend.getUsername()+ " " + "ONLINE");
             else
-            friends.add(userFriend.getUserId() + " " + "OFFLINE");
+            friends.add(userFriend.getUsername()+ " " + "OFFLINE");
         }
         return friends;
     }

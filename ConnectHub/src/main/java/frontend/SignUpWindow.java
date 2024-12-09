@@ -7,7 +7,9 @@ package frontend;
 import backend.AccountManagement;
 import backend.DataBase;
 import backend.User;
+import java.text.Format;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,20 +17,21 @@ import javax.swing.JOptionPane;
  * @author malak
  */
 public class SignUpWindow extends javax.swing.JFrame {
-SignIn_Or_SignUp_Window parentWindow;
-static SignUpWindow instance;
+
+    
+    static SignUpWindow instance;
 
     /**
      * Creates new form SignUpWIndow
      */
-    private SignUpWindow(SignIn_Or_SignUp_Window parentWindow) {
+    private SignUpWindow() {
         initComponents();
-        this.parentWindow=parentWindow;
+ 
     }
 
-    public static SignUpWindow getInstance(SignIn_Or_SignUp_Window parentWindow) {
+    public static SignUpWindow getInstance() {
         if (instance == null) {
-            instance = new SignUpWindow(parentWindow);
+            instance = new SignUpWindow();
         }
         return instance;
     }
@@ -60,11 +63,15 @@ static SignUpWindow instance;
         jLabel6 = new javax.swing.JLabel();
         SigninfromSignupButton = new javax.swing.JButton();
         SignUpButton = new javax.swing.JButton();
+        dayComboBox = new javax.swing.JComboBox<>();
+        monthComboBox = new javax.swing.JComboBox<>();
+        yearComboBox = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
         jPanel1.setForeground(new java.awt.Color(255, 153, 153));
+        jPanel1.setToolTipText("");
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Historic", 1, 18)); // NOI18N
         jLabel1.setText("Signup");
@@ -94,6 +101,17 @@ static SignUpWindow instance;
         SignUpButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SignUpButtonActionPerformed(evt);
+            }
+        });
+
+        dayComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "dd", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
+
+        monthComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "mm", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" }));
+
+        yearComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "yyyy", "2024", "2023", "2022", "2021", "2020", "2019", "2018", "2017", "2016", "2015", "2014", "2013", "2012", "2011", "2010", "2009", "2008", "2007", "2006", "2005", "2004", "2003", "2002", "2001", "2000", "1999", "1998", "1997", "1996", "1995", "1994", "1993", "1992", "1991", "1990", "1989", "1988", "1987", "1986", "1985", "1984", "1983", "1982", "1981", "1980", "1979", "1978", "1977", "1976", "1975", "1974", "1973", "1972", "1971", "1970" }));
+        yearComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                yearComboBoxActionPerformed(evt);
             }
         });
 
@@ -127,8 +145,16 @@ static SignUpWindow instance;
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(EmailTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
                                     .addComponent(UsernameTextField, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(PasswordField, javax.swing.GroupLayout.Alignment.LEADING))))))
-                .addGap(0, 31, Short.MAX_VALUE))
+                                    .addComponent(PasswordField, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(12, 12, 12)
+                                        .addComponent(yearComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(monthComboBox, 0, 1, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(dayComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(5, 5, 5)))))))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,14 +174,18 @@ static SignUpWindow instance;
                     .addComponent(jLabel4)
                     .addComponent(PasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(dayComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(monthComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(yearComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addComponent(SignUpButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(SigninfromSignupButton))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -180,7 +210,12 @@ static SignUpWindow instance;
 
         String userID = "U" + DataBase.getInstance().getUsers().size();
         System.out.println("Current number of users: " + DataBase.getInstance().getUsers().size());
-        LocalDate dob = LocalDate.now();
+        String year = yearComboBox.getItemAt(yearComboBox.getSelectedIndex());
+        String month = monthComboBox.getItemAt(monthComboBox.getSelectedIndex());
+        String day = dayComboBox.getItemAt(dayComboBox.getSelectedIndex());
+        String date = year + "-" + month + "-" + day;
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
+        LocalDate dob = LocalDate.parse(date,formatter);
 
         int n = AccountManagement.signUp(userID, email, username, password, dob, true);
         switch (n) {
@@ -194,9 +229,9 @@ static SignUpWindow instance;
                 JOptionPane.showMessageDialog(this, "An account linked to this email already exists.");
                 break;
             case 4:
-                JOptionPane.showMessageDialog(this, "Your account was successfully created.\nWelcome at ConnectHub!");
+                JOptionPane.showMessageDialog(this, "Your account was successfully created.\nWelcome to ConnectHub!");
                 User u = AccountManagement.findUser(username);
-                this.openNewsFeedPage(u);
+                openNewsFeedPage(u);
                 break;
             default:
                 break;
@@ -206,8 +241,12 @@ static SignUpWindow instance;
     private void SigninfromSignupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SigninfromSignupButtonActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        parentWindow.openSignInWindow();
+        SignIn_Or_SignUp_Window.getInstance().openSignInWindow();
     }//GEN-LAST:event_SigninfromSignupButtonActionPerformed
+
+    private void yearComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_yearComboBoxActionPerformed
 
     /**
      * @param args the command line arguments
@@ -220,6 +259,7 @@ static SignUpWindow instance;
     private javax.swing.JButton SignUpButton;
     private javax.swing.JButton SigninfromSignupButton;
     private javax.swing.JTextField UsernameTextField;
+    private javax.swing.JComboBox<String> dayComboBox;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -227,5 +267,7 @@ static SignUpWindow instance;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JComboBox<String> monthComboBox;
+    private javax.swing.JComboBox<String> yearComboBox;
     // End of variables declaration//GEN-END:variables
 }

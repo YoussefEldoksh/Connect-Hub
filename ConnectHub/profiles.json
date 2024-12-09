@@ -1,1 +1,38 @@
-[]
+[
+    {
+        "cover": "/Images/background.jpg",
+        "bio": "",
+        "profile pic": "/Images/DefaultPhoto.jpg",
+        "userid": "U0"
+    },
+    {
+        "cover": "/Images/background.jpg",
+        "bio": "",
+        "profile pic": "/Images/DefaultPhoto.jpg",
+        "userid": "U1"
+    },
+    {
+        "cover": "/Images/background.jpg",
+        "bio": "",
+        "profile pic": "/Images/DefaultPhoto.jpg",
+        "userid": "U2"
+    },
+    {
+        "cover": "/Images/background.jpg",
+        "bio": "",
+        "profile pic": "/Images/DefaultPhoto.jpg",
+        "userid": "U3"
+    },
+    {
+        "cover": "/Images/background.jpg",
+        "bio": "",
+        "profile pic": "/Images/DefaultPhoto.jpg",
+        "userid": "U4"
+    },
+    {
+        "cover": "/Images/background.jpg",
+        "bio": "",
+        "profile pic": "/Images/DefaultPhoto.jpg",
+        "userid": "U5"
+    }
+]

@@ -154,15 +154,22 @@ public class FriendReqSuggPanel extends javax.swing.JPanel {
         for (int i = 0; i < linerep.size(); i++) {
             friendsListModel.addElement(linerep.get(i));
         }
+        System.out.println("Friends List Data: " + linerep);
+        friendsList.revalidate();
+        friendsList.repaint();
     }
     
-     public void updateSuggestionsList(User u) {
+     public void  updateSuggestionsList(User u) {
         ArrayList<String> linerep = FriendManagement.fetchFriendsSuggestions(u);
         suggestionsListModel.clear();
-
-        for (int i = 0; i < linerep.size(); i++) {
-            suggestionsListModel.addElement(linerep.get(i));
-        }
+        
+         for (String string : linerep) {
+             suggestionsListModel.addElement(string);
+         }
+        
+        System.out.println("Friends List Data: " + linerep);
+        suggestionsList.validate();
+        suggestionsList.repaint();
     }
      
      public void updateRequestsList(User u) {
@@ -170,8 +177,11 @@ public class FriendReqSuggPanel extends javax.swing.JPanel {
         requestsListModel.clear();
 
         for (int i = 0; i < linerep.size(); i++) {
-            suggestionsListModel.addElement(linerep.get(i));
+            requestsListModel.addElement(linerep.get(i));
         }
+        requestsList.revalidate();
+        requestsList.repaint();
+        System.out.println("Friends List Data: " + linerep);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -181,6 +191,8 @@ public class FriendReqSuggPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
