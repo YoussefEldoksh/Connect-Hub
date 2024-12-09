@@ -16,8 +16,6 @@ import javax.swing.JOptionPane;
 
 public class SignInWindow extends javax.swing.JFrame {
 
-    
-    
     private static SignInWindow instance;
     /**
      * Creates new form SignInWindow
