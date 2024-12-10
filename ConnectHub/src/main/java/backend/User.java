@@ -7,6 +7,7 @@ package backend;
 import static backend.FriendManagement.friendSuggestion;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.DatabaseMetaData;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -218,10 +219,11 @@ public class User extends Account {
     }    
     
     public FriendRequests getFriendReq(String username) {
-        for (int i = 0; i < this.getListOfFriendReq().size(); i++) {
-            if (this.getListOfFriendReq().get(i).getUsername().equals(username))
+        for (int i = 0; i < friendReq.size(); i++) {
+            if (friendReq.get(i).getUsername().equals(username))
                 return this.getListOfFriendReq().get(i);
         }
+        System.out.println(friendReq);
         return null;
     }
     

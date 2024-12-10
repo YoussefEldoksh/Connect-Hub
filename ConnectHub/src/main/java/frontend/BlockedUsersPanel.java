@@ -22,25 +22,27 @@ import javax.swing.event.ListSelectionListener;
  */
 public class BlockedUsersPanel extends javax.swing.JPanel {
 
-    private JList<String> blockedList;
+  
+    User user;
     
     private DefaultListModel<String> blockedListModel;
     /**
      * Creates new form BlockedUsersPanel
      */
-    public BlockedUsersPanel() {
+    public BlockedUsersPanel(User u) {
         initComponents();
         blockedListModel = new DefaultListModel<>();
         // Set the JList models to DefaultListModel
-        blockedList = new JList<>(blockedListModel);
+        
+        this.user = u;
         blockedList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) { 
                     String selectedBlock = blockedList.getSelectedValue();
                     String[] token = selectedBlock.split(" ");
-                    String usernameUser = UserSession.getCurrentUser().getUsername();
-                    Friend blocked = UserSession.getCurrentUser().getListOfBlockedFriends(token[0]);
+                    String usernameUser = user.getUsername();
+                    Friend blocked = user.getListOfBlockedFriends(token[0]);
                     String[] options = {"Unblock", "Ignore"};
                     int choice = JOptionPane.showOptionDialog(
                             null,
@@ -51,9 +53,9 @@ public class BlockedUsersPanel extends javax.swing.JPanel {
                             null, options, options[0]
                     );
                     if (choice == 0) {
-                        FriendManagement.blockFriend(UserSession.getCurrentUser(), blocked);
+                        FriendManagement.blockFriend(user, blocked);
                         blockedListModel.removeElement(selectedBlock);
-                        updateBlockedList(UserSession.getCurrentUser());
+                        updateBlockedList(user);
                     } else if (choice == 1) {
                     }
                 }
@@ -64,11 +66,13 @@ public class BlockedUsersPanel extends javax.swing.JPanel {
 
     
     public void updateBlockedList(User u) {
-        ArrayList<String> linerep = UserSession.getCurrentUser().getLineRepOfBlockedFriends();
+        ArrayList<String> linerep = u.getLineRepOfBlockedFriends();
         blockedListModel.clear();
         for (int i = 0; i < linerep.size(); i++) {
             blockedListModel.addElement(linerep.get(i));
         }
+        blockedList.setModel(blockedListModel);
+      
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -79,19 +83,44 @@ public class BlockedUsersPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane4 = new javax.swing.JScrollPane();
+        blockedList = new javax.swing.JList<>();
+        jLabel3 = new javax.swing.JLabel();
+
+        blockedList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        jScrollPane4.setViewportView(blockedList);
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI Historic", 1, 14)); // NOI18N
+        jLabel3.setText("Blocked Users");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(78, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JList<String> blockedList;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane4;
     // End of variables declaration//GEN-END:variables
 }

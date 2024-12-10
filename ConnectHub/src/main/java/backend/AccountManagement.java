@@ -75,14 +75,19 @@ public abstract class AccountManagement {
     }
     
     public static User findUser(String username) {
-        for (int i = 0; i < DataBase.getInstance().getUsers().size(); i++) {
-            if (DataBase.getInstance().getUsers().get(i).getUsername().equals(username)) {
+        
+        for (User user : DataBase.getInstance().getUsers()) {
+            
+            if (user.getUsername().equals(username)) {
                 System.out.println("User found");
-                return DataBase.getInstance().getUsers().get(i);
+                return user;
             }
+            
         }
         return null;
     }
+    
+   
     
     public static String findUsername(String userId) {
         for (int i = 0; i < DataBase.getInstance().getUsers().size(); i++) {

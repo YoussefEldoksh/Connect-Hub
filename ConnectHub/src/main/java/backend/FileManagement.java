@@ -57,7 +57,7 @@ public class FileManagement { // Centrlized file operations system
                     String friendEmail = friend.getString("email");
                     String friendId = friend.getString("userId");
                     String friendUsername = friend.getString("username");
-                    user.addFriends(new Friend(friendEmail, friendId, friendUsername));
+                    user.addFriends(new Friend(friendEmail, friendUsername, friendId));
                     
                 }
                 
@@ -68,7 +68,7 @@ public class FileManagement { // Centrlized file operations system
                     String friendEmail = friend.getString("email");
                     String friendId = friend.getString("userId");
                     String friendUsername = friend.getString("username");
-                    user.addBlockedFriends(new Friend(friendEmail, friendId, friendUsername));
+                    user.addBlockedFriends(new Friend(friendEmail, friendUsername, friendId));
                     
                 }
                 

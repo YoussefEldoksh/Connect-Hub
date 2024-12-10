@@ -34,13 +34,12 @@ public class FriendManagementPage extends javax.swing.JFrame {
     public FriendManagementPage(User u) {
         initComponents();
         this.user = u;
-        
-               friendsListModel = new DefaultListModel<>();
-        requestsListModel = new DefaultListModel<>();
-        suggestionsListModel = new DefaultListModel<>();
-             updateFriendsList();
-            updateRequestsList();
-            updateSuggestionsList();
+        friendReqSuggPanel1.updateFriendsList(u);
+        friendReqSuggPanel1.updateRequestsList(u);
+        friendReqSuggPanel1.updateSuggestionsList(u);
+        blockedUsersPanel1.updateBlockedList(u);
+   
+          
     }
 
     public static FriendManagementPage getInstance(User user) {
@@ -50,37 +49,37 @@ public class FriendManagementPage extends javax.swing.JFrame {
         return instance;
     }
     
-        public void updateFriendsList() {
-        ArrayList<String> linerep = NewsFeed.fetchFriends(user);
-       friendsListModel.clear();
-
-        for (int i = 0; i < linerep.size(); i++) {
-            friendsListModel.addElement(linerep.get(i));
-        }
-        System.out.println("Friends List Data: " + linerep);
-        friendsList2.setModel(friendsListModel);
-    }
-    
-     public void updateSuggestionsList() {
-        ArrayList<String> linerep = FriendManagement.fetchFriendsSuggestions(user);
-        suggestionsListModel.clear();
-         for (String string : linerep) {
-             suggestionsListModel.addElement(string);
-         }
-        suggestionsList.setModel(suggestionsListModel);
-        System.out.println("Friends List Data: " + linerep);
-    }
-     
-     public void updateRequestsList() {
-        ArrayList<String> linerep = user.getLineRepOfFriendReq();
-        requestsListModel.clear();
-        
-        for (int i = 0; i < linerep.size(); i++) {
-            requestsListModel.addElement(linerep.get(i));
-        }
-        requestsList.setModel(requestsListModel);
-        System.out.println("Friends List Data: " + linerep);
-    }
+//        public void updateFriendsList() {
+//        ArrayList<String> linerep = NewsFeed.fetchFriends(user);
+//       friendsListModel.clear();
+//
+//        for (int i = 0; i < linerep.size(); i++) {
+//            friendsListModel.addElement(linerep.get(i));
+//        }
+//        System.out.println("Friends List Data: " + linerep);
+//        friendsList2.setModel(friendsListModel);
+//    }
+//    
+//     public void updateSuggestionsList() {
+//        ArrayList<String> linerep = FriendManagement.fetchFriendsSuggestions(user);
+//        suggestionsListModel.clear();
+//         for (String string : linerep) {
+//             suggestionsListModel.addElement(string);
+//         }
+//        suggestionsList.setModel(suggestionsListModel);
+//        System.out.println("Friends List Data: " + linerep);
+//    }
+//     
+//     public void updateRequestsList() {
+//        ArrayList<String> linerep = user.getLineRepOfFriendReq();
+//        requestsListModel.clear();
+//        
+//        for (int i = 0; i < linerep.size(); i++) {
+//            requestsListModel.addElement(linerep.get(i));
+//        }
+//        requestsList.setModel(requestsListModel);
+//        System.out.println("Friends List Data: " + linerep);
+//    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -92,21 +91,9 @@ public class FriendManagementPage extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        friendsNewsPanel1 = new frontend.FriendReqSuggPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        requestsList = new javax.swing.JList<>();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        suggestionsList = new javax.swing.JList<>();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        friendsList2 = new javax.swing.JList<>();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        friendReqSuggPanel1 = new frontend.FriendReqSuggPanel();
         jPanel2 = new javax.swing.JPanel();
-        blockedUsersPanel3 = new frontend.BlockedUsersPanel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        blockedList = new javax.swing.JList<>();
-        jLabel3 = new javax.swing.JLabel();
+        blockedUsersPanel1 = new frontend.BlockedUsersPanel(user);
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -118,123 +105,24 @@ public class FriendManagementPage extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
-        requestsList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        requestsList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                requestsListValueChanged(evt);
-            }
-        });
-        jScrollPane1.setViewportView(requestsList);
-
-        suggestionsList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        suggestionsList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                suggestionsListValueChanged(evt);
-            }
-        });
-        jScrollPane2.setViewportView(suggestionsList);
-
-        friendsList2.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        friendsList2.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                friendsList2ValueChanged(evt);
-            }
-        });
-        jScrollPane3.setViewportView(friendsList2);
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI Historic", 1, 14)); // NOI18N
-        jLabel1.setText("Friends");
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI Historic", 1, 14)); // NOI18N
-        jLabel2.setText("Friend Suggestions");
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI Historic", 1, 14)); // NOI18N
-        jLabel4.setText("Friend Requests");
-
-        javax.swing.GroupLayout friendsNewsPanel1Layout = new javax.swing.GroupLayout(friendsNewsPanel1);
-        friendsNewsPanel1.setLayout(friendsNewsPanel1Layout);
-        friendsNewsPanel1Layout.setHorizontalGroup(
-            friendsNewsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(friendsNewsPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(friendsNewsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(friendsNewsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(friendsNewsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(friendsNewsPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 79, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        friendsNewsPanel1Layout.setVerticalGroup(
-            friendsNewsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(friendsNewsPanel1Layout.createSequentialGroup()
-                .addGap(77, 77, 77)
-                .addGroup(friendsNewsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(friendsNewsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jScrollPane2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(friendsNewsPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(friendReqSuggPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 698, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(friendsNewsPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(friendReqSuggPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 153, 153));
-
-        blockedList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        jScrollPane4.setViewportView(blockedList);
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI Historic", 1, 14)); // NOI18N
-        jLabel3.setText("Blocked Users");
-
-        javax.swing.GroupLayout blockedUsersPanel3Layout = new javax.swing.GroupLayout(blockedUsersPanel3);
-        blockedUsersPanel3.setLayout(blockedUsersPanel3Layout);
-        blockedUsersPanel3Layout.setHorizontalGroup(
-            blockedUsersPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(blockedUsersPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(blockedUsersPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4)
-                    .addGroup(blockedUsersPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        blockedUsersPanel3Layout.setVerticalGroup(
-            blockedUsersPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(blockedUsersPanel3Layout.createSequentialGroup()
-                .addGap(83, 83, 83)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(91, Short.MAX_VALUE))
-        );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -242,15 +130,15 @@ public class FriendManagementPage extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(blockedUsersPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(blockedUsersPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(8, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(blockedUsersPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(18, 18, 18)
+                .addComponent(blockedUsersPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel5.setFont(new java.awt.Font("Segoe UI Historic", 1, 24)); // NOI18N
@@ -281,7 +169,7 @@ public class FriendManagementPage extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         pack();
@@ -293,110 +181,12 @@ public class FriendManagementPage extends javax.swing.JFrame {
         
     }//GEN-LAST:event_formWindowClosed
 
-    private void friendsList2ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_friendsList2ValueChanged
-        // TODO add your handling code here:
-        String selectedFriend = friendsList2.getSelectedValue();
-                    String[] token = selectedFriend.split(" ");
-                    String usernameUser = user.getUsername();
-                    Friend friend = Friend.getFriend(usernameUser, token[0]);
-                    String[] options = {"Remove", "Block"};
-                    int choice = JOptionPane.showOptionDialog(
-                            null,
-                            "Would you like to: ",
-                            ("Friend" + friend.getUsername()),
-                            JOptionPane.DEFAULT_OPTION,
-                            JOptionPane.INFORMATION_MESSAGE,
-                            null, options, options[0]
-                    );
-                    if (choice == 0) {
-                        FriendManagement.removeFriend(user, friend);
-                        friendsListModel.removeElement(selectedFriend);
-          
-                        updateFriendsList();
-                    } else if (choice == 1) {
-                        FriendManagement.blockFriend(user, friend);
-                        user.addBlockedFriends(friend);
-                        friendsListModel.removeElement(selectedFriend);
-                        updateFriendsList();
-                        /*must update blocked*/
-                        JOptionPane.showMessageDialog(null, "Friend removed successfully");
-                    }
-    }//GEN-LAST:event_friendsList2ValueChanged
-
-    private void requestsListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_requestsListValueChanged
-        // TODO add your handling code here:
-                String selectedFriend = requestsList.getSelectedValue();
-                    String[] token = selectedFriend.split(" ");
-                    String usernameUser = user.getUsername();
-                    FriendRequests friendrequest = user.getFriendReq(token[0]);
-                    String[] options = {"Accept", "Remove"};
-                    int choice = JOptionPane.showOptionDialog(
-                            null,
-                            "Would you like to: ",
-                            ("Request by" + friendrequest.getUsername()),
-                            JOptionPane.DEFAULT_OPTION,
-                            JOptionPane.INFORMATION_MESSAGE,
-                            null, options, options[0]
-                    );
-
-                    System.out.println("User selected: " + selectedFriend);
-                    if (choice == 0) {
-                        FriendManagement.friendRequest(true, user, friendrequest, false);
-                        updateRequestsList();  // Refresh the requests list
-                        updateFriendsList();
-                        JOptionPane.showMessageDialog(null, "Friend request accepted successfully");
-                        
-                    } else if (choice == 1) {
-                        FriendManagement.friendRequest(false, user, friendrequest, true);
-                        JOptionPane.showMessageDialog(null, "Friend request denied successfully");
-                    }
-    }//GEN-LAST:event_requestsListValueChanged
-
-    private void suggestionsListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_suggestionsListValueChanged
-        // TODO add your handling code here:
-                 String selectedFriend = suggestionsList.getSelectedValue();
-                    String[] token = selectedFriend.split(" ");
-                    String usernameUser = user.getUsername();
-                    Friend suggestedFriend = FriendManagement.getFriendSuggested(user, token[0]);
-                    System.out.println("User selected: " + selectedFriend);
-
-                    String[] options = {"Send Request", "Ignore"};
-                    int choice = JOptionPane.showOptionDialog(
-                            null,
-                            "Would you like to: ",
-                            ("Suggested Friend" + suggestedFriend.getUsername()),
-                            JOptionPane.DEFAULT_OPTION,
-                            JOptionPane.INFORMATION_MESSAGE,
-                            null, options, options[0]
-                    );
-
-                    System.out.println("User selected: " + selectedFriend);
-                    if (choice == 0) {
-                        FriendRequests fr = new FriendRequests(user.getEmail(),user.getUsername(), user.getUserId(), suggestedFriend.getUserId());
-                        FriendManagement.requestSent(fr, DataBase.getInstance().getUsers().get(DataBase.getInstance().getUsers().indexOf(AccountManagement.findUser(token[0]))));
-                        JOptionPane.showMessageDialog(null, "Friend request sent successfully");
-                    } else if (choice == 1) {
-                    }
-    }//GEN-LAST:event_suggestionsListValueChanged
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JList<String> blockedList;
-    private frontend.BlockedUsersPanel blockedUsersPanel3;
-    private javax.swing.JList<String> friendsList2;
-    private frontend.FriendReqSuggPanel friendsNewsPanel1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private frontend.BlockedUsersPanel blockedUsersPanel1;
+    private frontend.FriendReqSuggPanel friendReqSuggPanel1;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JList<String> requestsList;
-    private javax.swing.JList<String> suggestionsList;
     // End of variables declaration//GEN-END:variables
 }
