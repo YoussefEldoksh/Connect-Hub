@@ -10,18 +10,12 @@ import backend.Friend;
 import backend.FriendManagement;
 import backend.FriendRequests;
 import backend.NewsFeed;
-import backend.Posts;
 import backend.Stories;
 import backend.User;
 import backend.UserSession;
-import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 
@@ -49,8 +43,8 @@ public class NewsFeedPage extends javax.swing.JFrame {
         
         this.user = user;
 
-        mainNewsPanel2.updateStoriesList(user);
-        mainNewsPanel2.updatePostsList(user);
+        mainNewsPanel1.updateStoriesList(user);
+        mainNewsPanel1.updatePostsList(user);
 //        friendsListModel = new DefaultListModel<>();
 //        requestsListModel = new DefaultListModel<>();
 //        suggestionsListModel = new DefaultListModel<>();
@@ -202,7 +196,8 @@ public class NewsFeedPage extends javax.swing.JFrame {
         FeedPanel = new javax.swing.JPanel();
         scrollPane1 = new java.awt.ScrollPane();
         friendReqSuggPanel3 = new frontend.FriendReqSuggPanel();
-        mainNewsPanel2 = new frontend.MainNewsPanel();
+        newPostPanel21 = new frontend.NewPostPanel2();
+        mainNewsPanel1 = new frontend.MainNewsPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -295,17 +290,14 @@ public class NewsFeedPage extends javax.swing.JFrame {
         IconPanel.setLayout(IconPanelLayout);
         IconPanelLayout.setHorizontalGroup(
             IconPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(IconPanelLayout.createSequentialGroup()
-                .addGap(39, 39, 39)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, IconPanelLayout.createSequentialGroup()
+                .addContainerGap(40, Short.MAX_VALUE)
                 .addComponent(friendReqSuggPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addGap(15, 15, 15))
         );
         IconPanelLayout.setVerticalGroup(
             IconPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(IconPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(friendReqSuggPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(friendReqSuggPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         FeedPanel.setBackground(new java.awt.Color(204, 204, 255));
@@ -315,9 +307,9 @@ public class NewsFeedPage extends javax.swing.JFrame {
         FeedPanelLayout.setHorizontalGroup(
             FeedPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(FeedPanelLayout.createSequentialGroup()
-                .addContainerGap(23, Short.MAX_VALUE)
+                .addGap(17, 17, 17)
                 .addComponent(friendReqSuggPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                 .addComponent(scrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -329,7 +321,7 @@ public class NewsFeedPage extends javax.swing.JFrame {
                     .addComponent(scrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(FeedPanelLayout.createSequentialGroup()
                         .addComponent(friendReqSuggPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 581, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 26, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -343,11 +335,13 @@ public class NewsFeedPage extends javax.swing.JFrame {
                         .addComponent(IconPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(154, 154, 154)
-                        .addComponent(mainNewsPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(38, 38, 38)
+                        .addComponent(newPostPanel21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(48, 48, 48)
+                        .addComponent(mainNewsPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(FeedPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(FriendPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(702, 702, 702))))
         );
@@ -356,21 +350,32 @@ public class NewsFeedPage extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(IconPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(FriendPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(mainNewsPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(FeedPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(FriendPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(FeedPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addContainerGap()))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(newPostPanel21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(mainNewsPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+
 
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         // TODO add your handling code here:
         friendReqSuggPanel3.updateFriendsList(user);
         friendReqSuggPanel3.updateRequestsList(user);
         friendReqSuggPanel3.updateSuggestionsList(user);
+        mainNewsPanel1.updatePostsList(user);
+        mainNewsPanel1.updateStoriesList(user);
         this.openNewsFeedPage(user);
     }//GEN-LAST:event_refreshButtonActionPerformed
 
@@ -389,19 +394,8 @@ public class NewsFeedPage extends javax.swing.JFrame {
         this.openFriendManagementPage(user);
     }//GEN-LAST:event_friendsButtonActionPerformed
 
-   
-    
- 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+  
+
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel FeedPanel;
@@ -412,7 +406,8 @@ public class NewsFeedPage extends javax.swing.JFrame {
     private javax.swing.JButton friendsButton;
     private javax.swing.JButton homeButton;
     private javax.swing.JLabel jLabel1;
-    private frontend.MainNewsPanel mainNewsPanel2;
+    private frontend.MainNewsPanel mainNewsPanel1;
+    private frontend.NewPostPanel2 newPostPanel21;
     private javax.swing.JButton profileButton;
     private javax.swing.JButton refreshButton;
     private java.awt.ScrollPane scrollPane1;

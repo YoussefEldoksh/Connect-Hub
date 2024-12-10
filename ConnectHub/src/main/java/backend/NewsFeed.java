@@ -140,15 +140,15 @@ public class NewsFeed {
         return lineRepresentations;
     }
     
-               public static ArrayList<String> getLineRepresentationsAllStories(User user) {
+       public static ArrayList<String> getLineRepresentationsAllStories(User user) {
         ArrayList<String> lineRepresentations = new ArrayList<>();
         ArrayList<String> friendsId = new ArrayList<>();
         
             for (Friend friend : user.getListOfFriends()) {
                 friendsId.add(friend.getUserId());
-                friendsId.add(user.getUserId());
+               
             }
-        
+         friendsId.add(user.getUserId());
         for (int i = 0; i < DataBase.getInstance().getGlobalStories().size(); i++) {
            
             if(friendsId.contains(DataBase.getInstance().getGlobalStories().get(i).getAuthorID()))
@@ -156,10 +156,11 @@ public class NewsFeed {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             // Convert LocalDate to String
             String formattedDate = DataBase.getInstance().getGlobalStories().get(i).getTimestamp().format(formatter);
-            String s = username + "published on: " + formattedDate;
+            String s = username + " published on: " + formattedDate;
             lineRepresentations.add(s);
             }
         }
+           System.out.println(lineRepresentations);
         return lineRepresentations;
     }
     public static ArrayList<String> getLineRepresentationsAllPosts(User u) {

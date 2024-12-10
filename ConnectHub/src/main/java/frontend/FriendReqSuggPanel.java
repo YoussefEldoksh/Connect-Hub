@@ -25,22 +25,23 @@ import javax.swing.event.ListSelectionListener;
  */
 public class FriendReqSuggPanel extends javax.swing.JPanel {
 
-
     private DefaultListModel<String> friendsListModel = new DefaultListModel<>();
     private DefaultListModel<String> requestsListModel = new DefaultListModel<>();
     private DefaultListModel<String> suggestionsListModel = new DefaultListModel<>();
     User user;
-    
-    
+    private boolean requestlistUpdate = false;
+    private boolean friendlistUpdate = false;
+    private boolean suggestionlistUpdate = false;
+
     public FriendReqSuggPanel() {
         initComponents();
 
         // Set the JList models to DefaultListModel
-
-      
     }
 
     public void updateFriendsList(User u) {
+        
+        friendlistUpdate = true;
         ArrayList<String> linerep = NewsFeed.fetchFriends(u);
         friendsListModel.clear();
 
@@ -50,31 +51,39 @@ public class FriendReqSuggPanel extends javax.swing.JPanel {
         System.out.println("Friends List Data: " + linerep);
         friendsList.setModel(friendsListModel);
         this.user = u;
+        friendlistUpdate = false;
     }
-    
-     public void  updateSuggestionsList(User u) {
+
+    public void updateSuggestionsList(User u) {
+       
+        suggestionlistUpdate = true;
         ArrayList<String> linerep = FriendManagement.fetchFriendsSuggestions(u);
         suggestionsListModel.clear();
-        
-         for (String string : linerep) {
-             suggestionsListModel.addElement(string);
-         }
-        
+
+        for (String string : linerep) {
+            suggestionsListModel.addElement(string);
+        }
+
         System.out.println("Friends List Data: " + linerep);
         suggestionsList.setModel(suggestionsListModel);
+        suggestionlistUpdate = false;
     }
-     
-     public void updateRequestsList(User u) {
+
+    public void updateRequestsList(User u) {
+
+        requestlistUpdate = true;
         ArrayList<String> linerep = u.getLineRepOfFriendReq();
         requestsListModel.clear();
 
         for (int i = 0; i < linerep.size(); i++) {
             requestsListModel.addElement(linerep.get(i));
         }
-       requestsList.setModel(requestsListModel);
-
+        requestsList.setModel(requestsListModel);
+        requestlistUpdate = false;
         System.out.println("Friends List Data: " + linerep);
+
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -180,138 +189,130 @@ public class FriendReqSuggPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void friendsListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_friendsListValueChanged
-        
-                    String selectedFriend = friendsList.getSelectedValue();
-                    
-                    if(selectedFriend == null)
-                    {
-                        JOptionPane.showMessageDialog(this,"No requesttttt selected");
-                              
-                    }
-                    String[] token = selectedFriend.split(" ");
-                    String username = user.getUsername();
-                    Friend friend = Friend.getFriend(username,token[0]);
-                    if(friend == null)
-                    {
-                        JOptionPane.showMessageDialog(this, "There is no such friend");
-                        return;
-                    }
-                    
-                    String[] options = {"Remove", "Block"};
-                    int choice = JOptionPane.showOptionDialog(
-                            null,
-                            "Would you like to: ",
-                            ("Friend" + friend.getUsername()),
-                            JOptionPane.DEFAULT_OPTION,
-                            JOptionPane.INFORMATION_MESSAGE,
-                            null, options, options[0]
-                    );
-                    if (choice == 0) {
-                        FriendManagement.removeFriend(user, friend);
-                        friendsListModel.removeElement(selectedFriend);
-          
-                        updateFriendsList(user);
-                    } else if (choice == 1) {
-                        FriendManagement.blockFriend(user, friend);
-                        user.addBlockedFriends(friend);
-                        friendsListModel.removeElement(selectedFriend);
-                        updateFriendsList(user);
-                        /*must update blocked*/
-                        JOptionPane.showMessageDialog(null, "Friend removed successfully");
-                    }
+        if(!friendlistUpdate){
+        String selectedFriend = friendsList.getSelectedValue();
+
+        if (selectedFriend == null) {
+            JOptionPane.showMessageDialog(this, "No requesttttt selected");
+            return;
+        }
+        String[] token = selectedFriend.split(" ");
+        String username = user.getUsername();
+        Friend friend = Friend.getFriend(username, token[0]);
+        if (friend == null) {
+            JOptionPane.showMessageDialog(this, "There is no such friend");
+            return;
+        }
+
+        String[] options = {"Remove", "Block"};
+        int choice = JOptionPane.showOptionDialog(
+                null,
+                "Would you like to: ",
+                ("Friend" + friend.getUsername()),
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null, options, options[0]
+        );
+        if (choice == 0) {
+            FriendManagement.removeFriend(user, friend);
+            friendlistUpdate = true;
+            friendsListModel.removeElement(selectedFriend);
+            friendlistUpdate = false;
+            updateFriendsList(user);
+            updateSuggestionsList(user);
+        } else if (choice == 1) {
+            FriendManagement.blockFriend(user, friend);
+            friendlistUpdate = true;
+            friendsListModel.removeElement(selectedFriend);
+            friendlistUpdate = false;
+            updateFriendsList(user);
+            /*must update blocked*/
+            JOptionPane.showMessageDialog(null, "Friend removed successfully");
+        }}
     }//GEN-LAST:event_friendsListValueChanged
     private void requestsListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_requestsListValueChanged
         // TODO add your handling code here:
+        if (!requestlistUpdate) {
+            String selectedFriend = requestsList.getSelectedValue();
 
-        
-              String selectedFriend = requestsList.getSelectedValue();
-  
-                        if (evt.getValueIsAdjusting()) {
-                           return; // Ignore intermediate events
-                        }
-                     if (selectedFriend == null) {
-                          // No item is selected, exit the method
-                          JOptionPane.showMessageDialog(this,"No request selected");
-                          return;
-                        }
-                     
-                     
-                    
-                    String username = user.getUsername();
-                    FriendRequests friendrequest = user.getFriendReq(selectedFriend);
-                    if(friendrequest == null) 
-                    {
-                        JOptionPane.showMessageDialog(this, "Error finding friendrequest");
-                        return;
-                    }
-                    
-                    String[] options = {"Accept", "Remove"};
-                    int choice = JOptionPane.showOptionDialog(
-                            null,
-                            "Would you like to: ",
-                            ("Request by" + friendrequest.getUsername()),
-                            JOptionPane.DEFAULT_OPTION,
-                            JOptionPane.INFORMATION_MESSAGE,
-                            null, options, options[0]
-                    );
+            if (evt.getValueIsAdjusting()) {
+                return; // Ignore intermediate events
+            }
+            if (selectedFriend == null) {
+                // No item is selected, exit the method
+                JOptionPane.showMessageDialog(this, "No request selected");
+                return;
+            }
 
-                    System.out.println("User selected: " + selectedFriend);
-                    if (choice == 0) {
-                        FriendManagement.friendRequest(true, user, friendrequest, false);
-                        updateRequestsList(user);  // Refresh the requests list
-                        updateFriendsList(user);
-                        updateSuggestionsList(user);
-                        JOptionPane.showMessageDialog(null, "Friend request accepted successfully");
-                        
-                    } else if (choice == 1) {
-                        FriendManagement.friendRequest(false, user, friendrequest, true);
-                        updateRequestsList(user);  // Refresh the requests list
-                        updateFriendsList(user);
-                        updateSuggestionsList(user);
-                        JOptionPane.showMessageDialog(null, "Friend request denied successfully");
-                    }
+            String username = user.getUsername();
+            FriendRequests friendrequest = user.getFriendReq(selectedFriend);
+            if (friendrequest == null) {
+                JOptionPane.showMessageDialog(this, "Error finding friendrequest");
+                return;
+            }
+
+            String[] options = {"Accept", "Remove"};
+            int choice = JOptionPane.showOptionDialog(
+                    null,
+                    "Would you like to: ",
+                    ("Request by" + friendrequest.getUsername()),
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE,
+                    null, options, options[0]
+            );
+
+            System.out.println("User selected: " + selectedFriend);
+            if (choice == 0) {
+                FriendManagement.friendRequest(true, user, friendrequest, false);
+                updateRequestsList(user);  // Refresh the requests list
+                updateFriendsList(user);
+                updateSuggestionsList(user);
+                JOptionPane.showMessageDialog(null, "Friend request accepted successfully");
+
+            } else if (choice == 1) {
+                FriendManagement.friendRequest(false, user, friendrequest, true);
+                updateRequestsList(user);  // Refresh the requests list
+                updateFriendsList(user);
+                updateSuggestionsList(user);
+                JOptionPane.showMessageDialog(null, "Friend request denied successfully");
+            }
+        }
     }//GEN-LAST:event_requestsListValueChanged
 
-    
 
-    
-    
-    
-    
-    
     private void suggestionsListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_suggestionsListValueChanged
         // TODO add your handling code here:
+       
+        if(!suggestionlistUpdate){
         String selectedFriend = suggestionsList.getSelectedValue();
-                    String[] token = selectedFriend.split(" ");
-                    String username = user.getUsername();
-                    Friend suggestedFriend = FriendManagement.getFriendSuggested(user, token[0]);
-                    if(suggestedFriend == null) 
-                    {
-                        JOptionPane.showMessageDialog(this, "Error finding suggestedFriend");
-                        return;
-                    }
-                    
-                    
-                    System.out.println("User selected: " + selectedFriend);
+        String[] token = selectedFriend.split(" ");
+        String username = user.getUsername();
+        Friend suggestedFriend = FriendManagement.getFriendSuggested(user, token[0]);
+        if (suggestedFriend == null) {
+            JOptionPane.showMessageDialog(this, "Error finding suggestedFriend");
+            return;
+        }
 
-                    String[] options = {"Send Request", "Ignore"};
-                    int choice = JOptionPane.showOptionDialog(
-                            null,
-                            "Would you like to: ",
-                            ("Suggested Friend" + suggestedFriend.getUsername()),
-                            JOptionPane.DEFAULT_OPTION,
-                            JOptionPane.INFORMATION_MESSAGE,
-                            null, options, options[0]
-                    );
+        System.out.println("User selected: " + selectedFriend);
 
-                    System.out.println("User selected: " + selectedFriend);
-                    if (choice == 0) {
-                        FriendRequests fr = new FriendRequests(user.getEmail(), user.getUsername(), user.getUserId(), suggestedFriend.getUserId());
-                        FriendManagement.requestSent(fr, AccountManagement.findUser(suggestedFriend.getUsername()));
-                        JOptionPane.showMessageDialog(null, "Friend request sent successfully");
-                    } else if (choice == 1) {
-                        
-                    }
+        String[] options = {"Send Request", "Ignore"};
+        int choice = JOptionPane.showOptionDialog(
+                null,
+                "Would you like to: ",
+                ("Suggested Friend" + suggestedFriend.getUsername()),
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null, options, options[0]
+        );
+
+        System.out.println("User selected: " + selectedFriend);
+        if (choice == 0) {
+            FriendRequests fr = new FriendRequests(user.getEmail(), user.getUsername(), user.getUserId(), suggestedFriend.getUserId());
+            FriendManagement.requestSent(fr, AccountManagement.findUser(suggestedFriend.getUsername()));
+            JOptionPane.showMessageDialog(null, "Friend request sent successfully");
+        } else if (choice == 1) {
+
+        }}
     }//GEN-LAST:event_suggestionsListValueChanged
 
 

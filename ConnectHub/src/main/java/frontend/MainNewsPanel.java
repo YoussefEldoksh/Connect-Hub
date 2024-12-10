@@ -23,6 +23,8 @@ public class MainNewsPanel extends javax.swing.JPanel {
 //    
     private DefaultListModel<String> storiesListModel;
     private DefaultListModel<String> postsListModel;
+    boolean storiesListUpdate = false;
+    boolean postsListUpdate = false;
     User user;
    
     /**
@@ -41,11 +43,12 @@ public class MainNewsPanel extends javax.swing.JPanel {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) { 
-                    int selectedIndex = postsList.getSelectedIndex();
+                   if(!postsListUpdate){ int selectedIndex = postsList.getSelectedIndex();
 
                     System.out.println("User selected: " + selectedIndex);
                     ContentPreviewForFriendsFrame friendcontent= new ContentPreviewForFriendsFrame(selectedIndex, 1,user);
-                }
+                    friendcontent.setVisible(true);
+                }}
             }
         }
         );
@@ -54,18 +57,23 @@ public class MainNewsPanel extends javax.swing.JPanel {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {
+                   if(!storiesListUpdate){
                     int selectedIndex = storiesList.getSelectedIndex();
 
                     System.out.println("User selected: " + selectedIndex);
                     ContentPreviewForFriendsFrame friendcontent= new ContentPreviewForFriendsFrame(selectedIndex, 2,user);
-                }
+                    
+                    friendcontent.setVisible(true);
+                    
+                   }
             }
-        }
+        }}
         );
     }
     
     public void updateStoriesList(User u) {
         this.user= user;
+        storiesListUpdate = true;
         ArrayList<String> linerep = NewsFeed.getLineRepresentationsAllStories(u);
         storiesListModel.clear();
 
@@ -74,10 +82,12 @@ public class MainNewsPanel extends javax.swing.JPanel {
 
         }
         storiesList.setModel(postsListModel);
+        storiesListUpdate = false;
     }
     
     public void updatePostsList(User u) {
         this.user =user;
+        postsListUpdate = true;
         ArrayList<String> linerep = NewsFeed.getLineRepresentationsAllPosts(u);
         postsListModel.clear();
 
@@ -86,6 +96,7 @@ public class MainNewsPanel extends javax.swing.JPanel {
 
         }
         postsList.setModel(postsListModel);
+        postsListUpdate = false;
     }
     
    

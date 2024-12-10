@@ -25,9 +25,10 @@ import org.json.JSONObject;
  */
 public abstract class AccountManagement {
     
+    
     public static int signUp(String userId, String email, String username, String password, LocalDate dateOfBirth, boolean status) //create a user
     {
-        
+
         EmailValidator validator = EmailValidator.getInstance();
         if(!validator.isValid(email)) // check for email format
         {
@@ -53,8 +54,9 @@ public abstract class AccountManagement {
         User user = new User(userId, email, username, password, dateOfBirth, status);// created a new user
         Profile userProfile = new Profile(null, null, "", user); // create a profile for this user
         DataBase.getInstance().addUser(user); //adding a new user to our data base
-        DataBase.getInstance().addProfile(userProfile);
+        ProfilesDataBase.getInstance().addProfile(userProfile);
         //here I'll add the user to the json file before I return that it was successfully added
+        UserSession usersession = new UserSession(user);
         
         FileManagement.saveInUsersJSONfile();
         return 4; //returned the new user for use
@@ -66,6 +68,8 @@ public abstract class AccountManagement {
             if ((DataBase.getInstance().getUsers().get(i).getUsername().equals(username) || DataBase.getInstance().getUsers().get(i).getEmail().equals(username)) && (DataBase.getInstance().getUsers().get(i).getPassword().equals(hashPassword(password)))) //check if the user is in our database
             {
                 DataBase.getInstance().getUsers().get(i).setStatus(true);
+                UserSession usersession = new UserSession(DataBase.getInstance().getUsers().get(i));
+
                 FileManagement.saveInUsersJSONfile();
                 return DataBase.getInstance().getUsers().get(i);
             }

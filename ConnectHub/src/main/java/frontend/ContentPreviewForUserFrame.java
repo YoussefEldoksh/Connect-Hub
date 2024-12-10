@@ -100,7 +100,7 @@ NewPostPanel2 newPostPanel;
 
     private void deleteContentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteContentButtonActionPerformed
         // TODO add your handling code here:
-        
+        try{
         int choice = JOptionPane.showConfirmDialog(
                 this,
                 "Are you sure you would like to delete the story?",
@@ -112,7 +112,11 @@ NewPostPanel2 newPostPanel;
             newPostPanel.deleteContent(true);
         } else if (choice == JOptionPane.NO_OPTION) {
             System.out.println("User chose No");
-        }
+        }}catch(Exception ex)
+        {
+            System.out.println("No choice was made");
+            return;
+       }
     }//GEN-LAST:event_deleteContentButtonActionPerformed
 
     /**

@@ -352,7 +352,7 @@ public class ProfileManagement extends javax.swing.JFrame {
         }
 
         backend.ProfileManagement.getInstance().getProfile(user.getUserId()).setCover(file.getAbsolutePath());
-        Profile profile = backend.ProfileManagement.getInstance().getProfile(user.getUserId());
+       
        // coverPhotoLabel.setIcon(ImageHandler.rescaleImageIcon(profile.getCoverPhoto(), 285, 135));
 
     }//GEN-LAST:event_ChangeCoverButtonActionPerformed

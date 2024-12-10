@@ -132,14 +132,13 @@ public class User extends Account {
      public void addBlockedFriends(Friend friend)
     {
         blockedFriends.add(friend);
-        unviewableUsers.add(AccountManagement.findUser(friend.getUsername()));
-        AccountManagement.findUser(friend.getUsername()).addUnviewableUser(this);
+
         if(friends.contains(friend)){
             friends.remove(friend);
            //unviewableUsers.add(AccountManagement.findUser(friend.getUsername()));
            //AccountManagement.findUser(friend.getUsername()).addUnviewableUser(this); 
            //make the blocked friend not view the user 
-           AccountManagement.findUser(friend.getUsername()).getListOfFriends().remove(new Friend(this.getEmail(),this.getUsername(),this.getUserId()));
+          // AccountManagement.findUser(friend.getUsername()).getListOfFriends().remove(new Friend(this.getEmail(),this.getUsername(),this.getUserId()));
         }
         
         
@@ -151,6 +150,8 @@ public class User extends Account {
             }
         }
     }
+
+     
     
     public void removeBlockedFriend(Friend friend) // for unblocking
     {
@@ -166,6 +167,7 @@ public class User extends Account {
     
     public void addUnviewableUser(User user){
         unviewableUsers.add(user);
+        user.addUnviewableUser(this);
     }
     
     public void removeUnviewableUser(User user){

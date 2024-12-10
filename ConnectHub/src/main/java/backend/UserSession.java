@@ -9,6 +9,18 @@ package backend;
  * @author husse
  */
 public class UserSession {
+
+    static User user;
+    
+    public UserSession(User user) {
+       this.user = user;
+    }
+    
+    public static User getCurrentUser()
+    {
+        return user;
+    }
+    
  
 }
 
