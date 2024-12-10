@@ -60,7 +60,7 @@ public class FriendManagement {
 
             }
             
-                 FileManagement.saveToFriendRequestsJsonFile();
+                FileManagement.saveToFriendRequestsJsonFile();
                 FileManagement.saveInUsersJSONfile();
 
             //else the request is still pending
@@ -137,6 +137,8 @@ public class FriendManagement {
     public static void blockFriend(User user, Friend blockFriend)// moving the friend from the friends list to the blocked list
     {
         user.addBlockedFriends(blockFriend);
+        FriendManagement.removeFriend(AccountManagement.findUser(blockFriend.getUsername()),Friend.getFriend(blockFriend.getUsername(), user.getUsername()));
+        AccountManagement.findUser(blockFriend.getUsername()).addUnviewableUser(user);
         FileManagement.saveInUsersJSONfile();
         FileManagement.saveToFriendRequestsJsonFile();
     }

@@ -16,13 +16,18 @@ public class DataBase { // Centralized Data Management
     private ArrayList<Posts> posts;
     private ArrayList<Stories> stories;
     private ArrayList<FriendRequests> requests;
-    private ArrayList<Profile> profiles;
+    
     
     private static DataBase database = null;
+    private static boolean isLoading = false;
 
     private DataBase() {
-
-        loadAllFiles();
+        if (isLoading) {
+            throw new IllegalStateException("DataBase is already being initialized!");
+        }
+        isLoading = true;
+        loadAllFiles(); 
+        isLoading = false;
     }
     
     public static DataBase getInstance() {
@@ -82,13 +87,7 @@ public class DataBase { // Centralized Data Management
         FileManagement.saveInUsersJSONfile();
     }
     
-     public  ArrayList<Profile> getProfiles() {
-        return profiles;
-    }
-    public  void addProfile(Profile profile){
-        profiles.add(profile);
-        FileManagement.saveToProfilesJsonFile();
-    }
+
     
 
     public void loadAllFiles()
@@ -97,7 +96,7 @@ public class DataBase { // Centralized Data Management
         this.posts = FileManagement.loadFromPostsJsonFile();
         this.stories = FileManagement.loadFromStroiesJsonFile();
         this.requests = FileManagement.loadFromFriendRequestsJsonFile();
-        this.profiles = FileManagement.loadFromProfilesJsonFile(); 
+        
     }
     public void removeFriendReq(FriendRequests request)
     {

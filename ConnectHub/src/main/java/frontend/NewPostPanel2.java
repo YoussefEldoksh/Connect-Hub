@@ -10,6 +10,7 @@ import backend.DataBase;
 import backend.Posts;
 import backend.Stories;
 import backend.User;
+import backend.UserSession;
 import frontend.ContentPreviewForUserFrame;
 import frontend.SignIn_Or_SignUp_Window;
 import java.awt.Image;
@@ -33,11 +34,16 @@ public class NewPostPanel2 extends javax.swing.JPanel {
         private static int contentIDnum=0;
     ArrayList<Content> contents= new ArrayList<>();
     User user;
+    
+    
+    
 
-    public NewPostPanel2(User user) {
+    public NewPostPanel2() {
         initComponents();
-        this.user = user;
+        this.user = UserSession.getCurrentUser();
     }
+
+ 
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -107,18 +113,24 @@ public class NewPostPanel2 extends javax.swing.JPanel {
         String text= null;
         Image image=null;
         ImageIcon imageIcon= null;
-        JFileChooser jfc = new JFileChooser();
+ 
         File file= null;
-        
         if (choice == 0) {
             text = JOptionPane.showInputDialog(this, "Please enter your story's text");
             ContentPreviewForUserFrame ipf = new ContentPreviewForUserFrame(this, contentType, null, text);
             ipf.setVisible(true);
         } else if (choice == 1) {
             text = JOptionPane.showInputDialog(this, "Please enter your story's text");
+            JFileChooser jfc = new JFileChooser();
+            
             jfc.setDialogTitle("Select an Image File");
+
             jfc.showOpenDialog(this);
             file = jfc.getSelectedFile();
+            if(file == null)
+            {
+                return;
+            }
             try {
                 image = ImageIO.read(file);
                 imageIcon = new ImageIcon(image.getScaledInstance(350, 350, Image.SCALE_SMOOTH));
@@ -131,14 +143,15 @@ public class NewPostPanel2 extends javax.swing.JPanel {
         }
         
         if (contentType == 1) {
-                Posts post = new Posts("C" + (contentIDnum++), userId, text, imageIcon, file.getPath());
+                Posts post = new Posts("C" + (contentIDnum++), userId, text, imageIcon!=null ?imageIcon:null, file!=null?file.getPath():null);
                 contents.add(post);
                 DataBase.getInstance().addToGlobalPosts(post);
             } else if (contentType == 2) {
-                Stories story = new Stories("C" + (contentIDnum++), userId, text, imageIcon, file.getPath());
+                Stories story = new Stories("C" + (contentIDnum++), userId, text, imageIcon!=null ?imageIcon:null, file!=null?file.getPath():null);
                 contents.add(story);
                 DataBase.getInstance().addTOGlobalStories(story);
             }
+        
     }
 
     public void deleteContent(boolean Yes_Or_No)

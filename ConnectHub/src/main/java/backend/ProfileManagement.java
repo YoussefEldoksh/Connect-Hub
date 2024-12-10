@@ -38,11 +38,11 @@ public class ProfileManagement {
     }
     
     public void addProfile(Profile profile){
-        DataBase.getInstance().addProfile(profile);
+        ProfilesDataBase.getInstance().addProfile(profile);
     }
     
     public Profile getProfile(String userid){
-        for(Profile profile:DataBase.getInstance().getProfiles()){
+        for(Profile profile:ProfilesDataBase.getInstance().getProfiles()){
             if(profile.getUserId().equals(userid)){
                 return profile;
             }

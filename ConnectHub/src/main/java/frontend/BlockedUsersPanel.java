@@ -26,19 +26,22 @@ public class BlockedUsersPanel extends javax.swing.JPanel {
     User user;
     
     private DefaultListModel<String> blockedListModel;
+    boolean blockedFriendUpdate = false;
     /**
      * Creates new form BlockedUsersPanel
      */
-    public BlockedUsersPanel(User u) {
+    public BlockedUsersPanel() {
         initComponents();
         blockedListModel = new DefaultListModel<>();
         // Set the JList models to DefaultListModel
         
-        this.user = u;
+        this.user = UserSession.getCurrentUser();
         blockedList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) { 
+                   if(!blockedFriendUpdate)
+                   {
                     String selectedBlock = blockedList.getSelectedValue();
                     String[] token = selectedBlock.split(" ");
                     String usernameUser = user.getUsername();
@@ -53,12 +56,14 @@ public class BlockedUsersPanel extends javax.swing.JPanel {
                             null, options, options[0]
                     );
                     if (choice == 0) {
-                        FriendManagement.blockFriend(user, blocked);
+                        FriendManagement.unblockFriend(user, blocked);
+                        blockedFriendUpdate = true;
                         blockedListModel.removeElement(selectedBlock);
+                        blockedFriendUpdate = false;
                         updateBlockedList(user);
                     } else if (choice == 1) {
                     }
-                }
+                }}
             }
         }
         );
@@ -66,12 +71,14 @@ public class BlockedUsersPanel extends javax.swing.JPanel {
 
     
     public void updateBlockedList(User u) {
+        blockedFriendUpdate = true;
         ArrayList<String> linerep = u.getLineRepOfBlockedFriends();
         blockedListModel.clear();
         for (int i = 0; i < linerep.size(); i++) {
             blockedListModel.addElement(linerep.get(i));
         }
         blockedList.setModel(blockedListModel);
+        blockedFriendUpdate = false;
       
     }
     /**
