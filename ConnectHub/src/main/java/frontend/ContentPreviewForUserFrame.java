@@ -14,11 +14,11 @@ import java.awt.*;
  * @author husse
  */
 public class ContentPreviewForUserFrame extends javax.swing.JFrame {
-NewPostPanel newPostPanel;
+NewPostPanel2 newPostPanel;
     /**
      * Creates new form ImagePreviewFrame
      */
-    public ContentPreviewForUserFrame(NewPostPanel newPostPanel, int contentType, ImageIcon imageIcon, String text) {
+    public ContentPreviewForUserFrame(NewPostPanel2 newPostPanel, int contentType, ImageIcon imageIcon, String text) {
         initComponents();
         this.newPostPanel=newPostPanel;
         if(contentType==1){

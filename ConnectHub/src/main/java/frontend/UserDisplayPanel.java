@@ -4,6 +4,10 @@
  */
 package frontend;
 
+import backend.ImageHandler;
+import backend.Profile;
+import backend.User;
+
 /**
  *
  * @author husse
@@ -13,8 +17,13 @@ public class UserDisplayPanel extends javax.swing.JPanel {
     /**
      * Creates new form UserDisplayPanel
      */
-    public UserDisplayPanel() {
+    User user;
+    public UserDisplayPanel(User user) {
         initComponents();
+         Profile profile = backend.ProfileManagement.getInstance().getProfile(user.getUserId());
+     coverPhotoLabel.setIcon(ImageHandler.rescaleImageIcon(profile.getCoverPhoto(), 285, 135));
+     profilePhotoLabel.setIcon(ImageHandler.rescaleImageIcon(profile.getProfilePhoto(), 112, 112));
+     
     }
 
     
@@ -27,19 +36,57 @@ public class UserDisplayPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        coverPhotoLabel = new javax.swing.JLabel();
+        profilePhotoLabel = new javax.swing.JLabel();
+        BioTextbox = new javax.swing.JLabel();
+        userNameLabel = new javax.swing.JLabel();
+
+        coverPhotoLabel.setText("CP");
+
+        BioTextbox.setText("Bio:");
+
+        userNameLabel.setText("Username:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(userNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(BioTextbox, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(coverPhotoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(102, 102, 102)
+                        .addComponent(profilePhotoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(coverPhotoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(profilePhotoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(userNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(BioTextbox, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(29, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel BioTextbox;
+    private javax.swing.JLabel coverPhotoLabel;
+    private javax.swing.JLabel profilePhotoLabel;
+    private javax.swing.JLabel userNameLabel;
     // End of variables declaration//GEN-END:variables
 }

@@ -21,12 +21,8 @@ public class DataBase { // Centralized Data Management
     private static DataBase database = null;
 
     private DataBase() {
-        this.users = FileManagement.loadFromUsersJSONfile();
-        this.posts = FileManagement.loadFromPostsJsonFile();
-        this.stories = FileManagement.loadFromStroiesJsonFile();
-        this.requests = FileManagement.loadFromFriendRequestsJsonFile();
-        this.profiles = FileManagement.loadFromProfilesJsonFile(); 
-        
+
+        loadAllFiles();
     }
     
     public static DataBase getInstance() {
@@ -95,7 +91,27 @@ public class DataBase { // Centralized Data Management
     }
     
 
-    
-    
+    public void loadAllFiles()
+    {
+        this.users = FileManagement.loadFromUsersJSONfile();
+        this.posts = FileManagement.loadFromPostsJsonFile();
+        this.stories = FileManagement.loadFromStroiesJsonFile();
+        this.requests = FileManagement.loadFromFriendRequestsJsonFile();
+        this.profiles = FileManagement.loadFromProfilesJsonFile(); 
+    }
+    public void removeFriendReq(FriendRequests request)
+    {
+        for (FriendRequests req : requests) {
+            if(req.getUsername().equals(request.getUsername()))
+            {
+                System.out.println("Found the request");
+                request = req;
+                break;
+                
+            }
+        }
+        requests.remove(request);
+        System.out.println("requests" + requests);
+    }
     
 }

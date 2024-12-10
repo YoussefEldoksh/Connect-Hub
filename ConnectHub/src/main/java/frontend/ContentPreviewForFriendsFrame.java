@@ -23,15 +23,20 @@ public class ContentPreviewForFriendsFrame extends javax.swing.JFrame {
     /**
      * Creates new form ContentPreviewForFriendsFrame
      */
-    public ContentPreviewForFriendsFrame(int selectedIndex, int type) {
+    public ContentPreviewForFriendsFrame(int selectedIndex, int type, User user) {
         initComponents();
-        friendContentLabel.setText(UserSession.getCurrentUser().getUsername()+ "'s recent updates");
+        this.user = user;
+        friendContentLabel.setText(user.getUsername()+ "'s recent updates");
         friendContentLabel.setFont(new Font("Arial", Font.BOLD, 30));
-        friendContentLabel.setIcon(findPost(selectedIndex).getImage());
-        friendContentLabel.setText(findPost(selectedIndex).getContent());
-        friendContentLabel.setHorizontalTextPosition(JLabel.RIGHT);
-        friendContentLabel.setVerticalTextPosition(JLabel.CENTER);
+        
+        if(type == 1)
+        {friendContentLabel.setIcon(findPost(selectedIndex).getImage());
+        friendContentLabel.setText(findPost(selectedIndex).getContent());}
+        if(type == 2)
+        {friendContentLabel.setHorizontalTextPosition(JLabel.RIGHT);
+        friendContentLabel.setVerticalTextPosition(JLabel.CENTER);}
         friendContentLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        
     }
     
     public Posts findPost(int selectedIndex) {

@@ -16,7 +16,7 @@ public class FriendManagement {
     public static void friendRequest(boolean accept, User user,FriendRequests friend, boolean rejected)
     {
       ArrayList<String> excludedIds = new ArrayList<>();
-      User sender=AccountManagement.findUser(AccountManagement.findUsername(friend.getReceiver()));
+      User sender=AccountManagement.findUser(friend.getUsername());
       
       if (sender == null) {
     System.out.println("Sender user not found: " + friend.getUsername());
@@ -43,19 +43,21 @@ public class FriendManagement {
             if(accept == true) 
             {
                 
-                user.addFriends(new Friend(friend.getEmail(),friend.getUsername(), friend.getUserId()));
+                user.addFriends(new Friend(sender.getEmail(),sender.getUsername(), sender.getUserId()));
                 user.removeFriendReq(friend);
+                System.out.println("Friendrequests: "+user.getListOfFriendReq());
                 
                 sender.addFriends(new Friend(user.getEmail(),user.getUsername(),user.getUserId()));
-                sender.removeFriendReq(friend);
+               
+                     DataBase.getInstance().removeFriendReq(friend);
                 
-                DataBase.getInstance().getGlobalFriendRequests().remove(friend);
-                FileManagement.saveToFriendRequestsJsonFile();
+                
             }
             else if(accept == false &&  rejected == true)
             {
                 user.removeFriendReq(friend);//this means that the request if rejected
-                          
+                 DataBase.getInstance().removeFriendReq(friend);
+
             }
             
                  FileManagement.saveToFriendRequestsJsonFile();
@@ -73,10 +75,7 @@ public class FriendManagement {
     }
 
     DataBase.getInstance().addToGlobalFriendRequests(request);
-    DataBase.getInstance()
-            .getUsers()
-            .get(DataBase.getInstance().getUsers().indexOf(user))
-            .addFriendsReq(request);
+    user.addFriendsReq(request);
     System.out.println("Friend request sent to: " + request.getUsername());
 }
   
@@ -110,6 +109,7 @@ public class FriendManagement {
     
     public static Friend getFriendSuggested(User user, String friendUsername) {
         ArrayList<Friend> suggestedFriends= friendSuggestion(user);
+        
         for (int i = 0; i < friendSuggestion(user).size(); i++) {
             if (suggestedFriends.get(i).getUsername().equals(friendUsername))
             return suggestedFriends.get(i);

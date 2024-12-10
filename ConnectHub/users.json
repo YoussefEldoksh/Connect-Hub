@@ -15,20 +15,9 @@
         "dob": "2024-12-08",
         "userId": "U1",
         "email": "doksh5@gmail.com",
-        "friends": [
-            {
-                "userId": "doksh22",
-                "email": "doksh@gmail.com",
-                "username": "U0"
-            },
-            {
-                "userId": "U0",
-                "email": "doksh@gmail.com",
-                "username": "doksh22"
-            }
-        ],
+        "friends": [],
         "username": "doksh222",
-        "status": true
+        "status": false
     },
     {
         "blockedfriends": [],
