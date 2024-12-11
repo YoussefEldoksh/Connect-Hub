@@ -73,7 +73,7 @@ public class ContentPreviewForFriendsFrame extends javax.swing.JFrame {
         friendContentLabel = new javax.swing.JLabel();
         ContentLabel = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         ContentLabel.setText("jLabel1");
 

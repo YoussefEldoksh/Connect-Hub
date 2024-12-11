@@ -79,9 +79,9 @@ public class NewsFeed {
     {
         boolean swapped;
          if(posts.size() == 1 || posts.size() == 0) return posts;
-        for(int i = 0; i < posts.size(); i++) {
+        for(int i = 0; i < posts.size()- 1; i++) {
             swapped = false;
-            for(int j = i; j < posts.size(); j++) {
+            for(int j = i; j < posts.size()- 1-i; j++) {
                 if(posts.get(j).getTimestamp().isBefore(posts.get(j+1).getTimestamp()))
                 {
                    Posts temp = posts.get(j);
@@ -103,9 +103,9 @@ public class NewsFeed {
     {
         boolean swapped;
        if(stories.size() == 1 || stories.size() == 0) return stories;
-        for(int i = 0; i < stories.size(); i++) {
+        for(int i = 0; i < stories.size()- 1; i++) {
             swapped = false;
-            for(int j = i; j < stories.size(); j++) {
+            for(int j = i; j < stories.size()- 1 - i; j++) {
                 if(stories.get(j).getTimestamp().isBefore(stories.get(j+1).getTimestamp()))
                 {
                    Stories temp = stories.get(j);
