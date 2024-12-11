@@ -287,6 +287,7 @@ public class User extends Account {
     public void removeStory(Stories story)
     {
         this.userStories.remove(story);
+
     } 
     
     public void reload()
@@ -295,5 +296,17 @@ public class User extends Account {
         userStories = FileManagement.loadFromStroiesJsonFileForSpecificUser(this.getUserId());
         userPosts = FileManagement.loadFromPostsJsonFileForSpecificUser(this.getUserId());
     }
+    
+
+    
+
+    public void setUserPosts(ArrayList<Posts> userPosts) {
+        this.userPosts = userPosts;
+    }
+
+    public void setUserStories(ArrayList<Stories> userStories) {
+        this.userStories = userStories;
+    }
+    
     
 }

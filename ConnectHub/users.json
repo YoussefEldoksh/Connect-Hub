@@ -1,7 +1,7 @@
 [
     {
         "blockedfriends": [],
-        "password": "QyGoRO52DubKVXWnwWw00qQOwbPXYANoG4o4SNwfTMU=",
+        "password": "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=",
         "dob": "2024-12-08",
         "userId": "U0",
         "email": "doksh@gmail.com",
@@ -55,7 +55,11 @@
         "dob": "1995-02-07",
         "userId": "U5",
         "email": "doksh88@gmail.com",
-        "friends": [],
+        "friends": [{
+            "userId": "U0",
+            "email": "doksh@gmail.com",
+            "username": "doksh22"
+        }],
         "username": "doksh3333",
         "status": true
     }

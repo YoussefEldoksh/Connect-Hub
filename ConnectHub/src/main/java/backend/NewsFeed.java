@@ -59,6 +59,29 @@ public class NewsFeed {
         return sortStories(stories);
     }
     
+    public static ArrayList<Posts> fetchPostsForUser(User user){
+    ArrayList<Posts> allPosts = DataBase.getInstance().getGlobalPosts();
+        ArrayList<Posts> userPosts = new ArrayList<>();
+        for (Posts post : allPosts) {
+            if (post.getAuthorID().equals(user.getUserId())) {
+                userPosts.add(post);
+            }
+        }
+        return NewsFeed.sortPosts(userPosts);
+    }
+    
+            
+
+    public static ArrayList<Stories> fetchStoriesForUser(User user){
+    ArrayList<Stories> allStories = DataBase.getInstance().getGlobalStories();
+        ArrayList<Stories> userStories = new ArrayList<>();
+        for (Stories story : allStories) {
+            if (story.getAuthorID().equals(user.getUserId())) {
+                userStories.add(story);
+            }
+        }
+        return NewsFeed.sortStories(userStories);
+    }
 
     public static ArrayList<String> fetchFriends(User user) // fetching an array list of friends in the String format for display
     {
@@ -132,7 +155,7 @@ public class NewsFeed {
     */
     
     public static ArrayList<String> getLineRepresentationsStories(User u) {
-        ArrayList<Stories> stories = fetchStories(u);
+        ArrayList<Stories> stories = fetchStoriesForUser(u);
         ArrayList<String> lineRepresentations = new ArrayList<>();
         for (int i = 0; i < stories.size(); i++) {
             String username = AccountManagement.findUsername(stories.get(i).getAuthorID());
@@ -142,6 +165,7 @@ public class NewsFeed {
             String s = username + "published on: " + formattedDate;
             lineRepresentations.add(s);
         }
+        
         return lineRepresentations;
     }
     
@@ -169,53 +193,96 @@ public class NewsFeed {
         return null;
     }
 
-       public static ArrayList<String> getLineRepresentationsAllStories(User user) {
+      public static ArrayList<String> getLineRepresentationsAllStories(User user) {
+        // ArrayList<Stories> filteredStories = new ArrayList<>();
+
         ArrayList<String> lineRepresentations = new ArrayList<>();
         ArrayList<String> friendsId = new ArrayList<>();
-        
-            for (Friend friend : user.getListOfFriends()) {
-                friendsId.add(friend.getUserId());
-               
-            }
-         friendsId.add(user.getUserId());
-        for (int i = 0; i < DataBase.getInstance().getGlobalStories().size(); i++) {
-           
-            if(friendsId.contains(DataBase.getInstance().getGlobalStories().get(i).getAuthorID()))
-            { String username = AccountManagement.findUsername(DataBase.getInstance().getGlobalStories().get(i).getAuthorID());
 
-            String formattedDate = DataBase.getInstance().getGlobalStories().get(i).getTimestamp().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-            String s = username +" published on: " + formattedDate;
-            lineRepresentations.add(s);
+        for (Friend friend : user.getListOfFriends()) {
+            friendsId.add(friend.getUserId());
+
+        }
+        friendsId.add(user.getUserId());
+
+        /*
+    for (Stories story : DataBase.getInstance().getGlobalStories()) {
+        if (friendsId.contains(story.getAuthorID())) {
+            filteredStories.add(story);
+        }
+    }
+
+    // Sort the filtered stories
+    filteredStories = sortStories(filteredStories);
+
+    // Generate line representations
+    for (Stories story : filteredStories) {
+        String username = AccountManagement.findUsername(story.getAuthorID());
+        String formattedDate = story.getTimestamp().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        String s = username + " published on: " + formattedDate;
+        lineRepresentations.add(s);
+    }
+
+    return lineRepresentations;
+}
+         */
+        for (int i = 0; i < DataBase.getInstance().getGlobalStories().size(); i++) {
+
+            if (friendsId.contains(DataBase.getInstance().getGlobalStories().get(i).getAuthorID())) {
+                String username = AccountManagement.findUsername(DataBase.getInstance().getGlobalStories().get(i).getAuthorID());
+                String formattedDate = DataBase.getInstance().getGlobalStories().get(i).getTimestamp().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+                String s = username + " published on: " + formattedDate;
+                lineRepresentations.add(s);
             }
         }
-           System.out.println(lineRepresentations);
+        System.out.println(lineRepresentations);
         return lineRepresentations;
     }
-    public static ArrayList<String> getLineRepresentationsAllPosts(User u) {
-      ArrayList<String> lineRepresentations = new ArrayList<>();
-        ArrayList<String> friendsId = new ArrayList<>();
-        
-            for (Friend friend : u.getListOfFriends()) {
-                friendsId.add(friend.getUserId());
-            }
-            friendsId.add(u.getUserId());
-        
-        for (int i = 0; i < DataBase.getInstance().getGlobalPosts().size(); i++) {
-           
-            if(friendsId.contains(DataBase.getInstance().getGlobalPosts().get(i).getAuthorID()))
-            { String username = AccountManagement.findUsername(DataBase.getInstance().getGlobalPosts().get(i).getAuthorID());
 
-            // Convert LocalDate to String
-            String formattedDate = DataBase.getInstance().getGlobalPosts().get(i).getTimestamp().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-            String s = username + " published on: " + formattedDate;
-            lineRepresentations.add(s);
+    public static ArrayList<String> getLineRepresentationsAllPosts(User u) {
+        ArrayList<String> lineRepresentations = new ArrayList<>();
+        ArrayList<String> friendsId = new ArrayList<>();
+        ArrayList<Posts> filteredPosts = new ArrayList<>();
+
+        for (Friend friend : u.getListOfFriends()) {
+            friendsId.add(friend.getUserId());
+        }
+        friendsId.add(u.getUserId());
+
+        for (Posts post : DataBase.getInstance().getGlobalPosts()) {
+        if (friendsId.contains(post.getAuthorID())) {
+            filteredPosts.add(post);
+        }
+    }
+
+    // Sort the filtered posts
+    filteredPosts = sortPosts(filteredPosts);
+
+    // Generate line representations
+    for (Posts post : filteredPosts) {
+        String username = AccountManagement.findUsername(post.getAuthorID());
+        String formattedDate = post.getTimestamp().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        String s = username + " published on: " + formattedDate;
+        lineRepresentations.add(s);
+    }
+
+    return lineRepresentations;
+        /*for (int i = 0; i < DataBase.getInstance().getGlobalPosts().size(); i++) {
+
+            if (friendsId.contains(DataBase.getInstance().getGlobalPosts().get(i).getAuthorID())) {
+                String username = AccountManagement.findUsername(DataBase.getInstance().getGlobalPosts().get(i).getAuthorID());
+
+                // Convert LocalDate to String
+                String formattedDate = DataBase.getInstance().getGlobalPosts().get(i).getTimestamp().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+                String s = username + " published on: " + formattedDate;
+                lineRepresentations.add(s);
             }
         }
-        return lineRepresentations;
+        return lineRepresentations;*/
     }
 
     public static ArrayList<String> getLineRepresentationsPosts(User u) {
-        ArrayList<Posts> posts = fetchPosts(u);
+        ArrayList<Posts> posts = fetchPostsForUser(u);
         ArrayList<String> lineRepresentations = new ArrayList<>();
         for (int i = 0; i < posts.size(); i++) {
             String username = AccountManagement.findUsername(posts.get(i).getAuthorID());

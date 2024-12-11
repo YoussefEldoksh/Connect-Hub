@@ -6,6 +6,7 @@ package frontend;
 
 import backend.AccountManagement;
 import backend.DataBase;
+import backend.FileManagement;
 import backend.Friend;
 import backend.FriendManagement;
 import backend.FriendRequests;
@@ -295,6 +296,7 @@ public class NewsFeedPage extends javax.swing.JFrame {
         // TODO add your handling code here:
         DataBase.getInstance().loadAllFiles();
         user.reload();
+        
         friendReqSuggPanel3.updateFriendsList(user);
         friendReqSuggPanel3.updateRequestsList(user);
         friendReqSuggPanel3.updateSuggestionsList(user);

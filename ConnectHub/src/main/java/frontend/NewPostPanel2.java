@@ -144,7 +144,7 @@ public class NewPostPanel2 extends javax.swing.JPanel {
         }
         
         if (contentType == 1) {
-                Posts post= (Posts)ContentFactory.createContent("post", ("C" + (contentIDnum++)) , userId, text);
+                Posts post= (Posts)ContentFactory.createContent("post", ("C" + (contentIDnum++)) , userId, text == null? " ":text);
                 if(file!=null){
                 post.setImagePath(file.getPath());
                 post.setImage(imageIcon);
@@ -155,7 +155,7 @@ public class NewPostPanel2 extends javax.swing.JPanel {
                 DataBase.getInstance().addToGlobalPosts(post);
 
             } else if (contentType == 2) {
-                Stories story= (Stories)ContentFactory.createContent("story", ("C" + (contentIDnum++)) , userId, text);
+                Stories story= (Stories)ContentFactory.createContent("story", ("C" + (contentIDnum++)) , userId, text == null? " ":text);
                 if(file!=null){
                 story.setImagePath(file.getPath());
                 story.setImage(imageIcon);
@@ -163,7 +163,6 @@ public class NewPostPanel2 extends javax.swing.JPanel {
                 contents.add(story);
                 user.addStory(story);
                 DataBase.getInstance().addTOGlobalStories(story);
-
             }
     }
 
