@@ -4,12 +4,14 @@
  */
 package frontend;
 
+import backend.ImageHandler;
 import backend.NewsFeed;
 import backend.Posts;
 import backend.Stories;
 import backend.User;
 import backend.UserSession;
 import java.awt.Font;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import javax.swing.JLabel;
 
@@ -23,31 +25,41 @@ public class ContentPreviewForFriendsFrame extends javax.swing.JFrame {
     /**
      * Creates new form ContentPreviewForFriendsFrame
      */
-    public ContentPreviewForFriendsFrame(int selectedIndex, int type, User user) {
+    public ContentPreviewForFriendsFrame(int selectedindix ,int type, User user) {
         initComponents();
         this.user = user;
-        friendContentLabel.setText(user.getUsername()+ "'s recent updates");
-        friendContentLabel.setFont(new Font("Arial", Font.BOLD, 30));
+        ContentLabel.setText(UserSession.getCurrentUser().getUsername()+ "'s recent updates");
+        ContentLabel.setFont(new Font("Arial", Font.BOLD, 30));
         
         if(type == 1)
-        {friendContentLabel.setIcon(findPost(selectedIndex).getImage());
-        friendContentLabel.setText(findPost(selectedIndex).getContent());}
+        {
+            
+                friendContentLabel.setIcon(ImageHandler.rescaleImageIcon(findPost(selectedindix).getImage(), 339, 339));
+                 ContentLabel.setText(findPost(selectedindix).getContent());   
+        }
         if(type == 2)
-        {friendContentLabel.setHorizontalTextPosition(JLabel.RIGHT);
-        friendContentLabel.setVerticalTextPosition(JLabel.CENTER);}
-        friendContentLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        {
+            friendContentLabel.setIcon(ImageHandler.rescaleImageIcon(findStory(selectedindix).getImage(), 339, 339));
+            ContentLabel.setText(findStory(selectedindix).getContent()); 
+        }
+        
+       ContentLabel.setHorizontalTextPosition(JLabel.RIGHT);
+        ContentLabel.setVerticalTextPosition(JLabel.CENTER);
+        
+        
+        ContentLabel.setFont(new Font("Arial", Font.BOLD, 24));
         
     }
     
-    public Posts findPost(int selectedIndex) {
-        ArrayList<Posts> posts = NewsFeed.fetchPosts(user);
-        Posts postChosen= posts.get(selectedIndex);
+    public Posts findPost(int selectedindix) {
+        
+        Posts postChosen= NewsFeed.fetchPosts(UserSession.getCurrentUser()).get(selectedindix);
         return postChosen;
     }
     
-    public void findStory(int selectedIndex) {
-        ArrayList<Stories> stories = NewsFeed.fetchStories(user);
-        Stories storyChosen= stories.get(selectedIndex);
+    public Stories findStory(int selectedindix) {
+       Stories storyChosen =  NewsFeed.fetchStories(UserSession.getCurrentUser()).get(selectedindix);
+        return storyChosen;
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -59,24 +71,34 @@ public class ContentPreviewForFriendsFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         friendContentLabel = new javax.swing.JLabel();
+        ContentLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        ContentLabel.setText("jLabel1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addComponent(friendContentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(265, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(friendContentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(103, 103, 103)
+                        .addComponent(ContentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(86, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(friendContentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(574, Short.MAX_VALUE))
+                .addComponent(friendContentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(ContentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(231, Short.MAX_VALUE))
         );
 
         pack();
@@ -87,6 +109,7 @@ public class ContentPreviewForFriendsFrame extends javax.swing.JFrame {
      */
   
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel ContentLabel;
     private javax.swing.JLabel friendContentLabel;
     // End of variables declaration//GEN-END:variables
 }
