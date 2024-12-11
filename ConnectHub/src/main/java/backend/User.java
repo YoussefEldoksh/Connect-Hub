@@ -287,5 +287,15 @@ public class User extends Account {
     public void removeStory(Stories story)
     {
         this.userStories.remove(story);
-    } 
+    }
+
+    public void setUserPosts(ArrayList<Posts> userPosts) {
+        this.userPosts = userPosts;
+    }
+
+    public void setUserStories(ArrayList<Stories> userStories) {
+        this.userStories = userStories;
+    }
+    
+    
 }

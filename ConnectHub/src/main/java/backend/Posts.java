@@ -38,7 +38,7 @@ public class Posts extends Content{
      }
     }
   
-     public ArrayList<Posts> readPostForUser(String userID) {
+     public static ArrayList<Posts> readPostForUser(String userID) {
         ArrayList<Posts> x = DataBase.getInstance().getGlobalPosts();
         ArrayList<Posts> y = new ArrayList<>();
         for (Posts post : x) {

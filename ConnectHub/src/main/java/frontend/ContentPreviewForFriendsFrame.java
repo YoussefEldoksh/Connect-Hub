@@ -25,31 +25,26 @@ public class ContentPreviewForFriendsFrame extends javax.swing.JFrame {
      * Creates new form ContentPreviewForFriendsFrame
      */
 
-    public ContentPreviewForFriendsFrame(int selectedindix ,int type, User user) {
+    public ContentPreviewForFriendsFrame(int selectedindix, int type, User user) {
         initComponents();
         this.user = user;
-        ContentLabel.setText(UserSession.getCurrentUser().getUsername()+ "'s recent updates");
+        ContentLabel.setText(UserSession.getCurrentUser().getUsername() + "'s recent updates");
         ContentLabel.setFont(new Font("Arial", Font.BOLD, 30));
-        
-        if(type == 1)
-        {
-            
-                friendContentLabel.setIcon(ImageHandler.rescaleImageIcon(findPost(selectedindix).getImage(), 339, 339));
-                 ContentLabel.setText(findPost(selectedindix).getContent());   
+
+        if (type == 1) {
+
+            friendContentLabel.setIcon(ImageHandler.rescaleImageIcon(findPost(selectedindix).getImage(), 339, 339));
+            ContentLabel.setText(findPost(selectedindix).getContent());
         }
-        if(type == 2)
-        {
+        if (type == 2) {
             friendContentLabel.setIcon(ImageHandler.rescaleImageIcon(findStory(selectedindix).getImage(), 339, 339));
-            ContentLabel.setText(findStory(selectedindix).getContent()); 
+            ContentLabel.setText(findStory(selectedindix).getContent());
         }
-        
-       ContentLabel.setHorizontalTextPosition(JLabel.RIGHT);
+
+        ContentLabel.setHorizontalTextPosition(JLabel.RIGHT);
         ContentLabel.setVerticalTextPosition(JLabel.CENTER);
-        
-        
         ContentLabel.setFont(new Font("Arial", Font.BOLD, 24));
 
-        
 
     }
     
@@ -88,21 +83,21 @@ public class ContentPreviewForFriendsFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(103, 103, 103)
+                        .addGap(98, 98, 98)
                         .addComponent(ContentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(48, 48, 48)
+                        .addGap(57, 57, 57)
                         .addComponent(friendContentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(108, 108, 108)
                 .addComponent(friendContentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(3, 3, 3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ContentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(231, Short.MAX_VALUE))
+                .addContainerGap(126, Short.MAX_VALUE))
         );
 
         pack();

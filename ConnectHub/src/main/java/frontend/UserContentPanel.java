@@ -20,73 +20,88 @@ import javax.swing.event.ListSelectionListener;
  */
 public class UserContentPanel extends javax.swing.JPanel {
 
+    private static UserContentPanel instance;
 
-    
-    private DefaultListModel<String> storiesListModel;
-    private DefaultListModel<String> postsListModel;
+    private DefaultListModel<String> postsListModel= new DefaultListModel<>();
+    private DefaultListModel<String> storiesListModel = new DefaultListModel<>();
+
+    boolean storiesListUpdate = false;
+    boolean postsListUpdate = false;
     User user;
+   
     /**
      * Creates new form UserContentPanel
      */
     public UserContentPanel() {
-        initComponents();storiesListModel = new DefaultListModel<>();
-        postsListModel = new DefaultListModel<>();
+        initComponents();
+                postsList.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) { 
+                   if(!postsListUpdate){ 
+                    int selectedindix = postsList.getSelectedIndex();
+                    ContentPreviewForSavedUserContentFrame usercontent= new ContentPreviewForSavedUserContentFrame(selectedindix,1);
+                    usercontent.setVisible(true);
+                }}
+            }
+        }
+        );
 
-        // Set the JList models to DefaultListModel
-        storiesList = new JList<>(storiesListModel);
-        postsList = new JList<>(postsListModel);
         storiesList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) { 
-                    int selectedIndex = postsList.getSelectedIndex();
+                if (!e.getValueIsAdjusting()) {
 
-                    System.out.println("User selected: " + selectedIndex);
-                }
+                   if(!storiesListUpdate){
+                    int selectedindix = storiesList.getSelectedIndex();
+                    ContentPreviewForSavedUserContentFrame usercontent= new ContentPreviewForSavedUserContentFrame(selectedindix, 2);
+                    usercontent.setVisible(true);
+                    
+                   }
             }
-        }
+        }}
         );
-        
-        postsList.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) { 
-                    int selectedIndex = postsList.getSelectedIndex();
-
-                    System.out.println("User selected: " + selectedIndex);
-                }
-            }
-        }
-        );
-        
-        
-        
     }
-    
-    
+
     public void updateStoriesList(User u) {
+        storiesListUpdate = true;
+        this.user = u;
+        System.out.println("updateStoriesList called with user: " + u);
         ArrayList<String> linerep = NewsFeed.getLineRepresentationsStories(u);
         storiesListModel.clear();
 
         for (int i = 0; i < linerep.size(); i++) {
             storiesListModel.addElement(linerep.get(i));
-
+            System.out.println("Fetched stories: " + linerep);
         }
         storiesList.setModel(storiesListModel);
-        this.user = u;
+        storiesListUpdate = false;
+        System.out.println("Stories: " + linerep);
     }
 
     public void updatePostsList(User u) {
+        this.user = u;
+        System.out.println("updatePostsList called with user: " + u);
+        postsListUpdate = true;
         ArrayList<String> linerep = NewsFeed.getLineRepresentationsPosts(u);
         postsListModel.clear();
 
         for (int i = 0; i < linerep.size(); i++) {
             postsListModel.addElement(linerep.get(i));
+            System.out.println("Fetched posts: " + linerep);
 
         }
         postsList.setModel(postsListModel);
+        postsListUpdate = false;
     }
 
+   
+    public static UserContentPanel getInstance() {
+        if (instance == null) {
+            instance = new UserContentPanel();
+        }
+        return instance;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -103,10 +118,10 @@ public class UserContentPanel extends javax.swing.JPanel {
         jLabel7 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
 
-        storiesList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        storiesList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane4.setViewportView(storiesList);
 
-        postsList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        postsList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane5.setViewportView(postsList);
 
         jLabel7.setText("Your posts");
@@ -120,27 +135,24 @@ public class UserContentPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(69, 69, 69)
-                        .addComponent(jLabel6))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(60, 60, 60)
-                        .addComponent(jLabel7))
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel6)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
+                        .addComponent(jScrollPane5)))
                 .addContainerGap(39, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addGap(38, 38, 38)
                 .addComponent(jLabel6)
-                .addGap(26, 26, 26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(57, 57, 57)
+                .addGap(69, 69, 69)
                 .addComponent(jLabel7)
-                .addGap(51, 51, 51)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(44, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents

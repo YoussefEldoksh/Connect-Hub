@@ -48,7 +48,7 @@ public class MainNewsPanel extends javax.swing.JPanel {
                 if (!e.getValueIsAdjusting()) { 
                    if(!postsListUpdate){ 
                     int selectedindix = postsList.getSelectedIndex();
-                       ContentPreviewForFriendsFrame friendcontent= new ContentPreviewForFriendsFrame(selectedindix,1,user);
+                    ContentPreviewForFriendsFrame friendcontent= new ContentPreviewForFriendsFrame(selectedindix,1,user);
                     friendcontent.setVisible(true);
                 }}
 

@@ -6,6 +6,7 @@ package frontend;
 
 import backend.AccountManagement;
 import backend.DataBase;
+import backend.FileManagement;
 import backend.Friend;
 import backend.FriendManagement;
 import backend.FriendRequests;

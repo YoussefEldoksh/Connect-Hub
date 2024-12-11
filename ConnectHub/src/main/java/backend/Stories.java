@@ -36,19 +36,16 @@ public class Stories extends Content {
    @Override
    public void delete(String contentID) //not expired user chooses to delete it
     {
-     ArrayList<Stories> stories;
-     
+        ArrayList<Stories> stories;
         stories = DataBase.getInstance().getGlobalStories();
-     ArrayList<Stories> updated= new ArrayList();
-     
-     for(Stories s: stories)
-     {
-    if(s.getContentID() != contentID)
-     {
-         updated.add(s);
-         DataBase.getInstance().addTOGlobalStories(s);
-     }
-     }  
+        ArrayList<Stories> updated = new ArrayList();
+
+        for (Stories s : stories) {
+            if (s.getContentID() != contentID) {
+                updated.add(s);
+                DataBase.getInstance().addTOGlobalStories(s);
+            }
+        }
     }
  
    public ArrayList<Stories> readStoryForUser(String userID) {

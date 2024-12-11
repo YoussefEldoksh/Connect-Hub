@@ -163,7 +163,6 @@ public class NewPostPanel2 extends javax.swing.JPanel {
                 contents.add(story);
                 user.addStory(story);
                 DataBase.getInstance().addTOGlobalStories(story);
-
             }
     }
 
