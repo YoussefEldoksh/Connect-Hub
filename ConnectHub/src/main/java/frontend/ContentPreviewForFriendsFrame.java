@@ -20,11 +20,11 @@ import javax.swing.JLabel;
  * @author husse
  */
 public class ContentPreviewForFriendsFrame extends javax.swing.JFrame {
-
     User user;
     /**
      * Creates new form ContentPreviewForFriendsFrame
      */
+
     public ContentPreviewForFriendsFrame(int selectedindix ,int type, User user) {
         initComponents();
         this.user = user;
@@ -48,9 +48,12 @@ public class ContentPreviewForFriendsFrame extends javax.swing.JFrame {
         
         
         ContentLabel.setFont(new Font("Arial", Font.BOLD, 24));
+
         
+
     }
     
+
     public Posts findPost(int selectedindix) {
         
         Posts postChosen= NewsFeed.fetchPosts(UserSession.getCurrentUser()).get(selectedindix);
@@ -61,6 +64,7 @@ public class ContentPreviewForFriendsFrame extends javax.swing.JFrame {
        Stories storyChosen =  NewsFeed.fetchStories(UserSession.getCurrentUser()).get(selectedindix);
         return storyChosen;
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -84,19 +88,19 @@ public class ContentPreviewForFriendsFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(friendContentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(103, 103, 103)
-                        .addComponent(ContentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(86, Short.MAX_VALUE))
+                        .addComponent(ContentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(48, 48, 48)
+                        .addComponent(friendContentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(72, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(friendContentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addContainerGap()
+                .addComponent(friendContentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(3, 3, 3)
                 .addComponent(ContentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(231, Short.MAX_VALUE))
         );

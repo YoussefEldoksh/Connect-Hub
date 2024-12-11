@@ -23,8 +23,10 @@ public class MainNewsPanel extends javax.swing.JPanel {
 //    private JList<String> storiesList;
 //    private JList<String> postsList;
 //    
+
     private DefaultListModel<String> postsListModel= new DefaultListModel<>();
     private DefaultListModel<String> storiesListModel = new DefaultListModel<>();
+
     boolean storiesListUpdate = false;
     boolean postsListUpdate = false;
     User user;
@@ -39,31 +41,26 @@ public class MainNewsPanel extends javax.swing.JPanel {
         // Set the JList models to DefaultListModel
 
         
-        
-        postsList.addListSelectionListener(new ListSelectionListener() {
+                postsList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
+
                 if (!e.getValueIsAdjusting()) { 
                    if(!postsListUpdate){ 
-                    String selectedIndex = storiesList.getSelectedValue();
-                    int selectedindix = storiesList.getSelectedIndex();
-                    String token[] = selectedIndex.split(" ");
-
-                    System.out.println("User selected: " + token[0]);
-                      
-                             
-                  
+                    int selectedindix = postsList.getSelectedIndex();
                        ContentPreviewForFriendsFrame friendcontent= new ContentPreviewForFriendsFrame(selectedindix,1,user);
                     friendcontent.setVisible(true);
                 }}
+
             }
         }
         );
-        
+
         storiesList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {
+
                    if(!storiesListUpdate){
                     String selectedIndex = storiesList.getSelectedValue();
                     int selectedindix = storiesList.getSelectedIndex();
@@ -76,28 +73,28 @@ public class MainNewsPanel extends javax.swing.JPanel {
                     friendcontent.setVisible(true);
                     
                    }
+
             }
         }}
         );
     }
-    
+
     public void updateStoriesList(User u) {
-        this.user= user;
         storiesListUpdate = true;
+        this.user = u;
         ArrayList<String> linerep = NewsFeed.getLineRepresentationsAllStories(u);
         storiesListModel.clear();
 
         for (int i = 0; i < linerep.size(); i++) {
             storiesListModel.addElement(linerep.get(i));
-
         }
         storiesList.setModel(storiesListModel);
         storiesListUpdate = false;
         System.out.println("Stories: " + linerep);
     }
-    
+
     public void updatePostsList(User u) {
-        this.user =user;
+        this.user = u;
         postsListUpdate = true;
         ArrayList<String> linerep = NewsFeed.getLineRepresentationsAllPosts(u);
         postsListModel.clear();
@@ -109,8 +106,8 @@ public class MainNewsPanel extends javax.swing.JPanel {
         postsList.setModel(postsListModel);
         postsListUpdate = false;
     }
-    
-   
+
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

@@ -123,12 +123,13 @@ public class NewsFeed {
         return stories;
     }
     
-    public static void createPost(User user,String contentID,String content, String imagePath )
+    /*public static void createPost(User user,String contentID,String content, String imagePath )
     {
         Posts post = new Posts(contentID, user.getUserId(), content, ImageHandler.saveImage(imagePath), imagePath);
         user.addPost(post);
         DataBase.getInstance().addToGlobalPosts(post);
     }
+    */
     
     public static ArrayList<String> getLineRepresentationsStories(User u) {
         ArrayList<Stories> stories = fetchStories(u);
@@ -197,6 +198,7 @@ public class NewsFeed {
             for (Friend friend : u.getListOfFriends()) {
                 friendsId.add(friend.getUserId());
             }
+            friendsId.add(u.getUserId());
         
         for (int i = 0; i < DataBase.getInstance().getGlobalPosts().size(); i++) {
            
@@ -204,8 +206,8 @@ public class NewsFeed {
             { String username = AccountManagement.findUsername(DataBase.getInstance().getGlobalPosts().get(i).getAuthorID());
 
             // Convert LocalDate to String
-            String formattedDate = DataBase.getInstance().getGlobalPosts().get(i).getTimestamp().toString();
-            String s = username + "published on: " + formattedDate;
+            String formattedDate = DataBase.getInstance().getGlobalPosts().get(i).getTimestamp().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+            String s = username + " published on: " + formattedDate;
             lineRepresentations.add(s);
             }
         }

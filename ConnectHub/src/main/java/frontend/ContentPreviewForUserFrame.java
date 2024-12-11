@@ -119,6 +119,7 @@ NewPostPanel2 newPostPanel;
        }
     }//GEN-LAST:event_deleteContentButtonActionPerformed
 
+    
     /**
      * @param args the command line arguments
      */
