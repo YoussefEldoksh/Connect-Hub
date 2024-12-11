@@ -24,11 +24,10 @@ import javax.swing.event.ListSelectionListener;
  * @author malak
  */
 public class FriendReqSuggPanel extends javax.swing.JPanel {
-
+User user;
     private DefaultListModel<String> friendsListModel = new DefaultListModel<>();
     private DefaultListModel<String> requestsListModel = new DefaultListModel<>();
     private DefaultListModel<String> suggestionsListModel = new DefaultListModel<>();
-    User user;
     private boolean requestlistUpdate = false;
     private boolean friendlistUpdate = false;
     private boolean suggestionlistUpdate = false;

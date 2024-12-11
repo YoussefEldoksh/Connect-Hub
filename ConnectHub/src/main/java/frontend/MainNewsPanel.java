@@ -21,8 +21,8 @@ public class MainNewsPanel extends javax.swing.JPanel {
 //    private JList<String> storiesList;
 //    private JList<String> postsList;
 //    
-    private DefaultListModel<String> storiesListModel;
-    private DefaultListModel<String> postsListModel;
+    private DefaultListModel<String> storiesListModel = new DefaultListModel<>();
+    private DefaultListModel<String> postsListModel = new DefaultListModel<>();
     boolean storiesListUpdate = false;
     boolean postsListUpdate = false;
     User user;
@@ -32,61 +32,59 @@ public class MainNewsPanel extends javax.swing.JPanel {
      */
     public MainNewsPanel() {
         initComponents();
-        storiesListModel = new DefaultListModel<>();
-        postsListModel = new DefaultListModel<>();
 
         // Set the JList models to DefaultListModel
 
         
-        
-        postsList.addListSelectionListener(new ListSelectionListener() {
+                postsList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) { 
-                   if(!postsListUpdate){ int selectedIndex = postsList.getSelectedIndex();
-
-                    System.out.println("User selected: " + selectedIndex);
-                    ContentPreviewForFriendsFrame friendcontent= new ContentPreviewForFriendsFrame(selectedIndex, 1,user);
-                    friendcontent.setVisible(true);
-                }}
+                if (!e.getValueIsAdjusting()) {
+                    if (!postsListUpdate) {
+                        int selectedIndex = postsList.getSelectedIndex();
+                        System.out.println("User selected: " + selectedIndex);
+                        ContentPreviewForFriendsFrame friendcontent = new ContentPreviewForFriendsFrame(selectedIndex, 1, user);
+                        friendcontent.setVisible(true);
+                    }
+                }
             }
         }
         );
-        
+
         storiesList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {
-                   if(!storiesListUpdate){
-                    int selectedIndex = storiesList.getSelectedIndex();
+                    if (!storiesListUpdate) {
+                        int selectedIndex = storiesList.getSelectedIndex();
 
-                    System.out.println("User selected: " + selectedIndex);
-                    ContentPreviewForFriendsFrame friendcontent= new ContentPreviewForFriendsFrame(selectedIndex, 2,user);
-                    
-                    friendcontent.setVisible(true);
-                    
-                   }
+                        System.out.println("User selected: " + selectedIndex);
+                        ContentPreviewForFriendsFrame friendcontent = new ContentPreviewForFriendsFrame(selectedIndex, 2, user);
+
+                        friendcontent.setVisible(true);
+
+                    }
+                }
             }
-        }}
+        }
         );
     }
-    
+
     public void updateStoriesList(User u) {
-        this.user= user;
         storiesListUpdate = true;
+        this.user = u;
         ArrayList<String> linerep = NewsFeed.getLineRepresentationsAllStories(u);
         storiesListModel.clear();
 
         for (int i = 0; i < linerep.size(); i++) {
             storiesListModel.addElement(linerep.get(i));
-
         }
-        storiesList.setModel(postsListModel);
+        storiesList.setModel(storiesListModel);
         storiesListUpdate = false;
     }
-    
+
     public void updatePostsList(User u) {
-        this.user =user;
+        this.user = u;
         postsListUpdate = true;
         ArrayList<String> linerep = NewsFeed.getLineRepresentationsAllPosts(u);
         postsListModel.clear();
@@ -98,8 +96,8 @@ public class MainNewsPanel extends javax.swing.JPanel {
         postsList.setModel(postsListModel);
         postsListUpdate = false;
     }
-    
-   
+
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
