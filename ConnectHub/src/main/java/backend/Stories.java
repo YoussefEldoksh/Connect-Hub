@@ -19,8 +19,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class Stories extends Content {
     
-    public Stories(String contentID, String authorID, String content, ImageIcon image, String imagePath) {
-        super(contentID, authorID, content, image, imagePath);
+    public Stories(String contentID, String authorID, String content) {
+        super(contentID, authorID, content);
     }
     
   public static boolean isExpiredStory(Stories story)

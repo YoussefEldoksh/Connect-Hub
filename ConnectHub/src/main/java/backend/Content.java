@@ -27,15 +27,16 @@ public abstract class Content {
     private String content;
     private LocalDateTime timestamp;
 
-    public Content(String contentID, String authorID, String content, ImageIcon image, String imagePath) {
+    public Content(String contentID, String authorID, String content) {
         this.contentID = contentID;
         this.authorID = authorID;
         this.content = content;
-        this.image= image;
-        this.imagePath=imagePath;
+        this.image= null;
+        this.imagePath=null;
         this.timestamp = LocalDateTime.now();
     }
 
+    
     public String getImagePath() {
         return imagePath;
     }

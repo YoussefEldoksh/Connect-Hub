@@ -119,12 +119,13 @@ public class NewsFeed {
         return stories;
     }
     
-    public static void createPost(User user,String contentID,String content, String imagePath )
+    /*public static void createPost(User user,String contentID,String content, String imagePath )
     {
         Posts post = new Posts(contentID, user.getUserId(), content, ImageHandler.saveImage(imagePath), imagePath);
         user.addPost(post);
         DataBase.getInstance().addToGlobalPosts(post);
     }
+    */
     
     public static ArrayList<String> getLineRepresentationsStories(User u) {
         ArrayList<Stories> stories = fetchStories(u);

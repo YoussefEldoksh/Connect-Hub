@@ -11,12 +11,12 @@ import javax.swing.ImageIcon;
  * @author dell
  */
 public class ContentFactory {
-    public static Content createContent(String type,String contentID, String authorID,String content,ImageIcon image, String imagePath) {
+    public static Content createContent(String type,String contentID, String authorID,String content) {
         switch (type.toLowerCase()) {
             case "post":
-                return new Posts(contentID,authorID,content, image,imagePath); 
+                return new Posts(contentID,authorID,content); 
             case "story":
-                return new Stories(contentID,authorID,content, image,imagePath); 
+                return new Stories(contentID,authorID,content); 
             default:
                 throw new IllegalArgumentException("Unknown content type: " + type);
         }

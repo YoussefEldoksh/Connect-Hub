@@ -35,7 +35,6 @@ public class ContentPreviewForFriendsFrame extends javax.swing.JFrame {
         if (contentType == 2) {
             displayStory(selectedIndex);
         }
-        
     }
     
      private void displayPost(int selectedIndex) {
@@ -80,7 +79,7 @@ public class ContentPreviewForFriendsFrame extends javax.swing.JFrame {
         titleLabel = new javax.swing.JLabel();
         contentLabel = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

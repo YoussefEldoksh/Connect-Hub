@@ -15,9 +15,10 @@ import javax.swing.ImageIcon;
  */
 public class Posts extends Content{
 
-    public Posts(String contentID, String authorID, String content, ImageIcon image, String imagePath) {
-        super(contentID, authorID, content, image, imagePath);
+    public Posts(String contentID, String authorID, String content) {
+            super(contentID, authorID, content);
     }
+    
     
   
     @Override

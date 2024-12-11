@@ -6,6 +6,7 @@ package frontend;
 
 import backend.AccountManagement;
 import backend.Content;
+import backend.ContentFactory;
 import backend.DataBase;
 import backend.Posts;
 import backend.Stories;
@@ -143,15 +144,22 @@ public class NewPostPanel2 extends javax.swing.JPanel {
         }
         
         if (contentType == 1) {
-                Posts post = new Posts("C" + (contentIDnum++), userId, text, imageIcon!=null ?imageIcon:null, file!=null?file.getPath():null);
+                Content post= ContentFactory.createContent("post", ("C" + (contentIDnum++)) , userId, text);
+                if(file!=null){
+                post.setImagePath(file.getPath());
+                post.setImage(imageIcon);
+                }
                 contents.add(post);
-                DataBase.getInstance().addToGlobalPosts(post);
+                DataBase.getInstance().addToGlobalPosts((Posts) post);
             } else if (contentType == 2) {
-                Stories story = new Stories("C" + (contentIDnum++), userId, text, imageIcon!=null ?imageIcon:null, file!=null?file.getPath():null);
+                Content story= ContentFactory.createContent("story", ("C" + (contentIDnum++)) , userId, text);
+                if(file!=null){
+                story.setImagePath(file.getPath());
+                story.setImage(imageIcon);
+                }
                 contents.add(story);
-                DataBase.getInstance().addTOGlobalStories(story);
+                DataBase.getInstance().addTOGlobalStories((Stories) story);
             }
-        
     }
 
     public void deleteContent(boolean Yes_Or_No)

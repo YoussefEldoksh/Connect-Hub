@@ -251,7 +251,11 @@ public class FileManagement { // Centrlized file operations system
                     System.err.println("Image not found for path: " + photoPath);
                 }
 
-                Posts post = new Posts(contentId, userId, content, image, photoPath);
+                Posts post = new Posts(contentId, userId, content);
+                if (photoPath != null) {
+                    post.setImagePath(photoPath);
+                    post.setImage(image);
+                }
                 post.setTimestamp(date);
                 posts.add(post);// adding a new post to the array
             }
@@ -293,7 +297,11 @@ public class FileManagement { // Centrlized file operations system
                     System.err.println("Image not found for path: " + photoPath);
                 }
 
-                Posts post = new Posts(contentId, userId, content, image, photoPath);
+                Posts post = new Posts(contentId, userId, content);
+                if (photoPath != null) {
+                    post.setImagePath(photoPath);
+                    post.setImage(image);
+                }
                 post.setTimestamp(date);//setting the date to the actual one saved in file
                 posts.add(post);// adding a new post to the array
 
@@ -361,7 +369,11 @@ public class FileManagement { // Centrlized file operations system
                     System.err.println("Image not found for path: " + photoPath);
                 }
 
-                Stories story = new Stories(contentId, userId, content, image, photoPath);
+                Stories story = new Stories(contentId, userId, content);
+                if (photoPath != null) {
+                    story.setImagePath(photoPath);
+                    story.setImage(image);
+                }
                 story.setTimestamp(date);//because constructor doesn't set the date saved in the file
                 if (!Stories.isExpiredStory(story)) {
                     stories.add(story);
@@ -401,7 +413,11 @@ public class FileManagement { // Centrlized file operations system
                 } else {
                     System.err.println("Image not found for path: " + photoPath);
                 }
-                Stories story = new Stories(contentId, userId, content, image, photoPath);
+                Stories story = new Stories(contentId, userId, content);
+                if (photoPath != null) {
+                    story.setImagePath(photoPath);
+                    story.setImage(image);
+                }
                 story.setTimestamp(date);//because constructor doesn't set the date saved in the file
                 if (!Stories.isExpiredStory(story)) {
                     stories.add(story);
