@@ -55,7 +55,7 @@ public class FriendManagement {
             }
             else if(accept == false &&  rejected == true)
             {
-                user.removeFriendReq(friend);//this means that the request if rejected
+                user.removeFriendReq(friend);//this means that the request if 
                  DataBase.getInstance().removeFriendReq(friend);
 
             }
@@ -152,6 +152,7 @@ public class FriendManagement {
     public static void unblockFriend(User user, Friend blockedFriend) // function for unblocking someone
     {                                                          // can be added to suggestions and searched for
         user.removeBlockedFriend(blockedFriend);
+        
         FileManagement.saveInUsersJSONfile();
     }
     
@@ -208,22 +209,66 @@ public class FriendManagement {
         return friendrequests;
      }
     
-    public static ArrayList<User> advancedSearchUsersString(User user)
+    public static ArrayList<User> advancedSearchUsersString(String user)
      {
+
         ArrayList<User> searchedUser = new ArrayList<>();
-       
+         if (user == null || user.trim().isEmpty()) {
+             return searchedUser; // Return empty list for null or empty input
+         }
          if (user == null)
          {
               return searchedUser; // Return empty list if input is invalid
          }
         
          for (User allUsers : DataBase.getInstance().getUsers()) {
-             if(allUsers.getUsername().toLowerCase().contains(user.getUsername().toLowerCase())) // make case insenstive
+             if(allUsers.getUsername().toLowerCase().contains(user.toLowerCase())) // make case insenstive
              {
                  searchedUser.add(allUsers);
              }
          }
         return searchedUser;
      }   
+    
+    public static ArrayList<String> getLineRepresentationUserSearch(String keyword)
+    {
+        
+        ArrayList<String> keyUsers = new ArrayList<>();
+        
+        ArrayList<User> users = advancedSearchUsersString(keyword);
+        
+        if(users.isEmpty())
+        {
+            return keyUsers;
+        }
+        
+        for (User user : users) {
+           keyUsers.add(user.getUsername());
+            
+            
+        }
+        return keyUsers;
+    }
+    
+    public static boolean isFriend(String key)
+    {
+        ArrayList<Friend> friends = UserSession.getCurrentUser().getListOfFriends();
+        
+        for (Friend friend : friends) {
+            if(key.equals(friend.getUsername()))
+            {
+                return true;  // return true if they key is a friend of the user
+            }
+        }
+        return false;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
    
 }

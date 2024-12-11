@@ -5,7 +5,11 @@
         "dob": "2024-12-08",
         "userId": "U0",
         "email": "doksh@gmail.com",
-        "friends": [],
+        "friends": [{
+            "userId": "U5",
+            "email": "doksh88@gmail.com",
+            "username": "doksh3333"
+        }],
         "username": "doksh22",
         "status": true
     },

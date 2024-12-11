@@ -122,6 +122,7 @@ public class NewsFeedPage extends javax.swing.JFrame {
         homeButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         refreshButton = new javax.swing.JButton();
+        searchButton = new javax.swing.JButton();
         FeedPanel = new javax.swing.JPanel();
         scrollPane1 = new java.awt.ScrollPane();
         friendReqSuggPanel3 = new frontend.FriendReqSuggPanel();
@@ -181,6 +182,13 @@ public class NewsFeedPage extends javax.swing.JFrame {
             }
         });
 
+        searchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/result_searchIcon.jpg"))); // NOI18N
+        searchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout friendReqSuggPanel1Layout = new javax.swing.GroupLayout(friendReqSuggPanel1);
         friendReqSuggPanel1.setLayout(friendReqSuggPanel1Layout);
         friendReqSuggPanel1Layout.setHorizontalGroup(
@@ -194,7 +202,9 @@ public class NewsFeedPage extends javax.swing.JFrame {
                 .addComponent(refreshButton)
                 .addGap(144, 144, 144)
                 .addComponent(friendsButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 404, Short.MAX_VALUE)
+                .addGap(164, 164, 164)
+                .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 191, Short.MAX_VALUE)
                 .addComponent(profileButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(242, 242, 242))
         );
@@ -207,11 +217,13 @@ public class NewsFeedPage extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addGroup(friendReqSuggPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(friendReqSuggPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(friendsButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(homeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(refreshButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(profileButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(friendReqSuggPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(friendReqSuggPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(friendsButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(homeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                .addComponent(refreshButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                .addComponent(profileButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
@@ -320,6 +332,13 @@ public class NewsFeedPage extends javax.swing.JFrame {
         this.openFriendManagementPage(user);
     }//GEN-LAST:event_friendsButtonActionPerformed
 
+    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
+        // TODO add your handling code here:
+       
+        SearchForUserFrame.getInstance().setVisible(true);
+        
+    }//GEN-LAST:event_searchButtonActionPerformed
+
   
 
     
@@ -337,5 +356,6 @@ public class NewsFeedPage extends javax.swing.JFrame {
     private javax.swing.JButton profileButton;
     private javax.swing.JButton refreshButton;
     private java.awt.ScrollPane scrollPane1;
+    private javax.swing.JButton searchButton;
     // End of variables declaration//GEN-END:variables
 }
