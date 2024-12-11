@@ -288,4 +288,12 @@ public class User extends Account {
     {
         this.userStories.remove(story);
     } 
+    
+    public void reload()
+    {
+        friendReq = FileManagement.loadFromFriendRequestsJsonFileForSpecificUser(this.getUserId());
+        userStories = FileManagement.loadFromStroiesJsonFileForSpecificUser(this.getUserId());
+        userPosts = FileManagement.loadFromPostsJsonFileForSpecificUser(this.getUserId());
+    }
+    
 }

@@ -293,6 +293,8 @@ public class NewsFeedPage extends javax.swing.JFrame {
 
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         // TODO add your handling code here:
+        DataBase.getInstance().loadAllFiles();
+        user.reload();
         friendReqSuggPanel3.updateFriendsList(user);
         friendReqSuggPanel3.updateRequestsList(user);
         friendReqSuggPanel3.updateSuggestionsList(user);
