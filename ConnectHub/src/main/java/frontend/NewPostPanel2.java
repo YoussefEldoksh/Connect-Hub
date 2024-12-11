@@ -144,21 +144,26 @@ public class NewPostPanel2 extends javax.swing.JPanel {
         }
         
         if (contentType == 1) {
-                Content post= ContentFactory.createContent("post", ("C" + (contentIDnum++)) , userId, text);
+                Posts post= (Posts)ContentFactory.createContent("post", ("C" + (contentIDnum++)) , userId, text);
                 if(file!=null){
                 post.setImagePath(file.getPath());
                 post.setImage(imageIcon);
                 }
                 contents.add(post);
-                DataBase.getInstance().addToGlobalPosts((Posts) post);
+
+                user.addPost(post);
+                DataBase.getInstance().addToGlobalPosts(post);
+
             } else if (contentType == 2) {
-                Content story= ContentFactory.createContent("story", ("C" + (contentIDnum++)) , userId, text);
+                Stories story= (Stories)ContentFactory.createContent("story", ("C" + (contentIDnum++)) , userId, text);
                 if(file!=null){
                 story.setImagePath(file.getPath());
                 story.setImage(imageIcon);
                 }
                 contents.add(story);
-                DataBase.getInstance().addTOGlobalStories((Stories) story);
+                user.addStory(story);
+                DataBase.getInstance().addTOGlobalStories(story);
+
             }
     }
 

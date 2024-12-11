@@ -4,6 +4,8 @@
  */
 package backend;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,6 +25,7 @@ public class NewsFeed {
         for (Friend friend : user.getListOfFriends()) {
             friends.add(friend.getUserId());
         }
+        friends.add(user.getUserId());
         for (User allusers : DataBase.getInstance().getUsers()) {
             if(friends.contains(allusers.getUserId()))
             {
@@ -42,6 +45,7 @@ public class NewsFeed {
         for (Friend friend : user.getListOfFriends()) {
             friends.add(friend.getUserId());
         }
+        friends.add(user.getUserId());
         for (User allusers :  DataBase.getInstance().getUsers()) {
             if(friends.contains(allusers.getUserId()))
             {
@@ -74,10 +78,10 @@ public class NewsFeed {
     public static ArrayList<Posts> sortPosts(ArrayList<Posts> posts)
     {
         boolean swapped;
-        
-        for(int i = 0; i < posts.size(); i++) {
+         if(posts.size() == 1 || posts.size() == 0) return posts;
+        for(int i = 0; i < posts.size()- 1; i++) {
             swapped = false;
-            for(int j = i; j < posts.size(); j++) {
+            for(int j = i; j < posts.size()- 1-i; j++) {
                 if(posts.get(j).getTimestamp().isBefore(posts.get(j+1).getTimestamp()))
                 {
                    Posts temp = posts.get(j);
@@ -98,10 +102,10 @@ public class NewsFeed {
     public static ArrayList<Stories> sortStories(ArrayList<Stories> stories)
     {
         boolean swapped;
-        
-        for(int i = 0; i < stories.size(); i++) {
+       if(stories.size() == 1 || stories.size() == 0) return stories;
+        for(int i = 0; i < stories.size()- 1; i++) {
             swapped = false;
-            for(int j = i; j < stories.size(); j++) {
+            for(int j = i; j < stories.size()- 1 - i; j++) {
                 if(stories.get(j).getTimestamp().isBefore(stories.get(j+1).getTimestamp()))
                 {
                    Stories temp = stories.get(j);
@@ -132,15 +136,39 @@ public class NewsFeed {
         ArrayList<String> lineRepresentations = new ArrayList<>();
         for (int i = 0; i < stories.size(); i++) {
             String username = AccountManagement.findUsername(stories.get(i).getAuthorID());
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            
             // Convert LocalDate to String
-            String formattedDate = stories.get(i).getTimestamp().format(formatter);
+            String formattedDate = stories.get(i).getTimestamp().toString();
             String s = username + "published on: " + formattedDate;
             lineRepresentations.add(s);
         }
         return lineRepresentations;
     }
     
+    public static Stories getStorybyDate(User user ,LocalDateTime Date) {
+        
+        for (Stories stories : fetchStories(user)) {
+            if(Date.equals(stories.getTimestamp()))
+            {
+                
+                return  stories;
+            }
+            System.out.println(stories.getTimestamp());
+        }
+        return null;
+    }
+    
+    
+    public static Posts getPostbyDate(User user, LocalDateTime Date) {
+
+        for (Posts post : fetchPosts(user)) {
+            if (Date.equals(post.getTimestamp())) {
+                return post;
+            }
+        }
+        return null;
+    }
+
        public static ArrayList<String> getLineRepresentationsAllStories(User user) {
         ArrayList<String> lineRepresentations = new ArrayList<>();
         ArrayList<String> friendsId = new ArrayList<>();
@@ -154,10 +182,9 @@ public class NewsFeed {
            
             if(friendsId.contains(DataBase.getInstance().getGlobalStories().get(i).getAuthorID()))
             { String username = AccountManagement.findUsername(DataBase.getInstance().getGlobalStories().get(i).getAuthorID());
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            // Convert LocalDate to String
-            String formattedDate = DataBase.getInstance().getGlobalStories().get(i).getTimestamp().format(formatter);
-            String s = username + " published on: " + formattedDate;
+
+            String formattedDate = DataBase.getInstance().getGlobalStories().get(i).getTimestamp().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+            String s = username +" published on: " + formattedDate;
             lineRepresentations.add(s);
             }
         }
@@ -171,15 +198,16 @@ public class NewsFeed {
             for (Friend friend : u.getListOfFriends()) {
                 friendsId.add(friend.getUserId());
             }
+            friendsId.add(u.getUserId());
         
         for (int i = 0; i < DataBase.getInstance().getGlobalPosts().size(); i++) {
            
             if(friendsId.contains(DataBase.getInstance().getGlobalPosts().get(i).getAuthorID()))
             { String username = AccountManagement.findUsername(DataBase.getInstance().getGlobalPosts().get(i).getAuthorID());
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
             // Convert LocalDate to String
-            String formattedDate = DataBase.getInstance().getGlobalPosts().get(i).getTimestamp().format(formatter);
-            String s = username + "published on: " + formattedDate;
+            String formattedDate = DataBase.getInstance().getGlobalPosts().get(i).getTimestamp().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+            String s = username + " published on: " + formattedDate;
             lineRepresentations.add(s);
             }
         }
@@ -191,9 +219,9 @@ public class NewsFeed {
         ArrayList<String> lineRepresentations = new ArrayList<>();
         for (int i = 0; i < posts.size(); i++) {
             String username = AccountManagement.findUsername(posts.get(i).getAuthorID());
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+           
             // Convert LocalDate to String
-            String formattedDate = posts.get(i).getTimestamp().format(formatter);
+            String formattedDate = posts.get(i).getTimestamp().toString();
             String s = username + "published on: " + formattedDate;
             lineRepresentations.add(s);
         }

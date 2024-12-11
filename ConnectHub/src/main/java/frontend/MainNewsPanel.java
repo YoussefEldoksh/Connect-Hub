@@ -7,6 +7,8 @@ package frontend;
 import backend.NewsFeed;
 import backend.Stories;
 import backend.User;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
@@ -21,8 +23,10 @@ public class MainNewsPanel extends javax.swing.JPanel {
 //    private JList<String> storiesList;
 //    private JList<String> postsList;
 //    
+
+    private DefaultListModel<String> postsListModel= new DefaultListModel<>();
     private DefaultListModel<String> storiesListModel = new DefaultListModel<>();
-    private DefaultListModel<String> postsListModel = new DefaultListModel<>();
+
     boolean storiesListUpdate = false;
     boolean postsListUpdate = false;
     User user;
@@ -33,20 +37,21 @@ public class MainNewsPanel extends javax.swing.JPanel {
     public MainNewsPanel() {
         initComponents();
 
+
         // Set the JList models to DefaultListModel
 
         
                 postsList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) {
-                    if (!postsListUpdate) {
-                        int selectedIndex = postsList.getSelectedIndex();
-                        System.out.println("User selected: " + selectedIndex);
-                        ContentPreviewForFriendsFrame friendcontent = new ContentPreviewForFriendsFrame(selectedIndex, 1, user);
-                        friendcontent.setVisible(true);
-                    }
-                }
+
+                if (!e.getValueIsAdjusting()) { 
+                   if(!postsListUpdate){ 
+                    int selectedindix = postsList.getSelectedIndex();
+                       ContentPreviewForFriendsFrame friendcontent= new ContentPreviewForFriendsFrame(selectedindix,1,user);
+                    friendcontent.setVisible(true);
+                }}
+
             }
         }
         );
@@ -55,18 +60,22 @@ public class MainNewsPanel extends javax.swing.JPanel {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {
-                    if (!storiesListUpdate) {
-                        int selectedIndex = storiesList.getSelectedIndex();
 
-                        System.out.println("User selected: " + selectedIndex);
-                        ContentPreviewForFriendsFrame friendcontent = new ContentPreviewForFriendsFrame(selectedIndex, 2, user);
+                   if(!storiesListUpdate){
+                    String selectedIndex = storiesList.getSelectedValue();
+                    int selectedindix = storiesList.getSelectedIndex();
+                    String token[] = selectedIndex.split(" ");
 
-                        friendcontent.setVisible(true);
+                    System.out.println("User selected: " + token[0]);
+                       
+                    ContentPreviewForFriendsFrame friendcontent= new ContentPreviewForFriendsFrame(selectedindix, 2,user);
+                    
+                    friendcontent.setVisible(true);
+                    
+                   }
 
-                    }
-                }
             }
-        }
+        }}
         );
     }
 
@@ -81,6 +90,7 @@ public class MainNewsPanel extends javax.swing.JPanel {
         }
         storiesList.setModel(storiesListModel);
         storiesListUpdate = false;
+        System.out.println("Stories: " + linerep);
     }
 
     public void updatePostsList(User u) {
