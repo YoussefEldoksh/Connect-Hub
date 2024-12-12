@@ -17,6 +17,7 @@ import java.util.Base64;
  * @author malak
  */
 public class User extends Account {
+
     /*private String userId ;
     private String email;
     private String username;*/
@@ -30,9 +31,10 @@ public class User extends Account {
     private ArrayList<Posts> userPosts;
     private ArrayList<Stories> userStories;
     public String getPassword;
+    private ArrayList<Notification> notifications;
 
     public User(String userId, String email, String username, String password, LocalDate dateOfBirth, boolean status) {
-        super(email,username,userId);
+        super(email, username, userId);
         setPassword(password);
         this.dateOfBirth = dateOfBirth;
         this.status = status;
@@ -42,11 +44,12 @@ public class User extends Account {
         friendReq = FileManagement.loadFromFriendRequestsJsonFileForSpecificUser(userId);
         userStories = FileManagement.loadFromStroiesJsonFileForSpecificUser(userId);
         userPosts = FileManagement.loadFromPostsJsonFileForSpecificUser(userId);
+        notifications = fillFriendRequestsNotifications();
     }
-    
-    public User(String userId, String email, String username, String password, LocalDate dateOfBirth, boolean status,String load) {
-        super(email,username,userId);
-        this.password=password;
+
+    public User(String userId, String email, String username, String password, LocalDate dateOfBirth, boolean status, String load) {
+        super(email, username, userId);
+        this.password = password;
         this.dateOfBirth = dateOfBirth;
         this.status = status;
         friends = new ArrayList<>();
@@ -56,9 +59,8 @@ public class User extends Account {
         userStories = FileManagement.loadFromStroiesJsonFileForSpecificUser(userId);
         userPosts = FileManagement.loadFromPostsJsonFileForSpecificUser(userId);
     }
-    
-  public void addFriends(Friend friend)
-    {
+
+    public void addFriends(Friend friend) {
         friends.add(friend);
     }
 
@@ -69,23 +71,16 @@ public class User extends Account {
     public ArrayList<Posts> getUserPosts() {
         return userPosts;
     }
-    
-    
-    
-    public void removeFriend(Friend friend)
-    {
+
+    public void removeFriend(Friend friend) {
         friends.remove(friend);
     }
-    
-    
-    public ArrayList<Friend> getListOfFriends()
-    {
+
+    public ArrayList<Friend> getListOfFriends() {
         return friends;
     }
 
-     public String getUsername() {
-        return username;
-    }
+
 
     /*public String getUserId() {
         return userId;
@@ -95,7 +90,7 @@ public class User extends Account {
         return email;
     }
 
-   */
+     */
     public String getPassword() {
         return password;
     }
@@ -108,42 +103,39 @@ public class User extends Account {
         return status;
     }
 
-    public void setUsername(String username){
-        this.username=username;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public void setPassword(String password){
+    public void setPassword(String password) {
         MessageDigest md;
-        try{
-            md=MessageDigest.getInstance("SHA-256");
-        }
-        catch(NoSuchAlgorithmException e){
+        try {
+            md = MessageDigest.getInstance("SHA-256");
+        } catch (NoSuchAlgorithmException e) {
             System.out.println("No Such Algorithm.");
             return;
         }
-        byte[] hashedBytes=md.digest(password.getBytes());
-        this.password=Base64.getEncoder().encodeToString(hashedBytes);
+        byte[] hashedBytes = md.digest(password.getBytes());
+        this.password = Base64.getEncoder().encodeToString(hashedBytes);
     }
 
     public void setStatus(boolean status) {
         this.status = status;
     }
-    
-     public void addBlockedFriends(Friend friend)
-    {
+
+    public void addBlockedFriends(Friend friend) {
         blockedFriends.add(friend);
 
-        if(friends.contains(friend)){
+        if (friends.contains(friend)) {
             friends.remove(friend);
-           //unviewableUsers.add(AccountManagement.findUser(friend.getUsername()));
-           //AccountManagement.findUser(friend.getUsername()).addUnviewableUser(this); 
-           //make the blocked friend not view the user 
-          // AccountManagement.findUser(friend.getUsername()).getListOfFriends().remove(new Friend(this.getEmail(),this.getUsername(),this.getUserId()));
+            //unviewableUsers.add(AccountManagement.findUser(friend.getUsername()));
+            //AccountManagement.findUser(friend.getUsername()).addUnviewableUser(this); 
+            //make the blocked friend not view the user 
+            // AccountManagement.findUser(friend.getUsername()).getListOfFriends().remove(new Friend(this.getEmail(),this.getUsername(),this.getUserId()));
         }
-        
-        
-        for(FriendRequests request:friendReq){
-            if(request.getUserId().equals(friend.getUserId())){
+
+        for (FriendRequests request : friendReq) {
+            if (request.getUserId().equals(friend.getUserId())) {
                 friendReq.remove(request);
                 AccountManagement.findUser(friend.getUsername()).getListOfFriendReq().remove(request); //remove friend req from the blocked user too
                 return;
@@ -151,95 +143,89 @@ public class User extends Account {
         }
     }
 
-     
-    
     public void removeBlockedFriend(Friend friend) // for unblocking
     {
-        if(blockedFriends.contains(friend)){
-        unviewableUsers.remove(AccountManagement.findUser(friend.getUsername()));
-        AccountManagement.findUser(friend.getUsername()).removeUnviewableUser(this);
-        blockedFriends.remove(friend);
+        if (blockedFriends.contains(friend)) {
+            unviewableUsers.remove(AccountManagement.findUser(friend.getUsername()));
+            AccountManagement.findUser(friend.getUsername()).removeUnviewableUser(this);
+            blockedFriends.remove(friend);
             System.out.println("Unblocked.");
             return;
         }
         System.out.println("Friend not blocked in the first place");
     }
-    
-    public void addUnviewableUser(User user){
+
+    public void addUnviewableUser(User user) {
         unviewableUsers.add(user);
         user.addUnviewableUser(this);
     }
-    
-    public void removeUnviewableUser(User user){
+
+    public void removeUnviewableUser(User user) {
         unviewableUsers.remove(user);
     }
-    
-    public ArrayList<User> getListOfUnviewableUsers()
-    {
+
+    public ArrayList<User> getListOfUnviewableUsers() {
         return unviewableUsers;
     }
-    
-    public ArrayList<Friend> getListOfBlockedFriends()
-    {
+
+    public ArrayList<Friend> getListOfBlockedFriends() {
         return blockedFriends;
     }
-    
-    public Friend getListOfBlockedFriends(String username){
-    for (int i=0; i< getListOfBlockedFriends().size(); i++) {
-            if(getListOfBlockedFriends().get(i).getUsername().equals(username)){
-            return getListOfBlockedFriends().get(i);
+
+    public Friend getListOfBlockedFriends(String username) {
+        for (int i = 0; i < getListOfBlockedFriends().size(); i++) {
+            if (getListOfBlockedFriends().get(i).getUsername().equals(username)) {
+                return getListOfBlockedFriends().get(i);
             }
         }
         return null;
     }
-    
+
     public ArrayList<String> getLineRepOfBlockedFriends() // fetching an array list of friends suggestions in the String format for display
     {
         ArrayList<String> blocked = new ArrayList<>();
         ArrayList<Friend> userblocked = this.blockedFriends;
         int i;
-        for (i=0; i< userblocked.size(); i++) {
+        for (i = 0; i < userblocked.size(); i++) {
             blocked.add(userblocked.get(i).getUsername());
         }
         return blocked;
     }
-    
-     public void addFriendsReq(FriendRequests friend)
-    {
+
+    public void addFriendsReq(FriendRequests friend) {
         friendReq.add(friend);
     }
-    
-    public void removeFriendReq(FriendRequests friend) 
-    {
+
+    public void removeFriendReq(FriendRequests friend) {
         friendReq.remove(friend);
     }
-    
-    
-    public ArrayList<FriendRequests> getListOfFriendReq()
-    {
+
+    public ArrayList<FriendRequests> getListOfFriendReq() {
         return friendReq;
-    }    
-    
+    }
+
     public FriendRequests getFriendReq(String username) {
         for (int i = 0; i < friendReq.size(); i++) {
-            if (friendReq.get(i).getUsername().equals(username))
+            if (friendReq.get(i).getUsername().equals(username)) {
                 return this.getListOfFriendReq().get(i);
+            }
         }
         System.out.println(friendReq);
         return null;
     }
-    
-     public ArrayList<String> getLineRepOfFriendReq() // fetching an array list of friends suggestions in the String format for display
+
+    public ArrayList<String> getLineRepOfFriendReq() // fetching an array list of friends suggestions in the String format for display
     {
         ArrayList<String> requests = new ArrayList<>();
         ArrayList<FriendRequests> requested = this.getListOfFriendReq();
         int i;
-        for (i=0; i< requested.size(); i++) {
+        for (i = 0; i < requested.size(); i++) {
             requests.add(requested.get(i).getUsername());
         }
         return requests;
     }
-     /*
+
+    /*
     public void addSentRequest(FriendRequests friend){
         sentFriendReq.add(friend);
     }
@@ -249,60 +235,102 @@ public class User extends Account {
     }
     
      */
-     
-     public ArrayList<FriendRequests> getListOfSentReq()
-    {
-        ArrayList<FriendRequests>sent=new ArrayList<>();
-        for(FriendRequests req:friendReq){
-            if(req.getUserId().equals(this.getUserId())){
+
+    public ArrayList<FriendRequests> getListOfSentReq() {
+        ArrayList<FriendRequests> sent = new ArrayList<>();
+        for (FriendRequests req : friendReq) {
+            if (req.getUserId().equals(this.getUserId())) {
                 sent.add(req);
             }
         }
         return sent;
     }
-     
-     public ArrayList<FriendRequests> getListOfReceivedReq()
-    {
-        ArrayList<FriendRequests>received=new ArrayList<>();
-        for(FriendRequests req:friendReq){
-            if(req.getReceiver().equals(this.getUserId())){
+
+    public ArrayList<FriendRequests> getListOfReceivedReq() {
+        ArrayList<FriendRequests> received = new ArrayList<>();
+        for (FriendRequests req : friendReq) {
+            if (req.getReceiver().equals(this.getUserId())) {
                 received.add(req);
             }
         }
         return received;
     }
-    
-    public void addPost(Posts post)
-    {
+
+    public void addPost(Posts post) {
         this.userPosts.add(post);
     }
-    public void addStory(Stories story)
-    {
+
+    public void addStory(Stories story) {
         this.userStories.add(story);
     }
-    public void removePost(Posts post)
-    {
+
+    public void removePost(Posts post) {
         this.userPosts.remove(post);
     }
-    public void removeStory(Stories story)
-    {
+
+    public void removeStory(Stories story) {
         this.userStories.remove(story);
 
-    } 
-    
-    public void reload()
-    {
+    }
+
+    public void reload() {
         friendReq.clear();
         userStories.clear();
         userPosts.clear();
-        
+
         friendReq = FileManagement.loadFromFriendRequestsJsonFileForSpecificUser(this.getUserId());
         userStories = FileManagement.loadFromStroiesJsonFileForSpecificUser(this.getUserId());
         userPosts = FileManagement.loadFromPostsJsonFileForSpecificUser(this.getUserId());
     }
+
+    public ArrayList<Notification> fillFriendRequestsNotifications() {
+        ArrayList<NotificationFriendReq> requestNotification = DataBase.getInstance().getNotificationsFriendReq();
+        ArrayList<Notification> notifications = new ArrayList<>();
+       
+        for (NotificationFriendReq notificationFriendReq : requestNotification) {
+            if (notificationFriendReq.getRecieverId().equals(this.getUserId())) {
+                this.notifications.add(notificationFriendReq);
+            }
+        }
+        //hena el loop el hay add el notifications beta3et el group lazem a valdiate el awel eno a member
+        
+        
+        return notifications;
+    }
+    
+    
+    
     
 
+    public ArrayList<String> getLineRepresentationForNotifications() {
+        ArrayList<String> notification = new ArrayList<>();
+
+        if (notifications.isEmpty()) {
+            return notification;
+        }
+
+        for (Notification Notification : notifications) {
+
+            if (Notification instanceof NotificationFriendReq) {
+                String s = Notification.getMessage();
+                notification.add(s);
+            }
+            if (Notification instanceof NotificationGroupAdd || Notification instanceof NotificationGroupPost) {
+                String s = Notification.getMessage();
+                notification.add(s);
+            }
+        }
+        return notification;
+    }
     
+    public void addToListOfNotification(Notification notification)
+    {
+        notifications.add(notification);
+    }
+
+    public ArrayList<Notification> getListOfNotifications() {
+        return notifications;
+    }
 
     public void setUserPosts(ArrayList<Posts> userPosts) {
         this.userPosts = userPosts;
@@ -311,6 +339,5 @@ public class User extends Account {
     public void setUserStories(ArrayList<Stories> userStories) {
         this.userStories = userStories;
     }
-    
-    
+
 }

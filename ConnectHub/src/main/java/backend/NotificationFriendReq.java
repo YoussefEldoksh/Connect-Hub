@@ -21,6 +21,22 @@ public class NotificationFriendReq extends Notification{
         this.recieverId = recieverId;
         this.senderId = senderId;
     }
+
+    public String getRecieverId() {
+        return recieverId;
+    }
+
+    public void setRecieverId(String recieverId) {
+        this.recieverId = recieverId;
+    }
+
+    public String getSenderId() {
+        return senderId;
+    }
+
+    public void setSenderId(String senderId) {
+        this.senderId = senderId;
+    }
     
     
 }

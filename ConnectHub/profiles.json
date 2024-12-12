@@ -34,5 +34,11 @@
         "bio": "",
         "profile pic": "/Images/DefaultPhoto.jpg",
         "userid": "U5"
+    },
+    {
+        "cover": "/Images/background.jpg",
+        "bio": "",
+        "profile pic": "/Images/DefaultPhoto.jpg",
+        "userid": "U6"
     }
 ]
