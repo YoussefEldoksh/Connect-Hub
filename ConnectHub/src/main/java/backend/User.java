@@ -292,6 +292,10 @@ public class User extends Account {
     
     public void reload()
     {
+        friendReq.clear();
+        userStories.clear();
+        userPosts.clear();
+        
         friendReq = FileManagement.loadFromFriendRequestsJsonFileForSpecificUser(this.getUserId());
         userStories = FileManagement.loadFromStroiesJsonFileForSpecificUser(this.getUserId());
         userPosts = FileManagement.loadFromPostsJsonFileForSpecificUser(this.getUserId());
