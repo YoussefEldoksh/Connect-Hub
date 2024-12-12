@@ -12,10 +12,10 @@ import java.util.ArrayList;
  */
 
 public class DataBase { // Centralized Data Management
-    private ArrayList<User> users;
-    private ArrayList<Posts> posts;
-    private ArrayList<Stories> stories;
-    private ArrayList<FriendRequests> requests;
+    private ArrayList<User> users = new ArrayList<>();
+    private ArrayList<Posts> posts =  new ArrayList<>();
+    private ArrayList<Stories> stories = new ArrayList<>();
+    private ArrayList<FriendRequests> requests = new ArrayList<>();
     
     
     private static DataBase database = null;
@@ -92,12 +92,18 @@ public class DataBase { // Centralized Data Management
 
     public void loadAllFiles()
     {
+        this.users.clear();
+        this.posts.clear();
+        this.stories.clear();
+        this.requests.clear();
+
         this.users = FileManagement.loadFromUsersJSONfile();
         this.posts = FileManagement.loadFromPostsJsonFile();
         this.stories = FileManagement.loadFromStroiesJsonFile();
         this.requests = FileManagement.loadFromFriendRequestsJsonFile();
         
     }
+
     public void removeFriendReq(FriendRequests request)
     {
         for (FriendRequests req : requests) {

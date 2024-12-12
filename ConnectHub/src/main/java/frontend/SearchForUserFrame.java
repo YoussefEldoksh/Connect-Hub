@@ -81,13 +81,18 @@ public class SearchForUserFrame extends javax.swing.JFrame {
         getContentPane().add(searchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 50, 34, 34));
 
         resultsList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        resultsList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                resultsListValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(resultsList);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 324, 208));
 
-        label1.setBackground(new java.awt.Color(255, 255, 255));
+        label1.setBackground(new java.awt.Color(153, 0, 255));
         label1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        label1.setForeground(new java.awt.Color(0, 153, 255));
+        label1.setForeground(new java.awt.Color(255, 255, 255));
         label1.setText("Search For  A User");
         getContentPane().add(label1, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 8, 182, -1));
 
@@ -99,7 +104,7 @@ public class SearchForUserFrame extends javax.swing.JFrame {
         });
         getContentPane().add(clearSearchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 50, 34, 34));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/result_design.jpg"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/purple-gradient-background-5472-x-3648-i2xtxsy5ijm2ik4e.jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -40, 400, 390));
 
         pack();
@@ -136,6 +141,80 @@ public class SearchForUserFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_formWindowClosed
+
+    private void resultsListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_resultsListValueChanged
+        // TODO add your handling code here:
+         if (!resultsUpdated) {
+            String selectedValue = resultsList.getSelectedValue();
+
+            if (selectedValue == null) {
+                JOptionPane.showMessageDialog(this, "No selection was made;");
+            }
+
+            if (FriendManagement.isFriend(selectedValue)) {  // if the searched user is a friend
+                String username = backend.UserSession.getCurrentUser().getUsername();
+                Friend friend = Friend.getFriend(username, selectedValue);
+               
+                
+                if (friend == null) {
+                    JOptionPane.showMessageDialog(this, "There is no such friend");
+                    return;
+                }
+
+                String[] options = {"Remove", "Block"};
+                int choice = JOptionPane.showOptionDialog(
+                        null,
+                        "Would you like to: ",
+                        ("Friend" + friend.getUsername()),
+                        JOptionPane.DEFAULT_OPTION,
+                        JOptionPane.INFORMATION_MESSAGE,
+                        null, options, options[0]
+                );
+                if (choice == 0) {
+                    FriendManagement.removeFriend(backend.UserSession.getCurrentUser(), friend);
+                    
+                } else if (choice == 1) {
+                    FriendManagement.blockFriend(backend.UserSession.getCurrentUser(), friend);
+                    /*must update blocked*/
+                    JOptionPane.showMessageDialog(null, "Friend removed successfully");
+                }
+            }
+            
+            
+            if(!FriendManagement.isFriend(selectedValue))
+            {
+                String username = backend.UserSession.getCurrentUser().getUsername();
+        Friend suggestedFriend = FriendManagement.getFriendSuggested(backend.UserSession.getCurrentUser(), selectedValue);
+        if (suggestedFriend == null) {
+            JOptionPane.showMessageDialog(this, "Error finding suggestedFriend");
+            return;
+        }
+
+        System.out.println("User selected: " + selectedValue);
+
+        String[] options = {"Send Request", "Ignore"};
+        int choice = JOptionPane.showOptionDialog(
+                null,
+                "Would you like to: ",
+                ("Suggested Friend" + suggestedFriend.getUsername()),
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null, options, options[0]
+        );
+
+        System.out.println("User selected: " + selectedValue);
+        if (choice == 0) {
+            FriendRequests fr = new FriendRequests(backend.UserSession.getCurrentUser().getEmail(), backend.UserSession.getCurrentUser().getUsername(), backend.UserSession.getCurrentUser().getUserId(), suggestedFriend.getUserId());
+            FriendManagement.requestSent(fr, AccountManagement.findUser(suggestedFriend.getUsername()));
+            JOptionPane.showMessageDialog(null, "Friend request sent successfully");
+        } else if (choice == 1) {
+
+        }
+            }
+
+        }
+        
+    }//GEN-LAST:event_resultsListValueChanged
 
     
     public void updateStoriesList() {
