@@ -57,7 +57,12 @@ public class SearchForUserFrame extends javax.swing.JFrame {
         clearSearchButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         searchBar.addActionListener(new java.awt.event.ActionListener() {
@@ -80,6 +85,7 @@ public class SearchForUserFrame extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 324, 208));
 
+        label1.setBackground(new java.awt.Color(255, 255, 255));
         label1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         label1.setForeground(new java.awt.Color(0, 153, 255));
         label1.setText("Search For  A User");
@@ -94,7 +100,7 @@ public class SearchForUserFrame extends javax.swing.JFrame {
         getContentPane().add(clearSearchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 50, 34, 34));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/result_design.jpg"))); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -20, 410, 350));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -40, 400, 390));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -125,6 +131,11 @@ public class SearchForUserFrame extends javax.swing.JFrame {
            searchBar.setText("");
            resultsUpdated = false;
     }//GEN-LAST:event_clearSearchButtonActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_formWindowClosed
 
     
     public void updateStoriesList() {
