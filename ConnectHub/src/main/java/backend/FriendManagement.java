@@ -13,30 +13,28 @@ import java.util.ArrayList;
  */
 public class FriendManagement {
     
-    public static void friendRequest(boolean accept, User user,FriendRequests friend, boolean rejected)
+    public static void friendRequest(boolean accept, User user, FriendRequests friend, boolean rejected)
     {
       ArrayList<String> excludedIds = new ArrayList<>();
       User sender=AccountManagement.findUser(friend.getUsername());
       
-      if (sender == null) {
-    System.out.println("Sender user not found: " + friend.getUsername());
-    return;
-}
+        if (sender == null) {
+            System.out.println("Sender user not found: " + friend.getUsername());
+            return;
+        }
         for (Friend excludedfriends : user.getListOfBlockedFriends()) {
             excludedIds.add(excludedfriends.getUserId());
         }
-        for(Friend excludedFriends : user.getListOfFriends())
-        {
+        for (Friend excludedFriends : user.getListOfFriends()) {
             excludedIds.add(excludedFriends.getUserId());
         }
         excludedIds.add(user.getUserId());
-        
-        
-      if(!user.getListOfFriendReq().contains(friend))// if the request is already made don't added it again to the array
-      {
-          user.addFriendsReq(friend);               
-      }
-      
+
+        if (!user.getListOfFriendReq().contains(friend))// if the request is already made don't added it again to the array
+        {
+            user.addFriendsReq(friend);
+        }
+
        
        if(!excludedIds.contains(friend.getUserId()))
        {
@@ -68,6 +66,8 @@ public class FriendManagement {
        }
 
     }
+    
+    
    public static void requestSent(FriendRequests request, User user) {
     if (user.getListOfFriendReq().contains(request)) {
         System.out.println("Friend request already sent: " + request.getUsername());
