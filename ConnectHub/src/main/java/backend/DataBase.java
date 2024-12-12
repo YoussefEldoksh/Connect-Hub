@@ -93,7 +93,9 @@ public class DataBase { // Centralized Data Management
         FileManagement.saveInUsersJSONfile();
     }
 
-    public void loadAllFiles() {
+    
+    public void loadAllFiles()
+    {
         this.users.clear();
         this.posts.clear();
         this.stories.clear();
