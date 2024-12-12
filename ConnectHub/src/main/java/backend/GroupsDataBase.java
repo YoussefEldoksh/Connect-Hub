@@ -13,6 +13,9 @@ import java.util.ArrayList;
 public class GroupsDataBase {
  
     private ArrayList<Group> groups = new ArrayList<>();
+    private ArrayList<Posts> posts = new ArrayList<>();
+    private ArrayList<GroupRequests> grouprequests = new ArrayList<>();
+    
     private static GroupsDataBase groupdatabase = null;
     private static boolean isLoading = false;
     
@@ -25,14 +28,35 @@ public class GroupsDataBase {
         isLoading = false;
     }
     
-    public  synchronized void addToGlobalGroups(Group group){}
-     
-    public synchronized ArrayList<Group> getAllGroups(){
+    public  synchronized void addToGlobalGroups(Group group){
+    groups.add(group);
+    FileManagement.saveToGroupsJsonFile();
+    }
+    
+    public  synchronized void addToGlobalGroupsPosts(Posts post){
+    posts.add(post);
+    FileManagement.saveToGroupsPostsJsonFile();
+    }
+    
+    public synchronized ArrayList<Group> getAllGlobalGroups(){
     return groups;
     }
     
+    public synchronized ArrayList<Posts> getAllGlobalGroupsPosts(){
+    return posts;
+    }
+    
+    public synchronized ArrayList<GroupRequests> getAllGlobalGroupRequests(){
+    return grouprequests;
+    }
+    
+    public synchronized void addToGlobalGroupRequests(GroupRequests request){
+    grouprequests.add(request);
+    FileManagement.saveToGroupRequestsJsonFile();
+    }
+    
     public synchronized Group getSpecificGroup(String groupId) {
-        ArrayList<Group> groups = getAllGroups();
+        ArrayList<Group> groups = getAllGlobalGroups();
         for (int i = 0; i < groups.size(); i++) {
             if (groups.get(i).getGroupID().equals(groupId)) {
                 return groups.get(i);

@@ -33,4 +33,14 @@ public class GroupRequests {
             //remove also from requests if it was declined
         }       
     }
+
+    public String getUserMakingReqId() {
+        return userMakingReqId;
+    }
+
+    public String getGroupId() {
+        return groupId;
+    }
+    
+    
 }

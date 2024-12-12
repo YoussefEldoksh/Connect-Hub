@@ -15,11 +15,21 @@ import javax.swing.ImageIcon;
  */
 public class Posts extends Content{
 
+    String groupID;
     public Posts(String contentID, String authorID, String content) {
             super(contentID, authorID, content);
+            this.groupID = null;
     }
-    
-    
+
+    public Posts(String groupID, String contentID, String authorID, String content) {
+        super(contentID, authorID, content);
+        this.groupID = groupID;
+    }
+
+    public String getGroupID() {
+        return groupID;
+    }
+
   
     @Override
    public void delete(String contentID)

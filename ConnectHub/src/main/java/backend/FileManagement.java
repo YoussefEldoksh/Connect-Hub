@@ -347,8 +347,8 @@ public class FileManagement { // Centrlized file operations system
                 Files.createFile(Paths.get("stories.json")); // create the file if not found
                 return stories;
             }
+            
             String json = new String(Files.readAllBytes(Paths.get("stories.json")));
-
             JSONArray jsonPosts = new JSONArray(json);
 
             for (int i = 0; i < jsonPosts.length(); i++) {
@@ -503,6 +503,7 @@ public class FileManagement { // Centrlized file operations system
         }
         return profiles;
     }*/
+    
     public static ArrayList<Profile> loadFromProfilesJsonFile() {
         ArrayList<Profile> profiles = new ArrayList<>();
         ArrayList<User> users = DataBase.getInstance().getUsers();
@@ -565,5 +566,312 @@ public class FileManagement { // Centrlized file operations system
             System.err.println("Error saving stories to JSON file: " + ex.getMessage());
         }
     }
+    
+    
+    public static void saveToGroupsJsonFile(){
+    ArrayList<Group> groups = GroupsDataBase.getInstance().getAllGlobalGroups();
+    
+        try {
+            JSONArray Groups = new JSONArray();
 
+            for (int i = 0; i < groups.size(); i++) {
+                JSONObject group = new JSONObject();
+                group.put("groupid", groups.get(i).getGroupID());
+                group.put("group name", groups.get(i).getGroupName());
+                group.put("group description", groups.get(i).getGroupDescription());
+                group.put("group creator", groups.get(i).getGroupCreator());
+                group.put("group photopath", groups.get(i).getGroupPhotoPath());
+                
+                JSONArray admins = new JSONArray();
+                for (int j = 0; i < groups.get(i).getGroupAdmins().size(); i++) {
+                JSONObject admin = new JSONObject(); 
+                group.put("adminid", groups.get(i).getGroupAdmins().get(j));
+                
+                admins.put(admin);
+                }
+                
+                JSONArray members = new JSONArray();
+                for (int j = 0; i < groups.get(i).getGroupMembers().size(); i++) {
+                JSONObject member = new JSONObject(); 
+                group.put("memberid", groups.get(i).getGroupMembers().get(j));
+                
+                members.put(member);
+                }
+                
+                group.put("admins", admins);
+                group.put("members", members);
+                Groups.put(groups);
+            }
+            Files.write(Paths.get("groups.json"), Groups.toString(4).getBytes());
+            System.out.println("System successfully saved the stories");
+        } catch (IOException ex) {
+            System.err.println("Error saving stories to JSON file: " + ex.getMessage());
+        }
+    }
+    
+    
+    public ArrayList<Group> loadFromGroupsJsonFile() {
+        ArrayList<Group> groups = new ArrayList<>();
+        try {
+            if (!Files.exists(Paths.get("groups.json")) || Files.size(Paths.get("groups.json")) == 0) {
+                Files.createFile(Paths.get("groups.json")); // create the file if not found
+                return groups;
+            }
+            String json = new String(Files.readAllBytes(Paths.get("groups.json")));
+            JSONArray jsonGroups = new JSONArray(json);
+
+            for (int i = 0; i < jsonGroups.length(); i++) {
+                JSONObject jsonGroup = jsonGroups.getJSONObject(i);
+                String groupId = jsonGroup.getString("groupid");
+                String groupName = jsonGroup.getString("group name");
+                String groupDescription = jsonGroup.getString("group description");
+                String groupCreator = jsonGroup.getString("group creator");
+                String groupPhotoPath = jsonGroup.getString("group photopath");
+
+                Group group = new Group(groupId, groupName, groupDescription, groupCreator);
+                JSONArray jsonAdmins = jsonGroup.getJSONArray("admins");
+                for (int j = 0; i < jsonAdmins.length(); i++) {
+                    JSONObject admin = jsonAdmins.getJSONObject(j);
+                    String adminId = admin.getString("adminid");
+                    group.addGroupAdmin(adminId);
+                }
+
+                JSONArray jsonMembers = jsonGroup.getJSONArray("members");
+                for (int j = 0; i < jsonMembers.length(); i++) {
+                    JSONObject member = jsonMembers.getJSONObject(j);
+                    String memberId = member.getString("memberid");
+                    group.addGroupMember(memberId);
+                }
+                
+                groups.add(group);
+            }
+        } catch (IOException ex) {
+            System.err.println("Error loading groups from JSON file: " + ex.getMessage());
+        } catch (Exception ex) {
+            System.err.println("Error parsing JSON file: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+        return groups;
+    }
+    
+    //all posts present in all groups
+    public ArrayList<Posts> loadAllFromGroupsPostsJsonFile() {
+        ArrayList<Posts> posts = new ArrayList<>();
+        try {
+            if (!Files.exists(Paths.get("groupsposts.json")) || Files.size(Paths.get("groupsposts.json")) == 0) {
+                Files.createFile(Paths.get("groupsposts.json")); // create the file if not found
+                return posts;
+            }
+            String json = new String(Files.readAllBytes(Paths.get("groupsposts.json")));
+
+            JSONArray jsonPosts = new JSONArray(json);
+
+            for (int i = 0; i < jsonPosts.length(); i++) {
+                JSONObject jsonPost = jsonPosts.getJSONObject(i);
+                String groupId = jsonPost.getString("groupid");
+                String userId = jsonPost.getString("userid");
+                String contentId = jsonPost.getString("contentid");
+                String content = jsonPost.getString("content");
+                String time = jsonPost.getString("timestamp");
+                LocalDateTime date = LocalDateTime.parse(time);
+                String photoPath = jsonPost.optString("photopath");
+
+                ImageIcon image = null;
+                if (photoPath != null && Files.exists(Paths.get(photoPath))) {
+                    image = new ImageIcon(photoPath);
+                } else {
+                    System.err.println("Image not found for path: " + photoPath);
+                }
+
+                Posts post = new Posts(groupId, contentId, userId, content);
+                if (photoPath != null) {
+                    post.setImagePath(photoPath);
+                    post.setImage(image);
+                }
+                post.setTimestamp(date);//setting the date to the actual one saved in file
+                posts.add(post);// adding a new post to the array
+
+            }
+
+        } catch (IOException ex) {
+            System.err.println("Error loading posts from JSON file: " + ex.getMessage());
+        }
+
+        return posts;
+    }
+
+
+    public static void saveToGroupsPostsJsonFile() {
+       ArrayList<Posts> posts = GroupsDataBase.getInstance().getAllGlobalGroupsPosts();
+        try {
+            JSONArray Posts = new JSONArray();
+
+            for (int i = 0; i < posts.size(); i++) {
+                JSONObject post = new JSONObject();
+                post.put("groupid", posts.get(i).getGroupID());
+                post.put("userid", posts.get(i).getAuthorID());
+                post.put("contentid", posts.get(i).getContentID());
+                post.put("content", posts.get(i).getContent());
+                post.put("photopath", posts.get(i).getImagePath());
+                post.put("timestamp", posts.get(i).getTimestamp());
+
+                Posts.put(post);
+
+            }
+            Files.write(Paths.get("groupsposts.json"), Posts.toString(4).getBytes());
+            System.out.println("System successfully saved the friendrequests");
+
+        } catch (IOException ex) {
+            System.err.println("Error saving posts to JSON file: " + ex.getMessage());
+        }
+    }
+
+    public static ArrayList<Posts> loadFromPostsJsonFileForSpecificGroup(String groupid) {
+        ArrayList<Posts> posts = new ArrayList<>();
+        
+        try {
+            if (!Files.exists(Paths.get("groupsposts.json")) || Files.size(Paths.get("groupsposts.json")) == 0) {
+                Files.createFile(Paths.get("groupsposts.json")); // create the file if not found
+                return posts;
+            }
+            String json = new String(Files.readAllBytes(Paths.get("posts.json")));
+            JSONArray jsonPosts = new JSONArray(json);
+
+            for (int i = 0; i < jsonPosts.length(); i++) {
+                JSONObject jsonPost = jsonPosts.getJSONObject(i);
+                String groupId = jsonPost.getString("groupid");
+                if (!groupId.equals(groupid)) {
+                    continue;
+                }
+                String userId = jsonPost.getString("userid");
+                String contentId = jsonPost.getString("contentid");
+                String content = jsonPost.getString("content");
+                String time = jsonPost.getString("timestamp");
+                LocalDateTime date = LocalDateTime.parse(time);
+
+                String photoPath = jsonPost.optString("photopath");
+
+                ImageIcon image = null;
+                if (photoPath != null && Files.exists(Paths.get(photoPath))) {
+                    image = new ImageIcon(photoPath);
+                } else {
+                    System.err.println("Image not found for path: " + photoPath);
+                }
+
+                Posts post = new Posts(groupId, contentId, userId, content);
+                if (photoPath != null) {
+                    post.setImagePath(photoPath);
+                    post.setImage(image);
+                }
+                post.setTimestamp(date);
+                posts.add(post);// adding a new post to the array
+            }
+
+        } catch (IOException ex) {
+            System.err.println("Error loading posts from JSON file: " + ex.getMessage());
+        }
+        return posts;
+    }
+    
+    public static void saveToGroupRequestsJsonFile(){
+        ArrayList<GroupRequests> requests = GroupsDataBase.getInstance().getAllGlobalGroupRequests();
+        try {
+            JSONArray Requests = new JSONArray();
+
+            for (int i = 0; i < requests.size(); i++) {
+                JSONObject request = new JSONObject();
+                request.put("groupid", requests.get(i).getGroupId());
+                request.put("userid", requests.get(i).getUserMakingReqId());
+                Requests.put(request);
+            }
+            Files.write(Paths.get("grouprequests.json"), Requests.toString(4).getBytes());
+            System.out.println("System successfully saved the group requests");
+
+        } catch (IOException ex) {
+            System.err.println("Error saving posts to JSON file: " + ex.getMessage());
+        }
+    
+    }
+    
+    
+    public static ArrayList<GroupRequests> loadFromGroupRequestsJsonFile() {
+
+        ArrayList<GroupRequests> requests = new ArrayList<>();
+        try {
+
+            if (!Files.exists(Paths.get("grouprequests.json")) || Files.size(Paths.get("grouprequests.json")) == 0) {
+                Files.createFile(Paths.get("grouprequests.json")); // create the file if not found
+                return requests;
+
+            }
+
+            String json = new String(Files.readAllBytes(Paths.get("grouprequests.json")));
+            JSONArray RequestsJson = new JSONArray(json);
+
+            for (int i = 0; i < RequestsJson.length(); i++) {
+
+                JSONObject requestJson = RequestsJson.getJSONObject(i);
+                String groupId= requestJson.getString("groupid");
+                String userId = requestJson.getString("userid");
+                requests.add(new GroupRequests(groupId, userId));
+            }
+        } catch (IOException ex) {
+            System.err.println("Error loading group requests from JSON file: " + ex.getMessage());
+        }
+        return requests;
+    }
+    
+    public static ArrayList<GroupRequests> loadFromGroupRequestsJsonFileForSpecificGroup(String id) {
+        ArrayList<GroupRequests> requests = new ArrayList<>();
+        try {
+
+            if (!Files.exists(Paths.get("grouprequests.json")) || Files.size(Paths.get("grouprequests.json")) == 0) {
+                Files.createFile(Paths.get("grouprequests.json")); // create the file if not found
+                return requests;
+
+            }
+
+            String json = new String(Files.readAllBytes(Paths.get("grouprequests.json")));
+            JSONArray RequestsJson = new JSONArray(json);
+
+            for (int i = 0; i < RequestsJson.length(); i++) {
+                JSONObject requestJson = RequestsJson.getJSONObject(i);
+                if(!requestJson.getString("groupid").equals(id))
+                    continue;
+                String groupId= requestJson.getString("groupid");
+                String userId = requestJson.getString("userid");
+                requests.add(new GroupRequests(groupId, userId));
+            }
+        } catch (IOException ex) {
+            System.err.println("Error loading group requests from JSON file: " + ex.getMessage());
+        }
+        return requests;
+    }
+    
+    public static ArrayList<GroupRequests> loadFromGroupRequestsJsonFileForSpecificUser(String id) {
+        ArrayList<GroupRequests> requests = new ArrayList<>();
+        try {
+
+            if (!Files.exists(Paths.get("grouprequests.json")) || Files.size(Paths.get("grouprequests.json")) == 0) {
+                Files.createFile(Paths.get("grouprequests.json")); // create the file if not found
+                return requests;
+
+            }
+
+            String json = new String(Files.readAllBytes(Paths.get("grouprequests.json")));
+            JSONArray RequestsJson = new JSONArray(json);
+
+            for (int i = 0; i < RequestsJson.length(); i++) {
+                JSONObject requestJson = RequestsJson.getJSONObject(i);
+                if(!requestJson.getString("user").equals(id))
+                    continue;
+                String groupId= requestJson.getString("groupid");
+                String userId = requestJson.getString("userid");
+                requests.add(new GroupRequests(groupId, userId));
+            }
+        } catch (IOException ex) {
+            System.err.println("Error loading group requests from JSON file: " + ex.getMessage());
+        }
+        return requests;
+    }
 }
