@@ -26,8 +26,8 @@ public class FileManagement { // Centrlized file operations system
 
     public static ArrayList<User> loadFromUsersJSONfile() {
         System.out.println("t6ttttttt");
-            System.out.println("Entering loadFromUsersJSONfile");
- 
+        System.out.println("Entering loadFromUsersJSONfile");
+
         ArrayList<User> users = new ArrayList<>();
         try {
 
@@ -183,8 +183,8 @@ public class FileManagement { // Centrlized file operations system
         } catch (IOException ex) {
             System.err.println("Error loading friend requests from JSON file: " + ex.getMessage());
         }
-          
-    System.out.println("Exiting loadFromUsersJSONfile");
+
+        System.out.println("Exiting loadFromUsersJSONfile");
         return friendRequests;
     }
 
@@ -559,6 +559,66 @@ public class FileManagement { // Centrlized file operations system
 
             }
             Files.write(Paths.get("profiles.json"), Profiles.toString(4).getBytes());
+            System.out.println("System successfully saved the stories");
+
+        } catch (IOException ex) {
+            System.err.println("Error saving stories to JSON file: " + ex.getMessage());
+        }
+    }
+
+    public static ArrayList<NotificationFriendReq> loadFromRequestsNotificationsJsonFile() {
+        ArrayList<NotificationFriendReq> notifications = new ArrayList<>();
+       
+        try {
+            System.out.println("Entering loadFromNotificationsJSONfile");
+            if (!Files.exists(Paths.get("friendsReqNotif.json")) || Files.size(Paths.get("friendsReqNotif.json")) == 0) {
+                Files.createFile(Paths.get("friendsReqNotif.json")); // create the file if not found
+                return new ArrayList<>();
+            }
+            String json = new String(Files.readAllBytes(Paths.get("friendsReqNotif.json")));
+            JSONArray usersArray = new JSONArray(json);
+            
+             for (int i = 0; i < usersArray.length(); i++){
+                 JSONObject notificationJson = usersArray.getJSONObject(i);
+                 String reciever = notificationJson.getString("recieverID");
+                 String sender = notificationJson.getString("senderID");
+                 String notificationID = notificationJson.getString("notificationID");
+                 String notificationType = notificationJson.getString("notificationType");
+                 String message = notificationJson.getString("message");
+                 String time = notificationJson.getString("time");
+                 LocalDateTime date = LocalDateTime.parse(time, DateTimeFormatter.ISO_DATE);
+                 
+                 notifications.add(new NotificationFriendReq(reciever,sender,notificationID, notificationType, message, date));
+                 
+             }
+        } catch (IOException ex) {
+            System.err.println("Error loading users from JSON file: " + ex.getMessage());
+        } catch (Exception ex) {
+            System.err.println("Error parsing JSON: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+        return notifications;
+    }
+
+    public static void saveRequestsNotificationsJsonFile() {
+        ArrayList<NotificationFriendReq> notifications = DataBase.getInstance().getNotificationsFriendReq();
+         try {
+            JSONArray notifications_array = new JSONArray();
+
+            for (int i = 0; i < notifications.size(); i++) {
+                JSONObject notification = new JSONObject();
+                
+                notification.put("recieverID", notifications.get(i).getRecieverId());
+                notification.put("senderID", notifications.get(i).getSenderId());
+                notification.put("notificationID", notifications.get(i).getId());
+                notification.put("notificationType", notifications.get(i).getType());
+                notification.put("message", notifications.get(i).getMessage());
+                notification.put("time",notifications.get(i).getTime());
+
+                notifications_array.put(notification);
+
+            }
+            Files.write(Paths.get("friendsReqNotif.json"), notifications_array.toString(4).getBytes());
             System.out.println("System successfully saved the stories");
 
         } catch (IOException ex) {
