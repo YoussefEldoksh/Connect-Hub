@@ -4,6 +4,7 @@
  */
 package frontend;
 
+import backend.FileManagement;
 import backend.ImageHandler;
 import backend.Profile;
 import backend.User;
@@ -33,9 +34,8 @@ public class ProfileManagement extends javax.swing.JFrame {
      coverPhotoLabel.setIcon(ImageHandler.rescaleImageIcon(profile.getCoverPhoto(), 285, 135));
      profilePhotoLabel.setIcon(ImageHandler.rescaleImageIcon(profile.getProfilePhoto(), 112, 112));
     
-        
-        
-        
+        userContentPanel1.updatePostsList(user);
+        userContentPanel1.updateStoriesList(user);
     }
     public static ProfileManagement getInstance(User user) {
         if (instance == null) {
@@ -248,11 +248,11 @@ public class ProfileManagement extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(BioTextbox, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(coverPhotoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(102, 102, 102)
-                        .addComponent(profilePhotoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(profilePhotoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(coverPhotoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -317,7 +317,9 @@ public class ProfileManagement extends javax.swing.JFrame {
 
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         // TODO add your handling code here:
-       this.openProfileManagement(user);
+       userContentPanel1.updatePostsList(user);
+       userContentPanel1.updateStoriesList(user);
+        this.openProfileManagement(user);
 
     }//GEN-LAST:event_refreshButtonActionPerformed
 
@@ -331,13 +333,13 @@ public class ProfileManagement extends javax.swing.JFrame {
         // TODO add your handling code here:
                String newPassword = JOptionPane.showInputDialog(this, "Please enter your new Password:");
                        
-        if (newPassword == user.getPassword()) {
+        if (backend.AccountManagement.hashPassword(newPassword).equals(user.getPassword())) {
             JOptionPane.showMessageDialog(null, "Your new password can not be same as old password!");
         } else {
             user.setPassword(newPassword);
             JOptionPane.showMessageDialog(null, "Your password was changed successfully!");
         }
-
+        FileManagement.saveInUsersJSONfile();
     }//GEN-LAST:event_changePassButtonActionPerformed
 
     private void ChangeCoverButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChangeCoverButtonActionPerformed
@@ -353,7 +355,8 @@ public class ProfileManagement extends javax.swing.JFrame {
 
         backend.ProfileManagement.getInstance().getProfile(user.getUserId()).setCover(file.getAbsolutePath());
        
-       // coverPhotoLabel.setIcon(ImageHandler.rescaleImageIcon(profile.getCoverPhoto(), 285, 135));
+        coverPhotoLabel.setIcon(ImageHandler.rescaleImageIcon(backend.ProfileManagement.getInstance().getProfile(user.getUserId()).getCoverPhoto(), 285, 135));
+                FileManagement.saveToProfilesJsonFile();
 
     }//GEN-LAST:event_ChangeCoverButtonActionPerformed
 
@@ -370,8 +373,8 @@ public class ProfileManagement extends javax.swing.JFrame {
 
         backend.ProfileManagement.getInstance().getProfile(user.getUserId()).setProfilePic(file.getAbsolutePath());
         Profile profile = backend.ProfileManagement.getInstance().getProfile(user.getUserId());
-       // profilePhotoLabel.setIcon(ImageHandler.rescaleImageIcon(profile.getProfilePhoto(), 112, 112));
-
+        profilePhotoLabel.setIcon(ImageHandler.rescaleImageIcon(profile.getProfilePhoto(), 112, 112));
+        FileManagement.saveToProfilesJsonFile();
     }//GEN-LAST:event_profilePicButtonActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -381,6 +384,8 @@ public class ProfileManagement extends javax.swing.JFrame {
         //.setBio(newBio);
         BioTextbox.setText( "Bio: "+newBio);
         backend.ProfileManagement.getInstance().getProfile(user.getUserId()).setBio(newBio);
+                FileManagement.saveToProfilesJsonFile();
+
     }//GEN-LAST:event_jButton4ActionPerformed
 
     /**

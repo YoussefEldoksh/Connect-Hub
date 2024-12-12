@@ -8,6 +8,7 @@ import backend.ImageHandler;
 import backend.NewsFeed;
 import backend.Profile;
 import backend.User;
+import backend.UserSession;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
@@ -67,7 +68,7 @@ public class UserContentPanel extends javax.swing.JPanel {
         storiesListUpdate = true;
         this.user = u;
         System.out.println("updateStoriesList called with user: " + u);
-        ArrayList<String> linerep = NewsFeed.getLineRepresentationsStories(u);
+        ArrayList<String> linerep = NewsFeed.getLineRepresentationsStories(UserSession.getCurrentUser());
         storiesListModel.clear();
 
         for (int i = 0; i < linerep.size(); i++) {
@@ -83,7 +84,7 @@ public class UserContentPanel extends javax.swing.JPanel {
         this.user = u;
         System.out.println("updatePostsList called with user: " + u);
         postsListUpdate = true;
-        ArrayList<String> linerep = NewsFeed.getLineRepresentationsPosts(u);
+        ArrayList<String> linerep = NewsFeed.getLineRepresentationsPosts(UserSession.getCurrentUser());
         postsListModel.clear();
 
         for (int i = 0; i < linerep.size(); i++) {

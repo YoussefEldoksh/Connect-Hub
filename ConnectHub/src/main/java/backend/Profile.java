@@ -23,23 +23,23 @@ public class Profile {
        this.bio=bio;
        this.user=user;
        this.password=user.getPassword();
-       if(profilePhoto==null){
+       if(profilePhoto==null || profilePhoto.equals("/Images/DefaultPhoto.jpg")){
          
         profilePicPath = "/Images/DefaultPhoto.jpg"; // Correct path to default photo
         this.profilePhoto = new ImageIcon(getClass().getResource("/Images/DefaultPhoto.jpg"));           
         }
        else {
            profilePicPath = profilePhoto;
-           this.profilePhoto = new ImageIcon(getClass().getResource(profilePicPath));
+           this.profilePhoto = new ImageIcon(profilePicPath);
        }
        
-       if(cover==null){
+       if(cover==null || cover.equals("/Images/background.jpg")){
         coverPath = "/Images/background.jpg"; // Correct path to default cover photo
         this.coverPhoto = new ImageIcon(getClass().getResource("/Images/background.jpg")); 
        }       
        else {
            coverPath = cover;
-           this.coverPhoto = new ImageIcon(getClass().getResource(coverPath));
+           this.coverPhoto = new ImageIcon(coverPath);
        }
     }
     
@@ -77,8 +77,10 @@ public class Profile {
     }*/
     
     public void setCover(String cover){
-        coverPath="Images/"+Paths.get(cover).getFileName().toString();//the path is the images file in the project
-        this.coverPhoto=ImageHandler.saveImage(cover);
+        //coverPath="Images/"+Paths.get(cover).getFileName().toString();//the path is the images file in the project
+       // this.coverPhoto=ImageHandler.saveImage(cover);
+        coverPath=cover;
+        coverPhoto=ImageHandler.rescaleImageIcon(new ImageIcon(new File(cover).getAbsolutePath()), 285, 135);
     }
     
     /*public void setCoverPhoto(String cover){
@@ -92,8 +94,10 @@ public class Profile {
     }*/
     
     public void setProfilePic(String profilePic){
-        profilePicPath="/Images/"+Paths.get(profilePic).getFileName().toString();
-        this.profilePhoto=ImageHandler.saveImage(profilePic);
+        //profilePicPath="/Images/"+Paths.get(profilePic).getFileName().toString();
+        //this.profilePhoto=ImageHandler.saveImage(profilePic);
+        profilePicPath=profilePic;
+        profilePhoto=ImageHandler.rescaleImageIcon(new ImageIcon(new File(profilePic).getAbsolutePath()), 112, 112);
     }
     
     /*public void setProfilePhoto(String profilePic){

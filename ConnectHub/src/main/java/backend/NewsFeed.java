@@ -63,7 +63,7 @@ public class NewsFeed {
     ArrayList<Posts> allPosts = DataBase.getInstance().getGlobalPosts();
         ArrayList<Posts> userPosts = new ArrayList<>();
         for (Posts post : allPosts) {
-            if (post.getAuthorID() == user.getUserId()) {
+            if (post.getAuthorID().equals(user.getUserId())) {
                 userPosts.add(post);
             }
         }
@@ -76,7 +76,7 @@ public class NewsFeed {
     ArrayList<Stories> allStories = DataBase.getInstance().getGlobalStories();
         ArrayList<Stories> userStories = new ArrayList<>();
         for (Stories story : allStories) {
-            if (story.getAuthorID() == user.getUserId()) {
+            if (story.getAuthorID().equals(user.getUserId())) {
                 userStories.add(story);
             }
         }
@@ -165,6 +165,7 @@ public class NewsFeed {
             String s = username + "published on: " + formattedDate;
             lineRepresentations.add(s);
         }
+        
         return lineRepresentations;
     }
     
@@ -241,14 +242,14 @@ public class NewsFeed {
     public static ArrayList<String> getLineRepresentationsAllPosts(User u) {
         ArrayList<String> lineRepresentations = new ArrayList<>();
         ArrayList<String> friendsId = new ArrayList<>();
-        // ArrayList<Posts> filteredPosts = new ArrayList<>();
+        ArrayList<Posts> filteredPosts = new ArrayList<>();
 
         for (Friend friend : u.getListOfFriends()) {
             friendsId.add(friend.getUserId());
         }
         friendsId.add(u.getUserId());
 
-        /*for (Posts post : DataBase.getInstance().getGlobalPosts()) {
+        for (Posts post : DataBase.getInstance().getGlobalPosts()) {
         if (friendsId.contains(post.getAuthorID())) {
             filteredPosts.add(post);
         }
@@ -265,8 +266,8 @@ public class NewsFeed {
         lineRepresentations.add(s);
     }
 
-    return lineRepresentations;*/
-        for (int i = 0; i < DataBase.getInstance().getGlobalPosts().size(); i++) {
+    return lineRepresentations;
+        /*for (int i = 0; i < DataBase.getInstance().getGlobalPosts().size(); i++) {
 
             if (friendsId.contains(DataBase.getInstance().getGlobalPosts().get(i).getAuthorID())) {
                 String username = AccountManagement.findUsername(DataBase.getInstance().getGlobalPosts().get(i).getAuthorID());
@@ -277,7 +278,7 @@ public class NewsFeed {
                 lineRepresentations.add(s);
             }
         }
-        return lineRepresentations;
+        return lineRepresentations;*/
     }
 
     public static ArrayList<String> getLineRepresentationsPosts(User u) {

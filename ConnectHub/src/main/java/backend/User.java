@@ -287,7 +287,18 @@ public class User extends Account {
     public void removeStory(Stories story)
     {
         this.userStories.remove(story);
+
+    } 
+    
+    public void reload()
+    {
+        friendReq = FileManagement.loadFromFriendRequestsJsonFileForSpecificUser(this.getUserId());
+        userStories = FileManagement.loadFromStroiesJsonFileForSpecificUser(this.getUserId());
+        userPosts = FileManagement.loadFromPostsJsonFileForSpecificUser(this.getUserId());
     }
+    
+
+    
 
     public void setUserPosts(ArrayList<Posts> userPosts) {
         this.userPosts = userPosts;
