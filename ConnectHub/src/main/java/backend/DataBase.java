@@ -76,6 +76,7 @@ public class DataBase { // Centralized Data Management
         FileManagement.saveToFriendRequestsJsonFile();
     }
 
+    
     public synchronized ArrayList<FriendRequests> getGlobalFriendRequests() {
         return requests;
     }
