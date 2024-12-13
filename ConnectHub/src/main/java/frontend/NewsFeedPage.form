@@ -149,10 +149,8 @@
                                   <Component id="refreshButton" alignment="0" pref="0" max="32767" attributes="0"/>
                                   <Component id="profileButton" alignment="1" min="-2" pref="45" max="-2" attributes="0"/>
                                   <Component id="notificationsButton" alignment="1" pref="0" max="32767" attributes="0"/>
-                                  <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                                      <Component id="GroupsButton" alignment="1" min="-2" pref="41" max="-2" attributes="0"/>
-                                      <Component id="searchButton" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="GroupsButton" alignment="1" min="-2" pref="41" max="-2" attributes="0"/>
+                                  <Component id="searchButton" alignment="1" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>

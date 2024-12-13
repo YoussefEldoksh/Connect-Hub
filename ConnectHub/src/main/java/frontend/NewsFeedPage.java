@@ -243,9 +243,8 @@ public class NewsFeedPage extends javax.swing.JFrame {
                             .addComponent(refreshButton, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addComponent(profileButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(notificationsButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, friendReqSuggPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(GroupsButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(searchButton, javax.swing.GroupLayout.Alignment.TRAILING)))))
+                            .addComponent(GroupsButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(searchButton, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
@@ -372,6 +371,9 @@ public class NewsFeedPage extends javax.swing.JFrame {
         GroupsListFrame.getInstance().updateNotificationsList();
         GroupsListFrame.getInstance().setVisible(true);
     }//GEN-LAST:event_GroupsButtonActionPerformed
+    private void createGroupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createGroupButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_createGroupButtonActionPerformed
 
   
 

@@ -84,6 +84,12 @@ public class SignUpWindow extends javax.swing.JFrame {
 
         jLabel5.setText("Data of Birth");
 
+        EmailTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EmailTextFieldActionPerformed(evt);
+            }
+        });
+
         jLabel6.setText("Already have an account?");
 
         SigninfromSignupButton.setText("Signin now");
@@ -147,8 +153,7 @@ public class SignUpWindow extends javax.swing.JFrame {
                                     .addComponent(UsernameTextField, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(PasswordField, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(12, 12, 12)
-                                        .addComponent(yearComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(yearComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(monthComboBox, 0, 1, Short.MAX_VALUE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -247,6 +252,10 @@ public class SignUpWindow extends javax.swing.JFrame {
     private void yearComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearComboBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_yearComboBoxActionPerformed
+
+    private void EmailTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmailTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_EmailTextFieldActionPerformed
 
     /**
      * @param args the command line arguments
