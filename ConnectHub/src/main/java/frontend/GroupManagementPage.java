@@ -21,10 +21,9 @@ public class GroupManagementPage extends javax.swing.JFrame {
     
     
     
-    private GroupManagementPage(Group group, User user) {
+    private GroupManagementPage(Group group) {
         initComponents();
         this.group= group;
-        this.user = user;
         
         
         //groupMembersPanel1.updateGroupMembersList(user, group);
@@ -32,9 +31,9 @@ public class GroupManagementPage extends javax.swing.JFrame {
         //groupMembersPanel1.updateGroupRequestsList(user);
     }
 
-     public static GroupManagementPage getInstance(Group group, User user) {
+     public static GroupManagementPage getInstance(Group group) {
         if (instance == null) {
-            instance = new GroupManagementPage(group, user);
+            instance = new GroupManagementPage(group);
         }
         return instance;
     }
