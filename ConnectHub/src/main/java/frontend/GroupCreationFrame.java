@@ -6,6 +6,7 @@ package frontend;
 import backend.Group;
 import backend.GroupsDataBase;
 import backend.User;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -152,11 +153,19 @@ public class GroupCreationFrame extends javax.swing.JFrame {
     private void createGroupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createGroupButtonActionPerformed
         // TODO add your handling code here:
         String groupName = groupNameTextField.getText();
+        int flagfail=0; 
+        for (int i = 0; i < GroupsDataBase.getInstance().getAllGlobalGroups().size(); i++) {
+            if (GroupsDataBase.getInstance().getAllGlobalGroups().get(i).getGroupName().equals(groupName)) {
+                JOptionPane.showMessageDialog(this, "The group name entered already exists. Please choose another one");
+                flagfail=1;
+                break;
+            }
+        }
         String groupDescription = groupDescriptionTextField.getText();
         String creatorId = user.getUserId();
-        
+        if(flagfail==0){
         Group group = new Group("G" + groupID, groupName, groupDescription, creatorId);
-        GroupsDataBase.getInstance().addToGlobalGroups(group);
+        GroupsDataBase.getInstance().addToGlobalGroups(group);}
     }//GEN-LAST:event_createGroupButtonActionPerformed
 
     
