@@ -55,7 +55,12 @@ public class GroupCreationFrame extends javax.swing.JFrame {
         groupDescriptionTextField = new javax.swing.JTextField();
         createGroupButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(153, 204, 255));
 
@@ -113,7 +118,7 @@ public class GroupCreationFrame extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(97, 97, 97)
                         .addComponent(createGroupButton, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -137,7 +142,7 @@ public class GroupCreationFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -171,12 +176,21 @@ public class GroupCreationFrame extends javax.swing.JFrame {
 
         if(flagfail==0){
         Group group = new Group("G" + groupID, groupName, groupDescription, creatorId, null);
+        group.addGroupAdmin(backend.UserSession.getCurrentUser().getUserId());
+        group.addGroupMember(backend.UserSession.getCurrentUser().getUserId());
+        group.setGroupCreator(backend.UserSession.getCurrentUser().getUserId());
         GroupsDataBase.getInstance().addToGlobalGroups(group);
+        backend.UserSession.getCurrentUser().addToGroups(group);
         GroupSession groupSession = new GroupSession(group);
         this.openGroupPreviewFrame(GroupSession.getCurrentGroup());
 
         }
     }//GEN-LAST:event_createGroupButtonActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+        NewsFeedPage.getInstance(backend.UserSession.getCurrentUser()).setVisible(true);
+    }//GEN-LAST:event_formWindowClosed
 
     
     /**
