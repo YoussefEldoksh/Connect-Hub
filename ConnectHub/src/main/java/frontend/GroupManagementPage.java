@@ -44,7 +44,9 @@ public class GroupManagementPage extends javax.swing.JFrame {
     {
        Group newGroup = GroupSession.getCurrentGroup();
        groupPhotoLabel.setIcon(ImageHandler.rescaleImageIcon(newGroup.getGroupPhotoIcon(), 110, 104));
-
+       groupNameLabel.setText("Group Name: " +  newGroup.getGroupName());
+       groupDescriptionLabel.setText("Group Description: " + newGroup.getGroupDescription());
+       
        
     }
      
