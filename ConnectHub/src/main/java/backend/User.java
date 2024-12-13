@@ -23,6 +23,7 @@ public class User extends Account {
     /*private String userId ;
     private String email;
     private String username;*/
+    private ArrayList<GroupRequests> groupRequests;
     private String password;
     private LocalDate dateOfBirth;
     private boolean status;
@@ -47,6 +48,7 @@ public class User extends Account {
         friendReq = FileManagement.loadFromFriendRequestsJsonFileForSpecificUser(userId);
         userStories = FileManagement.loadFromStroiesJsonFileForSpecificUser(userId);
         userPosts = FileManagement.loadFromPostsJsonFileForSpecificUser(userId);
+        groupRequests= FileManagement.loadFromGroupRequestsJsonFile();
         notifications = fillFriendRequestsNotifications();
         groups = fillGroups();
     }
@@ -408,4 +410,36 @@ public class User extends Account {
         this.userStories = userStories;
     }
 
+    public ArrayList<Group> getGroupsOfUser() {
+        return groups;
+    }
+    
+     public void addToGroupsOfUser(Group group) {
+        groups.add(group);
+    }
+     
+       public void removeFromsGroupsOfUser(Group group) {
+        groups.remove(group);
+    }
+       
+      public void setGroupsOfUser(ArrayList<Group> groups) {
+        this.groups= groups;
+    }
+      
+      public ArrayList<GroupRequests> getGroupRequestsOfUser() {
+        return groupRequests;
+    }
+    
+     public void addToGroupRequestsOfUser(GroupRequests grouprequest) {
+        groupRequests.add(grouprequest);
+    }
+     
+       public void removeFromsGroupRequestsOfUser(GroupRequests grouprequest) {
+        groupRequests.remove(grouprequest);
+    }
+       
+      public void setGroupRequestsOfUser(ArrayList<GroupRequests> grouprequests) {
+        this.groupRequests= grouprequests;
+    }
 }
+

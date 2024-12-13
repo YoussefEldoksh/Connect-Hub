@@ -20,7 +20,6 @@ public class groupPostsPanel extends javax.swing.JPanel {
      */
     public groupPostsPanel() {
         initComponents();
-        
     }
 
     /**

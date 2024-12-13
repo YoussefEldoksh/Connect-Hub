@@ -582,7 +582,7 @@ public class FileManagement { // Centrlized file operations system
                 group.put("group photopath", groups.get(i).getGroupPhotoPath());
                 
                 JSONArray admins = new JSONArray();
-                for (int j = 0; i < groups.get(i).getGroupAdmins().size(); i++) {
+                for (int j = 0; j < groups.get(j).getGroupAdmins().size(); j++) {
                 JSONObject admin = new JSONObject(); 
                 group.put("adminid", groups.get(i).getGroupAdmins().get(j));
                 
@@ -590,7 +590,7 @@ public class FileManagement { // Centrlized file operations system
                 }
                 
                 JSONArray members = new JSONArray();
-                for (int j = 0; i < groups.get(i).getGroupMembers().size(); i++) {
+                for (int j = 0; j < groups.get(i).getGroupMembers().size(); j++) {
                 JSONObject member = new JSONObject(); 
                 group.put("memberid", groups.get(i).getGroupMembers().get(j));
                 
@@ -705,7 +705,6 @@ public class FileManagement { // Centrlized file operations system
                     System.out.println("Loading a member");
                     group.addGroupMember(memberId);
                 }
-                
                 groups.add(group);
             }
         } catch (IOException ex) {

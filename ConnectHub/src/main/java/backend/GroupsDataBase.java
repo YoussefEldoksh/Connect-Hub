@@ -107,4 +107,5 @@ public class GroupsDataBase {
         this.posts = FileManagement.loadAllFromGroupsPostsJsonFile();
         this.groups = FileManagement.loadFromGroupsJsonFile(); 
     }
+    
 }

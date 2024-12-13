@@ -28,7 +28,7 @@ public class groupMembersPanel extends javax.swing.JPanel {
     private boolean adminslistUpdate = false;
     
     private DefaultListModel<String> groupRequestsListModel = new DefaultListModel<>();
-    private boolean requestlistUpdate = false;
+    private boolean requestslistUpdate = false;
     
     private boolean creator; 
     private boolean admin;
@@ -63,22 +63,22 @@ public class groupMembersPanel extends javax.swing.JPanel {
         
         
     }
-    
-    public boolean checkAdmin(String userId) {
-        for (int i = 0; i < GroupSession.getCurrentGroup().getGroupAdmins().size(); i++) {
-            if (userId.equals(GroupSession.getCurrentGroup().getGroupAdmins().get(i))) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean checkCreator(String userId) {
-        if (userId.equals(GroupSession.getCurrentGroup().getGroupCreator())) {
-            return true;
-        }
-        return false;
-    }
+//    
+//    public boolean checkAdmin(String userId) {
+//        for (int i = 0; i < GroupSession.getCurrentGroup().getGroupAdmins().size(); i++) {
+//            if (userId.equals(GroupSession.getCurrentGroup().getGroupAdmins().get(i))) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+//
+//    public boolean checkCreator(String userId) {
+//        if (userId.equals(GroupSession.getCurrentGroup().getGroupCreator())) {
+//            return true;
+//        }
+//        return false;
+//    }
 
     public void updateGroupMembersList(User u, Group g) {
         
@@ -112,7 +112,7 @@ public class groupMembersPanel extends javax.swing.JPanel {
 
       public void updateGroupRequestsList(User u, Group g) {
         
-        requestlistUpdate = true;
+        requestslistUpdate = true;
         ArrayList<String> linerep = GroupManagement.getLineRepresentationGroupRequests(GroupSession.getCurrentGroup());
         groupRequestsListModel.clear();
 
@@ -122,7 +122,7 @@ public class groupMembersPanel extends javax.swing.JPanel {
         System.out.println("Group Requests List Data: " + linerep);
         groupRequestsList.setModel(groupRequestsListModel);
         //this.user = u;
-        requestlistUpdate = false;
+        requestslistUpdate = false;
     }
      
     /**
@@ -349,7 +349,47 @@ public class groupMembersPanel extends javax.swing.JPanel {
 
     private void groupRequestsListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_groupRequestsListValueChanged
         // TODO add your handling code here:
-        
+        if (!requestslistUpdate) {
+           String selectedRequest = groupRequestsList.getSelectedValue();
+
+            if (selectedRequest == null) {
+                JOptionPane.showMessageDialog(this, "No member selected");
+                return;
+            }
+            
+            if (admin) {
+                String[] options = {"Accept Request", "Decline"};
+                int choice = JOptionPane.showOptionDialog(
+                        null,
+                        "Would you like to: " ,
+                        ( selectedRequest + "'s join request"),
+                        JOptionPane.DEFAULT_OPTION,
+                        JOptionPane.INFORMATION_MESSAGE,
+                        null, options, options[0]
+                );
+                
+                String memberId = AccountManagement.findUserId(selectedRequest);
+                if (choice == 0) {
+                    GroupSession.getCurrentGroup().acceptRequest(memberId, true);
+                    requestslistUpdate = true;
+                    groupRequestsListModel.removeElement(selectedRequest);
+                    requestslistUpdate = false;
+                    updateGroupRequestsList(UserSession.getCurrentUser(), GroupSession.getCurrentGroup());
+                    updateGroupMembersList(UserSession.getCurrentUser(), GroupSession.getCurrentGroup());
+                    JOptionPane.showMessageDialog(this, selectedRequest + "'s request to join the group was accepted.\n The user is now a member in the group");
+                }
+                if (choice == 1) {
+                    GroupSession.getCurrentGroup().acceptRequest(memberId, false);
+                    requestslistUpdate = true;
+                    groupRequestsListModel.removeElement(selectedRequest);
+                    requestslistUpdate = false;
+                    updateGroupRequestsList(UserSession.getCurrentUser(), GroupSession.getCurrentGroup());
+                    JOptionPane.showMessageDialog(this, selectedRequest + "'s request to join the group was declined");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Access denied. Only admins can access Group Members");
+            }
+        }
     }//GEN-LAST:event_groupRequestsListValueChanged
 
 

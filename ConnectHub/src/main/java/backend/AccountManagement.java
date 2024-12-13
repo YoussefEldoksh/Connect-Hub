@@ -92,6 +92,16 @@ public abstract class AccountManagement {
     }
     
    
+     public static User findUserUsingId(String userId) {
+        for (User user : DataBase.getInstance().getUsers()) {    
+            if (user.getUserId().equals(userId)) {
+                System.out.println("User found");
+                return user;
+            }
+        }
+        return null;
+    }
+    
     
     public static String findUsername(String userId) {
         for (int i = 0; i < DataBase.getInstance().getUsers().size(); i++) {
