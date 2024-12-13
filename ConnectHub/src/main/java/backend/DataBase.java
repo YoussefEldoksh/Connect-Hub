@@ -17,6 +17,8 @@ public class DataBase { // Centralized Data Management
     private ArrayList<Stories> stories = new ArrayList<>();
     private ArrayList<FriendRequests> requests = new ArrayList<>();
     private ArrayList<NotificationFriendReq> notificationsFriendReq = new ArrayList<>();
+    private ArrayList<Group> groups = new ArrayList<>();
+    
 
     private static DataBase database = null;
     private static boolean isLoading = false;
@@ -91,6 +93,15 @@ public class DataBase { // Centralized Data Management
     public synchronized void addUser(User user) {
         users.add(user);
         FileManagement.saveInUsersJSONfile();
+    }
+    
+    public synchronized ArrayList<Group> getGroups() {
+        return groups;
+    }
+
+    public synchronized void addGroup(Group group) {
+        groups.add(group);
+        //FileManagement.saveInGroupsJSONfile();
     }
 
 
