@@ -38,5 +38,10 @@ public class NotificationFriendReq extends Notification{
         this.senderId = senderId;
     }
     
-    
+        public static String lineRepresentation(String requester){
+        
+        //requester could be changed to be username not id
+        return requester+" has requested to add you as a friend";
+        
+    }
 }
