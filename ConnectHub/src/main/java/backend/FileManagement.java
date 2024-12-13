@@ -347,7 +347,7 @@ public class FileManagement { // Centrlized file operations system
                 Files.createFile(Paths.get("stories.json")); // create the file if not found
                 return stories;
             }
-            
+
             String json = new String(Files.readAllBytes(Paths.get("stories.json")));
             JSONArray jsonPosts = new JSONArray(json);
 
@@ -503,7 +503,6 @@ public class FileManagement { // Centrlized file operations system
         }
         return profiles;
     }*/
-    
     public static ArrayList<Profile> loadFromProfilesJsonFile() {
         ArrayList<Profile> profiles = new ArrayList<>();
         ArrayList<User> users = DataBase.getInstance().getUsers();
@@ -566,11 +565,10 @@ public class FileManagement { // Centrlized file operations system
             System.err.println("Error saving stories to JSON file: " + ex.getMessage());
         }
     }
-    
-    
-    public static void saveToGroupsJsonFile(){
-    ArrayList<Group> groups = GroupsDataBase.getInstance().getAllGlobalGroups();
-    
+
+    public static void saveToGroupsJsonFile() {
+        ArrayList<Group> groups = GroupsDataBase.getInstance().getAllGlobalGroups();
+
         try {
             JSONArray Groups = new JSONArray();
             for (int i = 0; i < groups.size(); i++) {
@@ -580,7 +578,7 @@ public class FileManagement { // Centrlized file operations system
                 group.put("groupDescription", groups.get(i).getGroupDescription());
                 group.put("groupCreator", groups.get(i).getGroupCreator());
                 group.put("groupPhotoPath", groups.get(i).getGroupPhotoPath());
-                
+
                 JSONArray admins = new JSONArray();
                 for (int j = 0; j < groups.get(j).getGroupAdmins().size(); j++) {
 
@@ -589,30 +587,29 @@ public class FileManagement { // Centrlized file operations system
                 
                 admins.put(admin);
                 }
-                
+
                 JSONArray members = new JSONArray();
                 for (int j = 0; j < groups.get(i).getGroupMembers().size(); j++) {
-                JSONObject member = new JSONObject(); 
-                member.put("memberID", groups.get(i).getGroupMembers().get(j));
-                
-                members.put(member);
+                    JSONObject member = new JSONObject();
+                    member.put("memberID", groups.get(i).getGroupMembers().get(j));
+
+                    members.put(member);
                 }
-                
+
                 group.put("groupAdmins", admins);
                 group.put("groupMembers", members);
                 Groups.put(group);
             }
             Files.write(Paths.get("groups.json"), Groups.toString(4).getBytes());
             System.out.println("System successfully saved the stories");
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             System.err.println("Error saving groups to JSON file: " + ex.getMessage());
         }
     }
-        
+
     public static ArrayList<NotificationFriendReq> loadFromRequestsNotificationsJsonFile() {
         ArrayList<NotificationFriendReq> notifications = new ArrayList<>();
-       
+
         try {
             System.out.println("Entering loadFromNotificationsJSONfile");
             if (!Files.exists(Paths.get("friendsReqNotif.json")) || Files.size(Paths.get("friendsReqNotif.json")) == 0) {
@@ -621,20 +618,20 @@ public class FileManagement { // Centrlized file operations system
             }
             String json = new String(Files.readAllBytes(Paths.get("friendsReqNotif.json")));
             JSONArray usersArray = new JSONArray(json);
-            
-             for (int i = 0; i < usersArray.length(); i++){
-                 JSONObject notificationJson = usersArray.getJSONObject(i);
-                 String reciever = notificationJson.getString("recieverID");
-                 String sender = notificationJson.getString("senderID");
-                 String notificationID = notificationJson.getString("notificationID");
-                 String notificationType = notificationJson.getString("notificationType");
-                 String message = notificationJson.getString("message");
-                 String time = notificationJson.getString("time");
-                 LocalDateTime date = LocalDateTime.parse(time, DateTimeFormatter.ISO_DATE_TIME);
-                 
-                 notifications.add(new NotificationFriendReq(reciever,sender,notificationID, notificationType, message, date));
-                 
-             }
+
+            for (int i = 0; i < usersArray.length(); i++) {
+                JSONObject notificationJson = usersArray.getJSONObject(i);
+                String reciever = notificationJson.getString("recieverID");
+                String sender = notificationJson.getString("senderID");
+                String notificationID = notificationJson.getString("notificationID");
+                String notificationType = notificationJson.getString("notificationType");
+                String message = notificationJson.getString("message");
+                String time = notificationJson.getString("time");
+                LocalDateTime date = LocalDateTime.parse(time, DateTimeFormatter.ISO_DATE_TIME);
+
+                notifications.add(new NotificationFriendReq(reciever, sender, notificationID, notificationType, message, date));
+
+            }
         } catch (IOException ex) {
             System.err.println("Error loading users from JSON file: " + ex.getMessage());
         } catch (Exception ex) {
@@ -646,18 +643,18 @@ public class FileManagement { // Centrlized file operations system
 
     public static void saveRequestsNotificationsJsonFile() {
         ArrayList<NotificationFriendReq> notifications = DataBase.getInstance().getNotificationsFriendReq();
-         try {
+        try {
             JSONArray notifications_array = new JSONArray();
 
             for (int i = 0; i < notifications.size(); i++) {
                 JSONObject notification = new JSONObject();
-                
+
                 notification.put("recieverID", notifications.get(i).getRecieverId());
                 notification.put("senderID", notifications.get(i).getSenderId());
                 notification.put("notificationID", notifications.get(i).getId());
                 notification.put("notificationType", notifications.get(i).getType());
                 notification.put("message", notifications.get(i).getMessage());
-                notification.put("time",notifications.get(i).getTime());
+                notification.put("time", notifications.get(i).getTime());
 
                 notifications_array.put(notification);
 
@@ -670,8 +667,6 @@ public class FileManagement { // Centrlized file operations system
         }
     }
 
-    
-    
     public static ArrayList<Group> loadFromGroupsJsonFile() {
         ArrayList<Group> groups = new ArrayList<>();
         try {
@@ -690,14 +685,13 @@ public class FileManagement { // Centrlized file operations system
                 String groupCreator = jsonGroup.getString("groupCreator");
                 String groupPhotoPath = jsonGroup.getString("groupPhotoPath");
 
-                Group group = new Group(groupId, groupName, groupDescription, groupCreator,groupPhotoPath);
+                Group group = new Group(groupId, groupName, groupDescription, groupCreator, groupPhotoPath);
                 JSONArray jsonAdmins = jsonGroup.getJSONArray("groupAdmins");
                 for (int j = 0; j < jsonAdmins.length(); j++) {
                     JSONObject admin = jsonAdmins.getJSONObject(j);
                     String adminId = admin.getString("adminID");
                     group.addGroupAdmin(adminId);
-                }     
-                
+                }
 
                 JSONArray jsonMembers = jsonGroup.getJSONArray("groupMembers");
                 for (int j = 0; j < jsonMembers.length(); j++) {
@@ -706,6 +700,7 @@ public class FileManagement { // Centrlized file operations system
                     System.out.println("Loading a member");
                     group.addGroupMember(memberId);
                 }
+
                 groups.add(group);
             }
         } catch (IOException ex) {
@@ -716,7 +711,7 @@ public class FileManagement { // Centrlized file operations system
         }
         return groups;
     }
-    
+
     //all posts present in all groups
     public static ArrayList<Posts> loadAllFromGroupsPostsJsonFile() {
         ArrayList<Posts> posts = new ArrayList<>();
@@ -763,9 +758,8 @@ public class FileManagement { // Centrlized file operations system
         return posts;
     }
 
-
     public static void saveToGroupsPostsJsonFile() {
-       ArrayList<Posts> posts = GroupsDataBase.getInstance().getAllGlobalGroupsPosts();
+        ArrayList<Posts> posts = GroupsDataBase.getInstance().getAllGlobalGroupsPosts();
         try {
             JSONArray Posts = new JSONArray();
 
@@ -791,7 +785,7 @@ public class FileManagement { // Centrlized file operations system
 
     public static ArrayList<Posts> loadFromPostsJsonFileForSpecificGroup(String groupid) {
         ArrayList<Posts> posts = new ArrayList<>();
-        
+
         try {
             if (!Files.exists(Paths.get("groupsposts.json")) || Files.size(Paths.get("groupsposts.json")) == 0) {
                 Files.createFile(Paths.get("groupsposts.json")); // create the file if not found
@@ -835,8 +829,8 @@ public class FileManagement { // Centrlized file operations system
         }
         return posts;
     }
-    
-    public static void saveToGroupRequestsJsonFile(){
+
+    public static void saveToGroupRequestsJsonFile() {
         ArrayList<GroupRequests> requests = GroupsDataBase.getInstance().getAllGlobalGroupRequests();
         try {
             JSONArray Requests = new JSONArray();
@@ -853,10 +847,9 @@ public class FileManagement { // Centrlized file operations system
         } catch (IOException ex) {
             System.err.println("Error saving posts to JSON file: " + ex.getMessage());
         }
-    
+
     }
-    
-    
+
     public static ArrayList<GroupRequests> loadFromGroupRequestsJsonFile() {
 
         ArrayList<GroupRequests> requests = new ArrayList<>();
@@ -874,7 +867,7 @@ public class FileManagement { // Centrlized file operations system
             for (int i = 0; i < RequestsJson.length(); i++) {
 
                 JSONObject requestJson = RequestsJson.getJSONObject(i);
-                String groupId= requestJson.getString("groupid");
+                String groupId = requestJson.getString("groupid");
                 String userId = requestJson.getString("userid");
                 requests.add(new GroupRequests(groupId, userId));
             }
@@ -883,7 +876,7 @@ public class FileManagement { // Centrlized file operations system
         }
         return requests;
     }
-    
+
     public static ArrayList<GroupRequests> loadFromGroupRequestsJsonFileForSpecificGroup(String id) {
         ArrayList<GroupRequests> requests = new ArrayList<>();
         try {
@@ -899,9 +892,10 @@ public class FileManagement { // Centrlized file operations system
 
             for (int i = 0; i < RequestsJson.length(); i++) {
                 JSONObject requestJson = RequestsJson.getJSONObject(i);
-                if(!requestJson.getString("groupid").equals(id))
+                if (!requestJson.getString("groupid").equals(id)) {
                     continue;
-                String groupId= requestJson.getString("groupid");
+                }
+                String groupId = requestJson.getString("groupid");
                 String userId = requestJson.getString("userid");
                 requests.add(new GroupRequests(groupId, userId));
             }
@@ -910,7 +904,7 @@ public class FileManagement { // Centrlized file operations system
         }
         return requests;
     }
-    
+
     public static ArrayList<GroupRequests> loadFromGroupRequestsJsonFileForSpecificUser(String id) {
         ArrayList<GroupRequests> requests = new ArrayList<>();
         try {
@@ -926,9 +920,10 @@ public class FileManagement { // Centrlized file operations system
 
             for (int i = 0; i < RequestsJson.length(); i++) {
                 JSONObject requestJson = RequestsJson.getJSONObject(i);
-                if(!requestJson.getString("user").equals(id))
+                if (!requestJson.getString("user").equals(id)) {
                     continue;
-                String groupId= requestJson.getString("groupid");
+                }
+                String groupId = requestJson.getString("groupid");
                 String userId = requestJson.getString("userid");
                 requests.add(new GroupRequests(groupId, userId));
             }
@@ -938,5 +933,127 @@ public class FileManagement { // Centrlized file operations system
         return requests;
     }
 
-}
+    public static ArrayList<NotificationGroupAdd> loadFromGroupAddNotificationsJsonFile() {
+        ArrayList<NotificationGroupAdd> notifications = new ArrayList<>();
 
+        try {
+            System.out.println("Entering loadFromNotificationsAddJSONfile");
+            if (!Files.exists(Paths.get("groupAddNotif.json")) || Files.size(Paths.get("groupAddNotif.json")) == 0) {
+                Files.createFile(Paths.get("groupAddNotif.json")); // create the file if not found
+                return new ArrayList<>();
+            }
+            String json = new String(Files.readAllBytes(Paths.get("groupAddNotif.json")));
+            JSONArray usersArray = new JSONArray(json);
+
+            for (int i = 0; i < usersArray.length(); i++) {
+                JSONObject notificationJson = usersArray.getJSONObject(i);
+                String requester = notificationJson.getString("requesterID");
+                String groupId = notificationJson.getString("groupId");
+                String notificationID = notificationJson.getString("notificationID");
+                String notificationType = notificationJson.getString("notificationType");
+                //String message = notificationJson.getString("message");
+                String time = notificationJson.getString("time");
+                LocalDateTime date = LocalDateTime.parse(time, DateTimeFormatter.ISO_DATE_TIME);
+
+                notifications.add(new NotificationGroupAdd(groupId, requester, notificationID, notificationType, date));
+
+            }
+        } catch (IOException ex) {
+            System.err.println("Error loading notifications from addGroup JSON file: " + ex.getMessage());
+        } catch (Exception ex) {
+            System.err.println("Error parsing JSON: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+        return notifications;
+    }
+
+    public static void saveGroupAddNotificationsJsonFile() {
+        ArrayList<NotificationGroupAdd> notifications = DataBase.getInstance().getNotificationsGroupAdd();
+        try {
+            JSONArray notifications_array = new JSONArray();
+
+            for (int i = 0; i < notifications.size(); i++) {
+                JSONObject notification = new JSONObject();
+
+                notification.put("requesterId", notifications.get(i).getRequester());
+                notification.put("groupId", notifications.get(i).getGroupId());
+                notification.put("notificationID", notifications.get(i).getId());
+                notification.put("notificationType", notifications.get(i).getType());
+                //notification.put("message", notifications.get(i).getMessage());
+                notification.put("time", notifications.get(i).getTime());
+
+                notifications_array.put(notification);
+
+            }
+            Files.write(Paths.get("groupAddNotif.json"), notifications_array.toString(4).getBytes());
+            System.out.println("System successfully saved the add notifs");
+
+        } catch (IOException ex) {
+            System.err.println("Error saving stories to JSON file: " + ex.getMessage());
+        }
+    }
+
+    public static ArrayList<NotificationGroupPost> loadFromGroupPostNotificationsJsonFile() {
+        ArrayList<NotificationGroupPost> notifications = new ArrayList<>();
+
+        try {
+            System.out.println("Entering loadFromNotificationsPostJSONfile");
+            if (!Files.exists(Paths.get("groupPostNotif.json")) || Files.size(Paths.get("groupPostNotif.json")) == 0) {
+                Files.createFile(Paths.get("groupPostNotif.json")); // create the file if not found
+                return new ArrayList<>();
+            }
+            String json = new String(Files.readAllBytes(Paths.get("groupPostNotif.json")));
+            JSONArray usersArray = new JSONArray(json);
+
+            for (int i = 0; i < usersArray.length(); i++) {
+                JSONObject notificationJson = usersArray.getJSONObject(i);
+                String poster = notificationJson.getString("posterID");
+                String postId = notificationJson.getString("postID");
+                String groupId = notificationJson.getString("groupId");
+                String notificationID = notificationJson.getString("notificationID");
+                String notificationType = notificationJson.getString("notificationType");
+                //String message = notificationJson.getString("message");
+                String time = notificationJson.getString("time");
+                LocalDateTime date = LocalDateTime.parse(time, DateTimeFormatter.ISO_DATE_TIME);
+
+                notifications.add(new NotificationGroupPost(groupId, postId, notificationID, notificationType, date, poster));
+
+            }
+        } catch (IOException ex) {
+            System.err.println("Error loading notifications from Post JSON file: " + ex.getMessage());
+        } catch (Exception ex) {
+            System.err.println("Error parsing JSON: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+        return notifications;
+    }
+
+    public static void saveGroupPostNotificationsJsonFile() {
+        ArrayList<NotificationGroupPost> notifications = DataBase.getInstance().getNotificationsGroupPost();
+        try {
+            JSONArray notifications_array = new JSONArray();
+
+            for (int i = 0; i < notifications.size(); i++) {
+                JSONObject notification = new JSONObject();
+
+                notification.put("posterId", notifications.get(i).getPosterId());
+                notification.put("postId", notifications.get(i).getPostId());
+                notification.put("groupId", notifications.get(i).getGroupId());
+                notification.put("notificationID", notifications.get(i).getId());
+                notification.put("notificationType", notifications.get(i).getType());
+                //notification.put("message", notifications.get(i).getMessage());
+                notification.put("time", notifications.get(i).getTime());
+
+                notifications_array.put(notification);
+
+            }
+            Files.write(Paths.get("groupPostNotif.json"), notifications_array.toString(4).getBytes());
+            System.out.println("System successfully saved the post notifications");
+
+        } catch (IOException ex) {
+            System.err.println("Error saving notifs to JSON file: " + ex.getMessage());
+        }
+
+    }
+
+}

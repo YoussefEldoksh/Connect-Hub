@@ -54,6 +54,10 @@ public class groupMembersPanel extends javax.swing.JPanel {
         } else {
             admin = false;
         }
+        
+        updateGroupAdminsList(UserSession.getCurrentUser(), GroupSession.getCurrentGroup());
+        updateGroupMembersList(UserSession.getCurrentUser(), GroupSession.getCurrentGroup());
+        updateGroupRequestsList(UserSession.getCurrentUser(), GroupSession.getCurrentGroup());
 
         groupCreatorLabel.setText("The Group Creator Is: " + AccountManagement.findUsername(GroupSession.getCurrentGroup().getGroupCreator()));
     }

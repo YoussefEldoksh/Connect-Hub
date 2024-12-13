@@ -16,5 +16,41 @@
         "groupID": "G0",
         "groupCreator": "U0",
         "groupPhotoPath": "/Images/background.jpg"
+    },
+    {
+        "groupMembers": [{"memberID": "U0"}],
+        "groupName": "doksh333",
+        "groupDescription": "adb",
+        "groupAdmins": [{"adminID": "U0"}],
+        "groupID": "G0",
+        "groupCreator": "U0",
+        "groupPhotoPath": "/Images/background.jpg"
+    },
+    {
+        "groupMembers": [{"memberID": "U0"}],
+        "groupName": "dokshjsb",
+        "groupDescription": "ajenfbHBQ",
+        "groupAdmins": [{"adminID": "U0"}],
+        "groupID": "G0",
+        "groupCreator": "U0",
+        "groupPhotoPath": "/Images/background.jpg"
+    },
+    {
+        "groupMembers": [{"memberID": "U0"}],
+        "groupName": "doksh2222222",
+        "groupDescription": "adqedf",
+        "groupAdmins": [{"adminID": "U0"}],
+        "groupID": "G0",
+        "groupCreator": "U0",
+        "groupPhotoPath": "/Images/background.jpg"
+    },
+    {
+        "groupMembers": [{"memberID": "U0"}],
+        "groupName": "Group Gedid",
+        "groupDescription": "ajdhbchqlkjen",
+        "groupAdmins": [{"adminID": "U0"}],
+        "groupID": "G0",
+        "groupCreator": "U0",
+        "groupPhotoPath": "/Images/background.jpg"
     }
 ]

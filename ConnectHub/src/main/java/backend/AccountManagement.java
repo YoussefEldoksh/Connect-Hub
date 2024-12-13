@@ -93,7 +93,9 @@ public abstract class AccountManagement {
     
    
      public static User findUserUsingId(String userId) {
-        for (User user : DataBase.getInstance().getUsers()) {    
+      
+         ArrayList<User> users = FileManagement.loadFromUsersJSONfile();
+         for (User user : users) {    
             if (user.getUserId().equals(userId)) {
                 System.out.println("User found");
                 return user;

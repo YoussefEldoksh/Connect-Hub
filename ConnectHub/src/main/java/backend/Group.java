@@ -37,6 +37,9 @@ public class Group {
             this.groupPhotoPath = groupPhotoPath;
             this.groupPhotoIcon = new ImageIcon(getClass().getResource(groupPhotoPath));
         }
+        requests = FileManagement.loadFromGroupRequestsJsonFileForSpecificGroup(groupID);
+        
+        
     }
 
     public String getGroupID() {
@@ -102,12 +105,11 @@ public class Group {
     //only for filemanagement
     public void addGroupMember(String groupMember) {
         groupMembers.add(groupMember);
-        AccountManagement.findUserUsingId(groupMember).addToGroupsOfUser(this);
     }
 
     public void addGroupAdmin(String groupAdmin) {
         groupAdmins.add(groupAdmin);
-        AccountManagement.findUserUsingId(groupAdmin).addToGroupsOfUser(this);
+        
     }
 
     //when this is called, database method addToGlobalPosts should also be called
@@ -129,7 +131,8 @@ public class Group {
     
      public void addUserToGroupRequests(String userToJoinId) {
         for (int i = 0; i < requests.size(); i++) {
-            if (requests.get(i).equals(userToJoinId)) {
+         
+            if (requests.contains(userToJoinId)) {
                 System.out.println("Request already made");
                 return;
             }

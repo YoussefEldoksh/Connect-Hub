@@ -107,5 +107,16 @@ public class GroupsDataBase {
         this.posts = FileManagement.loadAllFromGroupsPostsJsonFile();
         this.groups = FileManagement.loadFromGroupsJsonFile(); 
     }
+     
+     public Group getGroupByName(String key)
+     {
+         for (Group group : this.groups) {
+             if(group.getGroupName().equals(key))
+             {
+                 return group;
+             }
+         }
+         return null;
+     }
     
 }

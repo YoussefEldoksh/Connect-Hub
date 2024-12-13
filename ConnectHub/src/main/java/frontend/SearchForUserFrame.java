@@ -8,8 +8,12 @@ import backend.AccountManagement;
 import backend.Friend;
 import backend.FriendManagement;
 import backend.FriendRequests;
+import backend.Group;
+import backend.GroupRequests;
+import backend.GroupsDataBase;
 import backend.NewsFeed;
 import backend.User;
+import backend.UserSession;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -23,23 +27,21 @@ public class SearchForUserFrame extends javax.swing.JFrame {
     /**
      * Creates new form SearchForUserFrame
      */
-    
-    
     boolean resultsUpdated;
     DefaultListModel<String> resultsListModel = new DefaultListModel<>();
     private static SearchForUserFrame instance = null;
+
     private SearchForUserFrame() {
         initComponents();
     }
-    
-    public static SearchForUserFrame getInstance()    
-    {
-        if(instance == null)
-        {
-            instance  = new SearchForUserFrame();                 
+
+    public static SearchForUserFrame getInstance() {
+        if (instance == null) {
+            instance = new SearchForUserFrame();
         }
         return instance;
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -112,50 +114,50 @@ public class SearchForUserFrame extends javax.swing.JFrame {
 
     private void searchBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBarActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_searchBarActionPerformed
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         // TODO add your handling code here:
-       if(searchBar.getText().isBlank())
-       {
-           JOptionPane.showMessageDialog(this,"Nothing in search bar");
-           return;
-       }
-        
-        
+        if (searchBar.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Nothing in search bar");
+            return;
+        }
+
         updateStoriesList();
-        
+
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void clearSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearSearchButtonActionPerformed
         // TODO add your handling code here:
-           resultsUpdated = true;
-           resultsListModel.clear();
-           resultsList.setModel(resultsListModel);
-           searchBar.setText("");
-           resultsUpdated = false;
+        resultsUpdated = true;
+        resultsListModel.clear();
+        resultsList.setModel(resultsListModel);
+        searchBar.setText("");
+        resultsUpdated = false;
     }//GEN-LAST:event_clearSearchButtonActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_formWindowClosed
 
     private void resultsListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_resultsListValueChanged
         // TODO add your handling code here:
-         if (!resultsUpdated) {
+        if (!resultsUpdated) {
             String selectedValue = resultsList.getSelectedValue();
-            String[] token = selectedValue.split("");
             if (selectedValue == null) {
                 JOptionPane.showMessageDialog(this, "No selection was made;");
-            }
+            }      
+            String[] token = selectedValue.split(" ");
+            
+            if(!token[0].equals("Group")){
+
 
             if (FriendManagement.isFriend(selectedValue)) {  // if the searched user is a friend
                 String username = backend.UserSession.getCurrentUser().getUsername();
                 Friend friend = Friend.getFriend(username, selectedValue);
-               
-                
+
                 if (friend == null) {
                     JOptionPane.showMessageDialog(this, "There is no such friend");
                     return;
@@ -172,59 +174,85 @@ public class SearchForUserFrame extends javax.swing.JFrame {
                 );
                 if (choice == 0) {
                     FriendManagement.removeFriend(backend.UserSession.getCurrentUser(), friend);
-                    
+
                 } else if (choice == 1) {
                     FriendManagement.blockFriend(backend.UserSession.getCurrentUser(), friend);
                     /*must update blocked*/
                     JOptionPane.showMessageDialog(null, "Friend removed successfully");
                 }
             }
-            
-            
-            if(!FriendManagement.isFriend(selectedValue))
-            {
+
+            if (!FriendManagement.isFriend(selectedValue)) {
                 String username = backend.UserSession.getCurrentUser().getUsername();
-        Friend suggestedFriend = FriendManagement.getFriendSuggested(backend.UserSession.getCurrentUser(), selectedValue);
-        if (suggestedFriend == null) {
-            JOptionPane.showMessageDialog(this, "Error finding suggestedFriend");
-            return;
-        }
+                Friend suggestedFriend = FriendManagement.getFriendSuggested(backend.UserSession.getCurrentUser(), selectedValue);
+                if (suggestedFriend == null) {
+                    JOptionPane.showMessageDialog(this, "Error finding suggestedFriend");
+                    return;
+                }
 
-        System.out.println("User selected: " + selectedValue);
+                System.out.println("User selected: " + selectedValue);
 
-        String[] options = {"Send Request", "Ignore"};
-        int choice = JOptionPane.showOptionDialog(
-                null,
-                "Would you like to: ",
-                ("Suggested Friend" + suggestedFriend.getUsername()),
-                JOptionPane.DEFAULT_OPTION,
-                JOptionPane.INFORMATION_MESSAGE,
-                null, options, options[0]
-        );
+                String[] options = {"Send Request", "Ignore"};
+                int choice = JOptionPane.showOptionDialog(
+                        null,
+                        "Would you like to: ",
+                        ("Suggested Friend" + suggestedFriend.getUsername()),
+                        JOptionPane.DEFAULT_OPTION,
+                        JOptionPane.INFORMATION_MESSAGE,
+                        null, options, options[0]
+                );
 
-        System.out.println("User selected: " + selectedValue);
-        if (choice == 0) {
-            FriendRequests fr = new FriendRequests(backend.UserSession.getCurrentUser().getEmail(), backend.UserSession.getCurrentUser().getUsername(), backend.UserSession.getCurrentUser().getUserId(), suggestedFriend.getUserId());
-            FriendManagement.requestSent(fr, AccountManagement.findUser(suggestedFriend.getUsername()));
-            JOptionPane.showMessageDialog(null, "Friend request sent successfully");
-        } else if (choice == 1) {
+                System.out.println("User selected: " + selectedValue);
+                if (choice == 0) {
+                    FriendRequests fr = new FriendRequests(backend.UserSession.getCurrentUser().getEmail(), backend.UserSession.getCurrentUser().getUsername(), backend.UserSession.getCurrentUser().getUserId(), suggestedFriend.getUserId());
+                    FriendManagement.requestSent(fr, AccountManagement.findUser(suggestedFriend.getUsername()));
+                    JOptionPane.showMessageDialog(null, "Friend request sent successfully");
+                } else if (choice == 1) {
 
-        }
+                }
             }
-            
-            if(token[0].equals("Group"))
-            {
-                
             }
-            
-            
-            
+            if (token[0].equals("Group")) {
+                Group group = GroupsDataBase.getInstance().getGroupByName(token[1]);
+
+                if (group == null) {
+                    JOptionPane.showMessageDialog(null, "Group not found: " + token[1], "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                if (!UserSession.getCurrentUser().isGroupMember(token[1])) {
+                    int choice = JOptionPane.showConfirmDialog(
+                            null,
+                            "You are not a member of the group \"" + token[1] + "\".\nWould you like to send a request to join?",
+                            "Join Group",
+                            JOptionPane.YES_NO_OPTION
+                    );
+                    
+                    if (choice == JOptionPane.YES_OPTION)
+                    {
+                        GroupRequests newReq = new GroupRequests(UserSession.getCurrentUser().getUserId(), group.getGroupID());
+                       
+                               
+                        group.addUserToGroupRequests(UserSession.getCurrentUser().getUserId());
+                        GroupsDataBase.getInstance().addToGlobalGroupRequests(newReq);
+
+                        JOptionPane.showMessageDialog(this, "Request to join sent succesfully");
+                        
+                    }
+                    else 
+                    {
+                        JOptionPane.showMessageDialog(this, "Alright some other time");
+                    }
+                }
+                else{
+                    JOptionPane.showMessageDialog(this, "You're already a group member");
+                }
+            }
 
         }
-        
+
     }//GEN-LAST:event_resultsListValueChanged
 
-    
     public void updateStoriesList() {
         resultsUpdated = true;
         ArrayList<String> linerep = FriendManagement.getLineRepresentationUserSearch(searchBar.getText());
@@ -238,8 +266,6 @@ public class SearchForUserFrame extends javax.swing.JFrame {
         resultsUpdated = false;
         System.out.println("Stories: " + linerep);
     }
-    
-    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

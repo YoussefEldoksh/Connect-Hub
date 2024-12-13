@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package backend;
 
 
@@ -22,6 +18,14 @@ public class NotificationGroupAdd extends Notification{
         this.groupId = groupId;
     }
     
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public String getRequester() {
+        return requesterId;
+    }
+    
     public static String lineRepresentation(String groupId,String requester){
         Group group1=null;
         for(Group group:DataBase.getInstance().getGroups()){
@@ -38,9 +42,4 @@ public class NotificationGroupAdd extends Notification{
 
        
     }
-    
-    
-    
-    
-    
 }

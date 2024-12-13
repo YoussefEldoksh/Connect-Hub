@@ -18,6 +18,9 @@ public class DataBase { // Centralized Data Management
     private ArrayList<FriendRequests> requests = new ArrayList<>();
     private ArrayList<NotificationFriendReq> notificationsFriendReq = new ArrayList<>();
     private ArrayList<Group> groups = new ArrayList<>();
+    private ArrayList<NotificationGroupAdd> notificationsGroupAdd = new ArrayList<>();
+    private ArrayList<NotificationGroupPost> notificationsGroupPost = new ArrayList<>();
+
     
 
     private static DataBase database = null;
@@ -53,12 +56,35 @@ public class DataBase { // Centralized Data Management
 
     
     
-
-    public synchronized void addToGlobalRequestsNotifications(NotificationFriendReq req)
+    public void loadAllFiles()
     {
-        notificationsFriendReq.add(req);
-        FileManagement.saveRequestsNotificationsJsonFile();
+        this.users.clear();
+        this.posts.clear();
+        this.stories.clear();
+        this.requests.clear();
+        this.notificationsFriendReq.clear();
+
+        this.users = FileManagement.loadFromUsersJSONfile();
+        this.posts = FileManagement.loadFromPostsJsonFile();
+        this.stories = FileManagement.loadFromStroiesJsonFile();
+        this.requests = FileManagement.loadFromFriendRequestsJsonFile();
+        this.notificationsFriendReq = FileManagement.loadFromRequestsNotificationsJsonFile();
+        this.notificationsGroupAdd = FileManagement.loadFromGroupAddNotificationsJsonFile();
+        this.notificationsGroupPost = FileManagement.loadFromGroupPostNotificationsJsonFile();
+
     }
+
+    public synchronized ArrayList<NotificationFriendReq> getNotificationsFriendReq() {
+        return notificationsFriendReq;
+    }
+    
+    public synchronized ArrayList<NotificationGroupAdd> getNotificationsGroupAdd() {
+        return notificationsGroupAdd;
+    }
+     
+    public synchronized ArrayList<NotificationGroupPost> getNotificationsGroupPost() {
+        return notificationsGroupPost;
+}
     
 
     
@@ -74,6 +100,11 @@ public class DataBase { // Centralized Data Management
     {
         requests.add(request);
         FileManagement.saveToFriendRequestsJsonFile();
+    }
+    
+    public void addToGlobalRequestsNotifications(NotificationFriendReq req)
+    {
+        this.notificationsFriendReq.add(req);
     }
 
     
@@ -105,27 +136,6 @@ public class DataBase { // Centralized Data Management
         //FileManagement.saveInGroupsJSONfile();
     }
 
-
-    
-    public void loadAllFiles()
-    {
-        this.users.clear();
-        this.posts.clear();
-        this.stories.clear();
-        this.requests.clear();
-        this.notificationsFriendReq.clear();
-
-        this.users = FileManagement.loadFromUsersJSONfile();
-        this.posts = FileManagement.loadFromPostsJsonFile();
-        this.stories = FileManagement.loadFromStroiesJsonFile();
-        this.requests = FileManagement.loadFromFriendRequestsJsonFile();
-        this.notificationsFriendReq = FileManagement.loadFromRequestsNotificationsJsonFile();
-
-    }
-
-    public synchronized ArrayList<NotificationFriendReq> getNotificationsFriendReq() {
-        return notificationsFriendReq;
-    }
 
     public synchronized void removeFriendReq(FriendRequests request) {
         for (FriendRequests req : requests) {

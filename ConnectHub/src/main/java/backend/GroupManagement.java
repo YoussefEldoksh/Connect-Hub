@@ -80,6 +80,26 @@ public class GroupManagement {
         return suggestions;
     }
     
+    public static ArrayList<String> groupLineRep()
+    {
+        ArrayList<Group> groups = groupSuggestion(UserSession.getCurrentUser());
+        ArrayList<String> Groups = new ArrayList<>();
+        if(groups == null)
+        {
+            return new ArrayList<>();
+        }
+        
+        for (Group group : groups) 
+        {
+            String s = "Group " + group.getGroupName();
+           Groups.add(s);
+        }
+        return Groups;
+    }
+    
+    
+    
+    
     public static Group getGroupSuggested(User user, String groupName)
     {
       ArrayList<Group> suggestedGroups = groupSuggestion(user); 
