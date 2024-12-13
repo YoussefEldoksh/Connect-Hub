@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
  *
  * @author malak
  */
-public abstract class Notification {
+public class Notification {
     private String id;
     private String type;
     private String message;
