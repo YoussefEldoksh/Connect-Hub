@@ -12,8 +12,6 @@ import javax.swing.ImageIcon;
  * @author malak
  */
 public class Group {
-
-    private static ArrayList<GroupRequests> requests;
     private String groupID;
     private String groupName;
     private String groupDescription;
@@ -23,6 +21,7 @@ public class Group {
     private ArrayList<String> groupAdmins; //ID of admin
     private ArrayList<String> groupMembers; //ID of member
     private ArrayList<Posts> groupPosts;
+    private static ArrayList<GroupRequests> requests;
 
     public Group(String groupID, String groupName, String groupDescription, String groupCreator) {
         this.groupID = groupID;
@@ -96,6 +95,7 @@ public class Group {
         this.groupPosts = groupPosts;
     }
 
+    //only for filemanagement
     public void addGroupMember(String groupMember){
     groupMembers.add(groupMember);
     }
@@ -104,11 +104,13 @@ public class Group {
     groupAdmins.add(groupAdmin);
     }
     
-    /*
+    //when this is called, database method addToGlobalPosts should also be called
     public void addGroupPosts(Posts groupPost){
     groupPosts.add(groupPost);
-    }*/
+    }
      
+    
+    //called when request is accepted
     public void addUserToGroup(String userToJoinId) {
         for (int i = 0; i < groupMembers.size(); i++) {
             if (groupMembers.get(i).equals(userToJoinId)) {
@@ -149,6 +151,7 @@ public class Group {
         }
     }
 
+    //admins can remove normal members but not other admins
     public boolean removeUserFromGroupByAdmin(String userToRemoveId) // for removing and leaving
     {
         //remove group from suggestions list of this user and all posts from newsfeed
@@ -170,12 +173,37 @@ public class Group {
         return false;
     }
     
+    //called when request is accepted or declined
+    public void removeGroupRequest(String userToRemoveId) {
+        this.requests.remove(userToRemoveId);
+    }
+            
     public void promoteMemberToAdmin(String userId) {
         groupAdmins.add(userId);
+        System.out.println("Congratulations. You are now an admin in the group");
     }
 
+    
+    public void acceptRequest(String userId, boolean accept) {
+        if (AccountManagement.findUser(userId) == null) {
+            System.out.println("The user does not exist");
+        }
+        if (accept == true) {
+            //remove from requests
+            this.removeGroupRequest(userId);
+            this.addUserToGroup(userId);
+            GroupsDataBase.getInstance().removeFromGlobalGroupRequests(GroupsDataBase.getInstance().getGroupRequest(userId, this.getGroupID()));
+        }
+        else if (accept == false) {
+            this.removeGroupRequest(userId);
+            GroupsDataBase.getInstance().removeFromGlobalGroupRequests(GroupsDataBase.getInstance().getGroupRequest(userId, this.getGroupID()));
+            //remove also from requests if it was declined
+        }       
+    }
+    
     public void demoteAdminToMember(String userId) {
         groupAdmins.remove(userId);
+        System.out.println("User is no longer an admin");
     }
 
     public void editPost(String postId) {
@@ -186,10 +214,4 @@ public class Group {
 
     public void deletePost(String postId) {
     }
-
-    //most probably should be somewhere else
-    public void deleteGroup() {
-        //listOfGroups.remove(this);
-    }
-    
 }

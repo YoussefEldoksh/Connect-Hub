@@ -24,8 +24,15 @@ public class GroupsDataBase {
             throw new IllegalStateException("DataBase is already being initialized!");
         }
         isLoading = true;
-        //loadAllFiles(); 
+        loadAllFiles(); 
         isLoading = false;
+    }
+    
+     public static GroupsDataBase getInstance() {
+        if (groupdatabase == null) {
+            groupdatabase = new GroupsDataBase(); 
+        }
+        return groupdatabase;
     }
     
     public  synchronized void addToGlobalGroups(Group group){
@@ -37,7 +44,22 @@ public class GroupsDataBase {
     posts.add(post);
     FileManagement.saveToGroupsPostsJsonFile();
     }
-    
+  
+    public synchronized void removeFromGlobalGroupsPosts(Posts post) {
+        posts.remove(post);
+        FileManagement.saveToGroupsPostsJsonFile();
+    }
+   
+    public synchronized void addToGlobalGroupRequests(GroupRequests request){
+    grouprequests.add(request);
+    FileManagement.saveToGroupRequestsJsonFile();
+    }
+      
+    public synchronized void removeFromGlobalGroupRequests(GroupRequests request){
+    grouprequests.remove(request);
+    FileManagement.saveToGroupRequestsJsonFile();
+    }
+     
     public synchronized ArrayList<Group> getAllGlobalGroups(){
     return groups;
     }
@@ -50,10 +72,7 @@ public class GroupsDataBase {
     return grouprequests;
     }
     
-    public synchronized void addToGlobalGroupRequests(GroupRequests request){
-    grouprequests.add(request);
-    FileManagement.saveToGroupRequestsJsonFile();
-    }
+    
     
     public synchronized Group getSpecificGroup(String groupId) {
         ArrayList<Group> groups = getAllGlobalGroups();
@@ -65,12 +84,27 @@ public class GroupsDataBase {
         return null;
     }
     
-    public synchronized void removeFromGlobalGroups(Group group){}
-    
-    public static GroupsDataBase getInstance() {
-        if (groupdatabase == null) {
-            groupdatabase = new GroupsDataBase(); 
+    public GroupRequests getGroupRequest(String userMakingReqId, String groupId){
+        for(int i=0; i< grouprequests.size(); i++)
+        {if(grouprequests.get(i).getGroupId().equals(groupId) && grouprequests.get(i).getUserMakingReqId().equals(userMakingReqId))
+            return grouprequests.get(i);
+        
         }
-        return groupdatabase;
+        return null;
+    }
+    
+    public synchronized void removeFromGlobalGroups(Group group){
+    groups.remove(group);
+    }
+    
+     public void loadAllFiles()
+    {
+        this.grouprequests.clear();
+        this.posts.clear();
+        this.groups.clear();
+        
+        this.grouprequests = FileManagement.loadFromGroupRequestsJsonFile();
+        this.posts = FileManagement.loadAllFromGroupsPostsJsonFile();
+        this.groups = FileManagement.loadFromGroupsJsonFile(); 
     }
 }

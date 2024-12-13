@@ -610,7 +610,7 @@ public class FileManagement { // Centrlized file operations system
     }
     
     
-    public ArrayList<Group> loadFromGroupsJsonFile() {
+    public static ArrayList<Group> loadFromGroupsJsonFile() {
         ArrayList<Group> groups = new ArrayList<>();
         try {
             if (!Files.exists(Paths.get("groups.json")) || Files.size(Paths.get("groups.json")) == 0) {
@@ -655,7 +655,7 @@ public class FileManagement { // Centrlized file operations system
     }
     
     //all posts present in all groups
-    public ArrayList<Posts> loadAllFromGroupsPostsJsonFile() {
+    public static ArrayList<Posts> loadAllFromGroupsPostsJsonFile() {
         ArrayList<Posts> posts = new ArrayList<>();
         try {
             if (!Files.exists(Paths.get("groupsposts.json")) || Files.size(Paths.get("groupsposts.json")) == 0) {
