@@ -18,21 +18,18 @@ public class Group {
     private String groupCreator;  //ID of creator
     private String groupPhotoPath;
     private ImageIcon groupPhotoIcon;
-    private ArrayList<String> groupAdmins; //ID of admin
-    private ArrayList<String> groupMembers; //ID of member
-    private ArrayList<Posts> groupPosts;
-    private static ArrayList<GroupRequests> requests;
+    private ArrayList<String> groupAdmins = new ArrayList<>(); //ID of admin
+    private ArrayList<String> groupMembers = new ArrayList<>(); //ID of member
+    private ArrayList<Posts> groupPosts = new ArrayList<>();
+    private static ArrayList<GroupRequests> requests = new ArrayList<>();
 
-    public Group(String groupID, String groupName, String groupDescription, String groupCreator) {
+    public Group(String groupID, String groupName, String groupDescription, String groupCreator, String groupPhotoPath) {
         this.groupID = groupID;
         this.groupName = groupName;
         this.groupDescription = groupDescription;
         this.groupCreator = groupCreator;
-        this.groupPhotoPath = null;
-        this.groupPhotoIcon = null;
-        this.groupAdmins = null;
-        this.groupMembers = null;
-        this.groupPosts = null;
+        this.groupPhotoPath = groupPhotoPath;
+        this.groupPhotoIcon = new ImageIcon(getClass().getResource(groupPhotoPath));
     }
 
     public String getGroupID() {

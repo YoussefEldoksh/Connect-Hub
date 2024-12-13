@@ -689,18 +689,20 @@ public class FileManagement { // Centrlized file operations system
                 String groupCreator = jsonGroup.getString("group creator");
                 String groupPhotoPath = jsonGroup.getString("group photopath");
 
-                Group group = new Group(groupId, groupName, groupDescription, groupCreator);
+                Group group = new Group(groupId, groupName, groupDescription, groupCreator,groupPhotoPath);
                 JSONArray jsonAdmins = jsonGroup.getJSONArray("admins");
-                for (int j = 0; i < jsonAdmins.length(); i++) {
+                for (int j = 0; j < jsonAdmins.length(); j++) {
                     JSONObject admin = jsonAdmins.getJSONObject(j);
                     String adminId = admin.getString("adminid");
                     group.addGroupAdmin(adminId);
-                }
+                }     
+                
 
                 JSONArray jsonMembers = jsonGroup.getJSONArray("members");
-                for (int j = 0; i < jsonMembers.length(); i++) {
+                for (int j = 0; j < jsonMembers.length(); j++) {
                     JSONObject member = jsonMembers.getJSONObject(j);
                     String memberId = member.getString("memberid");
+                    System.out.println("Loading a member");
                     group.addGroupMember(memberId);
                 }
                 

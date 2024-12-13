@@ -49,7 +49,7 @@ public class FriendManagement {
                 System.out.println("Friendrequests: "+user.getListOfFriendReq());
                 
                 sender.addFriends(new Friend(user.getEmail(),user.getUsername(),user.getUserId()));
-                     DataBase.getInstance().removeFriendReq(friend);
+                DataBase.getInstance().removeFriendReq(friend);
             }
             else if(accept == false &&  rejected == true)
             {

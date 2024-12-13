@@ -146,7 +146,7 @@ public class SearchForUserFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
          if (!resultsUpdated) {
             String selectedValue = resultsList.getSelectedValue();
-
+            String[] token = selectedValue.split("");
             if (selectedValue == null) {
                 JOptionPane.showMessageDialog(this, "No selection was made;");
             }
@@ -211,6 +211,14 @@ public class SearchForUserFrame extends javax.swing.JFrame {
 
         }
             }
+            
+            if(token[0].equals("Group"))
+            {
+                
+            }
+            
+            
+            
 
         }
         
@@ -220,6 +228,7 @@ public class SearchForUserFrame extends javax.swing.JFrame {
     public void updateStoriesList() {
         resultsUpdated = true;
         ArrayList<String> linerep = FriendManagement.getLineRepresentationUserSearch(searchBar.getText());
+        linerep.addAll(backend.UserSession.getCurrentUser().getLineRepresentationForAllGroups(searchBar.getText()));
         resultsListModel.clear();
 
         for (int i = 0; i < linerep.size(); i++) {
