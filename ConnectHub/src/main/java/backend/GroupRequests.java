@@ -30,4 +30,5 @@ public class GroupRequests {
     public String getGroupId() {
         return groupId;
     }  
+    
 }

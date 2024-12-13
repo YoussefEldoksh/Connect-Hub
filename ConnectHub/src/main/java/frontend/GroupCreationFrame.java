@@ -179,9 +179,12 @@ public class GroupCreationFrame extends javax.swing.JFrame {
         group.addGroupAdmin(backend.UserSession.getCurrentUser().getUserId());
         group.addGroupMember(backend.UserSession.getCurrentUser().getUserId());
         group.setGroupCreator(backend.UserSession.getCurrentUser().getUserId());
+        
         GroupsDataBase.getInstance().addToGlobalGroups(group);
+        
         backend.UserSession.getCurrentUser().addToGroups(group);
-        GroupSession groupSession = new GroupSession(group);
+        
+        GroupSession.setCurrentGroup(group);
         this.openGroupPreviewFrame(GroupSession.getCurrentGroup());
 
         }

@@ -37,6 +37,9 @@ public class Group {
             this.groupPhotoPath = groupPhotoPath;
             this.groupPhotoIcon = new ImageIcon(getClass().getResource(groupPhotoPath));
         }
+        requests = FileManagement.loadFromGroupRequestsJsonFileForSpecificGroup(groupID);
+        
+        
     }
 
     public String getGroupID() {
@@ -106,6 +109,7 @@ public class Group {
 
     public void addGroupAdmin(String groupAdmin) {
         groupAdmins.add(groupAdmin);
+        
     }
 
     //when this is called, database method addToGlobalPosts should also be called
@@ -122,6 +126,20 @@ public class Group {
             }
         }
         groupMembers.add(userToJoinId);
+        AccountManagement.findUserUsingId(userToJoinId).addToGroupsOfUser(this);
+    }
+    
+     public void addUserToGroupRequests(String userToJoinId) {
+        for (int i = 0; i < requests.size(); i++) {
+         
+            if (requests.contains(userToJoinId)) {
+                System.out.println("Request already made");
+                return;
+            }
+        }
+        GroupRequests gr= GroupManagement.getGroupRequest(userToJoinId, this.getGroupID());
+        requests.add(gr);
+        AccountManagement.findUserUsingId(userToJoinId).addToGroupRequestsOfUser(gr);
     }
 
     //creator can remove anyone and also himself
@@ -148,6 +166,7 @@ public class Group {
                     }
                 }
                 groupMembers.remove(userToRemoveId);
+                AccountManagement.findUserUsingId(userToRemoveId).addToGroupsOfUser(this);
                 System.out.println("User is no longer a member of the group");
                 return;
             }
@@ -169,6 +188,8 @@ public class Group {
                     }
                 }
                 groupMembers.remove(userToRemoveId);
+
+                AccountManagement.findUserUsingId(userToRemoveId).addToGroupsOfUser(this);
                 System.out.println("User is no longer a member of the group");
                 return true;
             }
@@ -178,7 +199,9 @@ public class Group {
 
     //called when request is accepted or declined
     public void removeGroupRequest(String userToRemoveId) {
-        this.requests.remove(userToRemoveId);
+        GroupRequests gr= GroupManagement.getGroupRequest(userToRemoveId, this.getGroupID());
+        AccountManagement.findUserUsingId(userToRemoveId).removeFromsGroupRequestsOfUser(gr);
+        requests.remove(gr);
     }
 
     public void promoteMemberToAdmin(String userId) {
@@ -215,7 +238,7 @@ public class Group {
 
     public void deletePost(String postId) {
     }
-    
+
     public ArrayList<String> getGroupMembersWithoutAdmins() {
         ArrayList<String> membersNotAdmins = new ArrayList<>();
         for (String member : getGroupMembers()) {
@@ -223,8 +246,9 @@ public class Group {
             if (!getGroupAdmins().contains(member)) {
                 membersNotAdmins.add(member);
             }
-            if(!getGroupCreator().equals(member))
+            if (!getGroupCreator().equals(member)) {
                 membersNotAdmins.add(member);
+            }
         }
         return membersNotAdmins;
 

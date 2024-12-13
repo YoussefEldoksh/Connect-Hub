@@ -23,18 +23,19 @@ public class User extends Account {
     /*private String userId ;
     private String email;
     private String username;*/
+    private ArrayList<GroupRequests> groupRequests = new ArrayList<>();
     private String password;
     private LocalDate dateOfBirth;
     private boolean status;
-    private ArrayList<Friend> friends;
-    private ArrayList<Friend> blockedFriends;
-    private ArrayList<FriendRequests> friendReq;
-    private ArrayList<User> unviewableUsers;
-    private ArrayList<Posts> userPosts;
-    private ArrayList<Stories> userStories;
+    private ArrayList<Friend> friends = new ArrayList<>();
+    private ArrayList<Friend> blockedFriends = new ArrayList<>();
+    private ArrayList<FriendRequests> friendReq = new ArrayList<>();
+    private ArrayList<User> unviewableUsers = new ArrayList<>();
+    private ArrayList<Posts> userPosts = new ArrayList<>();
+    private ArrayList<Stories> userStories = new ArrayList<>();
     public String getPassword;
-    private ArrayList<Notification> notifications;
-    private ArrayList<Group> groups;
+    private ArrayList<Notification> notifications = new ArrayList<>();
+    private ArrayList<Group> groups = new ArrayList<>();
 
     public User(String userId, String email, String username, String password, LocalDate dateOfBirth, boolean status) {
         super(email, username, userId);
@@ -47,6 +48,7 @@ public class User extends Account {
         friendReq = FileManagement.loadFromFriendRequestsJsonFileForSpecificUser(userId);
         userStories = FileManagement.loadFromStroiesJsonFileForSpecificUser(userId);
         userPosts = FileManagement.loadFromPostsJsonFileForSpecificUser(userId);
+        groupRequests= FileManagement.loadFromGroupRequestsJsonFile();
         notifications = fillFriendRequestsNotifications();
         groups = fillGroups();
     }
@@ -310,7 +312,9 @@ public class User extends Account {
 
     public ArrayList<Group> fillGroups() {
         ArrayList<Group> userGroups = new ArrayList<>();
+        
         ArrayList<Group> allGroups = FileManagement.loadFromGroupsJsonFile();
+        System.out.println("AllGroups: " + allGroups);
         if (allGroups.isEmpty()) {
             return userGroups;
         }
@@ -332,7 +336,7 @@ public class User extends Account {
         }
 
         for (Group Group : this.groups) {
-            String s = "Group " +Group.getGroupName() + ": " + Group.getGroupDescription();
+            String s = "Group " +Group.getGroupName() + " : " + Group.getGroupDescription();
             Groups.add(s);
         }
         return Groups;
@@ -362,7 +366,7 @@ public class User extends Account {
         this.groups.add(group);
     }
     
-    
+
     
     
     public ArrayList<String> getLineRepresentationForAllGroups(String key) {
@@ -373,7 +377,7 @@ public class User extends Account {
         }
 
         for (Group Group : advancedSearchUsersString(key)) {
-            String s = "Group " + Group.getGroupName() + ": " + Group.getGroupDescription();
+            String s = "Group " + Group.getGroupName() + " : " + Group.getGroupDescription();
             Groups.add(s);
         }
         return Groups;
@@ -416,4 +420,60 @@ public class User extends Account {
         this.userStories = userStories;
     }
 
+    public ArrayList<Group> getGroupsOfUser() {
+        return groups;
+    }
+    
+     public void addToGroupsOfUser(Group group) {
+        groups.add(group);
+    }
+     
+       public void removeFromsGroupsOfUser(Group group) {
+        groups.remove(group);
+    }
+       
+      public void setGroupsOfUser(ArrayList<Group> groups) {
+        this.groups= groups;
+    }
+      
+      public ArrayList<GroupRequests> getGroupRequestsOfUser() {
+        return groupRequests;
+    }
+    
+     public void addToGroupRequestsOfUser(GroupRequests grouprequest) {
+        groupRequests.add(grouprequest);
+    }
+     
+       public void removeFromsGroupRequestsOfUser(GroupRequests grouprequest) {
+        groupRequests.remove(grouprequest);
+    }
+       
+      public void setGroupRequestsOfUser(ArrayList<GroupRequests> grouprequests) {
+        this.groupRequests= grouprequests;
+    }
+      
+    public boolean isGroupMember(String key)
+    {
+        ArrayList<Group> allGroups = GroupsDataBase.getInstance().getAllGlobalGroups();
+        System.out.println("AllGroups: " + allGroups);
+        
+        if (allGroups.isEmpty()) {
+            return false;
+        }
+        
+        Group group = GroupsDataBase.getInstance().getGroupByName(key);
+        if(group == null)
+        {
+            return false;
+        }
+        
+        
+        if(group.getGroupMembers().contains(this.getUserId()))
+        {
+            return true;
+        }
+    
+        return false;
+    }
 }
+

@@ -28,7 +28,7 @@ public class groupMembersPanel extends javax.swing.JPanel {
     private boolean adminslistUpdate = false;
     
     private DefaultListModel<String> groupRequestsListModel = new DefaultListModel<>();
-    private boolean requestlistUpdate = false;
+    private boolean requestslistUpdate = false;
     
     private boolean creator; 
     private boolean admin;
@@ -44,44 +44,42 @@ public class groupMembersPanel extends javax.swing.JPanel {
     public groupMembersPanel() {
         initComponents();
 
-        if(GroupSession.getCurrentGroup().getGroupCreator().equals(UserSession.getCurrentUser().getUserId()))
-        {
+        if (GroupSession.getCurrentGroup().getGroupCreator().equals(UserSession.getCurrentUser().getUserId())) {
             creator = true;
-        }
-        else 
-        {
+        } else {
             creator = false;
         }
-        if(GroupSession.getCurrentGroup().getGroupAdmins().contains(UserSession.getCurrentUser().getUserId()))
-        {
+        if (GroupSession.getCurrentGroup().getGroupAdmins().contains(UserSession.getCurrentUser().getUserId())) {
             admin = true;
-        }
-        else 
-        {
+        } else {
             admin = false;
         }
         
-        
-    }
-    
-    public boolean checkAdmin(String userId) {
-        for (int i = 0; i < GroupSession.getCurrentGroup().getGroupAdmins().size(); i++) {
-            if (userId.equals(GroupSession.getCurrentGroup().getGroupAdmins().get(i))) {
-                return true;
-            }
-        }
-        return false;
-    }
+        updateGroupAdminsList(UserSession.getCurrentUser(), GroupSession.getCurrentGroup());
+        updateGroupMembersList(UserSession.getCurrentUser(), GroupSession.getCurrentGroup());
+        updateGroupRequestsList(UserSession.getCurrentUser(), GroupSession.getCurrentGroup());
 
-    public boolean checkCreator(String userId) {
-        if (userId.equals(GroupSession.getCurrentGroup().getGroupCreator())) {
-            return true;
-        }
-        return false;
+        groupCreatorLabel.setText("The Group Creator Is: " + AccountManagement.findUsername(GroupSession.getCurrentGroup().getGroupCreator()));
     }
+//    
+//    public boolean checkAdmin(String userId) {
+//        for (int i = 0; i < GroupSession.getCurrentGroup().getGroupAdmins().size(); i++) {
+//            if (userId.equals(GroupSession.getCurrentGroup().getGroupAdmins().get(i))) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+//
+//    public boolean checkCreator(String userId) {
+//        if (userId.equals(GroupSession.getCurrentGroup().getGroupCreator())) {
+//            return true;
+//        }
+//        return false;
+//    }
 
     public void updateGroupMembersList(User u, Group g) {
-        
+
         memberslistUpdate = true;
         ArrayList<String> linerep = GroupManagement.getLineRepresentationGroupMembers(GroupSession.getCurrentGroup());
         groupMembersListModel.clear();
@@ -94,9 +92,9 @@ public class groupMembersPanel extends javax.swing.JPanel {
         //this.user = u;
         memberslistUpdate = false;
     }
-    
-     public void updateGroupAdminsList(User u, Group g) {
-        
+
+    public void updateGroupAdminsList(User u, Group g) {
+
         adminslistUpdate = true;
         ArrayList<String> linerep = GroupManagement.getLineRepresentationGroupAdmins(GroupSession.getCurrentGroup());
         groupAdminsListModel.clear();
@@ -110,9 +108,9 @@ public class groupMembersPanel extends javax.swing.JPanel {
         adminslistUpdate = false;
     }
 
-      public void updateGroupRequestsList(User u, Group g) {
-        
-        requestlistUpdate = true;
+    public void updateGroupRequestsList(User u, Group g) {
+
+        requestslistUpdate = true;
         ArrayList<String> linerep = GroupManagement.getLineRepresentationGroupRequests(GroupSession.getCurrentGroup());
         groupRequestsListModel.clear();
 
@@ -122,9 +120,9 @@ public class groupMembersPanel extends javax.swing.JPanel {
         System.out.println("Group Requests List Data: " + linerep);
         groupRequestsList.setModel(groupRequestsListModel);
         //this.user = u;
-        requestlistUpdate = false;
+        requestslistUpdate = false;
     }
-     
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -143,6 +141,8 @@ public class groupMembersPanel extends javax.swing.JPanel {
         groupMembersList = new javax.swing.JList<>();
         jScrollPane3 = new javax.swing.JScrollPane();
         groupRequestsList = new javax.swing.JList<>();
+        leaveGroupButton = new javax.swing.JButton();
+        groupCreatorLabel = new javax.swing.JLabel();
 
         groupAdminsList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -188,6 +188,15 @@ public class groupMembersPanel extends javax.swing.JPanel {
         });
         jScrollPane3.setViewportView(groupRequestsList);
 
+        leaveGroupButton.setText("LEAVE THE GROUP");
+        leaveGroupButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                leaveGroupButtonActionPerformed(evt);
+            }
+        });
+
+        groupCreatorLabel.setText("The Group Creator is: ");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -195,37 +204,37 @@ public class groupMembersPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(groupCreatorLabel)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel2)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(167, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(30, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(184, Short.MAX_VALUE)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(leaveGroupButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addContainerGap(16, Short.MAX_VALUE)
+                .addComponent(groupCreatorLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(9, 9, 9)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel2)
-                .addGap(124, 124, 124)
-                .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(169, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(205, Short.MAX_VALUE)))
+                .addGap(18, 18, 18)
+                .addComponent(leaveGroupButton)
+                .addGap(17, 17, 17))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -238,54 +247,98 @@ public class groupMembersPanel extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "No admin selected");
                 return;
             }
-
+            String memberId = AccountManagement.findUserId(selectedMember);
             if (creator) {
-                String[] options = {"Remove From Group", "Demote To Member"};
+                if (memberId.equals(UserSession.getCurrentUser().getUsername())) {
+                    String[] options = {"Yes", "No"};
+                    int choice = JOptionPane.showOptionDialog(
+                            null,
+                            "Would you like to Leave The Group: ",
+                            ("This Is You: " + selectedMember),
+                            JOptionPane.DEFAULT_OPTION,
+                            JOptionPane.INFORMATION_MESSAGE,
+                            null, options, options[0]
+                    );
+
+                    if (choice == 0) {
+                        GroupSession.getCurrentGroup().removeUserFromGroupByCreator(memberId);
+                        adminslistUpdate = true;
+                        groupAdminsListModel.removeElement(selectedMember);
+                        adminslistUpdate = false;
+                        updateGroupAdminsList(UserSession.getCurrentUser(), GroupSession.getCurrentGroup());
+                        JOptionPane.showMessageDialog(this, "The new main ADMIN of the group is " + AccountManagement.findUsername(GroupSession.getCurrentGroup().getGroupCreator()));
+        groupCreatorLabel.setText("The Group Creator Is: " + AccountManagement.findUsername(GroupSession.getCurrentGroup().getGroupCreator()));
+                    } else if (choice == 1) {
+                        JOptionPane.showMessageDialog(this, "No action was performed");
+                    }
+                } else {
+                    String[] options = {"Remove From Group", "Demote To Member"};
+                    int choice = JOptionPane.showOptionDialog(
+                            null,
+                            "Would you like to: ",
+                            ("Admin" + selectedMember),
+                            JOptionPane.DEFAULT_OPTION,
+                            JOptionPane.INFORMATION_MESSAGE,
+                            null, options, options[0]
+                    );
+
+                    if (choice == 0) {
+                        GroupSession.getCurrentGroup().removeUserFromGroupByCreator(memberId);
+                        adminslistUpdate = true;
+                        groupAdminsListModel.removeElement(selectedMember);
+                        adminslistUpdate = false;
+                        updateGroupAdminsList(UserSession.getCurrentUser(), GroupSession.getCurrentGroup());
+                        updateGroupMembersList(UserSession.getCurrentUser(), GroupSession.getCurrentGroup());
+                        JOptionPane.showMessageDialog(this, "Admin was removed successfully.");
+                    }
+                    if (choice == 1) {
+                        GroupSession.getCurrentGroup().demoteAdminToMember(memberId);
+                        adminslistUpdate = true;
+                        groupAdminsListModel.removeElement(selectedMember);
+                        adminslistUpdate = false;
+                        updateGroupMembersList(UserSession.getCurrentUser(), GroupSession.getCurrentGroup());
+                        updateGroupAdminsList(UserSession.getCurrentUser(), GroupSession.getCurrentGroup());
+                        JOptionPane.showMessageDialog(this, "Your admin " + selectedMember + " is now a member in the group");
+                    }
+
+                }
+            } else if (admin && memberId.equals(UserSession.getCurrentUser().getUsername())) {
+                String[] options = {"Yes", "No"};
                 int choice = JOptionPane.showOptionDialog(
                         null,
-                        "Would you like to: ",
-                        ("Admin" + selectedMember),
+                        "Would you like to Leave The Group: ",
+                        ("This Is You: " + selectedMember),
                         JOptionPane.DEFAULT_OPTION,
                         JOptionPane.INFORMATION_MESSAGE,
                         null, options, options[0]
                 );
-                
-                String memberId= AccountManagement.findUserId(selectedMember);
                 if (choice == 0) {
                     GroupSession.getCurrentGroup().removeUserFromGroupByCreator(memberId);
                     adminslistUpdate = true;
                     groupAdminsListModel.removeElement(selectedMember);
                     adminslistUpdate = false;
                     updateGroupAdminsList(UserSession.getCurrentUser(), GroupSession.getCurrentGroup());
-                    updateGroupMembersList(UserSession.getCurrentUser(), GroupSession.getCurrentGroup());
                     JOptionPane.showMessageDialog(this, "Admin was removed successfully.");
+                } else if (choice == 1) {
+                    JOptionPane.showMessageDialog(this, "No Action was performed");
                 }
-                if (choice == 1) {
-                    GroupSession.getCurrentGroup().demoteAdminToMember(memberId);
-                    adminslistUpdate = true;
-                    groupAdminsListModel.removeElement(selectedMember);
-                    adminslistUpdate = false;
-                    updateGroupMembersList(UserSession.getCurrentUser(), GroupSession.getCurrentGroup());
-                    updateGroupAdminsList(UserSession.getCurrentUser(), GroupSession.getCurrentGroup());
-                    JOptionPane.showMessageDialog(this, "Your admin " + selectedMember + " is now a member in the group");
-                }
-                
-            } else{
-            JOptionPane.showMessageDialog(this, "Access denied. Only the creator can access Group Admins");
-            }}
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Access denied. Only the creator can access Group Admins");
+            }
+        }
     }//GEN-LAST:event_groupAdminsListValueChanged
 
     private void groupMembersListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_groupMembersListValueChanged
         // TODO add your handling code here:
-        
-    if (!memberslistUpdate) {
-           String selectedMember = groupMembersList.getSelectedValue();
+        if (!memberslistUpdate) {
+            String selectedMember = groupMembersList.getSelectedValue();
 
             if (selectedMember == null) {
                 JOptionPane.showMessageDialog(this, "No member selected");
                 return;
             }
-
+            String memberId = AccountManagement.findUserId(selectedMember);
             //boolean memberIsAdmin= checkAdmin(AccountManagement.findUserId(selectedMember));
             //boolean memberIsCreator= checkCreator(AccountManagement.findUserId(selectedMember));
             if (creator) {
@@ -298,8 +351,7 @@ public class groupMembersPanel extends javax.swing.JPanel {
                         JOptionPane.INFORMATION_MESSAGE,
                         null, options, options[0]
                 );
-                
-                String memberId= AccountManagement.findUserId(selectedMember);
+
                 if (choice == 0) {
                     GroupSession.getCurrentGroup().removeUserFromGroupByCreator(memberId);
                     memberslistUpdate = true;
@@ -317,7 +369,7 @@ public class groupMembersPanel extends javax.swing.JPanel {
                     updateGroupAdminsList(UserSession.getCurrentUser(), GroupSession.getCurrentGroup());
                     JOptionPane.showMessageDialog(this, "Congratulations! You now have a new admin in your group:" + selectedMember);
                 }
-                
+
             } else if (admin) {
                 String[] options = {"Remove From Group", "Ignore"};
                 int choice = JOptionPane.showOptionDialog(
@@ -328,7 +380,7 @@ public class groupMembersPanel extends javax.swing.JPanel {
                         JOptionPane.INFORMATION_MESSAGE,
                         null, options, options[0]
                 );
-                String memberId= AccountManagement.findUserId(selectedMember);
+
                 if (choice == 0) {
                     GroupSession.getCurrentGroup().removeUserFromGroupByAdmin(memberId);
                     memberslistUpdate = true;
@@ -342,19 +394,105 @@ public class groupMembersPanel extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(this, "No action will be performed. \nA Creator can promote this user to become an admin");
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "Access denied. Only admins can access Group Members");
+                if (memberId.equals(UserSession.getCurrentUser().getUsername())) {
+                    String[] options = {"Yes", "No"};
+                    int choice = JOptionPane.showOptionDialog(
+                            null,
+                            "Would you like to Leave The Group: ",
+                            ("This Is You: " + selectedMember),
+                            JOptionPane.DEFAULT_OPTION,
+                            JOptionPane.INFORMATION_MESSAGE,
+                            null, options, options[0]
+                    );
+
+                    if (choice == 0) {
+                        GroupSession.getCurrentGroup().removeUserFromGroupByCreator(memberId);
+                        memberslistUpdate = true;
+                        groupMembersListModel.removeElement(selectedMember);
+                        memberslistUpdate = false;
+                        updateGroupMembersList(UserSession.getCurrentUser(), GroupSession.getCurrentGroup());
+                        JOptionPane.showMessageDialog(this, "You are no longer a member of the group");
+                    } else if (choice == 1) {
+                        JOptionPane.showMessageDialog(this, "No action was performed");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Access denied. Only admins can access Group Members");
+                }
             }
         }
     }//GEN-LAST:event_groupMembersListValueChanged
 
     private void groupRequestsListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_groupRequestsListValueChanged
         // TODO add your handling code here:
-        
+        if (!requestslistUpdate) {
+           String selectedRequest = groupRequestsList.getSelectedValue();
+
+            if (selectedRequest == null) {
+                JOptionPane.showMessageDialog(this, "No member selected");
+                return;
+            }
+            
+            if (admin) {
+                String[] options = {"Accept Request", "Decline"};
+                int choice = JOptionPane.showOptionDialog(
+                        null,
+                        "Would you like to: " ,
+                        ( selectedRequest + "'s join request"),
+                        JOptionPane.DEFAULT_OPTION,
+                        JOptionPane.INFORMATION_MESSAGE,
+                        null, options, options[0]
+                );
+                
+                String memberId = AccountManagement.findUserId(selectedRequest);
+                if (choice == 0) {
+                    GroupSession.getCurrentGroup().acceptRequest(memberId, true);
+                    requestslistUpdate = true;
+                    groupRequestsListModel.removeElement(selectedRequest);
+                    requestslistUpdate = false;
+                    updateGroupRequestsList(UserSession.getCurrentUser(), GroupSession.getCurrentGroup());
+                    updateGroupMembersList(UserSession.getCurrentUser(), GroupSession.getCurrentGroup());
+                    JOptionPane.showMessageDialog(this, selectedRequest + "'s request to join the group was accepted.\n The user is now a member in the group");
+                }
+                if (choice == 1) {
+                    GroupSession.getCurrentGroup().acceptRequest(memberId, false);
+                    requestslistUpdate = true;
+                    groupRequestsListModel.removeElement(selectedRequest);
+                    requestslistUpdate = false;
+                    updateGroupRequestsList(UserSession.getCurrentUser(), GroupSession.getCurrentGroup());
+                    JOptionPane.showMessageDialog(this, selectedRequest + "'s request to join the group was declined");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Access denied. Only admins can access Group Members");
+            }
+        }
     }//GEN-LAST:event_groupRequestsListValueChanged
+
+    private void leaveGroupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leaveGroupButtonActionPerformed
+        // TODO add your handling code here:
+        String[] options = {"Yes", "No"};
+        int choice = JOptionPane.showOptionDialog(
+                null,
+                "Would you like to leave the group: ",
+                ("Leave Group"),
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null, options, options[0]
+        );
+        if (choice == 0) {
+            GroupSession.getCurrentGroup().removeUserFromGroupByCreator(UserSession.getCurrentUser().getUserId());
+//                 memberslistUpdate = true;
+//                 groupMembersListModel.removeElement(selectedMember);
+//                 memberslistUpdate = false;
+            updateGroupMembersList(UserSession.getCurrentUser(), GroupSession.getCurrentGroup());
+            updateGroupAdminsList(UserSession.getCurrentUser(), GroupSession.getCurrentGroup());
+            JOptionPane.showMessageDialog(this, "You are no longer a member of the group");
+        }
+    }//GEN-LAST:event_leaveGroupButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> groupAdminsList;
+    private javax.swing.JLabel groupCreatorLabel;
     private javax.swing.JList<String> groupMembersList;
     private javax.swing.JList<String> groupRequestsList;
     private javax.swing.JLabel jLabel1;
@@ -363,5 +501,6 @@ public class groupMembersPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JButton leaveGroupButton;
     // End of variables declaration//GEN-END:variables
 }

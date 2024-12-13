@@ -4,6 +4,7 @@
  */
 package frontend;
 
+import backend.GroupSession;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 
@@ -76,6 +77,11 @@ public class GroupsListFrame extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        GroupsList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                GroupsListValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(GroupsList);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(29, 56, 347, 195));
@@ -85,6 +91,20 @@ public class GroupsListFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void GroupsListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_GroupsListValueChanged
+        // TODO add your handling code here:
+        
+        if(!groupsListUpdate)
+        {
+            String selectedValue = GroupsList.getSelectedValue();
+            String [] token = selectedValue.split(" ");
+            
+            
+            GroupSession.setCurrentGroup(backend.GroupsDataBase.getInstance().getGroupByName(token[1]));
+            GroupManagementPage.getInstance(GroupSession.getCurrentGroup()).setVisible(true);
+        }
+    }//GEN-LAST:event_GroupsListValueChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

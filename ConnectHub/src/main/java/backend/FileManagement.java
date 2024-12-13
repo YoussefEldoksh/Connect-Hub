@@ -580,11 +580,12 @@ public class FileManagement { // Centrlized file operations system
                 group.put("groupPhotoPath", groups.get(i).getGroupPhotoPath());
 
                 JSONArray admins = new JSONArray();
-                for (int j = 0; j < groups.get(i).getGroupAdmins().size(); j++) {
-                    JSONObject admin = new JSONObject();
-                    admin.put("adminID", groups.get(i).getGroupAdmins().get(j));
+                for (int j = 0; j < groups.get(j).getGroupAdmins().size(); j++) {
 
-                    admins.put(admin);
+                JSONObject admin = new JSONObject(); 
+                admin.put("adminID", groups.get(i).getGroupAdmins().get(j));
+                
+                admins.put(admin);
                 }
 
                 JSONArray members = new JSONArray();
