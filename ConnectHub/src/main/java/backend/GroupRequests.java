@@ -20,17 +20,13 @@ public class GroupRequests {
         this.userMakingReqUsername = AccountManagement.findUsername(userMakingReqId);
         this.groupId = groupId;
     }
-    
-    public void acceptRequest(boolean accept) {
-        if (AccountManagement.findUser(userMakingReqId) == null) {
-            System.out.println("The user does not exist");
-        }
-        if (accept == true) {
-            //remove from requests
-            GroupsDataBase.getInstance().getSpecificGroup(groupId).addUserToGroup(userMakingReqId);
-        }
-        else if (accept == false) {
-            //remove also from requests if it was declined
-        }       
+
+
+    public String getUserMakingReqId() {
+        return userMakingReqId;
     }
+
+    public String getGroupId() {
+        return groupId;
+    }  
 }
