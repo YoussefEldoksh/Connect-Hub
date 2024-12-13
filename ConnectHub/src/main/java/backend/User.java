@@ -7,8 +7,10 @@ package backend;
 import static backend.FriendManagement.friendSuggestion;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Array;
 import java.sql.DatabaseMetaData;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Base64;
 
@@ -32,6 +34,7 @@ public class User extends Account {
     private ArrayList<Stories> userStories;
     public String getPassword;
     private ArrayList<Notification> notifications;
+    private ArrayList<Group> groups;
 
     public User(String userId, String email, String username, String password, LocalDate dateOfBirth, boolean status) {
         super(email, username, userId);
@@ -45,6 +48,7 @@ public class User extends Account {
         userStories = FileManagement.loadFromStroiesJsonFileForSpecificUser(userId);
         userPosts = FileManagement.loadFromPostsJsonFileForSpecificUser(userId);
         notifications = fillFriendRequestsNotifications();
+        groups = fillGroups();
     }
 
     public User(String userId, String email, String username, String password, LocalDate dateOfBirth, boolean status, String load) {
@@ -58,10 +62,16 @@ public class User extends Account {
         friendReq = FileManagement.loadFromFriendRequestsJsonFileForSpecificUser(userId);
         userStories = FileManagement.loadFromStroiesJsonFileForSpecificUser(userId);
         userPosts = FileManagement.loadFromPostsJsonFileForSpecificUser(userId);
+        notifications = fillFriendRequestsNotifications();
+        groups = fillGroups();
     }
 
     public void addFriends(Friend friend) {
         friends.add(friend);
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     public ArrayList<Stories> getUserStories() {
@@ -79,8 +89,6 @@ public class User extends Account {
     public ArrayList<Friend> getListOfFriends() {
         return friends;
     }
-
-
 
     /*public String getUserId() {
         return userId;
@@ -235,7 +243,6 @@ public class User extends Account {
     }
     
      */
-
     public ArrayList<FriendRequests> getListOfSentReq() {
         ArrayList<FriendRequests> sent = new ArrayList<>();
         for (FriendRequests req : friendReq) {
@@ -284,23 +291,85 @@ public class User extends Account {
     }
 
     public ArrayList<Notification> fillFriendRequestsNotifications() {
-        ArrayList<NotificationFriendReq> requestNotification = DataBase.getInstance().getNotificationsFriendReq();
-        ArrayList<Notification> notifications = new ArrayList<>();
-       
+        ArrayList<NotificationFriendReq> requestNotification = FileManagement.loadFromRequestsNotificationsJsonFile();
+        ArrayList<Notification> Notifications = new ArrayList<>();
+
+        if (requestNotification.isEmpty()) {
+            return Notifications;
+        }
+
         for (NotificationFriendReq notificationFriendReq : requestNotification) {
             if (notificationFriendReq.getRecieverId().equals(this.getUserId())) {
-                this.notifications.add(notificationFriendReq);
+                Notifications.add(notificationFriendReq);
             }
         }
         //hena el loop el hay add el notifications beta3et el group lazem a valdiate el awel eno a member
-        
-        
-        return notifications;
+
+        return Notifications;
     }
-    
-    
-    
-    
+
+    public ArrayList<Group> fillGroups() {
+        ArrayList<Group> userGroups = new ArrayList<>();
+        ArrayList<Group> allGroups = FileManagement.loadFromGroupsJsonFile();
+        if (allGroups.isEmpty()) {
+            return userGroups;
+        }
+
+        for (Group allGroup : allGroups) {
+            if (allGroup.getGroupMembers().contains(this.getUserId())) {
+                userGroups.add(allGroup);
+            }
+        }
+        return userGroups;
+    }
+
+    public ArrayList<String> getLineRepresentationForUserGroups() {
+        ArrayList<String> Groups = new ArrayList<>();
+        
+        System.out.println("Groups: " + this.groups);
+        if (groups.isEmpty()) {
+            return Groups;
+        }
+
+        for (Group Group : this.groups) {
+            String s = "Group " +Group.getGroupName() + ": " + Group.getGroupDescription();
+            Groups.add(s);
+        }
+        return Groups;
+    }
+
+    public static ArrayList<Group> advancedSearchUsersString(String group) {
+
+        ArrayList<Group> searchGroup = new ArrayList<>();
+        if (group == null || group.trim().isEmpty()) {
+            return searchGroup; // Return empty list for null or empty input
+        }
+        if (group == null) {
+            return searchGroup; // Return empty list if input is invalid
+        }
+
+        for (Group allGroups : GroupsDataBase.getInstance().getAllGlobalGroups()) {
+            if (allGroups.getGroupName().toLowerCase().contains(group.toLowerCase())) // make case insenstive
+            {
+                searchGroup.add(allGroups);
+            }
+        }
+        return searchGroup;
+    }
+
+    public ArrayList<String> getLineRepresentationForAllGroups(String key) {
+        ArrayList<String> Groups = new ArrayList<>();
+
+        if (advancedSearchUsersString(key).isEmpty()) {
+            return Groups;
+        }
+
+        for (Group Group : advancedSearchUsersString(key)) {
+            String s = "Group " + Group.getGroupName() + ": " + Group.getGroupDescription();
+            Groups.add(s);
+        }
+        return Groups;
+    }
 
     public ArrayList<String> getLineRepresentationForNotifications() {
         ArrayList<String> notification = new ArrayList<>();
@@ -312,19 +381,18 @@ public class User extends Account {
         for (Notification Notification : notifications) {
 
             if (Notification instanceof NotificationFriendReq) {
-                String s = Notification.getMessage();
+                String s = Notification.getMessage() + " " + Notification.getTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss a"));
                 notification.add(s);
             }
             if (Notification instanceof NotificationGroupAdd || Notification instanceof NotificationGroupPost) {
-                String s = Notification.getMessage();
+                String s = Notification.getMessage() + " " + Notification.getTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss a"));
                 notification.add(s);
             }
         }
         return notification;
     }
-    
-    public void addToListOfNotification(Notification notification)
-    {
+
+    public void addToListOfNotification(Notification notification) {
         notifications.add(notification);
     }
 

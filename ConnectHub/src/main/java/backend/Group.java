@@ -12,27 +12,32 @@ import javax.swing.ImageIcon;
  * @author malak
  */
 public class Group {
+
     private String groupID;
     private String groupName;
     private String groupDescription;
     private String groupCreator;  //ID of creator
     private String groupPhotoPath;
     private ImageIcon groupPhotoIcon;
-    private ArrayList<String> groupAdmins; //ID of admin
-    private ArrayList<String> groupMembers; //ID of member
-    private ArrayList<Posts> groupPosts;
-    private static ArrayList<GroupRequests> requests;
+    private ArrayList<String> groupAdmins = new ArrayList<>(); //ID of admin
+    private ArrayList<String> groupMembers = new ArrayList<>(); //ID of member
+    private ArrayList<Posts> groupPosts = new ArrayList<>();
+    private static ArrayList<GroupRequests> requests = new ArrayList<>();
 
-    public Group(String groupID, String groupName, String groupDescription, String groupCreator) {
+    public Group(String groupID, String groupName, String groupDescription, String groupCreator, String groupPhotoPath) {
         this.groupID = groupID;
         this.groupName = groupName;
         this.groupDescription = groupDescription;
         this.groupCreator = groupCreator;
-        this.groupPhotoPath = null;
-        this.groupPhotoIcon = null;
-        this.groupAdmins = null;
-        this.groupMembers = null;
-        this.groupPosts = null;
+
+        if (groupPhotoPath == null) {
+            this.groupPhotoPath = "/Images/background.jpg";
+            this.groupPhotoIcon = new ImageIcon(getClass().getResource("/Images/background.jpg"));
+        } else {
+            this.groupPhotoPath = groupPhotoPath;
+            this.groupPhotoIcon = new ImageIcon(getClass().getResource(groupPhotoPath));
+        }
+
     }
 
     public String getGroupID() {
@@ -96,20 +101,19 @@ public class Group {
     }
 
     //only for filemanagement
-    public void addGroupMember(String groupMember){
-    groupMembers.add(groupMember);
+    public void addGroupMember(String groupMember) {
+        groupMembers.add(groupMember);
     }
-    
-    public void addGroupAdmin(String groupAdmin){
-    groupAdmins.add(groupAdmin);
+
+    public void addGroupAdmin(String groupAdmin) {
+        groupAdmins.add(groupAdmin);
     }
-    
+
     //when this is called, database method addToGlobalPosts should also be called
-    public void addGroupPosts(Posts groupPost){
-    groupPosts.add(groupPost);
+    public void addGroupPosts(Posts groupPost) {
+        groupPosts.add(groupPost);
     }
-     
-    
+
     //called when request is accepted
     public void addUserToGroup(String userToJoinId) {
         for (int i = 0; i < groupMembers.size(); i++) {
@@ -172,18 +176,17 @@ public class Group {
         }
         return false;
     }
-    
+
     //called when request is accepted or declined
     public void removeGroupRequest(String userToRemoveId) {
         this.requests.remove(userToRemoveId);
     }
-            
+
     public void promoteMemberToAdmin(String userId) {
         groupAdmins.add(userId);
         System.out.println("Congratulations. You are now an admin in the group");
     }
 
-    
     public void acceptRequest(String userId, boolean accept) {
         if (AccountManagement.findUser(userId) == null) {
             System.out.println("The user does not exist");
@@ -193,14 +196,13 @@ public class Group {
             this.removeGroupRequest(userId);
             this.addUserToGroup(userId);
             GroupsDataBase.getInstance().removeFromGlobalGroupRequests(GroupsDataBase.getInstance().getGroupRequest(userId, this.getGroupID()));
-        }
-        else if (accept == false) {
+        } else if (accept == false) {
             this.removeGroupRequest(userId);
             GroupsDataBase.getInstance().removeFromGlobalGroupRequests(GroupsDataBase.getInstance().getGroupRequest(userId, this.getGroupID()));
             //remove also from requests if it was declined
-        }       
+        }
     }
-    
+
     public void demoteAdminToMember(String userId) {
         groupAdmins.remove(userId);
         System.out.println("User is no longer an admin");

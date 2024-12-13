@@ -155,7 +155,7 @@ public class GroupCreationFrame extends javax.swing.JFrame {
         String groupDescription = groupDescriptionTextField.getText();
         String creatorId = user.getUserId();
         
-        Group group = new Group("G" + groupID, groupName, groupDescription, creatorId);
+        Group group = new Group("G" + groupID, groupName, groupDescription, creatorId,null);
         GroupsDataBase.getInstance().addToGlobalGroups(group);
     }//GEN-LAST:event_createGroupButtonActionPerformed
 

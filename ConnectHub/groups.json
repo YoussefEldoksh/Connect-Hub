@@ -1,0 +1,11 @@
+[
+    {
+        "groupid": "G1",
+        "group name": "Tech Enthusiasts",
+        "group description": "A group for discussing the latest in technology.",
+        "group creator": "U1",
+        "group photopath": "/Images/background.jpg",
+        "admins": [{"adminid": "U0"}],
+        "members": [{"memberid": "U0"}]
+    }
+]

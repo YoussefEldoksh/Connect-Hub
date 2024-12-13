@@ -124,7 +124,7 @@ public class NewsFeedPage extends javax.swing.JFrame {
         refreshButton = new javax.swing.JButton();
         searchButton = new javax.swing.JButton();
         notificationsButton = new javax.swing.JButton();
-        createGroupButton = new javax.swing.JButton();
+        GroupsButton = new javax.swing.JButton();
         FeedPanel = new javax.swing.JPanel();
         scrollPane1 = new java.awt.ScrollPane();
         friendReqSuggPanel3 = new frontend.FriendReqSuggPanel();
@@ -198,10 +198,10 @@ public class NewsFeedPage extends javax.swing.JFrame {
             }
         });
 
-        createGroupButton.setText("Create Group");
-        createGroupButton.addActionListener(new java.awt.event.ActionListener() {
+        GroupsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/result_groupicon.png"))); // NOI18N
+        GroupsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                createGroupButtonActionPerformed(evt);
+                GroupsButtonActionPerformed(evt);
             }
         });
 
@@ -220,32 +220,31 @@ public class NewsFeedPage extends javax.swing.JFrame {
                 .addComponent(friendsButton)
                 .addGap(27, 27, 27)
                 .addComponent(notificationsButton)
-                .addGap(18, 18, 18)
-                .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(142, 142, 142)
-                .addComponent(createGroupButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 239, Short.MAX_VALUE)
+                .addGap(33, 33, 33)
+                .addComponent(searchButton)
+                .addGap(27, 27, 27)
+                .addComponent(GroupsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 327, Short.MAX_VALUE)
                 .addComponent(profileButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(242, 242, 242))
+                .addGap(297, 297, 297))
         );
         friendReqSuggPanel1Layout.setVerticalGroup(
             friendReqSuggPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(friendReqSuggPanel1Layout.createSequentialGroup()
-                .addGroup(friendReqSuggPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(friendReqSuggPanel1Layout.createSequentialGroup()
+                .addGroup(friendReqSuggPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, friendReqSuggPanel1Layout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addComponent(jLabel1))
-                    .addGroup(friendReqSuggPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, friendReqSuggPanel1Layout.createSequentialGroup()
                         .addGap(13, 13, 13)
-                        .addGroup(friendReqSuggPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(createGroupButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(friendReqSuggPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(friendsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(homeButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                .addComponent(refreshButton, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                .addComponent(profileButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(notificationsButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                .addComponent(searchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                        .addGroup(friendReqSuggPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(friendsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(homeButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(refreshButton, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(profileButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(notificationsButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(GroupsButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(searchButton, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
@@ -367,6 +366,11 @@ public class NewsFeedPage extends javax.swing.JFrame {
         NotificationsFrame.getInstance().updateNotificationsList();
     }//GEN-LAST:event_notificationsButtonActionPerformed
 
+    private void GroupsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GroupsButtonActionPerformed
+        // TODO add your handling code here:
+        GroupsListFrame.getInstance().updateNotificationsList();
+        GroupsListFrame.getInstance().setVisible(true);
+    }//GEN-LAST:event_GroupsButtonActionPerformed
     private void createGroupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createGroupButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_createGroupButtonActionPerformed
@@ -377,8 +381,8 @@ public class NewsFeedPage extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel FeedPanel;
     private javax.swing.JPanel FriendPanel;
+    private javax.swing.JButton GroupsButton;
     private javax.swing.JPanel IconPanel;
-    private javax.swing.JButton createGroupButton;
     private frontend.FriendReqSuggPanel friendReqSuggPanel1;
     private frontend.FriendReqSuggPanel friendReqSuggPanel3;
     private javax.swing.JButton friendsButton;

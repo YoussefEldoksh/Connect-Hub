@@ -123,36 +123,34 @@
                       <Component id="friendsButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                       <Component id="notificationsButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="searchButton" min="-2" pref="49" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="142" max="-2" attributes="0"/>
-                      <Component id="createGroupButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="239" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                      <Component id="searchButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                      <Component id="GroupsButton" min="-2" pref="41" max="-2" attributes="0"/>
+                      <EmptySpace pref="327" max="32767" attributes="0"/>
                       <Component id="profileButton" min="-2" pref="46" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="242" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="297" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
                               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="createGroupButton" alignment="0" min="-2" pref="45" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="friendsButton" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="homeButton" alignment="1" pref="0" max="32767" attributes="0"/>
-                                      <Component id="refreshButton" alignment="0" pref="0" max="32767" attributes="0"/>
-                                      <Component id="profileButton" alignment="1" min="-2" pref="45" max="-2" attributes="0"/>
-                                      <Component id="notificationsButton" alignment="1" pref="0" max="32767" attributes="0"/>
-                                      <Component id="searchButton" max="32767" attributes="0"/>
-                                  </Group>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="friendsButton" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="homeButton" alignment="1" pref="0" max="32767" attributes="0"/>
+                                  <Component id="refreshButton" alignment="0" pref="0" max="32767" attributes="0"/>
+                                  <Component id="profileButton" alignment="1" min="-2" pref="45" max="-2" attributes="0"/>
+                                  <Component id="notificationsButton" alignment="1" pref="0" max="32767" attributes="0"/>
+                                  <Component id="GroupsButton" alignment="1" min="-2" pref="41" max="-2" attributes="0"/>
+                                  <Component id="searchButton" alignment="1" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -245,12 +243,14 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="notificationsButtonActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="createGroupButton">
+            <Component class="javax.swing.JButton" name="GroupsButton">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Create Group"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Images/result_groupicon.png"/>
+                </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="createGroupButtonActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="GroupsButtonActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
