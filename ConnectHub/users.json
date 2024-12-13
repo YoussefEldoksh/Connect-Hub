@@ -5,13 +5,20 @@
         "dob": "2024-12-08",
         "userId": "U0",
         "email": "doksh@gmail.com",
-        "friends": [{
-            "userId": "U5",
-            "email": "doksh88@gmail.com",
-            "username": "doksh3333"
-        }],
+        "friends": [
+            {
+                "userId": "U5",
+                "email": "doksh88@gmail.com",
+                "username": "doksh3333"
+            },
+            {
+                "userId": "U7",
+                "email": "halaahaitham2@gmail.com",
+                "username": "halaa123"
+            }
+        ],
         "username": "doksh22",
-        "status": false
+        "status": true
     },
     {
         "blockedfriends": [],
@@ -76,5 +83,19 @@
         "friends": [],
         "username": "doksh8888",
         "status": false
+    },
+    {
+        "blockedfriends": [],
+        "password": "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=",
+        "dob": "2004-08-09",
+        "userId": "U7",
+        "email": "halaahaitham2@gmail.com",
+        "friends": [{
+            "userId": "U0",
+            "email": "doksh@gmail.com",
+            "username": "doksh22"
+        }],
+        "username": "halaa123",
+        "status": true
     }
 ]

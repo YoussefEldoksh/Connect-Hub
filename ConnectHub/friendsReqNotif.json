@@ -1,8 +1,18 @@
-[{
-    "senderID": "U0",
-    "notificationID": "NR",
-    "notificationType": "FriendRequest",
-    "time": "2024-12-13T01:00:08.101108800",
-    "recieverID": "U5",
-    "message": "doksh22 Sent you a friendrequest"
-}]
+[
+    {
+        "senderID": "U0",
+        "notificationID": "NR",
+        "notificationType": "FriendRequest",
+        "time": "2024-12-13T01:00:08.101108800",
+        "recieverID": "U5",
+        "message": "doksh22 Sent you a friendrequest"
+    },
+    {
+        "senderID": "U7",
+        "notificationID": "NR",
+        "notificationType": "FriendRequest",
+        "time": "2024-12-13T16:48:46.215717700",
+        "recieverID": "U0",
+        "message": "halaa123 Sent you a friendrequest"
+    }
+]
