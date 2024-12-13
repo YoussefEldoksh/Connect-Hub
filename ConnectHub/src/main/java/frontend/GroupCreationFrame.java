@@ -17,26 +17,24 @@ import javax.swing.JOptionPane;
 public class GroupCreationFrame extends javax.swing.JFrame {
 
     private static int groupID = 0;
-    User user;
     private static GroupCreationFrame instance;
     /**
      * Creates new form GroupCreationFrame
      */
-    public GroupCreationFrame(User user) {
+    public GroupCreationFrame() {
         initComponents();
-        this.user = user;
     }
     
-    public static GroupCreationFrame getInstance(User user) {
+    public static GroupCreationFrame getInstance() {
         if (instance == null) {
-            instance = new GroupCreationFrame(user);
+            instance = new GroupCreationFrame();
         }
         return instance;
     }
     
-    public void openGroupPreviewFrame(Group group,User user) {
+    public void openGroupPreviewFrame(Group group) {
         this.setVisible(false);
-        GroupManagementPage gpf = GroupManagementPage.getInstance(group, user);
+        GroupManagementPage gpf = GroupManagementPage.getInstance(group);
         gpf.setVisible(true);
     }
     
@@ -169,13 +167,14 @@ public class GroupCreationFrame extends javax.swing.JFrame {
             }
         }
         String groupDescription = groupDescriptionTextField.getText();
-        String creatorId = user.getUserId();
+        String creatorId = backend.UserSession.getCurrentUser().getUserId();
 
         if(flagfail==0){
         Group group = new Group("G" + groupID, groupName, groupDescription, creatorId, null);
         GroupsDataBase.getInstance().addToGlobalGroups(group);
-        GroupSession gs= new GroupSession(group);
-        this.openGroupPreviewFrame(group, user);
+        GroupSession groupSession = new GroupSession(group);
+        this.openGroupPreviewFrame(GroupSession.getCurrentGroup());
+
         }
     }//GEN-LAST:event_createGroupButtonActionPerformed
 
