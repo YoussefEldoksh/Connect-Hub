@@ -9,6 +9,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.DatabaseMetaData;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Base64;
 
@@ -58,10 +59,14 @@ public class User extends Account {
         friendReq = FileManagement.loadFromFriendRequestsJsonFileForSpecificUser(userId);
         userStories = FileManagement.loadFromStroiesJsonFileForSpecificUser(userId);
         userPosts = FileManagement.loadFromPostsJsonFileForSpecificUser(userId);
+        notifications = fillFriendRequestsNotifications();
     }
 
     public void addFriends(Friend friend) {
         friends.add(friend);
+    }
+    public String getUsername() {
+        return username;
     }
 
     public ArrayList<Stories> getUserStories() {
@@ -284,18 +289,18 @@ public class User extends Account {
     }
 
     public ArrayList<Notification> fillFriendRequestsNotifications() {
-        ArrayList<NotificationFriendReq> requestNotification = DataBase.getInstance().getNotificationsFriendReq();
-        ArrayList<Notification> notifications = new ArrayList<>();
+        ArrayList<NotificationFriendReq> requestNotification = FileManagement.loadFromRequestsNotificationsJsonFile();
+        ArrayList<Notification> Notifications = new ArrayList<>();
        
         for (NotificationFriendReq notificationFriendReq : requestNotification) {
             if (notificationFriendReq.getRecieverId().equals(this.getUserId())) {
-                this.notifications.add(notificationFriendReq);
+                Notifications.add(notificationFriendReq);
             }
         }
         //hena el loop el hay add el notifications beta3et el group lazem a valdiate el awel eno a member
         
         
-        return notifications;
+        return Notifications;
     }
     
     
@@ -312,17 +317,18 @@ public class User extends Account {
         for (Notification Notification : notifications) {
 
             if (Notification instanceof NotificationFriendReq) {
-                String s = Notification.getMessage();
+                String s = Notification.getMessage() + " "+Notification.getTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss a"));
                 notification.add(s);
             }
             if (Notification instanceof NotificationGroupAdd || Notification instanceof NotificationGroupPost) {
-                String s = Notification.getMessage();
+                String s = Notification.getMessage()+ " "+Notification.getTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss a"));
                 notification.add(s);
             }
         }
         return notification;
     }
     
+
     public void addToListOfNotification(Notification notification)
     {
         notifications.add(notification);

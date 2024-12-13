@@ -586,7 +586,7 @@ public class FileManagement { // Centrlized file operations system
                  String notificationType = notificationJson.getString("notificationType");
                  String message = notificationJson.getString("message");
                  String time = notificationJson.getString("time");
-                 LocalDateTime date = LocalDateTime.parse(time, DateTimeFormatter.ISO_DATE);
+                 LocalDateTime date = LocalDateTime.parse(time, DateTimeFormatter.ISO_DATE_TIME);
                  
                  notifications.add(new NotificationFriendReq(reciever,sender,notificationID, notificationType, message, date));
                  

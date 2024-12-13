@@ -90,7 +90,7 @@ public class SearchForUserFrame extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 324, 208));
 
-        label1.setBackground(new java.awt.Color(153, 0, 255));
+        label1.setBackground(new java.awt.Color(153, 102, 255));
         label1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         label1.setForeground(new java.awt.Color(255, 255, 255));
         label1.setText("Search For  A User");

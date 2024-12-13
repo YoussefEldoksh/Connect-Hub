@@ -102,6 +102,7 @@ public abstract class AccountManagement {
         }
         return null;
     }
+    
     public static void signOut(User user)
     {
         user.setStatus(false);

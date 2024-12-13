@@ -14,10 +14,12 @@ import java.util.ArrayList;
  */
 public class FriendManagement {
 
-    public static void friendRequest(boolean accept, User user, FriendRequests friend, boolean rejected) {
-        ArrayList<String> excludedIds = new ArrayList<>();
-        User sender = AccountManagement.findUser(friend.getUsername());
-
+    
+    public static void friendRequest(boolean accept, User user, FriendRequests friend, boolean rejected)
+    {
+      ArrayList<String> excludedIds = new ArrayList<>();
+      User sender=AccountManagement.findUser(friend.getUsername());
+      
         if (sender == null) {
             System.out.println("Sender user not found: " + friend.getUsername());
             return;
@@ -39,7 +41,6 @@ public class FriendManagement {
             if (accept == true) {
 
                 user.addFriends(new Friend(sender.getEmail(), sender.getUsername(), sender.getUserId()));
-                user.removeFriendReq(friend);
                 System.out.println("Friendrequests: " + user.getListOfFriendReq());
 
                 sender.addFriends(new Friend(user.getEmail(), user.getUsername(), user.getUserId()));
@@ -72,6 +73,9 @@ public class FriendManagement {
         AccountManagement.findUser(AccountManagement.findUsername(request.getReceiver())).addToListOfNotification(new NotificationFriendReq(request.getReceiver(), UserSession.getCurrentUser().getUserId(),"NR", "FriendRequest", UserSession.getCurrentUser().getUsername()+"Sent you a friendrequest", LocalDateTime.now()));
         user.addFriendsReq(request);
         System.out.println("Friend request sent to: " + request.getUsername());
+    
+    
+
     }
 
     public static ArrayList<Friend> friendSuggestion(User user) {
