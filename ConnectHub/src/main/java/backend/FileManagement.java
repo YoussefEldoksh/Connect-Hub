@@ -575,16 +575,17 @@ public class FileManagement { // Centrlized file operations system
             JSONArray Groups = new JSONArray();
             for (int i = 0; i < groups.size(); i++) {
                 JSONObject group = new JSONObject();
-                group.put("groupid", groups.get(i).getGroupID());
-                group.put("group name", groups.get(i).getGroupName());
-                group.put("group description", groups.get(i).getGroupDescription());
-                group.put("group creator", groups.get(i).getGroupCreator());
-                group.put("group photopath", groups.get(i).getGroupPhotoPath());
+                group.put("groupID", groups.get(i).getGroupID());
+                group.put("groupName", groups.get(i).getGroupName());
+                group.put("groupDescription", groups.get(i).getGroupDescription());
+                group.put("groupCreator", groups.get(i).getGroupCreator());
+                group.put("groupPhotoPath", groups.get(i).getGroupPhotoPath());
                 
                 JSONArray admins = new JSONArray();
                 for (int j = 0; j < groups.get(j).getGroupAdmins().size(); j++) {
+
                 JSONObject admin = new JSONObject(); 
-                group.put("adminid", groups.get(i).getGroupAdmins().get(j));
+                admin.put("adminID", groups.get(i).getGroupAdmins().get(j));
                 
                 admins.put(admin);
                 }
@@ -592,14 +593,14 @@ public class FileManagement { // Centrlized file operations system
                 JSONArray members = new JSONArray();
                 for (int j = 0; j < groups.get(i).getGroupMembers().size(); j++) {
                 JSONObject member = new JSONObject(); 
-                group.put("memberid", groups.get(i).getGroupMembers().get(j));
+                member.put("memberID", groups.get(i).getGroupMembers().get(j));
                 
                 members.put(member);
                 }
                 
-                group.put("admins", admins);
-                group.put("members", members);
-                Groups.put(groups);
+                group.put("groupAdmins", admins);
+                group.put("groupMembers", members);
+                Groups.put(group);
             }
             Files.write(Paths.get("groups.json"), Groups.toString(4).getBytes());
             System.out.println("System successfully saved the stories");
@@ -683,25 +684,25 @@ public class FileManagement { // Centrlized file operations system
 
             for (int i = 0; i < jsonGroups.length(); i++) {
                 JSONObject jsonGroup = jsonGroups.getJSONObject(i);
-                String groupId = jsonGroup.getString("groupid");
-                String groupName = jsonGroup.getString("group name");
-                String groupDescription = jsonGroup.getString("group description");
-                String groupCreator = jsonGroup.getString("group creator");
-                String groupPhotoPath = jsonGroup.getString("group photopath");
+                String groupId = jsonGroup.getString("groupID");
+                String groupName = jsonGroup.getString("groupName");
+                String groupDescription = jsonGroup.getString("groupDescription");
+                String groupCreator = jsonGroup.getString("groupCreator");
+                String groupPhotoPath = jsonGroup.getString("groupPhotoPath");
 
                 Group group = new Group(groupId, groupName, groupDescription, groupCreator,groupPhotoPath);
-                JSONArray jsonAdmins = jsonGroup.getJSONArray("admins");
+                JSONArray jsonAdmins = jsonGroup.getJSONArray("groupAdmins");
                 for (int j = 0; j < jsonAdmins.length(); j++) {
                     JSONObject admin = jsonAdmins.getJSONObject(j);
-                    String adminId = admin.getString("adminid");
+                    String adminId = admin.getString("adminID");
                     group.addGroupAdmin(adminId);
                 }     
                 
 
-                JSONArray jsonMembers = jsonGroup.getJSONArray("members");
+                JSONArray jsonMembers = jsonGroup.getJSONArray("groupMembers");
                 for (int j = 0; j < jsonMembers.length(); j++) {
                     JSONObject member = jsonMembers.getJSONObject(j);
-                    String memberId = member.getString("memberid");
+                    String memberId = member.getString("memberID");
                     System.out.println("Loading a member");
                     group.addGroupMember(memberId);
                 }

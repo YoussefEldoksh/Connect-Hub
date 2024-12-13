@@ -359,6 +359,14 @@ public class User extends Account {
         return searchGroup;
     }
 
+    public void addToGroups(Group group)
+    {
+        this.groups.add(group);
+    }
+    
+    
+    
+    
     public ArrayList<String> getLineRepresentationForAllGroups(String key) {
         ArrayList<String> Groups = new ArrayList<>();
 

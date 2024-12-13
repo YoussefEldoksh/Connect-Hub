@@ -1,11 +1,20 @@
 [
     {
-        "groupid": "G1",
-        "group name": "Tech Enthusiasts",
-        "group description": "A group for discussing the latest in technology.",
-        "group creator": "U1",
-        "group photopath": "/Images/background.jpg",
-        "admins": [{"adminid": "U0"}],
-        "members": [{"memberid": "U0"}]
+        "groupMembers": [{"memberID": "U0"}],
+        "groupName": "doksh22",
+        "groupDescription": "sdij",
+        "groupAdmins": [{"adminID": "U0"}],
+        "groupID": "G0",
+        "groupCreator": "U0",
+        "groupPhotoPath": "/Images/background.jpg"
+    },
+    {
+        "groupMembers": [{"memberID": "U0"}],
+        "groupName": "doksh2222",
+        "groupDescription": "",
+        "groupAdmins": [{"adminID": "U0"}],
+        "groupID": "G0",
+        "groupCreator": "U0",
+        "groupPhotoPath": "/Images/background.jpg"
     }
 ]
