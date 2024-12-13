@@ -90,7 +90,7 @@ public class SearchForUserFrame extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 324, 208));
 
-        label1.setBackground(new java.awt.Color(153, 0, 255));
+        label1.setBackground(new java.awt.Color(153, 102, 255));
         label1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         label1.setForeground(new java.awt.Color(255, 255, 255));
         label1.setText("Search For  A User");
@@ -146,7 +146,7 @@ public class SearchForUserFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
          if (!resultsUpdated) {
             String selectedValue = resultsList.getSelectedValue();
-
+            String[] token = selectedValue.split("");
             if (selectedValue == null) {
                 JOptionPane.showMessageDialog(this, "No selection was made;");
             }
@@ -211,6 +211,14 @@ public class SearchForUserFrame extends javax.swing.JFrame {
 
         }
             }
+            
+            if(token[0].equals("Group"))
+            {
+                
+            }
+            
+            
+            
 
         }
         
@@ -220,6 +228,7 @@ public class SearchForUserFrame extends javax.swing.JFrame {
     public void updateStoriesList() {
         resultsUpdated = true;
         ArrayList<String> linerep = FriendManagement.getLineRepresentationUserSearch(searchBar.getText());
+        linerep.addAll(backend.UserSession.getCurrentUser().getLineRepresentationForAllGroups(searchBar.getText()));
         resultsListModel.clear();
 
         for (int i = 0; i < linerep.size(); i++) {

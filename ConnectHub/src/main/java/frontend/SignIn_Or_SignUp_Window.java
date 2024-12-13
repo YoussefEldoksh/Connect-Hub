@@ -5,6 +5,8 @@
 package frontend;
 
 import backend.DataBase;
+import backend.GroupsDataBase;
+import backend.ProfilesDataBase;
 import backend.User;
 import javax.swing.JOptionPane;
 
@@ -29,6 +31,8 @@ public class SignIn_Or_SignUp_Window extends javax.swing.JFrame {
             signIn_Or_SignUp_Window = new SignIn_Or_SignUp_Window();
         }
         DataBase.getInstance();
+        GroupsDataBase.getInstance();
+        ProfilesDataBase.getInstance();
         return signIn_Or_SignUp_Window;
     }
     

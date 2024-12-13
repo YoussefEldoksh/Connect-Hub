@@ -33,6 +33,12 @@ public class GroupCreationFrame extends javax.swing.JFrame {
         return instance;
     }
     
+    public void openGroupPreviewFrame(Group group,User user) {
+        this.setVisible(false);
+        GroupManagementPage gpf = GroupManagementPage.getInstance(group, user);
+        gpf.setVisible(true);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -163,9 +169,12 @@ public class GroupCreationFrame extends javax.swing.JFrame {
         }
         String groupDescription = groupDescriptionTextField.getText();
         String creatorId = user.getUserId();
+
         if(flagfail==0){
-        Group group = new Group("G" + groupID, groupName, groupDescription, creatorId);
-        GroupsDataBase.getInstance().addToGlobalGroups(group);}
+        Group group = new Group("G" + groupID, groupName, groupDescription, creatorId, null);
+        GroupsDataBase.getInstance().addToGlobalGroups(group);
+        this.openGroupPreviewFrame(group, user);
+        }
     }//GEN-LAST:event_createGroupButtonActionPerformed
 
     

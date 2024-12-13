@@ -103,6 +103,16 @@ public abstract class AccountManagement {
         return null;
     }
     
+     public static String findUserId(String username) {
+        for (int i = 0; i < DataBase.getInstance().getUsers().size(); i++) {
+            if (DataBase.getInstance().getUsers().get(i).getUsername().equals(username)) {
+                System.out.println("User found");
+                return DataBase.getInstance().getUsers().get(i).getUserId();
+            }
+        }
+        return null;
+    }
+     
     public static void signOut(User user)
     {
         user.setStatus(false);

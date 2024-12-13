@@ -37,7 +37,7 @@ public class FriendManagement {
             user.addFriendsReq(friend);
         }
 
-       
+
        if(!excludedIds.contains(friend.getUserId()))
        {
             if(accept == true) 
@@ -49,7 +49,7 @@ public class FriendManagement {
                 System.out.println("Friendrequests: "+user.getListOfFriendReq());
                 
                 sender.addFriends(new Friend(user.getEmail(),user.getUsername(),user.getUserId()));
-                     DataBase.getInstance().removeFriendReq(friend);
+                DataBase.getInstance().removeFriendReq(friend);
             }
             else if(accept == false &&  rejected == true)
             {
@@ -79,6 +79,7 @@ public class FriendManagement {
         AccountManagement.findUser(AccountManagement.findUsername(request.getReceiver())).addToListOfNotification(new NotificationFriendReq(request.getReceiver(), UserSession.getCurrentUser().getUserId(),"NR", "FriendRequest", UserSession.getCurrentUser().getUsername()+"Sent you a friendrequest", LocalDateTime.now()));
         user.addFriendsReq(request);
         System.out.println("Friend request sent to: " + request.getUsername());
+
 
     }
 

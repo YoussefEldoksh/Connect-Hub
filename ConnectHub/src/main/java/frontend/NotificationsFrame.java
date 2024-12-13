@@ -4,10 +4,13 @@
  */
 package frontend;
 
+import backend.FriendManagement;
+import backend.FriendRequests;
 import backend.Notification;
 import backend.User;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,6 +24,7 @@ public class NotificationsFrame extends javax.swing.JFrame {
     private static NotificationsFrame instance = null;
     DefaultListModel<String> notificationsListModel = new DefaultListModel<>();
     boolean notificationListUpdate = false;
+
     private NotificationsFrame() {
         initComponents();
     }
@@ -43,7 +47,7 @@ public class NotificationsFrame extends javax.swing.JFrame {
         }
         notificationsList.setModel(notificationsListModel);
         notificationListUpdate = false;
-        System.out.println("Friends List Data: " + linerep);
+        System.out.println("Notifications List Data: " + linerep);
 
     }
 
@@ -82,6 +86,11 @@ public class NotificationsFrame extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        notificationsList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                notificationsListValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(notificationsList);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 59, 365, 175));
@@ -96,6 +105,51 @@ public class NotificationsFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         NewsFeedPage.getInstance(backend.UserSession.getCurrentUser()).setVisible(true);
     }//GEN-LAST:event_formWindowClosed
+
+    private void notificationsListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_notificationsListValueChanged
+        // TODO add your handling code here:
+        if (!notificationListUpdate) {
+            String selectedValue = notificationsList.getSelectedValue();
+            if (selectedValue == null) {
+                JOptionPane.showMessageDialog(this, "No selection was made;");
+            }
+
+            String[] token = selectedValue.split(" ");
+
+            if (token[4].equals("friendrequest")) {
+                if (!FriendManagement.isFriend(token[0])) {
+                    String username = backend.UserSession.getCurrentUser().getUsername();
+                    FriendRequests friendrequest = backend.UserSession.getCurrentUser().getFriendReq(token[0]);
+                    if (friendrequest == null) {
+                        JOptionPane.showMessageDialog(this, "Error finding friendrequest");
+                        return;
+                    }
+
+                    String[] options = {"Accept", "Remove"};
+                    int choice = JOptionPane.showOptionDialog(
+                            null,
+                            "Would you like to: ",
+                            ("Request by" + friendrequest.getUsername()),
+                            JOptionPane.DEFAULT_OPTION,
+                            JOptionPane.INFORMATION_MESSAGE,
+                            null, options, options[0]
+                    );
+
+                    System.out.println("User selected: " + token[0]);
+                    if (choice == 0) {
+                        FriendManagement.friendRequest(true, backend.UserSession.getCurrentUser(), friendrequest, false);
+                        JOptionPane.showMessageDialog(null, "Friend request accepted successfully");
+
+                    } else if (choice == 1) {
+                        FriendManagement.friendRequest(false, backend.UserSession.getCurrentUser(), friendrequest, true);
+                        JOptionPane.showMessageDialog(null, "Friend request denied successfully");
+                    }
+
+                }
+            }
+        }
+
+    }//GEN-LAST:event_notificationsListValueChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
