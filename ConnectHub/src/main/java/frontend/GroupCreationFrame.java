@@ -4,6 +4,7 @@
  */
 package frontend;
 import backend.Group;
+import backend.GroupSession;
 import backend.GroupsDataBase;
 import backend.User;
 import javax.swing.JOptionPane;
@@ -173,6 +174,7 @@ public class GroupCreationFrame extends javax.swing.JFrame {
         if(flagfail==0){
         Group group = new Group("G" + groupID, groupName, groupDescription, creatorId, null);
         GroupsDataBase.getInstance().addToGlobalGroups(group);
+        GroupSession gs= new GroupSession(group);
         this.openGroupPreviewFrame(group, user);
         }
     }//GEN-LAST:event_createGroupButtonActionPerformed

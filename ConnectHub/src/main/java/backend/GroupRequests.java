@@ -10,6 +10,7 @@ import java.util.ArrayList;
  *
  * @author pc castle
  */
+
 public class GroupRequests {
     String userMakingReqId;
     String userMakingReqUsername;

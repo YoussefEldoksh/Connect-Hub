@@ -29,5 +29,14 @@ public class GroupManagement {
         }
     return membersLineRep;
     }
+    
+    public static ArrayList<String> getLineRepresentationGroupRequests(Group g){
+    ArrayList<GroupRequests> requests= g.getRequests();
+    ArrayList<String> requestsLineRep = new ArrayList<>();
+        for(int i=0; i<requests.size(); i++){
+        requestsLineRep.add(requests.get(i).getUserMakingReqId());
+        }
+    return requestsLineRep;
+    }
 }
 
