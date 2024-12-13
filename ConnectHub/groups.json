@@ -16,5 +16,14 @@
         "groupID": "G0",
         "groupCreator": "U0",
         "groupPhotoPath": "/Images/background.jpg"
+    },
+    {
+        "groupMembers": [{"memberID": "U0"}],
+        "groupName": "doksh333",
+        "groupDescription": "adb",
+        "groupAdmins": [{"adminID": "U0"}],
+        "groupID": "G0",
+        "groupCreator": "U0",
+        "groupPhotoPath": "/Images/background.jpg"
     }
 ]

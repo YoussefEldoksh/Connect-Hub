@@ -5,6 +5,8 @@
 package frontend;
 
 import backend.Group;
+import backend.GroupSession;
+import backend.ImageHandler;
 import backend.User;
 
 /**
@@ -37,6 +39,15 @@ public class GroupManagementPage extends javax.swing.JFrame {
         }
         return instance;
     }
+     
+    public void setGroupAttributes()
+    {
+       Group newGroup = GroupSession.getCurrentGroup();
+       groupPhotoLabel.setIcon(ImageHandler.rescaleImageIcon(newGroup.getGroupPhotoIcon(), 110, 104));
+
+       
+    }
+     
      
     public void openNewsFeedPage(User u) {
         this.setVisible(false);
@@ -92,12 +103,17 @@ public class GroupManagementPage extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(groupPhotoLabel)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(2, 2, 2)
                                 .addComponent(groupNameLabel))
                             .addComponent(groupDescriptionLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(171, 171, 171))
-                    .addComponent(userPositionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(userPositionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(groupPhotoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(9, 9, 9)
@@ -134,10 +150,10 @@ public class GroupManagementPage extends javax.swing.JFrame {
                         .addGap(18, 18, 18)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(groupPhotoLabel)
-                        .addGap(76, 76, 76)
+                        .addComponent(groupPhotoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(groupDescriptionLabel)
-                        .addGap(80, 80, 80)
+                        .addGap(50, 50, 50)
                         .addComponent(userPositionLabel))
                     .addComponent(groupPostsPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(groupMembersPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))

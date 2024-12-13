@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package backend;
 
 import java.time.LocalDateTime;
@@ -13,12 +9,26 @@ import java.time.LocalDateTime;
 public class NotificationGroupPost extends Notification{
     private String groupId;
     private String postId;
+    private String posterId;
     
 
     public NotificationGroupPost(String groupId, String postId, String id, String type, LocalDateTime time,String poster) {
         super(id, type, lineRepresentation(groupId,postId,poster), time);
         this.groupId = groupId;
         this.postId = postId;
+        this.posterId = poster;
+    }
+    
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public String getPosterId() {
+        return posterId;
+    }
+    
+    public String getPostId() {
+        return postId;
     }
     
     public static String lineRepresentation(String groupId ,String postId ,String poster){
@@ -48,7 +58,5 @@ public class NotificationGroupPost extends Notification{
         else{
             return poster+" has posted a new Story in group:"+group1.getGroupName();
         }
-       
     }
-    
 }
