@@ -14,6 +14,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -124,7 +126,6 @@ public class FileManagement { // Centrlized file operations system
                 jsonUsersArray.put(jsonUser);
             }
             Files.write(Paths.get("users.json"), jsonUsersArray.toString(4).getBytes());
-
             System.out.println("System successfully saved the users");
         } catch (IOException ex) {
             System.err.println("Error saving users from JSON file: " + ex.getMessage());
@@ -145,10 +146,12 @@ public class FileManagement { // Centrlized file operations system
                 jsonFriendsArray.put(jsonFriend);
             }
             Files.write(Paths.get("friendrequests.json"), jsonFriendsArray.toString(4).getBytes());
-
+            Thread.sleep(100);
             System.out.println("System successfully saved the friendrequests");
         } catch (IOException ex) {
             System.err.println("Error saving friend requests from JSON file: " + ex.getMessage());
+        } catch (InterruptedException ex) {
+            Logger.getLogger(FileManagement.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -580,12 +583,12 @@ public class FileManagement { // Centrlized file operations system
                 group.put("groupPhotoPath", groups.get(i).getGroupPhotoPath());
 
                 JSONArray admins = new JSONArray();
-                for (int j = 0; j < groups.get(j).getGroupAdmins().size(); j++) {
+                for (int j = 0; j < groups.get(i).getGroupAdmins().size(); j++) {
 
-                JSONObject admin = new JSONObject(); 
-                admin.put("adminID", groups.get(i).getGroupAdmins().get(j));
-                
-                admins.put(admin);
+                    JSONObject admin = new JSONObject();
+                    admin.put("adminID", groups.get(i).getGroupAdmins().get(j));
+
+                    admins.put(admin);
                 }
 
                 JSONArray members = new JSONArray();
@@ -791,7 +794,7 @@ public class FileManagement { // Centrlized file operations system
                 Files.createFile(Paths.get("groupsposts.json")); // create the file if not found
                 return posts;
             }
-            String json = new String(Files.readAllBytes(Paths.get("posts.json")));
+            String json = new String(Files.readAllBytes(Paths.get("groupsposts.json")));
             JSONArray jsonPosts = new JSONArray(json);
 
             for (int i = 0; i < jsonPosts.length(); i++) {
@@ -863,13 +866,14 @@ public class FileManagement { // Centrlized file operations system
 
             String json = new String(Files.readAllBytes(Paths.get("grouprequests.json")));
             JSONArray RequestsJson = new JSONArray(json);
+            System.out.println("Raw JSON content: " + json);  // Debug line
 
             for (int i = 0; i < RequestsJson.length(); i++) {
 
                 JSONObject requestJson = RequestsJson.getJSONObject(i);
                 String groupId = requestJson.getString("groupid");
                 String userId = requestJson.getString("userid");
-                requests.add(new GroupRequests(groupId, userId));
+                requests.add(new GroupRequests(userId, groupId));
             }
         } catch (IOException ex) {
             System.err.println("Error loading group requests from JSON file: " + ex.getMessage());
@@ -889,15 +893,16 @@ public class FileManagement { // Centrlized file operations system
 
             String json = new String(Files.readAllBytes(Paths.get("grouprequests.json")));
             JSONArray RequestsJson = new JSONArray(json);
+            System.out.println("Pure Json: " + json);
 
             for (int i = 0; i < RequestsJson.length(); i++) {
                 JSONObject requestJson = RequestsJson.getJSONObject(i);
-                if (!requestJson.getString("groupid").equals(id)) {
+                String groupID = requestJson.getString("groupid");
+                if (!groupID.equals(id)) {
                     continue;
                 }
-                String groupId = requestJson.getString("groupid");
                 String userId = requestJson.getString("userid");
-                requests.add(new GroupRequests(groupId, userId));
+                requests.add(new GroupRequests(userId, groupID));
             }
         } catch (IOException ex) {
             System.err.println("Error loading group requests from JSON file: " + ex.getMessage());
@@ -925,7 +930,7 @@ public class FileManagement { // Centrlized file operations system
                 }
                 String groupId = requestJson.getString("groupid");
                 String userId = requestJson.getString("userid");
-                requests.add(new GroupRequests(groupId, userId));
+                requests.add(new GroupRequests(userId, groupId));
             }
         } catch (IOException ex) {
             System.err.println("Error loading group requests from JSON file: " + ex.getMessage());
@@ -947,15 +952,17 @@ public class FileManagement { // Centrlized file operations system
 
             for (int i = 0; i < usersArray.length(); i++) {
                 JSONObject notificationJson = usersArray.getJSONObject(i);
-                String requester = notificationJson.getString("requesterID");
+                String requester = notificationJson.getString("requesterId");
                 String groupId = notificationJson.getString("groupId");
                 String notificationID = notificationJson.getString("notificationID");
                 String notificationType = notificationJson.getString("notificationType");
+                String message = notificationJson.getString("message");
                 //String message = notificationJson.getString("message");
                 String time = notificationJson.getString("time");
                 LocalDateTime date = LocalDateTime.parse(time, DateTimeFormatter.ISO_DATE_TIME);
 
-                notifications.add(new NotificationGroupAdd(groupId, requester, notificationID, notificationType, date));
+                NotificationGroupAdd note = new NotificationGroupAdd(groupId, requester, notificationID, notificationType, date, message);
+                notifications.add(note);
 
             }
         } catch (IOException ex) {
@@ -978,6 +985,7 @@ public class FileManagement { // Centrlized file operations system
                 notification.put("requesterId", notifications.get(i).getRequester());
                 notification.put("groupId", notifications.get(i).getGroupId());
                 notification.put("notificationID", notifications.get(i).getId());
+                notification.put("message", notifications.get(i).getMessage());
                 notification.put("notificationType", notifications.get(i).getType());
                 //notification.put("message", notifications.get(i).getMessage());
                 notification.put("time", notifications.get(i).getTime());
@@ -1007,16 +1015,17 @@ public class FileManagement { // Centrlized file operations system
 
             for (int i = 0; i < usersArray.length(); i++) {
                 JSONObject notificationJson = usersArray.getJSONObject(i);
-                String poster = notificationJson.getString("posterID");
-                String postId = notificationJson.getString("postID");
+                String poster = notificationJson.getString("posterId");
+                String postId = notificationJson.getString("postId");
                 String groupId = notificationJson.getString("groupId");
                 String notificationID = notificationJson.getString("notificationID");
                 String notificationType = notificationJson.getString("notificationType");
+                String message = notificationJson.getString("message");
                 //String message = notificationJson.getString("message");
                 String time = notificationJson.getString("time");
                 LocalDateTime date = LocalDateTime.parse(time, DateTimeFormatter.ISO_DATE_TIME);
 
-                notifications.add(new NotificationGroupPost(groupId, postId, notificationID, notificationType, date, poster));
+                notifications.add(new NotificationGroupPost(groupId, postId, notificationID, notificationType, date, poster, message));
 
             }
         } catch (IOException ex) {
@@ -1041,6 +1050,8 @@ public class FileManagement { // Centrlized file operations system
                 notification.put("groupId", notifications.get(i).getGroupId());
                 notification.put("notificationID", notifications.get(i).getId());
                 notification.put("notificationType", notifications.get(i).getType());
+                notification.put("message", notifications.get(i).getMessage());
+
                 //notification.put("message", notifications.get(i).getMessage());
                 notification.put("time", notifications.get(i).getTime());
 
@@ -1054,6 +1065,110 @@ public class FileManagement { // Centrlized file operations system
             System.err.println("Error saving notifs to JSON file: " + ex.getMessage());
         }
 
+    }
+
+    public static void saveToChats() {
+        ArrayList<Chat> chats = DataBase.getInstance().getGlobalChats();
+        try {
+            JSONArray chatsArray = new JSONArray();
+
+            for (int i = 0; i < chats.size(); i++) {
+                JSONObject chatJson = new JSONObject();
+
+                chatJson.put("chatId",chats.get(i).getChatId());
+
+                JSONArray messages = new JSONArray();
+                
+                
+                for (int j = 0; j < chats.get(i).getChatMessages().size(); j++) {
+                    JSONObject message = new JSONObject();
+                    message.put("recieverId", chats.get(i).getChatMessages().get(j).getRecieverId());
+                    message.put("senderId", chats.get(i).getChatMessages().get(j).getSenderId());
+                    message.put("message", chats.get(i).getChatMessages().get(j).getMessage());
+                    message.put("timeSent", chats.get(i).getChatMessages().get(j).getTimeSent());
+                    
+                    if (chats.get(i).getChatMessages().get(j).getImagePath() != null) {
+                        message.put("imagePath", chats.get(i).getChatMessages().get(j).getImagePath());
+                    } else {
+                        message.put("imagePath", "null");
+                    }
+                    messages.put(message);
+
+                }
+                
+                chatJson.put("messages", messages);
+                chatsArray.put(chatJson);
+            }
+            Files.write(Paths.get("chats.json"), chatsArray.toString(4).getBytes());
+            System.out.println("System successfully saved the chat");
+
+        } catch (IOException ex) {
+            System.err.println("Error saving notifs to JSON file: " + ex.getMessage());
+        }
+
+    }
+
+    public static ArrayList<Chat> loadFromChatsJsonFile() {
+        ArrayList<Chat> chats = new ArrayList<>();
+
+        try {
+            System.out.println("Entering chats.json");
+            if (!Files.exists(Paths.get("chats.json")) || Files.size(Paths.get("groupPostNotif.json")) == 0) {
+                Files.createFile(Paths.get("chats.json")); // create the file if not found
+                return new ArrayList<>();
+            }
+            String json = new String(Files.readAllBytes(Paths.get("chats.json")));
+            JSONArray ChatsArray = new JSONArray(json);
+
+            for (int i = 0; i < ChatsArray.length(); i++) {
+                JSONObject chatJson = ChatsArray.getJSONObject(i);
+                String chatId = chatJson.getString("chatId");
+
+                JSONArray messages = chatJson.getJSONArray("messages");
+                ArrayList<Message> chatMessages = new ArrayList<>();
+                for (int j = 0; j < messages.length(); j++) {
+                    JSONObject messageJson = messages.getJSONObject(j);
+                    String recieverId = messageJson.getString("recieverId");
+                    String senderId = messageJson.getString("senderId");
+                    String message = messageJson.getString("message");
+                    String imagePath = messageJson.getString("imagePath");
+                    //String message = notificationJson.getString("message");
+                    String time = messageJson.getString("timeSent");
+                    LocalDateTime date = LocalDateTime.parse(time, DateTimeFormatter.ISO_DATE_TIME);
+
+                    if (imagePath == "null") {
+                        Message_Builder builder = new Message_Builder();
+                        builder.setSenderId(senderId)
+                                .setRecieverId(recieverId)
+                                .setMessage(message)
+                                .setTimeSent(date);
+                        Message newMessage = builder.build();
+                        chatMessages.add(newMessage);
+                    } else {
+                        Message_Builder builder = new Message_Builder();
+                        builder.setSenderId(senderId)
+                                .setRecieverId(recieverId)
+                                .setMessage(message)
+                                .setImagePath(imagePath)
+                                .setTimeSent(date);
+                        Message newMessage = builder.build();
+                        chatMessages.add(newMessage);
+
+                    }
+
+                }
+
+                chats.add(new Chat(chatId, chatMessages));
+
+            }
+
+        } catch (IOException ex) {
+            System.err.println("Error loading notifications from Post JSON file: " + ex.getMessage());
+        } catch (Exception ex) {
+            System.err.println("Error parsing JSON: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+        return chats;
     }
 
 }

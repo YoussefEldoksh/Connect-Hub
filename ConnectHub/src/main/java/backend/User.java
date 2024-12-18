@@ -36,6 +36,7 @@ public class User extends Account {
     public String getPassword;
     private ArrayList<Notification> notifications = new ArrayList<>();
     private ArrayList<Group> groups = new ArrayList<>();
+    private ArrayList<Chat> myChats = new ArrayList<>();
 
     public User(String userId, String email, String username, String password, LocalDate dateOfBirth, boolean status) {
         super(email, username, userId);
@@ -48,9 +49,13 @@ public class User extends Account {
         friendReq = FileManagement.loadFromFriendRequestsJsonFileForSpecificUser(userId);
         userStories = FileManagement.loadFromStroiesJsonFileForSpecificUser(userId);
         userPosts = FileManagement.loadFromPostsJsonFileForSpecificUser(userId);
-        groupRequests= FileManagement.loadFromGroupRequestsJsonFile();
-        notifications = fillFriendRequestsNotifications();
+        groupRequests = FileManagement.loadFromGroupRequestsJsonFileForSpecificUser(this.getUserId());
         groups = fillGroups();
+        notifications = fillFriendRequestsNotifications();
+        notifications.addAll(fillGroupAddNotifications());
+        notifications.addAll(fillGroupPostNotifications());
+        fillChats();
+
     }
 
     public User(String userId, String email, String username, String password, LocalDate dateOfBirth, boolean status, String load) {
@@ -64,8 +69,13 @@ public class User extends Account {
         friendReq = FileManagement.loadFromFriendRequestsJsonFileForSpecificUser(userId);
         userStories = FileManagement.loadFromStroiesJsonFileForSpecificUser(userId);
         userPosts = FileManagement.loadFromPostsJsonFileForSpecificUser(userId);
-        notifications = fillFriendRequestsNotifications();
         groups = fillGroups();
+
+        notifications.addAll(fillFriendRequestsNotifications());
+        notifications.addAll(fillGroupAddNotifications());
+        notifications.addAll(fillGroupPostNotifications());
+        fillChats();
+
     }
 
     public void addFriends(Friend friend) {
@@ -286,10 +296,14 @@ public class User extends Account {
         friendReq.clear();
         userStories.clear();
         userPosts.clear();
+        notifications.clear();
 
         friendReq = FileManagement.loadFromFriendRequestsJsonFileForSpecificUser(this.getUserId());
         userStories = FileManagement.loadFromStroiesJsonFileForSpecificUser(this.getUserId());
         userPosts = FileManagement.loadFromPostsJsonFileForSpecificUser(this.getUserId());
+        notifications.addAll(fillFriendRequestsNotifications());
+        notifications.addAll(fillGroupAddNotifications());
+        notifications.addAll(fillGroupPostNotifications());
     }
 
     public ArrayList<Notification> fillFriendRequestsNotifications() {
@@ -299,7 +313,6 @@ public class User extends Account {
 //        if (requestNotification.isEmpty()) {
 //            return Notifications;
 //        }
-
         for (NotificationFriendReq notificationFriendReq : requestNotification) {
             if (notificationFriendReq.getRecieverId().equals(this.getUserId())) {
                 Notifications.add(notificationFriendReq);
@@ -310,9 +323,66 @@ public class User extends Account {
         return Notifications;
     }
 
+    public ArrayList<Notification> fillGroupAddNotifications() {
+        ArrayList<NotificationGroupAdd> AddNotification = FileManagement.loadFromGroupAddNotificationsJsonFile();
+        ArrayList<Notification> Notifications = new ArrayList<>();
+
+//        if (requestNotification.isEmpty()) {
+//            return Notifications;
+//        }
+        ArrayList<String> myGroups = new ArrayList<>();
+
+        for (Group group : this.groups) {
+            myGroups.add(group.getGroupID());
+        }
+
+        if (myGroups.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        for (NotificationGroupAdd notificationFriendReq : AddNotification) {
+            if (myGroups.contains(notificationFriendReq.getGroupId())) {
+                Notifications.add(notificationFriendReq);
+                System.out.println("Filling the notification group add for userrrr");
+            }
+        }
+        //hena el loop el hay add el notifications beta3et el group lazem a valdiate el awel eno a member
+
+        return Notifications;
+    }
+
+    public ArrayList<Notification> fillGroupPostNotifications() {
+        ArrayList<NotificationGroupPost> AddNotification = FileManagement.loadFromGroupPostNotificationsJsonFile();
+        ArrayList<Notification> Notifications = new ArrayList<>();
+
+//        if (requestNotification.isEmpty()) {
+//            return Notifications;
+//        }
+        ArrayList<String> myGroups = new ArrayList<>();
+
+        for (Group group : this.groups) {
+            myGroups.add(group.getGroupID());
+        }
+
+        if (myGroups.isEmpty()) {
+            System.out.println("Groups empty returninggggggggggggggggg");
+            return new ArrayList<>();
+        }
+
+        for (NotificationGroupPost notificationFriendReq : AddNotification) {
+            if (myGroups.contains(notificationFriendReq.getGroupId())) {
+                Notifications.add(notificationFriendReq);
+                System.out.println("Filling the notification group post for userrrr");
+            }
+        }
+        //hena el loop el hay add el notifications beta3et el group lazem a valdiate el awel eno a member
+        System.out.println("Group post notific: " + Notifications);
+        return Notifications;
+    }
+
     public ArrayList<Group> fillGroups() {
         ArrayList<Group> userGroups = new ArrayList<>();
-        
+
         ArrayList<Group> allGroups = FileManagement.loadFromGroupsJsonFile();
         System.out.println("AllGroups: " + allGroups);
         if (allGroups.isEmpty()) {
@@ -329,14 +399,14 @@ public class User extends Account {
 
     public ArrayList<String> getLineRepresentationForUserGroups() {
         ArrayList<String> Groups = new ArrayList<>();
-        
+
         System.out.println("Groups: " + this.groups);
         if (groups.isEmpty()) {
             return Groups;
         }
 
         for (Group Group : this.groups) {
-            String s = "Group " +Group.getGroupName() + " : " + Group.getGroupDescription();
+            String s = "Group " + Group.getGroupName() + " : " + Group.getGroupDescription();
             Groups.add(s);
         }
         return Groups;
@@ -361,14 +431,10 @@ public class User extends Account {
         return searchGroup;
     }
 
-    public void addToGroups(Group group)
-    {
+    public void addToGroups(Group group) {
         this.groups.add(group);
     }
-    
 
-    
-    
     public ArrayList<String> getLineRepresentationForAllGroups(String key) {
         ArrayList<String> Groups = new ArrayList<>();
 
@@ -423,57 +489,90 @@ public class User extends Account {
     public ArrayList<Group> getGroupsOfUser() {
         return groups;
     }
-    
-     public void addToGroupsOfUser(Group group) {
+
+    public void addToGroupsOfUser(Group group) {
         groups.add(group);
     }
-     
-       public void removeFromsGroupsOfUser(Group group) {
+
+    public void removeFromsGroupsOfUser(Group group) {
         groups.remove(group);
     }
-       
-      public void setGroupsOfUser(ArrayList<Group> groups) {
-        this.groups= groups;
+
+    public void setGroupsOfUser(ArrayList<Group> groups) {
+        this.groups = groups;
     }
-      
-      public ArrayList<GroupRequests> getGroupRequestsOfUser() {
+
+    public ArrayList<GroupRequests> getGroupRequestsOfUser() {
         return groupRequests;
     }
-    
-     public void addToGroupRequestsOfUser(GroupRequests grouprequest) {
+
+    public void addToGroupRequestsOfUser(GroupRequests grouprequest) {
         groupRequests.add(grouprequest);
     }
-     
-       public void removeFromsGroupRequestsOfUser(GroupRequests grouprequest) {
+
+    public void removeFromsGroupRequestsOfUser(GroupRequests grouprequest) {
         groupRequests.remove(grouprequest);
     }
-       
-      public void setGroupRequestsOfUser(ArrayList<GroupRequests> grouprequests) {
-        this.groupRequests= grouprequests;
+
+    public void setGroupRequestsOfUser(ArrayList<GroupRequests> grouprequests) {
+        this.groupRequests = grouprequests;
     }
-      
-    public boolean isGroupMember(String key)
-    {
+
+    public boolean isGroupMember(String key) {
         ArrayList<Group> allGroups = GroupsDataBase.getInstance().getAllGlobalGroups();
         System.out.println("AllGroups: " + allGroups);
-        
+
         if (allGroups.isEmpty()) {
             return false;
         }
-        
+
         Group group = GroupsDataBase.getInstance().getGroupByName(key);
-        if(group == null)
-        {
+        if (group == null) {
             return false;
         }
-        
-        
-        if(group.getGroupMembers().contains(this.getUserId()))
-        {
+
+        if (group.getGroupMembers().contains(this.getUserId())) {
             return true;
         }
-    
+
         return false;
     }
-}
 
+    public void fillChats() {
+        ArrayList<Chat> chats = FileManagement.loadFromChatsJsonFile();
+        if (chats.isEmpty()) {
+            return;
+        }
+        for (Chat chat : chats) {
+            if (chat.getChatId().contains(this.getUserId())) {
+                this.myChats.add(chat);
+            }
+        }
+    }
+
+    public void addChat(Chat newChat) {
+        if (newChat == null) {
+            System.err.println("Cannot add a null chat to the user's chat list.");
+            return;
+        }
+        myChats.add(newChat);
+        System.out.println("Chat added to user's chat list: " + newChat.getChatId());
+    }
+
+    public ArrayList<Chat> getMyChats() {
+        return myChats;
+    }
+
+    public Chat getSpecificChat(String username) {
+        String id = AccountManagement.findUserId(username);
+
+        for (Chat chat : myChats) {
+            if (chat.getChatId().contains(id)) {
+                return chat;
+            }
+        }
+        System.out.println("Chat is nulllllllllllllll");
+        return null;
+    }
+
+}

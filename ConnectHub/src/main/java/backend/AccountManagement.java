@@ -134,6 +134,7 @@ public abstract class AccountManagement {
         FileManagement.saveToPostsJsonFile();
         FileManagement.saveToStoriesJsonFile();
         FileManagement.saveToProfilesJsonFile();
+        FileManagement.saveToChats();
         System.exit(0);
     }
     

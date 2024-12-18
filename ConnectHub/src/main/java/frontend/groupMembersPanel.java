@@ -5,12 +5,16 @@
 package frontend;
 
 import backend.AccountManagement;
+import backend.DataBase;
 import backend.Group;
 import backend.GroupManagement;
 import backend.GroupSession;
 import backend.GroupsDataBase;
+import backend.Notification;
+import backend.NotificationGroupAdd;
 import backend.User;
 import backend.UserSession;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -88,7 +92,7 @@ public class groupMembersPanel extends javax.swing.JPanel {
             groupMembersListModel.addElement(linerep.get(i));
         }
         System.out.println("Group Members List Data: " + linerep);
-        groupRequestsList.setModel(groupMembersListModel);
+        groupMembersList.setModel(groupMembersListModel);
         //this.user = u;
         memberslistUpdate = false;
     }
@@ -356,17 +360,17 @@ public class groupMembersPanel extends javax.swing.JPanel {
                     GroupSession.getCurrentGroup().removeUserFromGroupByCreator(memberId);
                     memberslistUpdate = true;
                     groupMembersListModel.removeElement(selectedMember);
-                    memberslistUpdate = false;
                     updateGroupMembersList(UserSession.getCurrentUser(), GroupSession.getCurrentGroup());
+                    memberslistUpdate = false;
                     JOptionPane.showMessageDialog(this, "Member was removed successfully.");
                 }
                 if (choice == 1) {
                     GroupSession.getCurrentGroup().promoteMemberToAdmin(memberId);
                     memberslistUpdate = true;
                     groupMembersListModel.removeElement(selectedMember);
-                    memberslistUpdate = false;
                     updateGroupMembersList(UserSession.getCurrentUser(), GroupSession.getCurrentGroup());
                     updateGroupAdminsList(UserSession.getCurrentUser(), GroupSession.getCurrentGroup());
+                    memberslistUpdate = false;
                     JOptionPane.showMessageDialog(this, "Congratulations! You now have a new admin in your group:" + selectedMember);
                 }
 
@@ -385,8 +389,8 @@ public class groupMembersPanel extends javax.swing.JPanel {
                     GroupSession.getCurrentGroup().removeUserFromGroupByAdmin(memberId);
                     memberslistUpdate = true;
                     groupMembersListModel.removeElement(selectedMember);
-                    memberslistUpdate = false;
                     updateGroupMembersList(UserSession.getCurrentUser(), GroupSession.getCurrentGroup());
+                    memberslistUpdate = false;
                     JOptionPane.showMessageDialog(this, "Member was removed successfully.");
                 }
                 if (choice == 1) {
@@ -409,8 +413,8 @@ public class groupMembersPanel extends javax.swing.JPanel {
                         GroupSession.getCurrentGroup().removeUserFromGroupByCreator(memberId);
                         memberslistUpdate = true;
                         groupMembersListModel.removeElement(selectedMember);
-                        memberslistUpdate = false;
                         updateGroupMembersList(UserSession.getCurrentUser(), GroupSession.getCurrentGroup());
+                        memberslistUpdate = false;
                         JOptionPane.showMessageDialog(this, "You are no longer a member of the group");
                     } else if (choice == 1) {
                         JOptionPane.showMessageDialog(this, "No action was performed");
@@ -446,12 +450,27 @@ public class groupMembersPanel extends javax.swing.JPanel {
                 String memberId = AccountManagement.findUserId(selectedRequest);
                 if (choice == 0) {
                     GroupSession.getCurrentGroup().acceptRequest(memberId, true);
+//                    GroupSession.getCurrentGroup().removeGroupRequest(memberId);
                     requestslistUpdate = true;
                     groupRequestsListModel.removeElement(selectedRequest);
-                    requestslistUpdate = false;
                     updateGroupRequestsList(UserSession.getCurrentUser(), GroupSession.getCurrentGroup());
                     updateGroupMembersList(UserSession.getCurrentUser(), GroupSession.getCurrentGroup());
                     JOptionPane.showMessageDialog(this, selectedRequest + "'s request to join the group was accepted.\n The user is now a member in the group");
+                    
+                    
+                    NotificationGroupAdd notification = new NotificationGroupAdd(GroupSession.getCurrentGroup().getGroupID(), memberId, "N/A", "GroupAdd", LocalDateTime.now(),AccountManagement.findUsername(memberId) + " joined Group: " + GroupSession.getCurrentGroup().getGroupName());
+                    ArrayList<User> users  = new ArrayList<>();
+                    for (String user : GroupSession.getCurrentGroup().getGroupMembers()) {
+                        users.add(AccountManagement.findUserUsingId(user));
+                    }
+                    for (User user : users) {
+                        user.addToListOfNotification(notification);         
+                    }
+                    DataBase.getInstance().addToGlobalGroupAddNotifications(notification);
+                    
+                    NotificationsFrame.getInstance().updateNotificationsList();
+                    requestslistUpdate = false;
+
                 }
                 if (choice == 1) {
                     GroupSession.getCurrentGroup().acceptRequest(memberId, false);
@@ -460,6 +479,7 @@ public class groupMembersPanel extends javax.swing.JPanel {
                     requestslistUpdate = false;
                     updateGroupRequestsList(UserSession.getCurrentUser(), GroupSession.getCurrentGroup());
                     JOptionPane.showMessageDialog(this, selectedRequest + "'s request to join the group was declined");
+              
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Access denied. Only admins can access Group Members");
@@ -486,6 +506,9 @@ public class groupMembersPanel extends javax.swing.JPanel {
             updateGroupMembersList(UserSession.getCurrentUser(), GroupSession.getCurrentGroup());
             updateGroupAdminsList(UserSession.getCurrentUser(), GroupSession.getCurrentGroup());
             JOptionPane.showMessageDialog(this, "You are no longer a member of the group");
+            NotificationsFrame.getInstance().notificationListUpdate = true;
+            NotificationsFrame.getInstance().updateNotificationsList();
+            NotificationsFrame.getInstance().notificationListUpdate = false;
         }
     }//GEN-LAST:event_leaveGroupButtonActionPerformed
 

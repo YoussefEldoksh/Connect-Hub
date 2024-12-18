@@ -150,9 +150,8 @@ public class NewPostPanel2 extends javax.swing.JPanel {
                 post.setImage(imageIcon);
                 }
                 contents.add(post);
-
-                user.addPost(post);
                 DataBase.getInstance().addToGlobalPosts(post);
+                user.addPost(post);
 
             } else if (contentType == 2) {
                 Stories story= (Stories)ContentFactory.createContent("story", ("C" + (contentIDnum++)) , userId, text == null? " ":text);

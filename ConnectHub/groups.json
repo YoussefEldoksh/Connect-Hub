@@ -1,6 +1,9 @@
 [
     {
-        "groupMembers": [{"memberID": "U0"}],
+        "groupMembers": [
+            {"memberID": "U0"},
+            {"memberID": "U8"}
+        ],
         "groupName": "doksh22",
         "groupDescription": "sdij",
         "groupAdmins": [{"adminID": "U0"}],
@@ -13,7 +16,7 @@
         "groupName": "doksh2222",
         "groupDescription": "",
         "groupAdmins": [{"adminID": "U0"}],
-        "groupID": "G0",
+        "groupID": "G1",
         "groupCreator": "U0",
         "groupPhotoPath": "/Images/background.jpg"
     },
@@ -22,7 +25,7 @@
         "groupName": "doksh333",
         "groupDescription": "adb",
         "groupAdmins": [{"adminID": "U0"}],
-        "groupID": "G0",
+        "groupID": "G2",
         "groupCreator": "U0",
         "groupPhotoPath": "/Images/background.jpg"
     },
@@ -31,7 +34,7 @@
         "groupName": "dokshjsb",
         "groupDescription": "ajenfbHBQ",
         "groupAdmins": [{"adminID": "U0"}],
-        "groupID": "G0",
+        "groupID": "G3",
         "groupCreator": "U0",
         "groupPhotoPath": "/Images/background.jpg"
     },
@@ -40,7 +43,7 @@
         "groupName": "doksh2222222",
         "groupDescription": "adqedf",
         "groupAdmins": [{"adminID": "U0"}],
-        "groupID": "G0",
+        "groupID": "G4",
         "groupCreator": "U0",
         "groupPhotoPath": "/Images/background.jpg"
     },
@@ -49,7 +52,7 @@
         "groupName": "Group Gedid",
         "groupDescription": "ajdhbchqlkjen",
         "groupAdmins": [{"adminID": "U0"}],
-        "groupID": "G0",
+        "groupID": "G5",
         "groupCreator": "U0",
         "groupPhotoPath": "/Images/background.jpg"
     }

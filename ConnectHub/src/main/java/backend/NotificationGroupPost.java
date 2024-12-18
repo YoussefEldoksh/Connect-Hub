@@ -12,8 +12,8 @@ public class NotificationGroupPost extends Notification{
     private String posterId;
     
 
-    public NotificationGroupPost(String groupId, String postId, String id, String type, LocalDateTime time,String poster) {
-        super(id, type, lineRepresentation(groupId,postId,poster), time);
+    public NotificationGroupPost(String groupId, String postId, String id, String type, LocalDateTime time,String poster,String message) {
+        super(id, type, message, time);
         this.groupId = groupId;
         this.postId = postId;
         this.posterId = poster;
