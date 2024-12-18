@@ -13,12 +13,13 @@ import javax.swing.ImageIcon;
  *
  * @author dell
  */
-public class Posts extends Content{
+public class Posts extends Content {
 
     String groupID;
+
     public Posts(String contentID, String authorID, String content) {
-            super(contentID, authorID, content);
-            this.groupID = null;
+        super(contentID, authorID, content);
+        this.groupID = null;
     }
 
     public Posts(String groupID, String contentID, String authorID, String content) {
@@ -30,25 +31,42 @@ public class Posts extends Content{
         return groupID;
     }
 
-  
     @Override
-   public void delete(String contentID)
-    {
-     ArrayList<Posts> posts;
+    public void delete(String contentID) {
+        ArrayList<Posts> posts;
         posts = DataBase.getInstance().getGlobalPosts();
-     ArrayList<Posts> updated= new ArrayList();
-     
-     for(Posts p: posts)
-     {
-     if(!p.getContentID().equals(contentID))
-     {
-         updated.add(p);
-         DataBase.getInstance().addToGlobalPosts(p);
-     }
-     }
+        ArrayList<Posts> updated = new ArrayList();
+
+        for (Posts p : posts) {
+            if (!p.getContentID().equals(contentID)) {
+                updated.add(p);
+                DataBase.getInstance().addToGlobalPosts(p);
+            }
+        }
     }
-  
-     public static ArrayList<Posts> readPostForUser(String userID) {
+
+    public void deleteGroupPost(String contentID, Group group) {
+        ArrayList<Posts> posts = GroupsDataBase.getInstance().getAllGlobalGroupsPosts();
+        ArrayList<Posts> updated = new ArrayList();
+        ArrayList<Posts> groupPosts = group.getGroupPosts();
+        ArrayList<Posts> updatedGroupSpecific = new ArrayList();
+        for (Posts p : posts) {
+            if (!p.getContentID().equals(contentID)) {
+                updated.add(p);
+            }
+        }
+        
+        for (Posts pp : groupPosts) {
+            if (!pp.getContentID().equals(contentID)) {
+                updatedGroupSpecific.add(pp);
+            }
+        }
+        
+        GroupsDataBase.getInstance().setAllGlobalGroupsPosts(updated);
+        group.setGroupPosts(updatedGroupSpecific);
+    }
+
+    public static ArrayList<Posts> readPostForUser(String userID) {
         ArrayList<Posts> x = DataBase.getInstance().getGlobalPosts();
         ArrayList<Posts> y = new ArrayList<>();
         for (Posts post : x) {
@@ -58,5 +76,5 @@ public class Posts extends Content{
         }
         return y;
     }
-   
+
 }

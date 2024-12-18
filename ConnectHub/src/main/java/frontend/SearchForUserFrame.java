@@ -235,7 +235,15 @@ public class SearchForUserFrame extends javax.swing.JFrame {
                                
                         group.addUserToGroupRequests(UserSession.getCurrentUser().getUserId());
                         GroupsDataBase.getInstance().addToGlobalGroupRequests(newReq);
-
+//                        ArrayList<User> user = new ArrayList<>();
+//                        
+//                        for (String admin : group.getGroupAdmins()) {
+//                            user.add(AccountManagement.findUserUsingId(admin));   
+//                        }
+//                        
+//                        for (User user1 : user) {
+//                            
+//                        }
                         JOptionPane.showMessageDialog(this, "Request to join sent succesfully");
                         
                     }

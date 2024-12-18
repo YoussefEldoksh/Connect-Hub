@@ -4,17 +4,24 @@
  */
 package frontend;
 
+import backend.AccountManagement;
 import backend.Content;
 import backend.ContentFactory;
 import backend.DataBase;
 import backend.Group;
+import backend.GroupManagement;
+import backend.GroupSession;
 import backend.GroupsDataBase;
+import backend.NotificationGroupAdd;
+import backend.NotificationGroupPost;
 import backend.Posts;
 import backend.Stories;
 import backend.User;
+import backend.UserSession;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
@@ -26,62 +33,85 @@ import javax.swing.JOptionPane;
  *
  * @author pc castle
  */
-
 public class groupPostsPanel extends javax.swing.JPanel {
-
 
     private DefaultListModel<String> groupPostsListModel = new DefaultListModel<>();
     boolean groupPostsListUpdate = false;
-    private static int contentIDnum=0;
-    ArrayList<Posts> posts= new ArrayList<>();
-    User user;
-    Group g;
+    private static int contentIDnum = 0;
+    ArrayList<Posts> posts = new ArrayList<>();
+    User user = UserSession.getCurrentUser();
+    Group group = GroupSession.getCurrentGroup();
+
     /**
      * Creates new form groupPostsPanel
      */
     public groupPostsPanel() {
         initComponents();
     }
-public void addContent(int contentType, String userId) {
-        String text= null;
-        Image image=null;
-        ImageIcon imageIcon= null;
- 
-        File file= null;
-        
+
+    public void updatePostsList() {
+        System.out.println("updating posts list");
+        groupPostsListUpdate = true;
+        ArrayList<String> linerep = GroupManagement.getLineRepresentationGroupPosts(GroupSession.getCurrentGroup());
+        groupPostsListModel.clear();
+
+        for (int i = 0; i < linerep.size(); i++) {
+            groupPostsListModel.addElement(linerep.get(i));
+        }
+        groupPostsList.setModel(groupPostsListModel);
+        groupPostsListUpdate = false;
+    }
+
+    public void addContent(int choiceChosen, String userId) {
+        int choice = choiceChosen;
+        String text = null;
+        Image image = null;
+        ImageIcon imageIcon = null;
+
+        File file = null;
+
+        //Text only
+        if (choice == 0) {
+            text = JOptionPane.showInputDialog(this, "Please enter your post's text");
+            Posts post = new Posts(group.getGroupID(), "C" + (contentIDnum++), userId, text == null ? " " : text);
+            ContentPreviewForGroups cpg = new ContentPreviewForGroups(post, choiceChosen, this);
+            cpg.setVisible(true);
+            posts.add(post);
+            group.addGroupPosts(post);
+            GroupsDataBase.getInstance().addToGlobalGroupsPosts(post);
+            updatePostsList();
+            notifyAllMembers(GroupSession.getCurrentGroup().getGroupID(), UserSession.getCurrentUser().getUserId(), "GroupPost", UserSession.getCurrentUser().getUsername());
+        } else if (choice == 1) {
             text = JOptionPane.showInputDialog(this, "Please enter your post's text");
             JFileChooser jfc = new JFileChooser();
-            
             jfc.setDialogTitle("Select an Image File");
-
             jfc.showOpenDialog(this);
             file = jfc.getSelectedFile();
-            if(file == null)
-            {
+            if (file == null) {
                 return;
             }
             try {
                 image = ImageIO.read(file);
                 imageIcon = new ImageIcon(image.getScaledInstance(350, 350, Image.SCALE_SMOOTH));
-                
+
             } catch (IOException e) {
                 // Handles the exception if the image cannot be loaded
                 JOptionPane.showMessageDialog(null, "Failed to load the image: " + e.getMessage());
             }
-                Posts post= (Posts)ContentFactory.createContent("post", ("C" + (contentIDnum++)) , userId, text == null? " ":text);
-                
-                ContentPreviewForGroups cpg = new ContentPreviewForGroups(post, contentType,user);
-                cpg.setVisible(true);
-
-                if(file!=null){
+            Posts post = new Posts(group.getGroupID(), "C" + (contentIDnum++), userId, text == null ? " " : text);
+            if (file != null) {
                 post.setImagePath(file.getPath());
                 post.setImage(imageIcon);
-                }
-                posts.add(post);
-                g.addGroupPosts(post);
-                GroupsDataBase.getInstance().addToGlobalGroupsPosts(post);
+            }
+            posts.add(post);
+            group.addGroupPosts(post);
+            GroupsDataBase.getInstance().addToGlobalGroupsPosts(post);
+            updatePostsList();
+            notifyAllMembers(GroupSession.getCurrentGroup().getGroupID(), UserSession.getCurrentUser().getUserId(), "GroupPost", UserSession.getCurrentUser().getUsername());
 
+        }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -121,63 +151,88 @@ public void addContent(int contentType, String userId) {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(AddPostButton, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(AddPostButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE))
+                .addContainerGap(115, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(61, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(AddPostButton)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(26, Short.MAX_VALUE)
+                .addComponent(AddPostButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void groupPostsListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_groupPostsListValueChanged
         // TODO add your handling code here:
-        
+        if (!groupPostsListUpdate) {
+            int selectedindix = groupPostsList.getSelectedIndex();
+            String selectedValue = groupPostsList.getSelectedValue();
+            String[] token = selectedValue.split(" ");
+            String selectedUsername = token[0];
+            ContentPreviewForGroups groupcontent = new ContentPreviewForGroups(selectedindix, selectedUsername, 1, this);
+            groupcontent.setVisible(true);
+        }
     }//GEN-LAST:event_groupPostsListValueChanged
 
     private void AddPostButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddPostButtonActionPerformed
-        int content = 1; 
-    String[] options = {"Text Only", "Text and Picture"};
-    int choice = JOptionPane.showOptionDialog(
-        null, 
-        "Choose how you want to add your post:", 
-        "Post Options", 
-        JOptionPane.DEFAULT_OPTION, 
-        JOptionPane.INFORMATION_MESSAGE, 
-        null, // No custom icon
-        options, 
-        options[0] 
-    );
-    
-    if (choice == 0){
-        content = 1; // Text Only
-    } else if (choice == 1) {
-        content = 2; // Text and Picture
-    } else {
-        JOptionPane.showMessageDialog(
-            null, 
-            "No option selected. Please try again.", 
-            "Error", 
-            JOptionPane.ERROR_MESSAGE
+        int content = 1;
+        String[] options = {"Text Only", "Text and Picture"};
+        int choice = JOptionPane.showOptionDialog(
+                null,
+                "Choose how you want to add your post:",
+                "Post Options",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null, // No custom icon
+                options,
+                options[0]
         );
-        return; // Exit the method if no valid option is chosen
-    }
 
-    addContent(content, user.getUserId());
+        if (choice == 0) {
+            addContent(0, user.getUserId());
+        } else if (choice == 1) {
+            addContent(1, user.getUserId());
+        } else {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "No option selected. Please try again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return; // Exit the method if no valid option is chosen
+        }
+
+
     }//GEN-LAST:event_AddPostButtonActionPerformed
 
-    public void deleteContent(boolean Yes_Or_No, Posts p)
-    {
-    //if(Yes_Or_No = true)
-       // p.deleteFromGroups(p.getContentID());
+    public void deleteContent(boolean Yes_Or_No, Posts p) {
+        if (Yes_Or_No = true) //removes post from both, specific group and all group posts
+        {
+            updatePostsList();
+        }
+        p.deleteGroupPost(p.getContentID(), group);
     }
+
+    public void notifyAllMembers(String groupId, String postId,String type,String poster) {
+        NotificationGroupPost notification = new NotificationGroupPost(groupId, postId, "N/A", type, LocalDateTime.now(),poster ,poster+" has posted a new Post in group: "+GroupSession.getCurrentGroup().getGroupName());
+        ArrayList<User> users = new ArrayList<>();
+        for (String user : GroupSession.getCurrentGroup().getGroupMembers()) {
+            users.add(AccountManagement.findUserUsingId(user));
+        }
+        for (User user : users) {
+            user.addToListOfNotification(notification);
+        }
+        DataBase.getInstance().addToGlobalGroupPostNotifications(notification);
+
+        NotificationsFrame.getInstance().updateNotificationsList();
+    }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddPostButton;
     private javax.swing.JList<String> groupPostsList;

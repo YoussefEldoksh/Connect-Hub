@@ -22,7 +22,7 @@ public class Group {
     private ArrayList<String> groupAdmins = new ArrayList<>(); //ID of admin
     private ArrayList<String> groupMembers = new ArrayList<>(); //ID of member
     private ArrayList<Posts> groupPosts = new ArrayList<>();
-    private static ArrayList<GroupRequests> requests = new ArrayList<>();
+    private  ArrayList<GroupRequests> requests = new ArrayList<>();
 
     public Group(String groupID, String groupName, String groupDescription, String groupCreator, String groupPhotoPath) {
         this.groupID = groupID;
@@ -38,7 +38,7 @@ public class Group {
             this.groupPhotoIcon = new ImageIcon(getClass().getResource(groupPhotoPath));
         }
         requests = FileManagement.loadFromGroupRequestsJsonFileForSpecificGroup(groupID);
-        
+        groupPosts = FileManagement.loadFromPostsJsonFileForSpecificGroup(groupID);
         
     }
 
@@ -46,7 +46,7 @@ public class Group {
         return groupID;
     }
 
-    public static ArrayList<GroupRequests> getRequests() {
+    public  ArrayList<GroupRequests> getRequests() {
         return requests;
     }
 
@@ -126,7 +126,7 @@ public class Group {
             }
         }
         groupMembers.add(userToJoinId);
-        AccountManagement.findUserUsingId(userToJoinId).addToGroupsOfUser(this);
+        AccountManagement.findUserUsingId(userToJoinId).addToGroups(this);
     }
     
      public void addUserToGroupRequests(String userToJoinId) {
@@ -151,12 +151,12 @@ public class Group {
             if (groupMembers.get(i).equals(userToRemoveId)) {
                 //check if userId is an admin
                 for (int j = 0; j < groupAdmins.size(); j++) {
-                    if (groupAdmins.get(i).equals(userToRemoveId)) {
+                    if (groupAdmins.get(j).equals(userToRemoveId)) {
                         groupAdmins.remove(userToRemoveId);
                         System.out.println("User is no longer a member of the group");
                         //check if userId is the group creator
                         if (groupCreator.equals(userToRemoveId)) {
-                            int k = j++;
+                            int k = ++j;
                             this.setGroupCreator(groupAdmins.get(k));
                             System.out.println("The user you are trying to remove is the creator of the group.");
                             System.out.println("The new Creator of the group is " + AccountManagement.findUsername(groupAdmins.get(k)));
@@ -166,7 +166,9 @@ public class Group {
                     }
                 }
                 groupMembers.remove(userToRemoveId);
-                AccountManagement.findUserUsingId(userToRemoveId).addToGroupsOfUser(this);
+                AccountManagement.findUserUsingId(userToRemoveId).removeFromsGroupsOfUser(this);
+                FileManagement.saveToGroupsJsonFile();
+
                 System.out.println("User is no longer a member of the group");
                 return;
             }
@@ -182,14 +184,15 @@ public class Group {
             if (groupMembers.get(i).equals(userToRemoveId)) {
                 //check if userId is an admin
                 for (int j = 0; j < groupAdmins.size(); j++) {
-                    if (groupAdmins.get(i).equals(userToRemoveId)) {
+                    if (groupAdmins.get(j).equals(userToRemoveId)) {
                         System.out.println("Admins can't remove other admins. Only the creator of the group can");
                         return false;
                     }
                 }
                 groupMembers.remove(userToRemoveId);
 
-                AccountManagement.findUserUsingId(userToRemoveId).addToGroupsOfUser(this);
+                AccountManagement.findUserUsingId(userToRemoveId).removeFromsGroupsOfUser(this);
+                FileManagement.saveToGroupsJsonFile();
                 System.out.println("User is no longer a member of the group");
                 return true;
             }
@@ -201,11 +204,15 @@ public class Group {
     public void removeGroupRequest(String userToRemoveId) {
         GroupRequests gr= GroupManagement.getGroupRequest(userToRemoveId, this.getGroupID());
         AccountManagement.findUserUsingId(userToRemoveId).removeFromsGroupRequestsOfUser(gr);
+        FileManagement.saveToGroupRequestsJsonFile();
+
         requests.remove(gr);
     }
 
     public void promoteMemberToAdmin(String userId) {
         groupAdmins.add(userId);
+        FileManagement.saveToGroupsJsonFile();
+
         System.out.println("Congratulations. You are now an admin in the group");
     }
 
@@ -223,13 +230,20 @@ public class Group {
             GroupsDataBase.getInstance().removeFromGlobalGroupRequests(GroupsDataBase.getInstance().getGroupRequest(userId, this.getGroupID()));
             //remove also from requests if it was declined
         }
+        FileManagement.saveToGroupsJsonFile();
     }
 
     public void demoteAdminToMember(String userId) {
         groupAdmins.remove(userId);
         System.out.println("User is no longer an admin");
     }
-
+   
+    public void reload()
+    {
+        requests.clear();
+        requests = FileManagement.loadFromGroupRequestsJsonFileForSpecificGroup(groupID);
+    }
+    
     public void editPost(String postId) {
     }
 
@@ -252,5 +266,14 @@ public class Group {
         }
         return membersNotAdmins;
 
+    }
+    
+    public boolean checkIfUserIsAdmin(String userId) {
+        for (int i = 0; i < getGroupAdmins().size(); i++) {
+            if (getGroupAdmins().get(i).equals(userId)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

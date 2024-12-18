@@ -1,1 +1,9 @@
-[]
+[{
+    "groupId": "G0",
+    "notificationID": "N/A",
+    "postId": "U0",
+    "notificationType": "GroupPost",
+    "time": "2024-12-16T02:32:55.724864400",
+    "message": "doksh22 has posted a new Post in group:doksh22",
+    "posterId": "doksh22"
+}]

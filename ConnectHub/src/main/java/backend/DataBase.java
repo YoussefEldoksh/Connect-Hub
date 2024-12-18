@@ -20,8 +20,7 @@ public class DataBase { // Centralized Data Management
     private ArrayList<Group> groups = new ArrayList<>();
     private ArrayList<NotificationGroupAdd> notificationsGroupAdd = new ArrayList<>();
     private ArrayList<NotificationGroupPost> notificationsGroupPost = new ArrayList<>();
-
-    
+    private ArrayList<Chat> chats = new ArrayList<>();
 
     private static DataBase database = null;
     private static boolean isLoading = false;
@@ -54,15 +53,31 @@ public class DataBase { // Centralized Data Management
         FileManagement.saveToStoriesJsonFile();
     }
 
-    
-    
-    public void loadAllFiles()
-    {
+    public synchronized void addToGlobalChats(Chat chat) {
+        if (chat == null) {
+            System.err.println("Cannot add a null chat to global chats.");
+            return;
+        }
+        chats.add(chat);
+        System.out.println("Chat added to global chats: " + chat.getChatId());
+        FileManagement.saveToChats();
+    }
+
+    public synchronized void removeFromGlobalChats(Chat chat) {
+        chats.remove(chat);
+    }
+
+    public synchronized ArrayList<Chat> getGlobalChats() {
+        return chats;
+    }
+
+    public void loadAllFiles() {
         this.users.clear();
         this.posts.clear();
         this.stories.clear();
         this.requests.clear();
         this.notificationsFriendReq.clear();
+        this.chats.clear();
 
         this.users = FileManagement.loadFromUsersJSONfile();
         this.posts = FileManagement.loadFromPostsJsonFile();
@@ -71,23 +86,22 @@ public class DataBase { // Centralized Data Management
         this.notificationsFriendReq = FileManagement.loadFromRequestsNotificationsJsonFile();
         this.notificationsGroupAdd = FileManagement.loadFromGroupAddNotificationsJsonFile();
         this.notificationsGroupPost = FileManagement.loadFromGroupPostNotificationsJsonFile();
+        this.chats = FileManagement.loadFromChatsJsonFile();
 
     }
 
     public synchronized ArrayList<NotificationFriendReq> getNotificationsFriendReq() {
         return notificationsFriendReq;
     }
-    
+
     public synchronized ArrayList<NotificationGroupAdd> getNotificationsGroupAdd() {
         return notificationsGroupAdd;
     }
-     
+
     public synchronized ArrayList<NotificationGroupPost> getNotificationsGroupPost() {
         return notificationsGroupPost;
-}
-    
+    }
 
-    
     public synchronized ArrayList<Posts> getGlobalPosts() {
         return posts;
     }
@@ -101,13 +115,22 @@ public class DataBase { // Centralized Data Management
         requests.add(request);
         FileManagement.saveToFriendRequestsJsonFile();
     }
-    
-    public void addToGlobalRequestsNotifications(NotificationFriendReq req)
-    {
+
+    public void addToGlobalRequestsNotifications(NotificationFriendReq req) {
         this.notificationsFriendReq.add(req);
+        FileManagement.saveGroupAddNotificationsJsonFile();
     }
 
-    
+    public void addToGlobalGroupAddNotifications(NotificationGroupAdd add) {
+        this.notificationsGroupAdd.add(add);
+        FileManagement.saveGroupAddNotificationsJsonFile();
+    }
+
+    public void addToGlobalGroupPostNotifications(NotificationGroupPost add) {
+        this.notificationsGroupPost.add(add);
+        FileManagement.saveGroupPostNotificationsJsonFile();
+    }
+
     public synchronized ArrayList<FriendRequests> getGlobalFriendRequests() {
         return requests;
     }
@@ -126,7 +149,7 @@ public class DataBase { // Centralized Data Management
         users.add(user);
         FileManagement.saveInUsersJSONfile();
     }
-    
+
     public synchronized ArrayList<Group> getGroups() {
         return groups;
     }
@@ -135,7 +158,6 @@ public class DataBase { // Centralized Data Management
         groups.add(group);
         //FileManagement.saveInGroupsJSONfile();
     }
-
 
     public synchronized void removeFriendReq(FriendRequests request) {
         for (FriendRequests req : requests) {
@@ -149,5 +171,17 @@ public class DataBase { // Centralized Data Management
         requests.remove(request);
         System.out.println("requests" + requests);
     }
+    
+    public synchronized void addChatMessage(String chatId,Message message)
+    {
+        for (Chat chat : chats) {
+            if(chat.getChatId().equals(chatId))
+            {
+                System.out.println("Chat found in Database class");
+                chat.AddChatMessages(message);
+            }
+        }
+    }
+    
 
 }

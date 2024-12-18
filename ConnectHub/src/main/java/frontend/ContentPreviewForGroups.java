@@ -4,6 +4,8 @@
  */
 package frontend;
 
+import backend.Group;
+import backend.GroupSession;
 import backend.ImageHandler;
 import backend.NewsFeed;
 import backend.Posts;
@@ -21,51 +23,58 @@ import javax.swing.JOptionPane;
  */
 public class ContentPreviewForGroups extends javax.swing.JFrame {
     User user;
+    Group group;
+    int selectedindex;
+    groupPostsPanel gpp;
     /**
      * Creates new form ContentPreviewForGroups
      */
 
-    public ContentPreviewForGroups(int selectedindix, int type, User user) {
+    //if user is displaying an image of another group member
+    public ContentPreviewForGroups(int selectedindex, String selectedUsername, int type, groupPostsPanel gpp) {
         initComponents();
-        this.user = user;
-        ContentLabel.setText(UserSession.getCurrentUser().getUsername() + "'s recent updates");
+        this.selectedindex= selectedindex;
+        this.gpp = gpp;
+        this.user = UserSession.getCurrentUser();
+        this.group = GroupSession.getCurrentGroup();
+        ContentLabel.setText(selectedUsername + "'s recent updates in the group ");
         ContentLabel.setFont(new Font("Arial", Font.BOLD, 30));
 
-
-            ContentLabel.setIcon(ImageHandler.rescaleImageIcon(findPost(selectedindix).getImage(), 339, 339));
-            ContentLabel.setText(findPost(selectedindix).getContent());
-    
+        ContentLabel.setIcon(ImageHandler.rescaleImageIcon(findPost(selectedindex).getImage(), 339, 339));
+        ContentLabel.setText(findPost(selectedindex).getContent());
 
         ContentLabel.setHorizontalTextPosition(JLabel.RIGHT);
         ContentLabel.setVerticalTextPosition(JLabel.CENTER);
         ContentLabel.setFont(new Font("Arial", Font.BOLD, 24));
-
-
-    }
-    
-        public ContentPreviewForGroups(Posts post, int type, User user) {
-        initComponents();
-        this.user = user;
-        ContentLabel.setText(UserSession.getCurrentUser().getUsername() + "'s recent updates");
-        ContentLabel.setFont(new Font("Arial", Font.BOLD, 30));
-
-
-            //ContentLabel.setIcon(ImageHandler.rescaleImageIcon(findPost(selectedindix).getImage(), 339, 339));
-            //ContentLabel.setText(findPost(selectedindix).getContent());
-    
-
-        ContentLabel.setHorizontalTextPosition(JLabel.RIGHT);
-        ContentLabel.setVerticalTextPosition(JLabel.CENTER);
-        ContentLabel.setFont(new Font("Arial", Font.BOLD, 24));
-
-
-    }
-    
-    
-
-    public Posts findPost(int selectedindix) {
         
-        Posts postChosen= NewsFeed.fetchPosts(UserSession.getCurrentUser()).get(selectedindix);
+       //if user is not an admin nor the publisher of the post, he shouldnt access the editor or removal button
+        boolean userIdAdmin = group.checkIfUserIsAdmin(user.getUserId());
+        if(!user.getUsername().equals(selectedUsername) &&  !userIdAdmin)
+        {
+        removePostButton.setVisible(false);
+        EditPostButton.setVisible(false);
+        }
+    }
+    
+    //if user is displaying his newly added post
+        public ContentPreviewForGroups(Posts post, int type, groupPostsPanel gpp) {
+        initComponents();
+        this.user = UserSession.getCurrentUser();
+        ContentLabel.setText("You, " + UserSession.getCurrentUser().getUsername() + " just published in the group");
+        ContentLabel.setFont(new Font("Arial", Font.BOLD, 30));
+
+        ContentLabel.setIcon(ImageHandler.rescaleImageIcon(post.getImage(), 339, 339));
+        ContentLabel.setText(post.getContent());
+    
+        ContentLabel.setHorizontalTextPosition(JLabel.RIGHT);
+        ContentLabel.setVerticalTextPosition(JLabel.CENTER);
+        ContentLabel.setFont(new Font("Arial", Font.BOLD, 24));
+    }
+    
+    
+
+    public Posts findPost(int selectedindex) {
+        Posts postChosen= group.getGroupPosts().get(selectedindex);
         return postChosen;
     }
     
@@ -130,23 +139,23 @@ public class ContentPreviewForGroups extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void removePostButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removePostButtonActionPerformed
-       try{
-        int choice = JOptionPane.showConfirmDialog(
-                this,
-                "Are you sure you would like to delete the Post?",
-                "Remove Post",
-                JOptionPane.YES_NO_OPTION
-        );
+        try {
+            int choice = JOptionPane.showConfirmDialog(
+                    this,
+                    "Are you sure you would like to delete the Post?",
+                    "Remove Post",
+                    JOptionPane.YES_NO_OPTION
+            );
 
-        if (choice == JOptionPane.YES_OPTION) {
-            //groupPostsPanel1.deleteContent(true, findPost(selectedindix));
-        } else if (choice == JOptionPane.NO_OPTION) {
-            System.out.println("User chose No");
-        }}catch(Exception ex)
-        {
+            if (choice == JOptionPane.YES_OPTION) {
+                gpp.deleteContent(true, findPost(selectedindex));
+            } else if (choice == JOptionPane.NO_OPTION) {
+                System.out.println("User chose No");
+            }
+        } catch (Exception ex) {
             System.out.println("No choice was made");
             return;
-       }                                               
+        }                                             
     }//GEN-LAST:event_removePostButtonActionPerformed
 
     private void EditPostButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditPostButtonActionPerformed

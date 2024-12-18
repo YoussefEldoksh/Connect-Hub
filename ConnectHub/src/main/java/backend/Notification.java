@@ -38,6 +38,10 @@ public class Notification {
     public LocalDateTime getTime() {
         return time;
     }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
     
     
     

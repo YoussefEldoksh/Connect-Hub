@@ -18,7 +18,6 @@ public class GroupRequests {
 
     public GroupRequests(String userMakingReqId, String groupId) {
         this.userMakingReqId = userMakingReqId;
-        this.userMakingReqUsername = AccountManagement.findUsername(userMakingReqId);
         this.groupId = groupId;
     }
 
@@ -30,5 +29,9 @@ public class GroupRequests {
     public String getGroupId() {
         return groupId;
     }  
+    public String getUserMakingReqUserName()
+    {
+        return AccountManagement.findUsername(userMakingReqId);
+    }
     
 }

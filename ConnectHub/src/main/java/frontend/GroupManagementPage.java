@@ -8,6 +8,7 @@ import backend.Group;
 import backend.GroupSession;
 import backend.ImageHandler;
 import backend.User;
+import backend.UserSession;
 
 /**
  *
@@ -34,7 +35,8 @@ public class GroupManagementPage extends javax.swing.JFrame {
     }
 
      public static GroupManagementPage getInstance(Group group) {
-        if (instance == null) {
+         
+         if (instance == null) {
             instance = new GroupManagementPage(group);
         }
         return instance;
@@ -44,8 +46,15 @@ public class GroupManagementPage extends javax.swing.JFrame {
     {
        Group newGroup = GroupSession.getCurrentGroup();
        groupPhotoLabel.setIcon(ImageHandler.rescaleImageIcon(newGroup.getGroupPhotoIcon(), 110, 104));
-
+       groupDescriptionLabel.setText("Group Description: "+GroupSession.getCurrentGroup().getGroupDescription());
+       groupNameLabel.setText("Group Name: "+GroupSession.getCurrentGroup().getGroupName());
        
+       groupMembersPanel1.updateGroupAdminsList(UserSession.getCurrentUser(), GroupSession.getCurrentGroup());
+       groupMembersPanel1.updateGroupMembersList(UserSession.getCurrentUser(), GroupSession.getCurrentGroup());
+       groupMembersPanel1.updateGroupRequestsList(UserSession.getCurrentUser(), GroupSession.getCurrentGroup());
+
+       groupPostsPanel1.updatePostsList();
+       //groupPostsPanel1.
     }
      
      

@@ -1,1 +1,26 @@
-[]
+[
+    {
+        "requesterId": "U5",
+        "groupId": "G0",
+        "notificationID": "N/A",
+        "notificationType": "GroupAdd",
+        "time": "2024-12-14T17:25:49.795909800",
+        "message": "doksh3333 joined Group: doksh22"
+    },
+    {
+        "requesterId": "U7",
+        "groupId": "G0",
+        "notificationID": "N/A",
+        "notificationType": "GroupAdd",
+        "time": "2024-12-14T19:34:01.286641300",
+        "message": "halaa123 joined Group: doksh22"
+    },
+    {
+        "requesterId": "U8",
+        "groupId": "G0",
+        "notificationID": "N/A",
+        "notificationType": "GroupAdd",
+        "time": "2024-12-16T12:12:52.258591700",
+        "message": "seifmahmoud468 joined Group: doksh22"
+    }
+]

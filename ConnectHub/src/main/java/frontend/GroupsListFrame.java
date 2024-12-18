@@ -102,6 +102,7 @@ public class GroupsListFrame extends javax.swing.JFrame {
             
             
             GroupSession.setCurrentGroup(backend.GroupsDataBase.getInstance().getGroupByName(token[1]));
+            GroupManagementPage.getInstance(GroupSession.getCurrentGroup()).setGroupAttributes();
             GroupManagementPage.getInstance(GroupSession.getCurrentGroup()).setVisible(true);
         }
     }//GEN-LAST:event_GroupsListValueChanged

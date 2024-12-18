@@ -1,0 +1,40 @@
+[
+    {
+        "chatId": "U0U1",
+        "messages": [{
+            "senderId": "U0",
+            "imagePath": "null",
+            "timeSent": "2024-12-18T17:56:27.855947600",
+            "recieverId": "U1",
+            "message": "fff"
+        }]
+    },
+    {
+        "chatId": "U0U2",
+        "messages": []
+    },
+    {
+        "chatId": "U0U3",
+        "messages": []
+    },
+    {
+        "chatId": "U0U4",
+        "messages": []
+    },
+    {
+        "chatId": "U0U5",
+        "messages": []
+    },
+    {
+        "chatId": "U0U6",
+        "messages": []
+    },
+    {
+        "chatId": "U0U7",
+        "messages": []
+    },
+    {
+        "chatId": "U0U8",
+        "messages": []
+    }
+]
