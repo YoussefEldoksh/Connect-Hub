@@ -79,7 +79,7 @@ public class SignInWindow extends javax.swing.JFrame {
             }
         });
 
-        LogInButton.setBackground(new java.awt.Color(102, 102, 255));
+        LogInButton.setBackground(new java.awt.Color(51, 0, 102));
         LogInButton.setFont(new java.awt.Font("Segoe UI Historic", 1, 14)); // NOI18N
         LogInButton.setForeground(new java.awt.Color(255, 255, 255));
         LogInButton.setText("Login");

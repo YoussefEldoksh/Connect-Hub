@@ -4,6 +4,8 @@
  */
 package frontend;
 
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author malak
@@ -20,6 +22,11 @@ public class Chat_Message extends javax.swing.JPanel {
     public Chat_Message(String message,String date) {
         initComponents();
         messageLabel.setText(message);
+        dateLabel.setText(date);
+    }
+    public Chat_Message(ImageIcon image ,String date) {
+        initComponents();
+        messageLabel.setIcon(image);
         dateLabel.setText(date);
     }
 

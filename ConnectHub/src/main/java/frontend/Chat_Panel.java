@@ -11,10 +11,14 @@ import backend.FileManagement;
 import backend.Message;
 import backend.Message_Builder;
 import backend.UserSession;
+import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import net.miginfocom.swing.MigLayout;
+import org.json.JSONPointer;
 
 /**
  *
@@ -65,22 +69,41 @@ public class Chat_Panel extends javax.swing.JPanel {
     }
 
     public void setMessageLeft(String message, String date) {
-        messagesDisplayPanel.add(new Chat_Message(message,date), "wrap");
+        messagesDisplayPanel.add(new Chat_Message(message, date), "wrap");
         messagesDisplayPanel.revalidate();
         messagesDisplayPanel.repaint();
     }
 
-    public void setMessageRight(String message,String date) {
-        messagesDisplayPanel.add(new Chat_Message(message,date), "wrap, al right");
+    public void setMessageRight(String message, String date) {
+        messagesDisplayPanel.add(new Chat_Message(message, date), "wrap, al right");
         messagesDisplayPanel.revalidate();
         messagesDisplayPanel.repaint();
     }
 
+    public void setMessagesPicRight(String imagePath, String date)
+    {
+        messagesDisplayPanel.add(new Chat_Message_Photo(new ImageIcon(imagePath),date),"wrap, al right");
+        messagesDisplayPanel.revalidate();
+        messagesDisplayPanel.repaint();
+    }
+    
+        public void setMessagesPicLeft(String imagePath, String date)
+    {
+        messagesDisplayPanel.add(new Chat_Message_Photo(new ImageIcon(imagePath),date),"wrap");
+        messagesDisplayPanel.revalidate();
+        messagesDisplayPanel.repaint();
+    }
+    
+    
+    
+    
     public void clearchat() {
         messagesDisplayPanel.removeAll();
         messagesDisplayPanel.revalidate();
         messagesDisplayPanel.repaint();
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -263,12 +286,40 @@ public class Chat_Panel extends javax.swing.JPanel {
 
     private void attachPhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attachPhotoButtonActionPerformed
         // TODO add your handling code here:
+        JFileChooser chooser = new JFileChooser();
+        chooser.showSaveDialog(this);
+        File file = chooser.getSelectedFile();
+
+        if (file == null) {
+            JOptionPane.showMessageDialog(this, "No file selected");
+            return;
+        }
+        System.out.println(file.getPath());
+        
+        Message_Builder message = new Message_Builder();
+        message.setImagePath(file.getAbsolutePath())
+                .setSenderId(UserSession.getCurrentUser().getUserId())
+                .setMessage("")
+                .setRecieverId(AccountManagement.findUserId(ChatFrame.getInstance().chatName))
+                .setTimeSent(LocalDateTime.now());
+        Message newMessage = message.build();
+        
+        
+            ChatFrame.getInstance().chat.AddChatMessages(newMessage);
+            System.out.println(ChatFrame.getInstance().chat.getChatId());
+            System.out.println(ChatFrame.getInstance().chat.getChatMessages());
+            DataBase.getInstance().addChatMessage(ChatFrame.getInstance().chat.getChatId(), newMessage);
+        
+            
+        ImageIcon image = new ImageIcon(file.getPath());
+        messagesDisplayPanel.add(new Chat_Message_Photo(image,newMessage.getTimeSent().format(DateTimeFormatter.ofPattern("HH:mm:ss a"))),"wrap, al right"); 
+
     }//GEN-LAST:event_attachPhotoButtonActionPerformed
 
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
         // TODO add your handling code here:
         if (!jTextArea1.getText().trim().isEmpty()) {
-            messagesDisplayPanel.add(new Chat_Message(jTextArea1.getText(),LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))),"wrap");
+            setMessageRight(jTextArea1.getText(), LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss a")));
             backend.Message_Builder builder = new Message_Builder();
 
             builder.setTimeSent(LocalDateTime.now())
@@ -288,6 +339,7 @@ public class Chat_Panel extends javax.swing.JPanel {
         } else {
             jTextArea1.setText("");
         }
+
 
     }//GEN-LAST:event_sendButtonActionPerformed
 
