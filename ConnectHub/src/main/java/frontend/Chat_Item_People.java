@@ -18,6 +18,7 @@ public class Chat_Item_People extends javax.swing.JPanel {
      */
     private String name;
     static boolean selected = false;
+
     public Chat_Item_People(String name) {
         initComponents();
         friendName.setText(name);
@@ -25,17 +26,14 @@ public class Chat_Item_People extends javax.swing.JPanel {
     }
 
     public Chat_Item_People() {
-       initComponents();
+        initComponents();
 
     }
-    
-    private void init()
-    {
-        
+
+    private void init() {
+
     }
-    
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -90,27 +88,42 @@ public class Chat_Item_People extends javax.swing.JPanel {
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
         // TODO add your handling code here:
+        if (ChatFrame.getInstance().isLoaded(friendName.getText())) {
+            ChatFrame.getInstance().chatName = friendName.getText();
+            boolean status = backend.AccountManagement.findUser(name).getStatus();
+            if (status) {
+                ChatFrame.getInstance().chatStatus = "Online";
+            } else {
+                ChatFrame.getInstance().chatStatus = "Offline";
+            }
+            ChatFrame.getInstance().setChatHeading();
+             ChatFrame.getInstance().loadMessages();
+            return;
+        } else {
+            ChatFrame.getInstance().addToLoadedChats(friendName.getText());
+        }
         ChatFrame.getInstance().chatName = friendName.getText();
+
         System.out.println(friendName.getText());
-       boolean status = backend.AccountManagement.findUser(name).getStatus();
-       if(status)
-       {
-           ChatFrame.getInstance().chatStatus = "Online";
-       }
-       else ChatFrame.getInstance().chatStatus = "Offline";
-       
+        boolean status = backend.AccountManagement.findUser(name).getStatus();
+        if (status) {
+            ChatFrame.getInstance().chatStatus = "Online";
+        } else {
+            ChatFrame.getInstance().chatStatus = "Offline";
+        }
+
         ChatFrame.getInstance().setChatHeading();
         ChatFrame.getInstance().loadMessages();
     }//GEN-LAST:event_formMouseClicked
 
     private void formMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseEntered
         // TODO add your handling code here:
-        setBackground(new Color(238,226,245));
+        setBackground(new Color(238, 226, 245));
     }//GEN-LAST:event_formMouseEntered
 
     private void formMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseExited
         // TODO add your handling code here:
-        setBackground(new Color(220,220,220));
+        setBackground(new Color(220, 220, 220));
     }//GEN-LAST:event_formMouseExited
 
 

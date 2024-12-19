@@ -10,6 +10,8 @@ import backend.DataBase;
 import backend.FileManagement;
 import backend.Message;
 import backend.UserSession;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -22,9 +24,10 @@ public class ChatFrame extends javax.swing.JFrame {
     /**
      * Creates new form ChatFrame
      */
-    public  String chatName;
-    public  String chatStatus;
-    public  Chat chat = null;
+    public String chatName;
+    public String chatStatus;
+    public Chat chat = null;
+    public ArrayList<String> loadedChats = new ArrayList<>();
 
     static ChatFrame instance = null;
 
@@ -62,17 +65,41 @@ public class ChatFrame extends javax.swing.JFrame {
         } else {
             this.chat = chat;
             messages.addAll(this.chat.getChatMessages());
-            
+            messages.reversed();
         }
-            
+        
+
+         chat_Panel1.clearchat();
         for (Message message : messages) {
             if (message.getRecieverId().equals(UserSession.getCurrentUser().getUserId())) {
-
-                chat_Panel1.setMessageLeft(message.getMessage());
+                
+                chat_Panel1.setMessageLeft(message.getMessage(),message.getTimeSent().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
             } else {
-                chat_Panel1.setMessageRight(message.getMessage());
+                chat_Panel1.setMessageRight(message.getMessage(),message.getTimeSent().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
             }
         }
+    }
+
+    public void addToLoadedChats(String name) {
+       
+            loadedChats.add(name);
+        
+    }
+    
+    
+    
+
+    public boolean isLoaded(String name) {
+        if (loadedChats.contains(name)) {
+           return true;
+        }
+        return false;
+    }
+    
+    
+    public void sortMessagesByDate()
+    {
+        
     }
 
     /**
@@ -125,9 +152,9 @@ public class ChatFrame extends javax.swing.JFrame {
             borderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(borderLayout.createSequentialGroup()
                 .addGroup(borderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
