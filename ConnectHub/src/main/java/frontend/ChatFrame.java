@@ -52,6 +52,7 @@ public class ChatFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "no chat selected");
 
         }
+        UserSession.getCurrentUser().fillChats();
         Chat chat = UserSession.getCurrentUser().getSpecificChat(this.chatName);
         ArrayList<Message> messages = new ArrayList<>();
         if (chat == null) {
@@ -67,39 +68,53 @@ public class ChatFrame extends javax.swing.JFrame {
             messages.addAll(this.chat.getChatMessages());
             messages.reversed();
         }
-        
 
-         chat_Panel1.clearchat();
+        System.out.println("ana abl ma clear el chat");
+        chat_Panel1.clearchat();
+        System.out.println("ana ba3d ma clear el chat");
         for (Message message : messages) {
             if (message.getRecieverId().equals(UserSession.getCurrentUser().getUserId())) {
-                
-                chat_Panel1.setMessageLeft(message.getMessage(),message.getTimeSent().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
-            } else {
-                chat_Panel1.setMessageRight(message.getMessage(),message.getTimeSent().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+                if (message.getMessage() != null) {
+                        chat_Panel1.setMessageLeft(message.getMessage(), message.getTimeSent().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+           }
+            else
+                {
+                     chat_Panel1.setMessagesPicLeft(message.getImagePath(), message.getTimeSent().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+                }
+            
             }
-        }
-    }
+            
+            
+            else {
+                if(message.getMessage() != null)
+                {  
+                    chat_Panel1.setMessageRight(message.getMessage(),message.getTimeSent().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+                }
+                else
+                {
+                     chat_Panel1.setMessagesPicRight(message.getImagePath(), message.getTimeSent().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+                }
+            } 
+                }
+            }
+
+    
 
     public void addToLoadedChats(String name) {
-       
-            loadedChats.add(name);
-        
+
+        loadedChats.add(name);
+
     }
-    
-    
-    
 
     public boolean isLoaded(String name) {
         if (loadedChats.contains(name)) {
-           return true;
+            return true;
         }
         return false;
     }
-    
-    
-    public void sortMessagesByDate()
-    {
-        
+
+    public void sortMessagesByDate() {
+
     }
 
     /**
@@ -119,7 +134,7 @@ public class ChatFrame extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         chat_Menu_Right1 = new frontend.Chat_Menu_Right();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         border.setBackground(new java.awt.Color(219, 219, 252));
         border.setRequestFocusEnabled(false);
@@ -166,47 +181,15 @@ public class ChatFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(border, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(border, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ChatFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ChatFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ChatFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ChatFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ChatFrame().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel border;

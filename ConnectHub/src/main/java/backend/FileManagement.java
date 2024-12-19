@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import java.nio.channels.FileLock;
 
 /**
  *
@@ -1069,51 +1070,63 @@ public class FileManagement { // Centrlized file operations system
 
     public static void saveToChats() {
         ArrayList<Chat> chats = DataBase.getInstance().getGlobalChats();
+
         try {
             JSONArray chatsArray = new JSONArray();
 
             for (int i = 0; i < chats.size(); i++) {
                 JSONObject chatJson = new JSONObject();
 
-                chatJson.put("chatId",chats.get(i).getChatId());
+                chatJson.put("chatId", chats.get(i).getChatId());
 
                 JSONArray messages = new JSONArray();
-                
-                
+
                 for (int j = 0; j < chats.get(i).getChatMessages().size(); j++) {
                     JSONObject message = new JSONObject();
                     message.put("recieverId", chats.get(i).getChatMessages().get(j).getRecieverId());
                     message.put("senderId", chats.get(i).getChatMessages().get(j).getSenderId());
-                    message.put("message", chats.get(i).getChatMessages().get(j).getMessage());
+
                     message.put("timeSent", chats.get(i).getChatMessages().get(j).getTimeSent());
-                    
+
                     if (chats.get(i).getChatMessages().get(j).getImagePath() != null) {
                         message.put("imagePath", chats.get(i).getChatMessages().get(j).getImagePath());
                     } else {
                         message.put("imagePath", "null");
                     }
+                    if (chats.get(i).getChatMessages().get(j).getMessage() != null) {
+                        message.put("message", chats.get(i).getChatMessages().get(j).getMessage());
+                    }
+                    else
+                    {
+                        message.put("message", "null");
+                    }
                     messages.put(message);
 
                 }
-                
+
                 chatJson.put("messages", messages);
                 chatsArray.put(chatJson);
             }
             Files.write(Paths.get("chats.json"), chatsArray.toString(4).getBytes());
+
             System.out.println("System successfully saved the chat");
 
         } catch (IOException ex) {
             System.err.println("Error saving notifs to JSON file: " + ex.getMessage());
         }
-
     }
 
     public static ArrayList<Chat> loadFromChatsJsonFile() {
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(FileManagement.class.getName()).log(Level.SEVERE, null, ex);
+        }
         ArrayList<Chat> chats = new ArrayList<>();
 
         try {
             System.out.println("Entering chats.json");
-            if (!Files.exists(Paths.get("chats.json")) || Files.size(Paths.get("groupPostNotif.json")) == 0) {
+            if (!Files.exists(Paths.get("chats.json")) || Files.size(Paths.get("chats.json")) == 0) {
                 Files.createFile(Paths.get("chats.json")); // create the file if not found
                 return new ArrayList<>();
             }
@@ -1136,7 +1149,8 @@ public class FileManagement { // Centrlized file operations system
                     String time = messageJson.getString("timeSent");
                     LocalDateTime date = LocalDateTime.parse(time, DateTimeFormatter.ISO_DATE_TIME);
 
-                    if (imagePath == "null") {
+                    
+                    if (imagePath.equals("null")) {
                         Message_Builder builder = new Message_Builder();
                         builder.setSenderId(senderId)
                                 .setRecieverId(recieverId)
@@ -1148,7 +1162,6 @@ public class FileManagement { // Centrlized file operations system
                         Message_Builder builder = new Message_Builder();
                         builder.setSenderId(senderId)
                                 .setRecieverId(recieverId)
-                                .setMessage(message)
                                 .setImagePath(imagePath)
                                 .setTimeSent(date);
                         Message newMessage = builder.build();
