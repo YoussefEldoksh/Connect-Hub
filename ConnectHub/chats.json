@@ -1,13 +1,50 @@
 [
     {
         "chatId": "U0U1",
-        "messages": [{
-            "senderId": "U0",
-            "imagePath": "null",
-            "timeSent": "2024-12-18T17:56:27.855947600",
-            "recieverId": "U1",
-            "message": "fff"
-        }]
+        "messages": [
+            {
+                "senderId": "U0",
+                "imagePath": "null",
+                "timeSent": "2024-12-18T17:56:27.855947600",
+                "recieverId": "U1",
+                "message": "fff"
+            },
+            {
+                "senderId": "U0",
+                "imagePath": "null",
+                "timeSent": "2024-12-18T21:21:19.841310900",
+                "recieverId": "U1",
+                "message": "ezayak ybnyy"
+            },
+            {
+                "senderId": "U1",
+                "imagePath": "null",
+                "timeSent": "2024-12-18T21:26:10.558010",
+                "recieverId": "U0",
+                "message": "tarsh"
+            },
+            {
+                "senderId": "U0",
+                "imagePath": "null",
+                "timeSent": "2024-12-19T02:45:07.814051700",
+                "recieverId": "U1",
+                "message": "fajer"
+            },
+            {
+                "senderId": "U0",
+                "imagePath": "null",
+                "timeSent": "2024-12-19T03:06:54.484419700",
+                "recieverId": "U1",
+                "message": "mn doksh22"
+            },
+            {
+                "senderId": "U1",
+                "imagePath": "null",
+                "timeSent": "2024-12-19T03:08:40.733413300",
+                "recieverId": "U0",
+                "message": "mn doksh222"
+            }
+        ]
     },
     {
         "chatId": "U0U2",

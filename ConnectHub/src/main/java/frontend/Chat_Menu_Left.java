@@ -24,6 +24,7 @@ public class Chat_Menu_Left extends javax.swing.JPanel {
 
     }
 
+    
     private void init() {
         menuList.setLayout(new MigLayout());
         showPeople();
