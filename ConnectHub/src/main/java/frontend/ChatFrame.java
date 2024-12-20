@@ -70,6 +70,7 @@ public class ChatFrame extends javax.swing.JFrame {
         UserSession.getCurrentUser().fillChats();
         Chat chat = UserSession.getCurrentUser().getSpecificChat(this.chatName);
         chat_Panel1.clearchat();
+
         
         if (chat == null) {
             System.out.println("Chat is null in ChatFrame");
@@ -85,6 +86,7 @@ public class ChatFrame extends javax.swing.JFrame {
                 lastMessageTime = message.getTimeSent();
             }
         }
+
     }
 
     private void displayMessage(Message message) {
@@ -96,6 +98,7 @@ public class ChatFrame extends javax.swing.JFrame {
 
             } else {
                 chat_Panel1.setMessagesPicLeft(message.getImagePath(), message.getTimeSent().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+
             }
         } else {
             if (message.getMessage() != null) {
@@ -103,6 +106,7 @@ public class ChatFrame extends javax.swing.JFrame {
 
             
             } else {
+
 
                 chat_Panel1.setMessagesPicRight(message.getImagePath(), message.getTimeSent().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
             }
