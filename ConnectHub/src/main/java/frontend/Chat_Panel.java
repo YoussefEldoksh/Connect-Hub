@@ -19,6 +19,8 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollBar;
+import javax.swing.SwingUtilities;
 import net.miginfocom.swing.MigLayout;
 import org.json.JSONPointer;
 
@@ -74,37 +76,41 @@ public class Chat_Panel extends javax.swing.JPanel {
         messagesDisplayPanel.add(new Chat_Message(message, date), "wrap");
         messagesDisplayPanel.revalidate();
         messagesDisplayPanel.repaint();
-        jScrollPane2.getVerticalScrollBar().setValue(jScrollPane2.getVerticalScrollBar().getMaximum());
-
+        scrollToBottom();
     }
 
     public void setMessageRight(String message, String date) {
         messagesDisplayPanel.add(new Chat_Message(message, date), "wrap, al right");
         messagesDisplayPanel.revalidate();
         messagesDisplayPanel.repaint();
-        jScrollPane2.getVerticalScrollBar().setValue(jScrollPane2.getVerticalScrollBar().getMaximum());
-
+        scrollToBottom();
     }
 
     public void setMessagesPicRight(String imagePath, String date) {
         messagesDisplayPanel.add(new Chat_Message_Photo(new ImageIcon(imagePath), date), "wrap, al right");
         messagesDisplayPanel.revalidate();
         messagesDisplayPanel.repaint();
-        jScrollPane2.getVerticalScrollBar().setValue(jScrollPane2.getVerticalScrollBar().getMaximum());
-
+        scrollToBottom();
     }
 
     public void setMessagesPicLeft(String imagePath, String date) {
         messagesDisplayPanel.add(new Chat_Message_Photo(new ImageIcon(imagePath), date), "wrap");
         messagesDisplayPanel.revalidate();
         messagesDisplayPanel.repaint();
-        jScrollPane2.getVerticalScrollBar().setValue(jScrollPane2.getVerticalScrollBar().getMaximum() );
+        scrollToBottom();
     }
 
     public void clearchat() {
         messagesDisplayPanel.removeAll();
         messagesDisplayPanel.revalidate();
         messagesDisplayPanel.repaint();
+    }
+
+    public void scrollToBottom() {
+        SwingUtilities.invokeLater(() -> {
+            JScrollBar verticalScrollBar = jScrollPane2.getVerticalScrollBar();
+            verticalScrollBar.setValue(verticalScrollBar.getMaximum());
+        });
     }
 
     /**
