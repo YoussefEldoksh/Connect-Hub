@@ -12,6 +12,8 @@ import java.util.ArrayList;
  */
 public class DataBase { // Centralized Data Management
 
+    private boolean isRefreshing=false;
+    private boolean isRefreshingChat=false;
     private ArrayList<User> users = new ArrayList<>();
     private ArrayList<Posts> posts = new ArrayList<>();
     private ArrayList<Stories> stories = new ArrayList<>();
@@ -31,6 +33,7 @@ public class DataBase { // Centralized Data Management
         }
         isLoading = true;
         loadAllFiles();
+        loadChatFile();
         isLoading = false;
     }
 
@@ -65,29 +68,51 @@ public class DataBase { // Centralized Data Management
 
     public synchronized void removeFromGlobalChats(Chat chat) {
         chats.remove(chat);
+        FileManagement.saveToChats();
     }
 
     public synchronized ArrayList<Chat> getGlobalChats() {
         return chats;
     }
 
-    public void loadAllFiles() {
-        this.users.clear();
-        this.posts.clear();
-        this.stories.clear();
-        this.requests.clear();
-        this.notificationsFriendReq.clear();
-        this.chats.clear();
-
-        this.users = FileManagement.loadFromUsersJSONfile();
-        this.posts = FileManagement.loadFromPostsJsonFile();
-        this.stories = FileManagement.loadFromStroiesJsonFile();
-        this.requests = FileManagement.loadFromFriendRequestsJsonFile();
-        this.notificationsFriendReq = FileManagement.loadFromRequestsNotificationsJsonFile();
-        this.notificationsGroupAdd = FileManagement.loadFromGroupAddNotificationsJsonFile();
-        this.notificationsGroupPost = FileManagement.loadFromGroupPostNotificationsJsonFile();
-        this.chats = FileManagement.loadFromChatsJsonFile();
-
+    public synchronized void loadAllFiles() {
+        if (isRefreshing) {
+            System.out.println("Refresh is already in progress");
+            return;
+        }
+        isRefreshing = true;
+        try {
+            this.users.clear();
+            this.posts.clear();
+            this.stories.clear();
+            this.requests.clear();
+            this.notificationsFriendReq.clear();
+            this.chats.clear();
+            this.users = FileManagement.loadFromUsersJSONfile();
+            this.posts = FileManagement.loadFromPostsJsonFile();
+            this.stories = FileManagement.loadFromStroiesJsonFile();
+            this.requests = FileManagement.loadFromFriendRequestsJsonFile();
+            this.notificationsFriendReq = FileManagement.loadFromRequestsNotificationsJsonFile();
+            this.notificationsGroupAdd = FileManagement.loadFromGroupAddNotificationsJsonFile();
+            this.notificationsGroupPost = FileManagement.loadFromGroupPostNotificationsJsonFile();
+            this.chats = FileManagement.loadFromChatsJsonFile();
+        } finally {
+            isRefreshing = false;
+        }
+    }
+    
+    public synchronized void loadChatFile() {
+        if (isRefreshingChat) {
+            System.out.println("Refresh is already in progress");
+            return;
+        }
+        isRefreshingChat = true;
+        try {
+            this.chats.clear();
+            this.chats = FileManagement.loadFromChatsJsonFile();
+        } finally {
+            isRefreshingChat = false;
+        }
     }
 
     public synchronized ArrayList<NotificationFriendReq> getNotificationsFriendReq() {
@@ -170,6 +195,7 @@ public class DataBase { // Centralized Data Management
         }
         requests.remove(request);
         System.out.println("requests" + requests);
+        FileManagement.saveToFriendRequestsJsonFile();
     }
     
     public synchronized void addChatMessage(String chatId,Message message)

@@ -138,10 +138,56 @@
     },
     {
         "chatId": "U0U7",
-        "messages": []
+        "messages": [{
+            "senderId": "U7",
+            "imagePath": "null",
+            "timeSent": "2024-12-20T11:52:36.843677600",
+            "recieverId": "U0",
+            "message": "hello doksh"
+        }]
     },
     {
         "chatId": "U0U8",
         "messages": []
+    },
+    {
+        "chatId": "U1U7",
+        "messages": [
+            {
+                "senderId": "U1",
+                "imagePath": "null",
+                "timeSent": "2024-12-20T11:56:50.206660400",
+                "recieverId": "U7",
+                "message": "hello halaa"
+            },
+            {
+                "senderId": "U7",
+                "imagePath": "null",
+                "timeSent": "2024-12-20T12:33:08.053283600",
+                "recieverId": "U1",
+                "message": "hello doksh"
+            },
+            {
+                "senderId": "U1",
+                "imagePath": "null",
+                "timeSent": "2024-12-20T12:34:03.271733700",
+                "recieverId": "U7",
+                "message": "reload?"
+            },
+            {
+                "senderId": "U7",
+                "imagePath": "null",
+                "timeSent": "2024-12-20T12:35:23.102958600",
+                "recieverId": "U1",
+                "message": "shaklaha mesh shaghala"
+            },
+            {
+                "senderId": "U7",
+                "imagePath": "null",
+                "timeSent": "2024-12-20T13:12:45.673359700",
+                "recieverId": "U1",
+                "message": "tab delwaati eh"
+            }
+        ]
     }
 ]

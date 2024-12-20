@@ -9,6 +9,7 @@ import backend.Chat;
 import backend.DataBase;
 import backend.FileManagement;
 import backend.Message;
+import backend.ThreadForChat;
 import backend.UserSession;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -28,7 +29,7 @@ public class ChatFrame extends javax.swing.JFrame {
     public String chatStatus;
     public Chat chat = null;
     public ArrayList<String> loadedChats = new ArrayList<>();
-
+    private LocalDateTime lastMessageTime = null;
     static ChatFrame instance = null;
 
     public static ChatFrame getInstance() {
@@ -41,69 +42,88 @@ public class ChatFrame extends javax.swing.JFrame {
     private ChatFrame() {
         initComponents();
         this.setTitle("Chats");
+//        ThreadForChat t= new ThreadForChat();
+//        Thread tt = new Thread(t);
+//        tt.start();
     }
 
     public void setChatHeading() {
         chat_Panel1.setChat(chatName, chatStatus);
     }
 
+    public void updateChatsList() {
+        chat_Menu_Left1.showPeople();
+    }
+
+    public String getChatName() {
+        return chatName;
+    }
+
     public void loadMessages() {
+        DataBase.getInstance().loadChatFile();
         if (chatName == null || chatName.trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "no chat selected");
 
         }
         UserSession.getCurrentUser().fillChats();
         Chat chat = UserSession.getCurrentUser().getSpecificChat(this.chatName);
-        ArrayList<Message> messages = new ArrayList<>();
+
         if (chat == null) {
-            System.out.println("chat it null ana hena f chatframe");
-            Chat newchat = new Chat(UserSession.getCurrentUser().getUserId() + AccountManagement.findUserId(chatName), new ArrayList<Message>());
-
-            this.chat = newchat;
-            DataBase.getInstance().addToGlobalChats(newchat);
-            UserSession.getCurrentUser().addChat(newchat);
-
-        } else {
+            System.out.println("Chat is null in ChatFrame");
+            chat = new Chat(UserSession.getCurrentUser().getUserId() + AccountManagement.findUserId(chatName), new ArrayList<>());
             this.chat = chat;
-            messages.addAll(this.chat.getChatMessages());
-            messages.reversed();
+            DataBase.getInstance().addToGlobalChats(chat);
+            UserSession.getCurrentUser().addChat(chat);
+        } else {
+            ArrayList<Message> newMessages = chat.getChatMessagesAfter(lastMessageTime);
+            for (Message message : newMessages) {
+                displayMessage(message);
+                lastMessageTime = message.getTimeSent();
+            }
         }
+    }
 
+    private void displayMessage(Message message) {
+        if (message.getRecieverId().equals(UserSession.getCurrentUser().getUserId())) {
+            if (message.getMessage() != null) {
+                chat_Panel1.setMessageLeft(message.getMessage(), message.getTimeSent().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+            } else {
+                chat_Panel1.setMessagesPicLeft(message.getImagePath(), message.getTimeSent().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+            }
+        } else {
+            if (message.getMessage() != null) {
+                chat_Panel1.setMessageRight(message.getMessage(), message.getTimeSent().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+            } else {
+                chat_Panel1.setMessagesPicRight(message.getImagePath(), message.getTimeSent().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+            }
+        }
+    }
+
+
+    /*
         System.out.println("ana abl ma clear el chat");
         chat_Panel1.clearchat();
         System.out.println("ana ba3d ma clear el chat");
         for (Message message : messages) {
             if (message.getRecieverId().equals(UserSession.getCurrentUser().getUserId())) {
                 if (message.getMessage() != null) {
-                        chat_Panel1.setMessageLeft(message.getMessage(), message.getTimeSent().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
-           }
-            else
-                {
-                     chat_Panel1.setMessagesPicLeft(message.getImagePath(), message.getTimeSent().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+                    chat_Panel1.setMessageLeft(message.getMessage(), message.getTimeSent().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+                } else {
+                    chat_Panel1.setMessagesPicLeft(message.getImagePath(), message.getTimeSent().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
                 }
-            
-            }
-            
-            
-            else {
-                if(message.getMessage() != null)
-                {  
-                    chat_Panel1.setMessageRight(message.getMessage(),message.getTimeSent().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
-                }
-                else
-                {
-                     chat_Panel1.setMessagesPicRight(message.getImagePath(), message.getTimeSent().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
-                }
-            } 
+
+            } else {
+                if (message.getMessage() != null) {
+                    chat_Panel1.setMessageRight(message.getMessage(), message.getTimeSent().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+                } else {
+                    chat_Panel1.setMessagesPicRight(message.getImagePath(), message.getTimeSent().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
                 }
             }
-
-    
-
+        }
+    }
+     */
     public void addToLoadedChats(String name) {
-
         loadedChats.add(name);
-
     }
 
     public boolean isLoaded(String name) {

@@ -56,13 +56,20 @@
         "dob": "2024-12-08",
         "userId": "U1",
         "email": "doksh5@gmail.com",
-        "friends": [{
-            "userId": "U0",
-            "email": "doksh@gmail.com",
-            "username": "doksh22"
-        }],
+        "friends": [
+            {
+                "userId": "U0",
+                "email": "doksh@gmail.com",
+                "username": "doksh22"
+            },
+            {
+                "userId": "U7",
+                "email": "halaahaitham2@gmail.com",
+                "username": "halaa123"
+            }
+        ],
         "username": "doksh222",
-        "status": false
+        "status": true
     },
     {
         "blockedfriends": [],
@@ -140,13 +147,20 @@
         "dob": "2004-08-09",
         "userId": "U7",
         "email": "halaahaitham2@gmail.com",
-        "friends": [{
-            "userId": "U0",
-            "email": "doksh@gmail.com",
-            "username": "doksh22"
-        }],
+        "friends": [
+            {
+                "userId": "U0",
+                "email": "doksh@gmail.com",
+                "username": "doksh22"
+            },
+            {
+                "userId": "U1",
+                "email": "doksh5@gmail.com",
+                "username": "doksh222"
+            }
+        ],
         "username": "halaa123",
-        "status": true
+        "status": false
     },
     {
         "blockedfriends": [],
