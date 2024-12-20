@@ -31,8 +31,8 @@ public class ChatFrame extends javax.swing.JFrame {
     public ArrayList<String> loadedChats = new ArrayList<>();
     private LocalDateTime lastMessageTime = null;
     static ChatFrame instance = null;
-     //ThreadForChat t= new ThreadForChat();
-    //public  Thread tt = new Thread(t);
+     ThreadForChat t= new ThreadForChat();
+    public  Thread tt = new Thread(t);
     public static ChatFrame getInstance() {
         if (instance == null) {
             instance = new ChatFrame();
@@ -43,7 +43,7 @@ public class ChatFrame extends javax.swing.JFrame {
     private ChatFrame() {
         initComponents();
         this.setTitle("Chats");
-       // tt.start();
+        tt.start();
     }
 
     public void setChatHeading() {
