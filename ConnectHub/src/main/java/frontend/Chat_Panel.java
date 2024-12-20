@@ -14,6 +14,8 @@ import backend.UserSession;
 import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -72,38 +74,38 @@ public class Chat_Panel extends javax.swing.JPanel {
         messagesDisplayPanel.add(new Chat_Message(message, date), "wrap");
         messagesDisplayPanel.revalidate();
         messagesDisplayPanel.repaint();
+        jScrollPane2.getVerticalScrollBar().setValue(jScrollPane2.getVerticalScrollBar().getMaximum());
+
     }
 
     public void setMessageRight(String message, String date) {
         messagesDisplayPanel.add(new Chat_Message(message, date), "wrap, al right");
         messagesDisplayPanel.revalidate();
         messagesDisplayPanel.repaint();
+        jScrollPane2.getVerticalScrollBar().setValue(jScrollPane2.getVerticalScrollBar().getMaximum());
+
     }
 
-    public void setMessagesPicRight(String imagePath, String date)
-    {
-        messagesDisplayPanel.add(new Chat_Message_Photo(new ImageIcon(imagePath),date),"wrap, al right");
+    public void setMessagesPicRight(String imagePath, String date) {
+        messagesDisplayPanel.add(new Chat_Message_Photo(new ImageIcon(imagePath), date), "wrap, al right");
         messagesDisplayPanel.revalidate();
         messagesDisplayPanel.repaint();
+        jScrollPane2.getVerticalScrollBar().setValue(jScrollPane2.getVerticalScrollBar().getMaximum());
+
     }
-    
-        public void setMessagesPicLeft(String imagePath, String date)
-    {
-        messagesDisplayPanel.add(new Chat_Message_Photo(new ImageIcon(imagePath),date),"wrap");
+
+    public void setMessagesPicLeft(String imagePath, String date) {
+        messagesDisplayPanel.add(new Chat_Message_Photo(new ImageIcon(imagePath), date), "wrap");
         messagesDisplayPanel.revalidate();
         messagesDisplayPanel.repaint();
+        jScrollPane2.getVerticalScrollBar().setValue(jScrollPane2.getVerticalScrollBar().getMaximum() );
     }
-    
-    
-    
-    
+
     public void clearchat() {
         messagesDisplayPanel.removeAll();
         messagesDisplayPanel.revalidate();
         messagesDisplayPanel.repaint();
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -295,7 +297,7 @@ public class Chat_Panel extends javax.swing.JPanel {
             return;
         }
         System.out.println(file.getPath());
-        
+
         Message_Builder message = new Message_Builder();
         message.setImagePath(file.getAbsolutePath())
                 .setSenderId(UserSession.getCurrentUser().getUserId())
@@ -303,20 +305,19 @@ public class Chat_Panel extends javax.swing.JPanel {
                 .setRecieverId(AccountManagement.findUserId(ChatFrame.getInstance().chatName))
                 .setTimeSent(LocalDateTime.now());
         Message newMessage = message.build();
-        
-        
-            ChatFrame.getInstance().chat.AddChatMessages(newMessage);
-            System.out.println(ChatFrame.getInstance().chat.getChatId());
-            System.out.println(ChatFrame.getInstance().chat.getChatMessages());
-            DataBase.getInstance().addChatMessage(ChatFrame.getInstance().chat.getChatId(), newMessage);
-        
-            
+
+        ChatFrame.getInstance().chat.AddChatMessages(newMessage);
+        System.out.println(ChatFrame.getInstance().chat.getChatId());
+        System.out.println(ChatFrame.getInstance().chat.getChatMessages());
+        DataBase.getInstance().addChatMessage(ChatFrame.getInstance().chat.getChatId(), newMessage);
+
         ImageIcon image = new ImageIcon(file.getPath());
-        messagesDisplayPanel.add(new Chat_Message_Photo(image,newMessage.getTimeSent().format(DateTimeFormatter.ofPattern("HH:mm:ss a"))),"wrap, al right"); 
+        messagesDisplayPanel.add(new Chat_Message_Photo(image, newMessage.getTimeSent().format(DateTimeFormatter.ofPattern("HH:mm:ss a"))), "wrap, al right");
+        jScrollPane2.getVerticalScrollBar().setValue(jScrollPane2.getVerticalScrollBar().getMaximum());
 
     }//GEN-LAST:event_attachPhotoButtonActionPerformed
 
-    private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
+    private synchronized void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
         // TODO add your handling code here:
         if (!jTextArea1.getText().trim().isEmpty()) {
             setMessageRight(jTextArea1.getText(), LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss a")));
@@ -333,7 +334,9 @@ public class Chat_Panel extends javax.swing.JPanel {
             System.out.println(ChatFrame.getInstance().chat.getChatId());
             System.out.println(ChatFrame.getInstance().chat.getChatMessages());
             DataBase.getInstance().addChatMessage(ChatFrame.getInstance().chat.getChatId(), message);
+
             FileManagement.saveToChats();
+
             jTextArea1.setText("");
 
         } else {

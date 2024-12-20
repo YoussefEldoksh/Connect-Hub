@@ -31,7 +31,8 @@ public class ChatFrame extends javax.swing.JFrame {
     public ArrayList<String> loadedChats = new ArrayList<>();
     private LocalDateTime lastMessageTime = null;
     static ChatFrame instance = null;
-
+     ThreadForChat t= new ThreadForChat();
+    public  Thread tt = new Thread(t);
     public static ChatFrame getInstance() {
         if (instance == null) {
             instance = new ChatFrame();
@@ -42,18 +43,18 @@ public class ChatFrame extends javax.swing.JFrame {
     private ChatFrame() {
         initComponents();
         this.setTitle("Chats");
-//        ThreadForChat t= new ThreadForChat();
-//        Thread tt = new Thread(t);
-//        tt.start();
+        tt.start();
     }
 
     public void setChatHeading() {
         chat_Panel1.setChat(chatName, chatStatus);
     }
-
-    public void updateChatsList() {
+    
+    public void updateChatsList()
+    {
         chat_Menu_Left1.showPeople();
     }
+
 
     public String getChatName() {
         return chatName;
@@ -63,11 +64,14 @@ public class ChatFrame extends javax.swing.JFrame {
         DataBase.getInstance().loadChatFile();
         if (chatName == null || chatName.trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "no chat selected");
-
         }
+        
+        
         UserSession.getCurrentUser().fillChats();
         Chat chat = UserSession.getCurrentUser().getSpecificChat(this.chatName);
-
+        chat_Panel1.clearchat();
+        System.out.println("A7A1");
+        
         if (chat == null) {
             System.out.println("Chat is null in ChatFrame");
             chat = new Chat(UserSession.getCurrentUser().getUserId() + AccountManagement.findUserId(chatName), new ArrayList<>());
@@ -75,25 +79,41 @@ public class ChatFrame extends javax.swing.JFrame {
             DataBase.getInstance().addToGlobalChats(chat);
             UserSession.getCurrentUser().addChat(chat);
         } else {
-            ArrayList<Message> newMessages = chat.getChatMessagesAfter(lastMessageTime);
+            this.chat = chat;
+            ArrayList<Message> newMessages = chat.getChatMessages();
+             System.out.println("A7A2");
             for (Message message : newMessages) {
                 displayMessage(message);
                 lastMessageTime = message.getTimeSent();
+                 System.out.println("A7A3");
             }
+             System.out.println("A7A4");
         }
+         System.out.println("A7A5");
     }
 
     private void displayMessage(Message message) {
+       
+        
         if (message.getRecieverId().equals(UserSession.getCurrentUser().getUserId())) {
             if (message.getMessage() != null) {
                 chat_Panel1.setMessageLeft(message.getMessage(), message.getTimeSent().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+                     System.out.println("A7A6");
+
             } else {
                 chat_Panel1.setMessagesPicLeft(message.getImagePath(), message.getTimeSent().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+                    System.out.println("A7A7");
+
             }
         } else {
             if (message.getMessage() != null) {
                 chat_Panel1.setMessageRight(message.getMessage(), message.getTimeSent().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+                    System.out.println("A7A8");
+
+            
             } else {
+                    System.out.println("A7A9");
+
                 chat_Panel1.setMessagesPicRight(message.getImagePath(), message.getTimeSent().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
             }
         }

@@ -34,12 +34,16 @@ public class Chat_Menu_Left extends javax.swing.JPanel {
 
     public void showPeople() {
         menuList.removeAll();
+
         ArrayList<Friend> friendList = UserSession.getCurrentUser().getListOfFriends();
         for (int i = 0; i < friendList.size(); i++) {
 
             System.out.println(friendList.get(i));
             menuList.add(new Chat_Item_People(friendList.get(i).getUsername()), "wrap");
         }
+      
+      menuList.revalidate();
+      menuList.repaint();
 
 //        for (int i = 0; i < 10; i++) {
 //          menuList.add(new Chat_Item_People("name" + i),"wrap");

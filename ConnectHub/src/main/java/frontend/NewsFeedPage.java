@@ -431,6 +431,7 @@ public class NewsFeedPage extends javax.swing.JFrame {
 
     private void messagesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_messagesButtonActionPerformed
         // TODO add your handling code here:
+
         
         ChatFrame.getInstance().updateChatsList();
         ChatFrame.getInstance().setVisible(true);

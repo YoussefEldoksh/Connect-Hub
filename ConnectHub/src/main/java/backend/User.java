@@ -543,6 +543,7 @@ public class User extends Account {
         if (chats.isEmpty()) {
             return;
         }
+        myChats.clear();
         for (Chat chat : chats) {
             if (chat.getChatId().contains(this.getUserId())) {
                 this.myChats.add(chat);

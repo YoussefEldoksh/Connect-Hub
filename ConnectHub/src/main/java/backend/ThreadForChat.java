@@ -20,7 +20,7 @@ public void stopThread() {
 public void run() {
     while (running) {
         try {
-            Thread.sleep(500); // Poll every 500ms
+            Thread.sleep(5000); 
             ChatFrame chatFrame = ChatFrame.getInstance();
             if (chatFrame.getChatName() != null && !chatFrame.getChatName().trim().isEmpty()) {
                 chatFrame.loadMessages();
