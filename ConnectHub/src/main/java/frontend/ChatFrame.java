@@ -70,7 +70,7 @@ public class ChatFrame extends javax.swing.JFrame {
         UserSession.getCurrentUser().fillChats();
         Chat chat = UserSession.getCurrentUser().getSpecificChat(this.chatName);
         chat_Panel1.clearchat();
-        System.out.println("check1");
+
         
         if (chat == null) {
             System.out.println("Chat is null in ChatFrame");
@@ -81,15 +81,12 @@ public class ChatFrame extends javax.swing.JFrame {
         } else {
             this.chat = chat;
             ArrayList<Message> newMessages = chat.getChatMessages();
-             System.out.println("check2");
             for (Message message : newMessages) {
                 displayMessage(message);
                 lastMessageTime = message.getTimeSent();
-                 System.out.println("check3");
             }
-             System.out.println("check4");
         }
-         System.out.println("check5");
+
     }
 
     private void displayMessage(Message message) {
@@ -98,21 +95,18 @@ public class ChatFrame extends javax.swing.JFrame {
         if (message.getRecieverId().equals(UserSession.getCurrentUser().getUserId())) {
             if (message.getMessage() != null) {
                 chat_Panel1.setMessageLeft(message.getMessage(), message.getTimeSent().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
-                     System.out.println("check6");
 
             } else {
                 chat_Panel1.setMessagesPicLeft(message.getImagePath(), message.getTimeSent().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
-                    System.out.println("check7");
 
             }
         } else {
             if (message.getMessage() != null) {
                 chat_Panel1.setMessageRight(message.getMessage(), message.getTimeSent().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
-                    System.out.println("check8");
 
             
             } else {
-                    System.out.println("check9");
+
 
                 chat_Panel1.setMessagesPicRight(message.getImagePath(), message.getTimeSent().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
             }
