@@ -97,7 +97,7 @@ public class Chat_Item_People extends javax.swing.JPanel {
                 ChatFrame.getInstance().chatStatus = "Offline";
             }
             ChatFrame.getInstance().setChatHeading();
-             ChatFrame.getInstance().loadMessages();
+            ChatFrame.getInstance().loadMessages();
             return;
         } else {
             ChatFrame.getInstance().addToLoadedChats(friendName.getText());

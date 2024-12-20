@@ -32,7 +32,7 @@ public class FriendManagement {
         }
         excludedIds.add(user.getUserId());
 
-        if (!user.getListOfFriendReq().contains(friend))// if the request is already made don't added it again to the array
+        if (!user.getListOfFriendReq().contains(friend) && !excludedIds.contains(friend))// if the request is already made don't added it again to the array
         {
             user.addFriendsReq(friend);
         }
@@ -56,12 +56,12 @@ public class FriendManagement {
 
                 user.removeFriendReq(friend);//this means that the request if 
                 DataBase.getInstance().removeFriendReq(friend);
+                
 
             }
 
             FileManagement.saveToFriendRequestsJsonFile();
             FileManagement.saveInUsersJSONfile();
-
             //else the request is still pending
             // add it for future responding
         }

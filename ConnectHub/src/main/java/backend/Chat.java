@@ -4,6 +4,7 @@
  */
 package backend;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
@@ -32,6 +33,16 @@ public class Chat {
     public ArrayList<Message> getChatMessages() {
         return chatMessages;
     }
+    
+    public ArrayList<Message> getChatMessagesAfter(LocalDateTime lastMessageTime) {
+    ArrayList<Message> newMessages = new ArrayList<>();
+    for (Message message : this.getChatMessages()) {
+        if (lastMessageTime == null || message.getTimeSent().isAfter(lastMessageTime)) {
+            newMessages.add(message);
+        }
+    }
+    return newMessages;
+}
 
     public void AddChatMessages(Message newMessage) {
        

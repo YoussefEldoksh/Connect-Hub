@@ -14,6 +14,8 @@ import backend.UserSession;
 import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -316,7 +318,7 @@ public class Chat_Panel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_attachPhotoButtonActionPerformed
 
-    private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
+    private synchronized void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
         // TODO add your handling code here:
         if (!jTextArea1.getText().trim().isEmpty()) {
             setMessageRight(jTextArea1.getText(), LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss a")));
@@ -333,7 +335,9 @@ public class Chat_Panel extends javax.swing.JPanel {
             System.out.println(ChatFrame.getInstance().chat.getChatId());
             System.out.println(ChatFrame.getInstance().chat.getChatMessages());
             DataBase.getInstance().addChatMessage(ChatFrame.getInstance().chat.getChatId(), message);
+
             FileManagement.saveToChats();
+           
             jTextArea1.setText("");
 
         } else {

@@ -7,6 +7,7 @@ package backend;
 import backend.User;
 import java.awt.Image;
 import java.io.IOException;
+import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
@@ -20,6 +21,7 @@ import javax.swing.ImageIcon;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.nio.channels.FileLock;
+import java.nio.file.StandardOpenOption;
 
 /**
  *
@@ -1095,9 +1097,7 @@ public class FileManagement { // Centrlized file operations system
                     }
                     if (chats.get(i).getChatMessages().get(j).getMessage() != null) {
                         message.put("message", chats.get(i).getChatMessages().get(j).getMessage());
-                    }
-                    else
-                    {
+                    } else {
                         message.put("message", "null");
                     }
                     messages.put(message);
@@ -1108,20 +1108,20 @@ public class FileManagement { // Centrlized file operations system
                 chatsArray.put(chatJson);
             }
             Files.write(Paths.get("chats.json"), chatsArray.toString(4).getBytes());
-
+            
+            try (FileChannel channel = FileChannel.open(Paths.get("chats.json"), StandardOpenOption.WRITE)) {
+                channel.force(true); // Force the changes to disk
+            }
             System.out.println("System successfully saved the chat");
 
         } catch (IOException ex) {
             System.err.println("Error saving notifs to JSON file: " + ex.getMessage());
         }
+
     }
 
     public static ArrayList<Chat> loadFromChatsJsonFile() {
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(FileManagement.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
         ArrayList<Chat> chats = new ArrayList<>();
 
         try {
@@ -1149,7 +1149,6 @@ public class FileManagement { // Centrlized file operations system
                     String time = messageJson.getString("timeSent");
                     LocalDateTime date = LocalDateTime.parse(time, DateTimeFormatter.ISO_DATE_TIME);
 
-                    
                     if (imagePath.equals("null")) {
                         Message_Builder builder = new Message_Builder();
                         builder.setSenderId(senderId)

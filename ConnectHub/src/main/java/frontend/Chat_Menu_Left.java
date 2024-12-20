@@ -4,7 +4,9 @@
  */
 package frontend;
 
+import backend.Friend;
 import backend.UserSession;
+import java.util.ArrayList;
 import javax.swing.BoxLayout;
 import net.miginfocom.swing.MigLayout;
 
@@ -32,12 +34,12 @@ public class Chat_Menu_Left extends javax.swing.JPanel {
 
     public void showPeople() {
         menuList.removeAll();
-                
-      for (int i = 0; i < UserSession.getCurrentUser().getListOfFriends().size(); i++) {
-            
-            System.out.println(UserSession.getCurrentUser().getListOfFriends().get(i));
-            menuList.add(new Chat_Item_People(UserSession.getCurrentUser().getListOfFriends().get(i).getUsername()),"wrap");
 
+        ArrayList<Friend> friendList = UserSession.getCurrentUser().getListOfFriends();
+        for (int i = 0; i < friendList.size(); i++) {
+
+            System.out.println(friendList.get(i));
+            menuList.add(new Chat_Item_People(friendList.get(i).getUsername()), "wrap");
         }
       
       menuList.revalidate();
@@ -46,6 +48,8 @@ public class Chat_Menu_Left extends javax.swing.JPanel {
 //        for (int i = 0; i < 10; i++) {
 //          menuList.add(new Chat_Item_People("name" + i),"wrap");
 //        }
+        menuList.revalidate();
+        menuList.repaint();
     }
 
     /**

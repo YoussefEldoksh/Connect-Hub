@@ -373,18 +373,22 @@ public class NewsFeedPage extends javax.swing.JFrame {
 
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         // TODO add your handling code here:
-        DataBase.getInstance().loadAllFiles();
-        user.reload();
-
-               
-        
-        friendReqSuggPanel3.updateFriendsList(user);
-        friendReqSuggPanel3.updateRequestsList(user);
-        friendReqSuggPanel3.updateSuggestionsList(user);
-        mainNewsPanel1.updatePostsList(user);
-        mainNewsPanel1.updateStoriesList(user);
-        GroupSession.getCurrentGroup().reload();
-        this.openNewsFeedPage(user);
+        synchronized (this) {
+            try {
+                DataBase.getInstance().loadAllFiles();
+                user.reload();
+                friendReqSuggPanel3.updateFriendsList(user);
+                friendReqSuggPanel3.updateRequestsList(user);
+                friendReqSuggPanel3.updateSuggestionsList(user);
+                mainNewsPanel1.updatePostsList(user);
+                mainNewsPanel1.updateStoriesList(user);
+                //GroupSession.getCurrentGroup().reload();
+                this.openNewsFeedPage(user);
+            } catch (Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error refreshing data: " + e.getMessage());
+            }
+        }
     }//GEN-LAST:event_refreshButtonActionPerformed
 
     private void homeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeButtonActionPerformed
@@ -427,7 +431,9 @@ public class NewsFeedPage extends javax.swing.JFrame {
 
     private void messagesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_messagesButtonActionPerformed
         // TODO add your handling code here:
-         ChatFrame.getInstance().updateChatsList();
+
+        
+        ChatFrame.getInstance().updateChatsList();
         ChatFrame.getInstance().setVisible(true);
     }//GEN-LAST:event_messagesButtonActionPerformed
 

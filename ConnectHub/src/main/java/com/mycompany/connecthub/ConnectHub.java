@@ -12,7 +12,7 @@ import frontend.SignIn_Or_SignUp_Window;
  */
 public class ConnectHub {
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
        frontend.SignIn_Or_SignUp_Window.getInstance().getInstance().main(args); 
     }
     

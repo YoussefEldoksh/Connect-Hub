@@ -7,6 +7,7 @@ package frontend;
 import backend.DataBase;
 import backend.GroupsDataBase;
 import backend.ProfilesDataBase;
+import backend.ThreadForChat;
 import backend.User;
 import javax.swing.JOptionPane;
 
@@ -14,7 +15,7 @@ import javax.swing.JOptionPane;
  *
  * @author malak
  */
-public class SignIn_Or_SignUp_Window extends javax.swing.JFrame {
+public class SignIn_Or_SignUp_Window extends javax.swing.JFrame{
 
     /**
      * Creates new form Sign_inWindow
@@ -162,7 +163,7 @@ public class SignIn_Or_SignUp_Window extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) throws InterruptedException{
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -204,4 +205,6 @@ public class SignIn_Or_SignUp_Window extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
+
+ 
 }
