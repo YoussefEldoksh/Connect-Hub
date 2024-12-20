@@ -46,6 +46,11 @@ public class ChatFrame extends javax.swing.JFrame {
     public void setChatHeading() {
         chat_Panel1.setChat(chatName, chatStatus);
     }
+    
+    public void updateChatsList()
+    {
+        chat_Menu_Left1.showPeople();
+    }
 
     public void loadMessages() {
         if (chatName == null || chatName.trim().isEmpty()) {
