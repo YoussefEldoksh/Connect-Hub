@@ -295,7 +295,7 @@ public class Chat_Panel extends javax.swing.JPanel {
     private void attachPhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attachPhotoButtonActionPerformed
         // TODO add your handling code here:
         JFileChooser chooser = new JFileChooser();
-        chooser.showSaveDialog(this);
+        chooser.showOpenDialog(this);
         File file = chooser.getSelectedFile();
 
         if (file == null) {
@@ -305,9 +305,8 @@ public class Chat_Panel extends javax.swing.JPanel {
         System.out.println(file.getPath());
 
         Message_Builder message = new Message_Builder();
-        message.setImagePath(file.getAbsolutePath())
+        message.setImagePath(file.getPath())
                 .setSenderId(UserSession.getCurrentUser().getUserId())
-                .setMessage("")
                 .setRecieverId(AccountManagement.findUserId(ChatFrame.getInstance().chatName))
                 .setTimeSent(LocalDateTime.now());
         Message newMessage = message.build();
@@ -316,10 +315,12 @@ public class Chat_Panel extends javax.swing.JPanel {
         System.out.println(ChatFrame.getInstance().chat.getChatId());
         System.out.println(ChatFrame.getInstance().chat.getChatMessages());
         DataBase.getInstance().addChatMessage(ChatFrame.getInstance().chat.getChatId(), newMessage);
-
+        
         ImageIcon image = new ImageIcon(file.getPath());
         messagesDisplayPanel.add(new Chat_Message_Photo(image, newMessage.getTimeSent().format(DateTimeFormatter.ofPattern("HH:mm:ss a"))), "wrap, al right");
-        jScrollPane2.getVerticalScrollBar().setValue(jScrollPane2.getVerticalScrollBar().getMaximum());
+        messagesDisplayPanel.revalidate();
+        messagesDisplayPanel.repaint();
+        scrollToBottom();
 
     }//GEN-LAST:event_attachPhotoButtonActionPerformed
 

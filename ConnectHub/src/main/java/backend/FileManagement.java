@@ -304,7 +304,7 @@ public class FileManagement { // Centrlized file operations system
                 }
 
                 Posts post = new Posts(contentId, userId, content);
-                if (photoPath != null) {
+                if (photoPath != null && !photoPath.isEmpty()) {
                     post.setImagePath(photoPath);
                     post.setImage(image);
                 }
@@ -331,14 +331,19 @@ public class FileManagement { // Centrlized file operations system
                 post.put("userid", posts.get(i).getAuthorID());
                 post.put("contentid", posts.get(i).getContentID());
                 post.put("content", posts.get(i).getContent());
-                post.put("photopath", posts.get(i).getImagePath());
-                post.put("timestamp", posts.get(i).getTimestamp());
+                post.put("photopath", posts.get(i).getImagePath() != null ? posts.get(i).getImagePath() : JSONObject.NULL);
+                post.put("timestamp", posts.get(i).getTimestamp().toString());
 
                 Posts.put(post);
 
             }
             Files.write(Paths.get("posts.json"), Posts.toString(4).getBytes());
             System.out.println("System successfully saved the friendrequests");
+
+            try (FileChannel channel = FileChannel.open(Paths.get("posts.json"), StandardOpenOption.WRITE)) {
+                channel.force(true); // Force the changes to disk
+            }
+            System.out.println("System successfully saved the chat");
 
         } catch (IOException ex) {
             System.err.println("Error saving posts to JSON file: " + ex.getMessage());
@@ -1108,7 +1113,7 @@ public class FileManagement { // Centrlized file operations system
                 chatsArray.put(chatJson);
             }
             Files.write(Paths.get("chats.json"), chatsArray.toString(4).getBytes());
-            
+
             try (FileChannel channel = FileChannel.open(Paths.get("chats.json"), StandardOpenOption.WRITE)) {
                 channel.force(true); // Force the changes to disk
             }
