@@ -53,6 +53,7 @@ public class Chat {
         }
         
         this.chatMessages.add(newMessage);
+        FileManagement.saveToChats();
         
     }
     
