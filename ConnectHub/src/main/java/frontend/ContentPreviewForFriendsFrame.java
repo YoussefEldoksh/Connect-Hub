@@ -11,54 +11,79 @@ import backend.Stories;
 import backend.User;
 import backend.UserSession;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JScrollBar;
+import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 
 /**
  *
  * @author husse
  */
 public class ContentPreviewForFriendsFrame extends javax.swing.JFrame {
+
     User user;
     /**
      * Creates new form ContentPreviewForFriendsFrame
      */
-
-    public ContentPreviewForFriendsFrame(int selectedindix, int type, User user) {
+    
+    Stories story;
+    public ContentPreviewForFriendsFrame(Stories story) {
         initComponents();
-        this.user = user;
+        this.story = story;
+        init();
+    }
+    
+    public void init()
+    {
+        showContent();
+    }
+    
+    public void showContent()
+    {
         ContentLabel.setText(UserSession.getCurrentUser().getUsername() + "'s recent updates");
         ContentLabel.setFont(new Font("Arial", Font.BOLD, 30));
 
-        if (type == 1) {
-
-            friendContentLabel.setIcon(ImageHandler.rescaleImageIcon(findPost(selectedindix).getImage(), 339, 339));
-            ContentLabel.setText(findPost(selectedindix).getContent());
+        if (story.getImagePath() != null && !story.getImagePath().isEmpty()) {
+            friendContentLabel.setIcon(ImageHandler.rescaleImageIcon(new ImageIcon(story.getImagePath()), 345, 320));
         }
-        if (type == 2) {
-            friendContentLabel.setIcon(ImageHandler.rescaleImageIcon(findStory(selectedindix).getImage(), 339, 339));
-            ContentLabel.setText(findStory(selectedindix).getContent());
-        }
+        ContentLabel.setText(story.getContent());
 
         ContentLabel.setHorizontalTextPosition(JLabel.RIGHT);
         ContentLabel.setVerticalTextPosition(JLabel.CENTER);
         ContentLabel.setFont(new Font("Arial", Font.BOLD, 24));
-
-
-    }
-    
-
-    public Posts findPost(int selectedindix) {
         
-        Posts postChosen= NewsFeed.fetchPosts(UserSession.getCurrentUser()).get(selectedindix);
-        return postChosen;
+
+                SwingUtilities.invokeLater(() -> {
+           iterate();
+        });
     }
-    
-    public Stories findStory(int selectedindix) {
-       Stories storyChosen =  NewsFeed.fetchStories(UserSession.getCurrentUser()).get(selectedindix);
-        return storyChosen;
+
+    public void iterate() {
+        int i = 0;
+        while (i < 30000) {
+
+            jProgressBar1.setValue(i);
+
+            i += 200;
+
+            try {
+                Thread.sleep(150);  // Simulate work being done
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ContentPreviewForFriendsFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        this.dispose();
     }
+
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -71,44 +96,52 @@ public class ContentPreviewForFriendsFrame extends javax.swing.JFrame {
 
         friendContentLabel = new javax.swing.JLabel();
         ContentLabel = new javax.swing.JLabel();
+        jProgressBar1 = new javax.swing.JProgressBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         ContentLabel.setText("jLabel1");
 
+        jProgressBar1.setStringPainted(true);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(98, 98, 98)
-                        .addComponent(ContentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(57, 57, 57)
-                        .addComponent(friendContentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(63, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(186, Short.MAX_VALUE)
+                .addComponent(friendContentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(155, 155, 155))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ContentLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(108, 108, 108)
-                .addComponent(friendContentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ContentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(126, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(122, 122, 122)
+                .addComponent(friendContentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(ContentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     /**
      * @param args the command line arguments
      */
-  
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ContentLabel;
     private javax.swing.JLabel friendContentLabel;
+    private javax.swing.JProgressBar jProgressBar1;
     // End of variables declaration//GEN-END:variables
 }

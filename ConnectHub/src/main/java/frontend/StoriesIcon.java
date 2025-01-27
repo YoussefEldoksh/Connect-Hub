@@ -4,6 +4,9 @@
  */
 package frontend;
 
+import backend.NewsFeed;
+import backend.Stories;
+
 /**
  *
  * @author malak
@@ -13,8 +16,14 @@ public class StoriesIcon extends javax.swing.JPanel {
     /**
      * Creates new form StoriesIcon
      */
+    private String id;
     public StoriesIcon() {
         initComponents();
+    }
+
+    public StoriesIcon(String id) {
+        initComponents();
+        this.id = id;
     }
 
     /**
@@ -26,21 +35,30 @@ public class StoriesIcon extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        jLabel2 = new javax.swing.JLabel();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 74, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 75, Short.MAX_VALUE)
-        );
+        setBackground(new java.awt.Color(153, 153, 255));
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/result_DefaultPhoto.jpg"))); // NOI18N
+        jLabel2.setAlignmentY(0.0F);
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 5, 40, 40));
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        // TODO add your handling code here:
+        Stories story = NewsFeed.findStoryUsingContentId(id);
+        ContentPreviewForFriendsFrame frame = new ContentPreviewForFriendsFrame(story);
+        frame.setVisible(true);
+    }//GEN-LAST:event_formMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
 }
