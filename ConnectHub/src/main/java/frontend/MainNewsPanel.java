@@ -48,8 +48,8 @@ public class MainNewsPanel extends javax.swing.JPanel {
                 if (!e.getValueIsAdjusting()) { 
                    if(!postsListUpdate){ 
                     int selectedindix = postsList.getSelectedIndex();
-                    ContentPreviewForFriendsFrame friendcontent= new ContentPreviewForFriendsFrame(selectedindix,1,user);
-                    friendcontent.setVisible(true);
+                   // ContentPreviewForFriendsFrame friendcontent= new ContentPreviewForFriendsFrame(selectedindix,1,user);
+                    //friendcontent.setVisible(true);
                 }}
 
             }
@@ -68,9 +68,9 @@ public class MainNewsPanel extends javax.swing.JPanel {
 
                     System.out.println("User selected: " + token[0]);
                        
-                    ContentPreviewForFriendsFrame friendcontent= new ContentPreviewForFriendsFrame(selectedindix, 2,user);
+//                    ContentPreviewForFriendsFrame friendcontent= new ContentPreviewForFriendsFrame(selectedindix, 2,user);
                     
-                    friendcontent.setVisible(true);
+          //          friendcontent.setVisible(true);
                     
                    }
 
